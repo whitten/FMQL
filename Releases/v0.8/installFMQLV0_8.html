@@ -1,0 +1,216 @@
+<html>
+<head>
+<title>Install FMQL v0.8</title>
+<style>
+.section {border-top: solid black 1px; margin: 20px;}
+</style>
+</head>
+<body>
+
+<div id="zip" class="section">
+<p>The following describes how to install an FMQL v0.8 endpoint for your VistA or RPMS system.</p>
+<p>Besides this file, the installation ZIP contains ...</p>
+<ol>
+<li><em>CGFMQL08.KID</em>: a KIDs (VistA package format) file with the FMQL RPC and user option</li>
+<li><em>usrlocalfmql</em>: the FMQL (python) server, (html) clients, (wsgi) server configuration</li>
+<li><em>examplehospital.com-[operating system]</em>: Apache2 Virtual Host configuration</li>
+</ol>
+<p><strong>Note: </strong>Example clients for both Java and Python are on caregraf.org.</p>
+</div>
+
+<div class="section">
+<h1>Steps (4)</h1>
+<p>There are four steps - two involve VistA (install FMQL RPC, add FMQL user), one sets the endpoint's address and the last adds a Virtual Host to Apache.</p></p>
+
+<div>
+<h2>VistA: Install FMQL RPC</h2>
+<p>The FMQL RPC, <code>FMQL QP RPC</code> provides remote, graph-centric access to VistA's datastore, FileMan. It comes in a small KIDS file, <code>CGFMQLV08.KID</code> included in the FMQL installation.</p>
+<p>To install, log on to VistA and go to <em>Programmer Options</em> (EVE/Programmer Options) and ...
+
+<pre>
+
+Select Kernel Installation & Distribution System Option: Installation
+
+
+   1      Load a Distribution
+   2      Run XINDEX against a Distribution
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Verify Checksums in Transport Global
+
+Select Installation Option: 1  Load a Distribution
+Enter a Host File: /[fmqlinstallation]/CGFMQL08.KID  
+
+KIDS Distribution saved on Dec, 15, 2010@09:53:53
+Comment: 0.8
+
+This Distribution contains Transport Globals for the following Package(s):
+   CGFMQL 0.8
+Distribution OK!
+
+Want to Continue with Load? YES// YES
+Loading Distribution...
+
+   CGFMQL 0.8
+Use INSTALL NAME: CGFMQL 0.8 to install this Distribution.
+
+Press <Enter> to continue  
+
+   1      Load a Distribution
+   2      Run XINDEX against a Distribution
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Verify Checksums in Transport Global
+
+Select Installation Option: 6  Install Package(s)
+Select INSTALL NAME: CGFMQL 0.8
+
+Install Completed
+
+Press <Enter> to continue   
+</pre>
+<p>The FMQL RPC and its user option is now in your system.</p>
+</div>
+
+<div id="adduser">
+<h2>VistA: Add user <em>USER,FMQL</em></h2>
+<p>When you installed FMQL, a new user option, <code>CG FMQL QP USER</code> was added to your system. In this step, you will create a user for FMQL with permission to use this option.</p>
+
+<pre>
+OPEN&gt;D P^DI
+
+MSC FileMan 22.1030
+
+Identity = MAN,SYS&nbsp; MANAGER,SYSTEM&nbsp;&nbsp;&nbsp;&nbsp; pb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SYSTEM MANAGER
+
+Select OPTION: 1&nbsp; ENTER OR EDIT FILE ENTRIES
+
+Input to what File: NEW PERSON// NEW PERSON&nbsp;&nbsp;&nbsp; (54 entries)
+EDIT WHICH FIELD: ALL// .01&nbsp; NAME
+THEN EDIT FIELD: 7.2&nbsp; VERIFY CODE never expires
+THEN EDIT FIELD: 2.1&nbsp; Want to edit ACCESS CODE (Y/N)
+THEN EDIT FIELD: 11.1&nbsp; Want to edit VERIFY CODE (Y/N)
+THEN EDIT FIELD: 203&nbsp; SECONDARY MENU OPTIONS&nbsp; (multiple)
+
+
+
+&nbsp;&nbsp; EDIT WHICH SECONDARY MENU OPTIONS SUB-FIELD: ALL// .01&nbsp; SECONDARY MENU OPTION
+S
+&nbsp;&nbsp; THEN EDIT SECONDARY MENU OPTIONS SUB-FIELD:
+THEN EDIT FIELD:
+STORE THESE FIELDS IN TEMPLATE: 
+
+Select NEW PERSON NAME: USER,FMQL
+  Are you adding 'USER,FMQL' as a new NEW PERSON (the 54TH)? No// YES  (Yes)
+Checking SOUNDEX for matches.
+     USER,NURSE
+     ...
+     USER,PHYSICIAN
+Do you still want to add this entry: NO//YES
+&nbsp;&nbsp; NEW PERSON INITIAL: FMQL
+&nbsp;&nbsp; NEW PERSON MAIL CODE:
+VERIFY CODE never expires: Y&nbsp; Yes
+Want to edit ACCESS CODE (Y/N): Y
+Enter a new ACCESS CODE &lt;Hidden&gt;: QLFM1234
+Please re-type the new code to show that I have it right: QLFM1234
+
+ OK, Access code has been changed!
+ The VERIFY CODE has been deleted as a security measure.
+ The user will have to enter a new one the next time they sign-on.
+
+Want to edit VERIFY CODE (Y/N): Y
+
+Enter a new VERIFY CODE: QLFM1234!!
+
+Please re-type the new code to show that I have it right: QLFM1234!!
+
+
+ OK, Verify code has been changed!
+
+Select SECONDARY MENU OPTIONS: CG FMQL QP USER
+&nbsp; Are you adding 'CG FMQL QP USER' as
+&nbsp;&nbsp;&nbsp; a new SECONDARY MENU OPTIONS (the 1ST for this NEW PERSON)? No//&nbsp;&nbsp; (No) ? Y (Yes)
+Select SECONDARY MENU OPTIONS:
+
+Select NEW PERSON NAME:
+
+Select OPTION:
+OPEN&gt;halt
+
+
+
+</pre>
+</div>
+
+<div id="host">
+<h2>Name Service: Specify a domain for your <em>FMQL-enabled</em> hospital</h2>
+<p>Add the following to the <code>hosts</code> file on your system: on Linux, <code>/etc/hosts</code>, 
+on Windows, <code>C:\WINDOWS\system32\drivers\etc\hosts</code></p>
+<pre>127.0.0.1       www.examplehospital.com</pre>
+<p><strong>Note: </strong>You can, of course, choose any domain you want. The one above is also used in the installation's Virtual Host file, <em>examplehospital.com</em>.</p>
+
+</div>
+
+<div id="apache">
+<h2>Apache: configure a Virtual Host</h2>
+<p>On Linux (Ubuntu):</p>
+<pre>
+sudo cp -r /[fmqlinstallation]/usrlocalfmql /usr/local/fmql
+sudo cp /[fmqlinstallation]/examplehospital.com-linux /etc/apache2/sites-available/.
+edit /etc/apache2/sites-available/examplehospital.com to suit your configuration (read the file to see where)
+sudo a2ensite examplehospital.com
+sudo /etc/init.d/apache2 restart
+</pre>
+<p>Redhat's directories are different and <code>examplehospital.com</code> should be renamed <code>examplehospital.com.conf</code>.</p>
+<p>For Windows, see the instructions at the top of <code>/[fmqlinstallation]/examplehospital.com-windows</code>.</p>
+<p><strong>Important: </strong>For the endpoint to run, you will need <em>mod_rewrite</em>, <em>mod_wsgi</em> and Virtual Hosting enabled in Apache</p>
+<p>On Linux (Ubuntu):</p>
+<pre>
+mod-rewrite: run <code>sudo a2enmod rewrite</code>
+mod-wsgi: run <em>sudo apt-get install libapache2-mod-wsgi</em> 
+For more, see: <a href="code.google.com/p/modwsgi/wiki/InstallationOnLinux">Install WSGI on Linux</a>
+</pre>
+<p>For Windows, see the instructions at the top of <code>/[fmqlinstallation]/examplehospital.com-windows</code>.</p>
+<p>A final note: is Python 2.6+ running on your system? If you have Linux, it is. You may need to download and install it on your Windows.</p>
+</div>
+
+</div>
+
+<div id="testit" class="section">
+
+<h1>Test/ Use</h1>
+<ol>
+<li>Point your browser to <code>http://www.examplehospital.com/rambler</code> and start rambling around your VistA.</li>
+<li>Then point to the <em>VistA Patient Browser</em>, <code>http://www.examplehospital.com/patients</code> and browse what VistA holds on your patients.</li>
+</ol>
+<p>Have problems? First thing for troubleshooting - enhance Apache logging. Go into <code>examplehospital.com</code> and change the log level from <code>warn</code> to <code>info</code> and then restart Apache. The FMQL error log, <code>error_fmql.log</code>, will now describe the process leading up to your problem.</p>
+
+<p>Most installation issues involve <em>WSGI</em>. WSGI is ...</p>
+
+<blockquote cite="http://ivory.idyll.org/articles/wsgi-intro/what-is-wsgi.html">
+a specification, laid out in PEP 333, for a standardized interface between Web servers and Python Web frameworks/applications. The goal is to provide a relatively simple yet comprehensive interface capable of supporting all (or most) interactions between a Web server and a Web framework. (Think "CGI" but programmatic rather than I/O based.)
+</blockquote>
+<p>FMQL's query processor is implemented in Python and runs under Apache's WSGI module. <a href="http://code.google.com/p/modwsgi/wiki/InstallationIssues">This Google Guide</a> details problems with WSGI installation and how to fix them.</p>
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-XXXXXXXXXX");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+</body>
+</html>
+

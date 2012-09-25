@@ -1,0 +1,28 @@
+RELEASE v0.8 HIGHLIGHTS
+
+Additions since V0.7:
+- formalized the query triple of COUNT, SELECT and DESCRIBE
+- scaling:
+  - indexes used to efficiently query larger systems
+  - LIMIT and OFFSET paging added to efficiently walk larger systems
+- blank node querying to support FileMan's "subordinate-node-pattern"
+- standard projection of the lab file (63.04): query labs like Pharmacy and Radiology
+- explicit exposure of VUID and other standard vocabularies
+- support for the CIA RPC Broker for connection to standard RPMS
+
+Platform/System support (tested):
+- OpenVistA and WorldVistA on (GT/M, Linux) [as before]
+- VxVistA (Cache, Windows)
+- RPMS (Cache/Windows)
+- FOIA VistA (Cache/Windows)
+
+Bug fixes/ reliability:
+- "defensive coding": checks the sanity of FileMan arrays at every point in the query process
+- removed dependency on the buggy GETS API call. Now goes directly to arrays for all information.
+
+Systems Tested on (other than in-house test VistAs):
+the focus was scaling ...
+- production VistA with 200K patients, 10M+ documents, 10M+ vitals ...
+- de-identified RPMS with full multi-year data of 50K patients
+- VxVistA demonstration system (VxVistA is the closest to an in-house VA system) 
+

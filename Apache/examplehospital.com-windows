@@ -1,0 +1,70 @@
+#
+# The FMQL EP Virtual Host setup on Windows
+#
+# This typically applies to VistA or RPMS running on Cache/Windows.
+#
+# First edit <apache locn>\conf\httpd.conf to
+# (Apache Locn is normally Programmer Files/Apache ...)
+# - enable mod_rewrite
+#   (uncomment: #LoadModule rewrite_module modules/mod_rewrite.so)
+# - enable virtual hosting
+#   (uncomment: #Include conf/extra/httpd-vhosts.conf)
+# - first download wsgi to /modules and then enable it
+#   - Goto http://code.google.com/p/modwsgi/downloads
+#   - add "LoadModule wsgi_module modules/mod_wsgi.so" to httpd.conf
+#   (for more see: http://code.google.com/p/modwsgi/wiki/InstallationOnWindows)
+#
+# Then copy the following VirtualHost definition into:
+# <apache locn>\conf\extras\httpd-vhosts.conf
+#
+# Remember to reset port (####) and directory settings
+# <apache locn> and <fmql location> which only have
+# placeholders below. 
+#
+# Official Apache docs: http://httpd.apache.org/docs/2.2/vhosts/
+#
+
+<VirtualHost *:80>
+
+    ServerName www.examplehospital.com
+    ServerAlias examplehospital.com
+    ServerAdmin webmaster@examplehospital.com
+
+    # Make sure there is access to fmql's location
+    <Directory "C:/<fmql location>">
+        Order Deny,Allow
+        AllowOverride All
+    </Directory>
+
+    # IMPORTANT: these settings must match your VistA/RPMS 
+    # - reload in Apache with every change
+    # - the user (access/verify) MUST have permission to use the FMQL RPC.
+    # - for VistA, set rpcBroker to "VistA"; RPMS, use "CIA"
+    # - rpcport is the port of your VistA's broker: 9201 for OpenVistA
+    SetEnv fmql.rpcbroker "VistA"
+    SetEnv fmql.rpchost localhost
+    SetEnv fmql.rpcport ####
+    SetEnv fmql.rpcaccess "QLFM1234"
+    SetEnv fmql.rpcverify "QLFM1234!!"
+
+    # Trace problems in FMQL in this error log
+    LogLevel warn
+    ErrorLog logs/error_fmql.log
+
+<ifmodule mod_rewrite.c>
+    RewriteEngine On
+    DocumentRoot C:/<fmql location>
+    RewriteRule ^/$ /rambler [R]
+    RewriteRule ^/([0-9\.\_\-]+)$ /rambler
+    RewriteRule ^/rambler.* /fmRambler.html [L]
+    RewriteRule ^/schema.* /fmSchema.html [L]
+    RewriteRule ^/query.* /fmQuery.html [L]
+</IfModule>
+
+<IfModule mod_wsgi.c>
+    # Always runs embedded in one process, in the multi-threading "winnt MPM". 
+    # - IMPORTANT: inside fmqlEP.wsgi, reset the sys.path setting
+    WSGIScriptAlias /fmqlEP C:/<fmql location>/fmqlEP.wsgi
+</IfModule>
+
+</VirtualHost>

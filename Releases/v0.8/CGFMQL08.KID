@@ -1,0 +1,2924 @@
+KIDS Distribution saved on Dec 14, 2010@23:10:48
+V0.8.16 - comment fix. Final build.
+**KIDS**:CGFMQL 0.8^
+
+**INSTALL NAME**
+CGFMQL 0.8
+"BLD",7070,0)
+CGFMQL 0.8^^0^3101214^n
+"BLD",7070,4,0)
+^9.64PA^^
+"BLD",7070,6.3)
+61
+"BLD",7070,"KRN",0)
+^9.67PA^8989.52^19
+"BLD",7070,"KRN",.4,0)
+.4
+"BLD",7070,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",7070,"KRN",.401,0)
+.401
+"BLD",7070,"KRN",.401,"NM",0)
+^9.68A^^
+"BLD",7070,"KRN",.402,0)
+.402
+"BLD",7070,"KRN",.403,0)
+.403
+"BLD",7070,"KRN",.5,0)
+.5
+"BLD",7070,"KRN",.84,0)
+.84
+"BLD",7070,"KRN",3.6,0)
+3.6
+"BLD",7070,"KRN",3.8,0)
+3.8
+"BLD",7070,"KRN",9.2,0)
+9.2
+"BLD",7070,"KRN",9.8,0)
+9.8
+"BLD",7070,"KRN",9.8,"NM",0)
+^9.68A^9^8
+"BLD",7070,"KRN",9.8,"NM",1,0)
+FMQLQP^^0^B378654
+"BLD",7070,"KRN",9.8,"NM",2,0)
+FMQLDATA^^0^B588948
+"BLD",7070,"KRN",9.8,"NM",4,0)
+FMQLUTIL^^0^B364444
+"BLD",7070,"KRN",9.8,"NM",5,0)
+FMQLFILT^^0^B787708
+"BLD",7070,"KRN",9.8,"NM",6,0)
+FMQLJSON^^0^B583201
+"BLD",7070,"KRN",9.8,"NM",7,0)
+FMQLSSAM^^0^B262396
+"BLD",7070,"KRN",9.8,"NM",8,0)
+FMQLSCH^^0^B3196157
+"BLD",7070,"KRN",9.8,"NM",9,0)
+FMQLSLAB^^0^B187571
+"BLD",7070,"KRN",9.8,"NM","B","FMQLDATA",2)
+
+"BLD",7070,"KRN",9.8,"NM","B","FMQLFILT",5)
+
+"BLD",7070,"KRN",9.8,"NM","B","FMQLJSON",6)
+
+"BLD",7070,"KRN",9.8,"NM","B","FMQLQP",1)
+
+"BLD",7070,"KRN",9.8,"NM","B","FMQLSCH",8)
+
+"BLD",7070,"KRN",9.8,"NM","B","FMQLSLAB",9)
+
+"BLD",7070,"KRN",9.8,"NM","B","FMQLSSAM",7)
+
+"BLD",7070,"KRN",9.8,"NM","B","FMQLUTIL",4)
+
+"BLD",7070,"KRN",19,0)
+19
+"BLD",7070,"KRN",19,"NM",0)
+^9.68A^1^1
+"BLD",7070,"KRN",19,"NM",1,0)
+CG FMQL QP USER^^0
+"BLD",7070,"KRN",19,"NM","B","CG FMQL QP USER",1)
+
+"BLD",7070,"KRN",19.1,0)
+19.1
+"BLD",7070,"KRN",101,0)
+101
+"BLD",7070,"KRN",409.61,0)
+409.61
+"BLD",7070,"KRN",771,0)
+771
+"BLD",7070,"KRN",870,0)
+870
+"BLD",7070,"KRN",8989.51,0)
+8989.51
+"BLD",7070,"KRN",8989.51,"NM",0)
+^9.68A^^
+"BLD",7070,"KRN",8989.52,0)
+8989.52
+"BLD",7070,"KRN",8994,0)
+8994
+"BLD",7070,"KRN",8994,"NM",0)
+^9.68A^1^1
+"BLD",7070,"KRN",8994,"NM",1,0)
+CG FMQL QP^^0
+"BLD",7070,"KRN",8994,"NM","B","CG FMQL QP",1)
+
+"BLD",7070,"KRN","B",.4,.4)
+
+"BLD",7070,"KRN","B",.401,.401)
+
+"BLD",7070,"KRN","B",.402,.402)
+
+"BLD",7070,"KRN","B",.403,.403)
+
+"BLD",7070,"KRN","B",.5,.5)
+
+"BLD",7070,"KRN","B",.84,.84)
+
+"BLD",7070,"KRN","B",3.6,3.6)
+
+"BLD",7070,"KRN","B",3.8,3.8)
+
+"BLD",7070,"KRN","B",9.2,9.2)
+
+"BLD",7070,"KRN","B",9.8,9.8)
+
+"BLD",7070,"KRN","B",19,19)
+
+"BLD",7070,"KRN","B",19.1,19.1)
+
+"BLD",7070,"KRN","B",101,101)
+
+"BLD",7070,"KRN","B",409.61,409.61)
+
+"BLD",7070,"KRN","B",771,771)
+
+"BLD",7070,"KRN","B",870,870)
+
+"BLD",7070,"KRN","B",8989.51,8989.51)
+
+"BLD",7070,"KRN","B",8989.52,8989.52)
+
+"BLD",7070,"KRN","B",8994,8994)
+
+"BLD",7070,"MSC")
+/home/conor/CGFMQL08.KID
+"BLD",7070,"MSCOM")
+V0.8.16 - comment fix. Final build.
+"BLD",7070,"QUES",0)
+^9.62^^
+"BLD",7070,"REQB",0)
+^9.611^^
+"KRN",19,13599,-1)
+0^1
+"KRN",19,13599,0)
+CG FMQL QP USER^CG FMQL QP^^B^^^^^^^^VISTALINK
+"KRN",19,13599,99.1)
+61965,52031
+"KRN",19,13599,21450)
+^^192
+"KRN",19,13599,"RPC",0)
+^19.05P^1^1
+"KRN",19,13599,"RPC",1,0)
+CG FMQL QP
+"KRN",19,13599,"U")
+CG FMQL QP
+"KRN",8994,2490,-1)
+0^1
+"KRN",8994,2490,0)
+CG FMQL QP^FMQLRPC^FMQLQP^4^P^0^1^0^.7^^0
+"MBREQ")
+0
+"ORD",16,8994)
+8994;16;1;;;;;;;RPCDEL^XPDIA1
+"ORD",16,8994,0)
+REMOTE PROCEDURE
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+8
+"RTN","FMQLDATA")
+0^2^B588948
+"RTN","FMQLDATA",1,0)
+FMQLDATA; Caregraf - FMQL Data Query Processor ; Dec 15th, 2010
+"RTN","FMQLDATA",2,0)
+ ;;0.8;FMQLQP;;Dec 15th, 2010
+"RTN","FMQLDATA",3,0)
+ 
+"RTN","FMQLDATA",4,0)
+; FMQL Data Query processor
+"RTN","FMQLDATA",5,0)
+; 
+"RTN","FMQLDATA",6,0)
+; Process a query and build a response. The
+"RTN","FMQLDATA",7,0)
+; exact form of the response is decided in FMQLJSON.
+"RTN","FMQLDATA",8,0)
+; 
+"RTN","FMQLDATA",9,0)
+; FMQL Query Processor (c) Caregraf 2010-2011 AGPL
+"RTN","FMQLDATA",10,0)
+ 
+"RTN","FMQLDATA",11,0)
+;
+"RTN","FMQLDATA",12,0)
+; DESCRIBE ONE of a type of node
+"RTN","FMQLDATA",13,0)
+;
+"RTN","FMQLDATA",14,0)
+; returns a list with one entry that describes a node and its subnodes
+"RTN","FMQLDATA",15,0)
+;
+"RTN","FMQLDATA",16,0)
+DESONE(REPLY,PARAMS)
+"RTN","FMQLDATA",17,0)
+ I '$D(PARAMS("TYPE")) D ERRORREPLY^FMQLJSON(REPLY,"Type Not Specified") Q
+"RTN","FMQLDATA",18,0)
+ I '$D(PARAMS("ID")) D ERRORREPLY^FMQLJSON(REPLY,"ID Not Specified") Q
+"RTN","FMQLDATA",19,0)
+ ; INCBNODES defaults to true unless set to 0 explicitly
+"RTN","FMQLDATA",20,0)
+ N INCBNODES S INCBNODES=$S($G(PARAMS("INCBNODES"))=0:0,1:1)
+"RTN","FMQLDATA",21,0)
+ N NTYPE S NTYPE=$TR(PARAMS("TYPE"),"_",".")
+"RTN","FMQLDATA",22,0)
+ N FLINF D BLDFLINF^FMQLUTIL(NTYPE,.FLINF)
+"RTN","FMQLDATA",23,0)
+ I $D(FLINF("BAD")) D ERRORREPLY^FMQLJSON(REPLY,FLINF("BAD")) Q
+"RTN","FMQLDATA",24,0)
+ I '$D(FLINF("GL")) D ERRORREPLY^FMQLJSON(REPLY,"Can Only Describe a Global") Q
+"RTN","FMQLDATA",25,0)
+ I '$D(@FLINF("ARRAY")@(PARAMS("ID"),0)) D ERRORREPLY^FMQLJSON(REPLY,"No such identifier for type "_PARAMS("TYPE")) Q
+"RTN","FMQLDATA",26,0)
+ D REPLYSTART^FMQLJSON(REPLY)
+"RTN","FMQLDATA",27,0)
+ D LISTSTART^FMQLJSON(REPLY,"results") ; TBD: remove for new JSON
+"RTN","FMQLDATA",28,0)
+ D ONEOFTYPE(REPLY,.FLINF,FLINF("ARRAY"),PARAMS("ID"),INCBNODES)
+"RTN","FMQLDATA",29,0)
+ D LISTEND^FMQLJSON(REPLY)
+"RTN","FMQLDATA",30,0)
+ D REPLYEND^FMQLJSON(REPLY)
+"RTN","FMQLDATA",31,0)
+ Q
+"RTN","FMQLDATA",32,0)
+ 
+"RTN","FMQLDATA",33,0)
+;
+"RTN","FMQLDATA",34,0)
+; Filtered Select, Describe or Count all of a Node type or first class 
+"RTN","FMQLDATA",35,0)
+; BNode type (parent is a Node)
+"RTN","FMQLDATA",36,0)
+;
+"RTN","FMQLDATA",37,0)
+; TBD: filter support for BNodes.
+"RTN","FMQLDATA",38,0)
+; TBD: order direction support (ie. forward or back) (ala 9999999-ORRDT)
+"RTN","FMQLDATA",39,0)
+;
+"RTN","FMQLDATA",40,0)
+ALL(REPLY,PARAMS)
+"RTN","FMQLDATA",41,0)
+ I '$D(PARAMS("TYPE")) D ERRORREPLY^FMQLJSON(REPLY,"Type Not Specified") Q
+"RTN","FMQLDATA",42,0)
+ S FILE=$TR(PARAMS("TYPE"),"_",".")
+"RTN","FMQLDATA",43,0)
+ N FLINF D BLDFLINF^FMQLUTIL(FILE,.FLINF)
+"RTN","FMQLDATA",44,0)
+ I $D(FLINF("BAD")) D ERRORREPLY^FMQLJSON(REPLY,FLINF("BAD")) Q
+"RTN","FMQLDATA",45,0)
+ N BPERR,PFLINF,PID,IENA
+"RTN","FMQLDATA",46,0)
+ I '$D(FLINF("GL")) D  ; Handle Describe or Count of top level blank nodes.
+"RTN","FMQLDATA",47,0)
+ . I $D(PARAMS("FILTER")) S BPERR="Unsupported: Blank Node FILTERing" Q
+"RTN","FMQLDATA",48,0)
+ . I '$D(PARAMS("IN")) S BPERR="Missing: Blank Node Selection requires 'IN'" Q
+"RTN","FMQLDATA",49,0)
+ . D PARSEURL^FMQLUTIL(PARAMS("IN"),.PFLINF,.PID)
+"RTN","FMQLDATA",50,0)
+ . I '$D(PID) S BPERR="Bad Value: 'IN' requires ID" Q
+"RTN","FMQLDATA",51,0)
+ . I '$D(PFLINF("GL")) S BPERR="Bad Value: 'IN' must be a global type" Q
+"RTN","FMQLDATA",52,0)
+ . I PFLINF("FILE")'=FLINF("PARENT") S BPERR="Bad Value: BNode parent must be in 'IN'" Q
+"RTN","FMQLDATA",53,0)
+ . S IENA=$NA(@PFLINF("ARRAY")@(PID,FLINF("PLOCSUB")))
+"RTN","FMQLDATA",54,0)
+ E  S IENA=""
+"RTN","FMQLDATA",55,0)
+ I $D(BPERR) D ERRORREPLY^FMQLJSON(REPLY,BPERR) Q
+"RTN","FMQLDATA",56,0)
+ ; Defaults of -1,0,-1 for no LIMIT, no offset, no max cut off if no IDX, 
+"RTN","FMQLDATA",57,0)
+ N LIMIT S LIMIT=$S($G(PARAMS("LIMIT"))?0.1"-"1.N:PARAMS("LIMIT"),1:-1)
+"RTN","FMQLDATA",58,0)
+ N OFFSET S OFFSET=$S($G(PARAMS("OFFSET"))?1.N:PARAMS("OFFSET"),1:0)
+"RTN","FMQLDATA",59,0)
+ N NOIDXMX S NOIDXMX=$S($G(PARAMS("NOIDXMX"))?1.N:PARAMS("NOIDXMX"),1:-1)
+"RTN","FMQLDATA",60,0)
+ N TOX ; Default value is "" for COUNT
+"RTN","FMQLDATA",61,0)
+ S TOX=$S((PARAMS("OP")="SELECT"):"D JSEL^FMQLDATA(REPLY,.FLINF,FAR,IEN,.PARAMS)",(PARAMS("OP")="DESCRIBE"):"D JDES^FMQLDATA(REPLY,.FLINF,FAR,IEN,.PARAMS)","1":"")
+"RTN","FMQLDATA",62,0)
+ D REPLYSTART^FMQLJSON(REPLY)
+"RTN","FMQLDATA",63,0)
+ D LISTSTART^FMQLJSON(REPLY,"results")
+"RTN","FMQLDATA",64,0)
+ N CNT S CNT=$$XIENA^FMQLUTIL(.FLINF,$G(PARAMS("FILTER")),IENA,LIMIT,OFFSET,NOIDXMX,TOX,.PARAMS)
+"RTN","FMQLDATA",65,0)
+ D LISTEND^FMQLJSON(REPLY)
+"RTN","FMQLDATA",66,0)
+ D DASSERT^FMQLJSON(REPLY,"fmqlFileName",FLINF("LABEL"))
+"RTN","FMQLDATA",67,0)
+ D DASSERT^FMQLJSON(REPLY,"fmqlFile",FLINF("FILE"))
+"RTN","FMQLDATA",68,0)
+ D DASSERT^FMQLJSON(REPLY,"fmqlLimit",LIMIT)
+"RTN","FMQLDATA",69,0)
+ D DASSERT^FMQLJSON(REPLY,"fmqlOffset",OFFSET)
+"RTN","FMQLDATA",70,0)
+ D DASSERT^FMQLJSON(REPLY,"fmqlCount",CNT) ; CNT -1 if NOIDXMX exceeded (TBD: Error)
+"RTN","FMQLDATA",71,0)
+ D REPLYEND^FMQLJSON(REPLY)		
+"RTN","FMQLDATA",72,0)
+ Q
+"RTN","FMQLDATA",73,0)
+ 
+"RTN","FMQLDATA",74,0)
+;
+"RTN","FMQLDATA",75,0)
+; Build JSON for one selection
+"RTN","FMQLDATA",76,0)
+; - FAR = FLINF("ARRAY") for Global; FAR = Qualified location for BNode
+"RTN","FMQLDATA",77,0)
+; Note: supports only top level BNodes
+"RTN","FMQLDATA",78,0)
+; Note: "g"]"H" in MUMPS ie. lower case follows upper case. This means
+"RTN","FMQLDATA",79,0)
+;       selection order is case sensitive. This may be unexpected.
+"RTN","FMQLDATA",80,0)
+; 
+"RTN","FMQLDATA",81,0)
+JSEL(REPLY,FLINF,FAR,IEN,PARAMS)
+"RTN","FMQLDATA",82,0)
+ D DICTSTART^FMQLJSON(REPLY)
+"RTN","FMQLDATA",83,0)
+ ; FID=IEN for Globals. Only qualify for BNodes
+"RTN","FMQLDATA",84,0)
+ ; - replace for unusual IENS in .11 etc.
+"RTN","FMQLDATA",85,0)
+ N FID S FID=$TR($S('$D(FLINF("GL")):IEN_"_"_$QS(FAR,$QL(FAR)-1),1:IEN),".","_")
+"RTN","FMQLDATA",86,0)
+ D IDFIELD(.FLINF,FAR,IEN,FID)
+"RTN","FMQLDATA",87,0)
+ I $D(PARAMS("PREDICATE")) D
+"RTN","FMQLDATA",88,0)
+ . N FDINF D BLDFDINF^FMQLUTIL(.FLINF,PARAMS("PREDICATE"),.FDINF)
+"RTN","FMQLDATA",89,0)
+ . Q:$D(FDINF("BAD"))  ; TBD: centralize
+"RTN","FMQLDATA",90,0)
+ . Q:FDINF("TYPE")=9  ; Don't allow BNode selection this way. Force "IN".
+"RTN","FMQLDATA",91,0)
+ . D ONEFIELD(FAR,IEN,.FDINF)
+"RTN","FMQLDATA",92,0)
+ D DICTEND^FMQLJSON(REPLY)
+"RTN","FMQLDATA",93,0)
+ Q
+"RTN","FMQLDATA",94,0)
+ 
+"RTN","FMQLDATA",95,0)
+; Same as JSEL except returns full description
+"RTN","FMQLDATA",96,0)
+JDES(REPLY,FLINF,FAR,IEN,PARAMS)
+"RTN","FMQLDATA",97,0)
+ ; INCBNODES defaults to true unless set to 0 explicitly
+"RTN","FMQLDATA",98,0)
+ N INCBNODES S INCBNODES=$S($G(PARAMS("INCBNODES"))=0:0,1:1)
+"RTN","FMQLDATA",99,0)
+ ; Last Subscript for BNode
+"RTN","FMQLDATA",100,0)
+ N ID S ID=$S('$D(FLINF("GL")):IEN_"_"_$QS(FAR,$QL(FAR)-1),1:IEN) 
+"RTN","FMQLDATA",101,0)
+ D ONEOFTYPE(REPLY,.FLINF,FAR,ID,INCBNODES)
+"RTN","FMQLDATA",102,0)
+ Q
+"RTN","FMQLDATA",103,0)
+ 
+"RTN","FMQLDATA",104,0)
+;
+"RTN","FMQLDATA",105,0)
+; Describe one of a type.
+"RTN","FMQLDATA",106,0)
+; - for a Node, FAR is its ARRAY
+"RTN","FMQLDATA",107,0)
+; - for a BNode, FAR has form AR(#,POS[,#,POS]+) where # are BNode indexes
+"RTN","FMQLDATA",108,0)
+;   The URI for a BNode takes the same form: BFILENO-#_#[_#]+
+"RTN","FMQLDATA",109,0)
+;   The URI of the first race info bnode (2.02) in file 2 (patient) ien 9 is 2_02-9_1
+"RTN","FMQLDATA",110,0)
+; - FID (Full ID) is # for Node, #_#_... for a BNode
+"RTN","FMQLDATA",111,0)
+; - INCBNODES (0 or 1) decides whether dive into BNodes or not
+"RTN","FMQLDATA",112,0)
+;
+"RTN","FMQLDATA",113,0)
+; TBD:
+"RTN","FMQLDATA",114,0)
+; - support 6: computed. See invoke in GETS ex/ ^DD(2,.033,0)
+"RTN","FMQLDATA",115,0)
+; - recurse into pointers if to instances of the same type
+"RTN","FMQLDATA",116,0)
+; - building new V0.9 form of JSON
+"RTN","FMQLDATA",117,0)
+;
+"RTN","FMQLDATA",118,0)
+ONEOFTYPE(REPLY,FLINF,FAR,FID,INCBNODES)
+"RTN","FMQLDATA",119,0)
+ N ID S ID=$P(FID,"_") ; Allow for BNode
+"RTN","FMQLDATA",120,0)
+ D DICTSTART^FMQLJSON(REPLY)
+"RTN","FMQLDATA",121,0)
+    N FIELD S FIELD=0 F  S FIELD=$O(^DD(FLINF("FILE"),FIELD)) Q:FIELD'=+FIELD  D
+"RTN","FMQLDATA",122,0)
+ . N FDINF D BLDFDINF^FMQLUTIL(.FLINF,FIELD,.FDINF)
+"RTN","FMQLDATA",123,0)
+ . Q:$D(FDINF("BAD"))
+"RTN","FMQLDATA",124,0)
+ . I FDINF("TYPE")=9 D  ; TBD: loop with walkers and B Index
+"RTN","FMQLDATA",125,0)
+ . . Q:INCBNODES=0
+"RTN","FMQLDATA",126,0)
+ . . Q:'$D(@FAR@(ID,FDINF("LOCSUB")))
+"RTN","FMQLDATA",127,0)
+ . . N NFAR S NFAR=$NA(@FAR@(ID,FDINF("LOCSUB")))
+"RTN","FMQLDATA",128,0)
+ . . ; Pharma+ case: bnode location but no list params in 0 node
+"RTN","FMQLDATA",129,0)
+ . . Q:$P($G(@NFAR@(0)),"^",4)=""
+"RTN","FMQLDATA",130,0)
+ . . D BNLISTSTART^FMQLJSON(REPLY,FDINF("LABEL"),FIELD)
+"RTN","FMQLDATA",131,0)
+ . . ; Using $O to skip missing bnodes, starting after 1 etc.
+"RTN","FMQLDATA",132,0)
+ . . N BFLINF D BLDFLINF^FMQLUTIL(FDINF("BFILE"),.BFLINF)
+"RTN","FMQLDATA",133,0)
+ . . ; No need for NFAR or BFLINF if FLINF (even if bnode) supports ARRAY
+"RTN","FMQLDATA",134,0)
+ . . N BID S BID=0 F  S BID=$O(@NFAR@(BID)) Q:BID'=+BID  D
+"RTN","FMQLDATA",135,0)
+ . . . D ONEOFTYPE(REPLY,.BFLINF,NFAR,BID_"_"_FID,INCBNODES)
+"RTN","FMQLDATA",136,0)
+ . . D BNLISTEND^FMQLJSON(REPLY)
+"RTN","FMQLDATA",137,0)
+ . E  D ONEFIELD(FAR,ID,.FDINF) D:FDINF("FIELD")=.01 IDFIELD(.FLINF,FAR,ID,FID)
+"RTN","FMQLDATA",138,0)
+ I FLINF("FILE")="63.04",INCBNODES=1 D BLDBNODES^FMQLSLAB(FAR,FID)
+"RTN","FMQLDATA",139,0)
+ D DICTEND^FMQLJSON(REPLY)
+"RTN","FMQLDATA",140,0)
+ Q
+"RTN","FMQLDATA",141,0)
+ 
+"RTN","FMQLDATA",142,0)
+;
+"RTN","FMQLDATA",143,0)
+; ID is special. Derived from resolving the .01 field.
+"RTN","FMQLDATA",144,0)
+;
+"RTN","FMQLDATA",145,0)
+IDFIELD(FLINF,FAR,ID,FID)
+"RTN","FMQLDATA",146,0)
+ ; This is redundant. Already calculated if .01 calculated first but don't
+"RTN","FMQLDATA",147,0)
+ ; optimize until v0.9 new reply form
+"RTN","FMQLDATA",148,0)
+ N O1L S O1L=$P($G(@FAR@(ID,0)),"^")
+"RTN","FMQLDATA",149,0)
+ ; All records should have a value for .01. TBD: check above.
+"RTN","FMQLDATA",150,0)
+ ; Saw bug in RPMS (9001021) where index has "^" as name and 0 is "^".
+"RTN","FMQLDATA",151,0)
+ Q:O1L=""
+"RTN","FMQLDATA",152,0)
+ N FDINF D BLDFDINF^FMQLUTIL(.FLINF,.01,.FDINF)  ; Assume ok. FLINF checked
+"RTN","FMQLDATA",153,0)
+ N EVALUE S EVALUE=$$GETEVAL^FMQLUTIL(.FDINF,O1L)
+"RTN","FMQLDATA",154,0)
+ N PVALUE S PVALUE=$TR(FLINF("FILE"),".","_")_"-"_$TR(FID,".","_")
+"RTN","FMQLDATA",155,0)
+ N PLABEL S PLABEL=$TR(FLINF("LABEL"),"/","_")_"/"_$TR(EVALUE,"/","_")
+"RTN","FMQLDATA",156,0)
+ ; SAMEAS ONLY FOR GLOBALS
+"RTN","FMQLDATA",157,0)
+ N PSAMEAS I $D(FLINF("GL")),$L($T(RESOLVE^FMQLSSAM)) D RESOLVE^FMQLSSAM(FLINF("FILE"),ID,PLABEL,.PSAMEAS)
+"RTN","FMQLDATA",158,0)
+ D ASSERT^FMQLJSON(REPLY,"URI",".01","7",PVALUE,PLABEL,.PSAMEAS)
+"RTN","FMQLDATA",159,0)
+ Q
+"RTN","FMQLDATA",160,0)
+ 
+"RTN","FMQLDATA",161,0)
+;
+"RTN","FMQLDATA",162,0)
+; Build JSON for one non-BNode Field
+"RTN","FMQLDATA",163,0)
+;
+"RTN","FMQLDATA",164,0)
+; Assume: FDINF is good
+"RTN","FMQLDATA",165,0)
+;
+"RTN","FMQLDATA",166,0)
+ONEFIELD(FAR,ID,FDINF)
+"RTN","FMQLDATA",167,0)
+ Q:FDINF("TYPE")=6 ; Computed (TBD: v0.9)
+"RTN","FMQLDATA",168,0)
+ Q:FDINF("FIELD")=".001"  ; Questionable!
+"RTN","FMQLDATA",169,0)
+ Q:'$D(@FAR@(ID,FDINF("LOCSUB")))
+"RTN","FMQLDATA",170,0)
+ I FDINF("TYPE")=5 D
+"RTN","FMQLDATA",171,0)
+ . ; Pharma+ case: WP location but no entries (ala special case for 9)
+"RTN","FMQLDATA",172,0)
+ . ; TBD: "" only entry. Seen in RAD, P/H. 
+"RTN","FMQLDATA",173,0)
+ . Q:'$D(@FAR@(ID,FDINF("LOCSUB"),1))
+"RTN","FMQLDATA",174,0)
+ . D WPASTART^FMQLJSON(REPLY,FDINF("LABEL"),FDINF("FIELD"))
+"RTN","FMQLDATA",175,0)
+ . F WPR=1:1 Q:'$D(@FAR@(ID,FDINF("LOCSUB"),WPR))  D
+"RTN","FMQLDATA",176,0)
+ . . D WPALINE^FMQLJSON(REPLY,@FAR@(ID,FDINF("LOCSUB"),WPR,0))
+"RTN","FMQLDATA",177,0)
+ . D WPAEND^FMQLJSON(REPLY)
+"RTN","FMQLDATA",178,0)
+ E  D
+"RTN","FMQLDATA",179,0)
+ . ; Check as sub values may exist but not the value indicated. 
+"RTN","FMQLDATA",180,0)
+ . ; Saw WP field's location overloaded for another field 
+"RTN","FMQLDATA",181,0)
+ . ; (RPMS:811.8 vs VistA's which is ok)
+"RTN","FMQLDATA",182,0)
+ . Q:$G(@FAR@(ID,FDINF("LOCSUB")))=""
+"RTN","FMQLDATA",183,0)
+ . N LOCSUB S LOCSUB=@FAR@(ID,FDINF("LOCSUB"))
+"RTN","FMQLDATA",184,0)
+ . ; For $E values, don't just take the $E limit.
+"RTN","FMQLDATA",185,0)
+ . N IVALUE S IVALUE=$S($D(FDINF("LOCPOS")):$P(LOCSUB,"^",FDINF("LOCPOS")),1:LOCSUB) Q:IVALUE=""
+"RTN","FMQLDATA",186,0)
+ . N EVALUE S EVALUE=$$GETEVAL^FMQLUTIL(.FDINF,IVALUE)
+"RTN","FMQLDATA",187,0)
+ . I FDINF("TYPE")=7 D
+"RTN","FMQLDATA",188,0)
+ . . N PFLINF D BLDFLINF^FMQLUTIL(FDINF("PFILE"),.PFLINF)
+"RTN","FMQLDATA",189,0)
+ . . Q:$D(PFLINF("BAD"))
+"RTN","FMQLDATA",190,0)
+ . . S PVALUE=$TR(PFLINF("FILE"),".","_")_"-"_IVALUE
+"RTN","FMQLDATA",191,0)
+ . . S PLABEL=$TR(PFLINF("LABEL"),"/","_")_"/"_$TR(EVALUE,"/","_")
+"RTN","FMQLDATA",192,0)
+ . . N PSAMEAS I $L($T(RESOLVE^FMQLSSAM)) D RESOLVE^FMQLSSAM(PFLINF("FILE"),IVALUE,PLABEL,.PSAMEAS)
+"RTN","FMQLDATA",193,0)
+ . . D ASSERT^FMQLJSON(REPLY,FDINF("LABEL"),FDINF("FIELD"),"7",PVALUE,PLABEL,.PSAMEAS)
+"RTN","FMQLDATA",194,0)
+ . E  I FDINF("TYPE")=8 D
+"RTN","FMQLDATA",195,0)
+ . . N PID S PID=$P(IVALUE,";")
+"RTN","FMQLDATA",196,0)
+ . . Q:PID'=+PID  ; Corrupt pointer
+"RTN","FMQLDATA",197,0)
+ . . Q:$P(IVALUE,";",2)=""  ; Corrupt pointer
+"RTN","FMQLDATA",198,0)
+ . . N LOCZ S LOCZ="^"_$P(IVALUE,";",2)_"0)"  ; 0 has file's description
+"RTN","FMQLDATA",199,0)
+ . . Q:'$D(@LOCZ)
+"RTN","FMQLDATA",200,0)
+ . . N PFI S PFI=@LOCZ
+"RTN","FMQLDATA",201,0)
+ . . N PFILE S PFILE=+$P(PFI,"^",2)
+"RTN","FMQLDATA",202,0)
+ . . N PFLBL S PFLBL=$TR($P(PFI,"^",1),"/","_")
+"RTN","FMQLDATA",203,0)
+ . . S PVALUE=$TR(PFILE,".","_")_"-"_PID
+"RTN","FMQLDATA",204,0)
+ . . S PLABEL=$TR(PFLBL,"/","_")_"/"_$TR(EVALUE,"/","_")
+"RTN","FMQLDATA",205,0)
+ . . N PSAMEAS I $L($T(RESOLVE^FMQLSSAM)) D RESOLVE^FMQLSSAM(PFILE,PID,PLABEL,.PSAMEAS)
+"RTN","FMQLDATA",206,0)
+ . . D ASSERT^FMQLJSON(REPLY,FDINF("LABEL"),FDINF("FIELD"),"8",PVALUE,PLABEL,.PSAMEAS)
+"RTN","FMQLDATA",207,0)
+ . E  D ASSERT^FMQLJSON(REPLY,FDINF("LABEL"),FDINF("FIELD"),FDINF("TYPE"),EVALUE)
+"RTN","FMQLDATA",208,0)
+ Q
+"RTN","FMQLDATA",209,0)
+ 
+"RTN","FMQLDATA",210,0)
+;
+"RTN","FMQLDATA",211,0)
+; Referrers to a node
+"RTN","FMQLDATA",212,0)
+; - "TYPE", "ID", "NOIDXMX", "LIMIT"
+"RTN","FMQLDATA",213,0)
+;
+"RTN","FMQLDATA",214,0)
+; DEPRECATED: will roll into generic SELECT in V0.9 when
+"RTN","FMQLDATA",215,0)
+; SELECT allows filtering to drive all.
+"RTN","FMQLDATA",216,0)
+;
+"RTN","FMQLDATA",217,0)
+; TBD: BNode Refs, Note if skip
+"RTN","FMQLDATA",218,0)
+;
+"RTN","FMQLDATA",219,0)
+REFRS(REPLY,PARAMS)
+"RTN","FMQLDATA",220,0)
+ I '$D(PARAMS("TYPE")) D ERRORREPLY^FMQLJSON(REPLY,"Type Not Specified") Q
+"RTN","FMQLDATA",221,0)
+ I '$D(PARAMS("ID")) D ERRORREPLY^FMQLJSON(REPLY,"ID Not Specified") Q
+"RTN","FMQLDATA",222,0)
+ N NTINF D BLDFLINF^FMQLUTIL(PARAMS("TYPE"),.NTINF)
+"RTN","FMQLDATA",223,0)
+ I $D(NTINF("BAD")) D ERRORREPLY^FMQLJSON(REPLY,NTINF("BAD")) Q
+"RTN","FMQLDATA",224,0)
+ I '$D(@NTINF("ARRAY")@(PARAMS("ID"),0)) D ERRORREPLY^FMQLJSON(REPLY,"No such identifier for type "_PARAMS("TYPE")) Q
+"RTN","FMQLDATA",225,0)
+ S NID=$TR(PARAMS("ID"),"_",".")
+"RTN","FMQLDATA",226,0)
+ N NOIDXMX S NOIDXMX=$G(PARAMS("NOIDXMX"))
+"RTN","FMQLDATA",227,0)
+ S:(NOIDXMX'=+NOIDXMX) NOIDXMX=-1
+"RTN","FMQLDATA",228,0)
+ N LIMIT S LIMIT=$S($G(PARAMS("LIMIT"))?0.1"-"1.N:PARAMS("LIMIT"),1:-1)
+"RTN","FMQLDATA",229,0)
+ N LIMLEFT,TCNT S LIMLEFT=LIMIT,TCNT=0
+"RTN","FMQLDATA",230,0)
+ D REPLYSTART^FMQLJSON(REPLY)
+"RTN","FMQLDATA",231,0)
+ D LISTSTART^FMQLJSON(REPLY,"results")
+"RTN","FMQLDATA",232,0)
+ N RFL ; Order referrer types by name
+"RTN","FMQLDATA",233,0)
+    S FILE="" F  S FILE=$O(^DD(NTINF("FILE"),0,"PT",FILE)) Q:FILE'=+FILE  D
+"RTN","FMQLDATA",234,0)
+ . N FLINF D BLDFLINF^FMQLUTIL(FILE,.FLINF)
+"RTN","FMQLDATA",235,0)
+ . Q:($D(FLINF("BAD"))!$D(FLINF("PARENT")))
+"RTN","FMQLDATA",236,0)
+ . S RFL(FLINF("LABEL"),FILE)=""
+"RTN","FMQLDATA",237,0)
+ ; Walk referring files in order (know ok as orderer catches bad files)
+"RTN","FMQLDATA",238,0)
+ S FILELABEL="" F  S FILELABEL=$O(RFL(FILELABEL)) Q:FILELABEL=""  D
+"RTN","FMQLDATA",239,0)
+ . S FILE="" F  S FILE=$O(RFL(FILELABEL,FILE)) Q:FILE=""  D
+"RTN","FMQLDATA",240,0)
+ . . Q:LIMLEFT=0
+"RTN","FMQLDATA",241,0)
+ . . N FLINF D BLDFLINF^FMQLUTIL(FILE,.FLINF)
+"RTN","FMQLDATA",242,0)
+    . . N FIELD S FIELD="" F  S FIELD=$O(^DD(NTINF("FILE"),0,"PT",FILE,FIELD)) Q:FIELD'=+FIELD  D
+"RTN","FMQLDATA",243,0)
+ . . . Q:LIMLEFT=0
+"RTN","FMQLDATA",244,0)
+ . . . N FDINF D BLDFDINF^FMQLUTIL(.FLINF,FIELD,.FDINF)
+"RTN","FMQLDATA",245,0)
+ . . . I $D(FDINF("BAD")) Q
+"RTN","FMQLDATA",246,0)
+ . . . I FDINF("TYPE")'=7 Q  ; PTR only for now (no vptr)
+"RTN","FMQLDATA",247,0)
+ . . . N FLT S FLT=FIELD_"="_FILE_"-"_PARAMS("ID")
+"RTN","FMQLDATA",248,0)
+ . . . N CNT S CNT=$$XIENA^FMQLUTIL(.FLINF,FLT,"",LIMLEFT,0,NOIDXMX,"D JREF^FMQLDATA(REPLY,.FLINF,FAR,IEN,"""_FDINF("LABEL")_""")")
+"RTN","FMQLDATA",249,0)
+ . . . S LIMLEFT=$S(LIMIT=-1:-1,1:LIMLEFT-CNT),TCNT=TCNT+CNT
+"RTN","FMQLDATA",250,0)
+ D LISTEND^FMQLJSON(REPLY)
+"RTN","FMQLDATA",251,0)
+ D DASSERT^FMQLJSON(REPLY,"fmqlLimit",LIMIT)
+"RTN","FMQLDATA",252,0)
+ D DASSERT^FMQLJSON(REPLY,"fmqlCount",TCNT)
+"RTN","FMQLDATA",253,0)
+ D REPLYEND^FMQLJSON(REPLY)	
+"RTN","FMQLDATA",254,0)
+    Q
+"RTN","FMQLDATA",255,0)
+ 
+"RTN","FMQLDATA",256,0)
+;
+"RTN","FMQLDATA",257,0)
+; Build JSON for one global referrer
+"RTN","FMQLDATA",258,0)
+;
+"RTN","FMQLDATA",259,0)
+JREF(REPLY,FLINF,FAR,IEN,FLDLABEL)
+"RTN","FMQLDATA",260,0)
+ N FDINF D BLDFDINF^FMQLUTIL(.FLINF,.01,.FDINF)
+"RTN","FMQLDATA",261,0)
+ I $D(FDINF("BAD")) Q
+"RTN","FMQLDATA",262,0)
+ N O1L S O1L=$P($G(@FAR@(IEN,0)),"^")
+"RTN","FMQLDATA",263,0)
+ Q:O1L=""  ; All records should have a value for .01
+"RTN","FMQLDATA",264,0)
+ S O1L=$$GETEVAL^FMQLUTIL(.FDINF,O1L)
+"RTN","FMQLDATA",265,0)
+ D DICTSTART^FMQLJSON(REPLY)
+"RTN","FMQLDATA",266,0)
+ D ASSERT^FMQLJSON(REPLY,"REFBY",".01","7",$TR(FLINF("FILE"),".","_")_"-"_$TR(IEN,".","_"),FLINF("LABEL")_"/"_O1L)
+"RTN","FMQLDATA",267,0)
+ D VASSERT^FMQLJSON(REPLY,"predicate",$TR(FLDLABEL,"'/","- ")) ; TBD: centralize predicate
+"RTN","FMQLDATA",268,0)
+ D DICTEND^FMQLJSON(REPLY)
+"RTN","FMQLDATA",269,0)
+ Q
+"RTN","FMQLFILT")
+0^5^B787708
+"RTN","FMQLFILT",1,0)
+FMQLFILT; Caregraf - FMQL Filter Handling ; Dec 15th, 2010
+"RTN","FMQLFILT",2,0)
+ ;;0.8;FMQLQP;;Dec 15th, 2010
+"RTN","FMQLFILT",3,0)
+ 
+"RTN","FMQLFILT",4,0)
+; FMQL Filters
+"RTN","FMQLFILT",5,0)
+; 
+"RTN","FMQLFILT",6,0)
+; Parse and Apply filters
+"RTN","FMQLFILT",7,0)
+; 
+"RTN","FMQLFILT",8,0)
+; FMQL Query Processor (c) Caregraf 2010-2011 AGPL
+"RTN","FMQLFILT",9,0)
+ 
+"RTN","FMQLFILT",10,0)
+; For now, simple & sequence. X=Y&A>B&bound(C)...
+"RTN","FMQLFILT",11,0)
+; Note: must be careful with MUMPS evaluation precedence - lot's of brackets
+"RTN","FMQLFILT",12,0)
+FLTTOM(FILE,FLT)
+"RTN","FMQLFILT",13,0)
+ N FLTP,FLTN,TST S FLTN=1,TST="("
+"RTN","FMQLFILT",14,0)
+ F  S FLTP=$P(FLT,"&",FLTN) Q:FLTP=""  D
+"RTN","FMQLFILT",15,0)
+ . I FLTN>1 S TST=TST_"&"
+"RTN","FMQLFILT",16,0)
+ . S FLTN=FLTN+1
+"RTN","FMQLFILT",17,0)
+ . I $F(FLTP,"bound") S TST=TST_$$FLTBOUNDTOM(FILE,FLTP)
+"RTN","FMQLFILT",18,0)
+ . E  S TST=TST_$$FLTLRTOM(FILE,FLTP)
+"RTN","FMQLFILT",19,0)
+ Q TST_")"
+"RTN","FMQLFILT",20,0)
+ 
+"RTN","FMQLFILT",21,0)
+; .01=JONES - does a field have a particular value
+"RTN","FMQLFILT",22,0)
+; TBD: pointer chasing through files. ".01/.02=X"
+"RTN","FMQLFILT",23,0)
+FLTLRTOM(FILE,FLT)
+"RTN","FMQLFILT",24,0)
+ N FIELD,OP,VAL,FILEGL,FIELDINFO,FIELDSL,FIELDSUB,FIELDLOC
+"RTN","FMQLFILT",25,0)
+ Q:'$D(^DIC(FILE,0,"GL")) "0" ; skip corrupt file info
+"RTN","FMQLFILT",26,0)
+ S FILEGL=^("GL")
+"RTN","FMQLFILT",27,0)
+ S OP=$S($F(FLT,"="):"=",$F(FLT,"["):"[",$F(FLT,">"):">",$F(FLT,"<"):"<",1:"")
+"RTN","FMQLFILT",28,0)
+ Q:OP="" "0"
+"RTN","FMQLFILT",29,0)
+ S FIELD=$P(FLT,OP)
+"RTN","FMQLFILT",30,0)
+ S VAL=$P(FLT,OP,2)
+"RTN","FMQLFILT",31,0)
+ I OP=">",VAL'=+VAL S OP="]"  ; use order operator for non numeric > thans. TBD: what of <?
+"RTN","FMQLFILT",32,0)
+ Q:'$D(^DD(FILE,FIELD,0)) "0"
+"RTN","FMQLFILT",33,0)
+ S FIELDFLGS=$P(^DD(FILE,FIELD,0),"^",2)
+"RTN","FMQLFILT",34,0)
+ Q:FIELDFLGS["V" "0"  ; not supporting variable pointers for now
+"RTN","FMQLFILT",35,0)
+ I FIELDFLGS["P" S VAL=$P(VAL,"-",2)
+"RTN","FMQLFILT",36,0)
+ I FIELDFLGS["D" S VAL=$$MAKEFMDATE^FMQLUTIL(VAL)
+"RTN","FMQLFILT",37,0)
+ S FIELDSL=$P(^DD(FILE,FIELD,0),"^",4) ; ex: 0;1
+"RTN","FMQLFILT",38,0)
+ S FIELDSUB=$P(FIELDSL,";")
+"RTN","FMQLFILT",39,0)
+ S FIELDLOC=$P(FIELDSL,";",2)
+"RTN","FMQLFILT",40,0)
+ S LVAL="$P($G("_FILEGL_"IEN,"""_FIELDSUB_""")),""^"","_FIELDLOC_")"
+"RTN","FMQLFILT",41,0)
+ ; One special case: remove file type if pointer. Second is date. Will do later.
+"RTN","FMQLFILT",42,0)
+ Q "("_LVAL_OP_""""_VAL_""")"
+"RTN","FMQLFILT",43,0)
+ 
+"RTN","FMQLFILT",44,0)
+; bound(.01) - is a field bound in the file?
+"RTN","FMQLFILT",45,0)
+; TBD: bound will call FLTLRTOM if in the form ".01/bound(.02)"
+"RTN","FMQLFILT",46,0)
+FLTBOUNDTOM(FILE,FLT)
+"RTN","FMQLFILT",47,0)
+ N FIELD,NOT,FILEGL,FIELDINFO,FIELDSL,FIELDSUB,FIELDLOC
+"RTN","FMQLFILT",48,0)
+ Q:'$D(^DIC(FILE,0,"GL")) "0" ; skip corrupt file info
+"RTN","FMQLFILT",49,0)
+ S FILEGL=^("GL")
+"RTN","FMQLFILT",50,0)
+ S FIELD=$P($P(FLT,"(",2),")")
+"RTN","FMQLFILT",51,0)
+ S NOT=$S($F(FLT,"!"):"",1:"'")
+"RTN","FMQLFILT",52,0)
+ Q:'$D(^DD(FILE,FIELD,0)) "0"
+"RTN","FMQLFILT",53,0)
+ S FIELDSL=$P(^DD(FILE,FIELD,0),"^",4) ; ex: 0;1
+"RTN","FMQLFILT",54,0)
+ S FIELDSUB=$P(FIELDSL,";")
+"RTN","FMQLFILT",55,0)
+ S FIELDLOC=$P(FIELDSL,";",2)
+"RTN","FMQLFILT",56,0)
+ ; Can't use Define as many fields in part of 0. Check if value there.
+"RTN","FMQLFILT",57,0)
+ Q "($P($G("_FILEGL_"IEN,"""_FIELDSUB_""")),""^"","_FIELDLOC_")"_NOT_"="""")"
+"RTN","FMQLFILT",58,0)
+ 
+"RTN","FMQLFILT",59,0)
+FLTIDX(FLINF,FLT,IDXA,IDXSTART)
+"RTN","FMQLFILT",60,0)
+ N FLTP,FLTN
+"RTN","FMQLFILT",61,0)
+ S FLTN=1,IDXA="",IDXSTART=""
+"RTN","FMQLFILT",62,0)
+ F  S FLTP=$P(FLT,"&",FLTN) Q:((FLTP="")!(IDXA'=""))  D
+"RTN","FMQLFILT",63,0)
+ . S FLTN=FLTN+1
+"RTN","FMQLFILT",64,0)
+ . Q:$F(FLTP,"bound")
+"RTN","FMQLFILT",65,0)
+ . N OP S OP=$S($F(FLT,"="):"=",$F(FLT,">"):">",1:"") Q:OP=""  ; =, > are only options
+"RTN","FMQLFILT",66,0)
+ . N FIELD S FIELD=$P(FLTP,OP)
+"RTN","FMQLFILT",67,0)
+ . Q:'$D(^DD(FLINF("FILE"),FIELD,0))
+"RTN","FMQLFILT",68,0)
+ . N FIELDFLGS S FIELDFLGS=$P(^DD(FLINF("FILE"),FIELD,0),"^",2)
+"RTN","FMQLFILT",69,0)
+ . Q:FIELDFLGS["V"  ; No "V" - not supporting variable pointers for now
+"RTN","FMQLFILT",70,0)
+ . N IDX S IDX=$$FIELDIDX^FMQLUTIL(FLINF("FILE"),FIELD)
+"RTN","FMQLFILT",71,0)
+ . I IDX'="" D
+"RTN","FMQLFILT",72,0)
+ . . N ID S ID=$P(FLTP,OP,2)
+"RTN","FMQLFILT",73,0)
+ . . Q:ID=""  ; Go to next possibility
+"RTN","FMQLFILT",74,0)
+ . . I FIELDFLGS["P" S ID=$P(ID,"-",2)  ; Use internal fileman form of pointer
+"RTN","FMQLFILT",75,0)
+ . . I FIELDFLGS["D" S ID=$$MAKEFMDATE^FMQLUTIL(ID)  ; Use internal fileman date
+"RTN","FMQLFILT",76,0)
+ . . I OP=">" S IDXA=FLINF("GL")_""""_IDX_""")",IDXSTART=ID Q
+"RTN","FMQLFILT",77,0)
+ . . S IDXA=FLINF("GL")_""""_IDX_""","""_ID_""")"
+"RTN","FMQLFILT",78,0)
+ Q
+"RTN","FMQLFILT",79,0)
+ 
+"RTN","FMQLFILT",80,0)
+; Special handling for orders (need them). Remove when do _11 properly in v0.9
+"RTN","FMQLFILT",81,0)
+; NEW STYLE: ZWR ^DD("IX","B",100,*)
+"RTN","FMQLFILT",82,0)
+OFLTIDX(FLINF,FLT,IDXA,IDXSTART)
+"RTN","FMQLFILT",83,0)
+ N FLTP,FLTN
+"RTN","FMQLFILT",84,0)
+ Q:FLINF("FILE")'="100"
+"RTN","FMQLFILT",85,0)
+ S IDXA="",IDXSTART=""
+"RTN","FMQLFILT",86,0)
+ S FLTN=1,IDXA=""
+"RTN","FMQLFILT",87,0)
+ F  S FLTP=$P(FLT,"&",FLTN) Q:FLTP=""  D
+"RTN","FMQLFILT",88,0)
+ . S FLTN=FLTN+1
+"RTN","FMQLFILT",89,0)
+ . I $F(FLTP,"bound") Q
+"RTN","FMQLFILT",90,0)
+ . N OP S OP=$S($F(FLT,"="):"=",1:"")
+"RTN","FMQLFILT",91,0)
+ . Q:OP=""
+"RTN","FMQLFILT",92,0)
+ . Q:OP'="="
+"RTN","FMQLFILT",93,0)
+ . N FIELD S FIELD=$P(FLTP,OP)
+"RTN","FMQLFILT",94,0)
+ . Q:FIELD'=".02"
+"RTN","FMQLFILT",95,0)
+ . I $P($P(FLTP,"=",2),"-")'="2" Q ; must be patient filter for now
+"RTN","FMQLFILT",96,0)
+ . N PID S PID=$P($P(FLTP,"=",2),"-",2) 
+"RTN","FMQLFILT",97,0)
+ . S IDXA="^OR(100,""AR"","""_PID_";DPT("")" Q
+"RTN","FMQLFILT",98,0)
+ Q
+"RTN","FMQLFILT",99,0)
+ 
+"RTN","FMQLJSON")
+0^6^B583201
+"RTN","FMQLJSON",1,0)
+FMQLJSON; Caregraf - FMQL JSON Builder ; Dec 15th, 2010
+"RTN","FMQLJSON",2,0)
+ ;;0.8;FMQLQP;;Dec 15th, 2010
+"RTN","FMQLJSON",3,0)
+ 
+"RTN","FMQLJSON",4,0)
+; FMQL JSON Builder
+"RTN","FMQLJSON",5,0)
+; 
+"RTN","FMQLJSON",6,0)
+; A "class" for building JSON responses
+"RTN","FMQLJSON",7,0)
+; 
+"RTN","FMQLJSON",8,0)
+; FMQL Query Processor (c) Caregraf 2010-2011 AGPL
+"RTN","FMQLJSON",9,0)
+ 
+"RTN","FMQLJSON",10,0)
+; TBD: roll out of existing and do such exceptions properly.
+"RTN","FMQLJSON",11,0)
+ERRORREPLY(REPLY,MSG)
+"RTN","FMQLJSON",12,0)
+ D REPLYSTART^FMQLJSON(.REPLY)
+"RTN","FMQLJSON",13,0)
+ D DASSERT^FMQLJSON(.REPLY,"error",MSG) 
+"RTN","FMQLJSON",14,0)
+ D REPLYEND^FMQLJSON(.REPLY)
+"RTN","FMQLJSON",15,0)
+ Q
+"RTN","FMQLJSON",16,0)
+REPLYSTART(JSON)
+"RTN","FMQLJSON",17,0)
+ S @JSON@("INDEX")=0
+"RTN","FMQLJSON",18,0)
+ S @JSON@("OFFSET")=1
+"RTN","FMQLJSON",19,0)
+ S @JSON@(0)=""
+"RTN","FMQLJSON",20,0)
+ D PUTDATA(JSON,"{")
+"RTN","FMQLJSON",21,0)
+ S @JSON@("LSTLVL")=0
+"RTN","FMQLJSON",22,0)
+ S @JSON@("LSTLVL",0)=""
+"RTN","FMQLJSON",23,0)
+ Q
+"RTN","FMQLJSON",24,0)
+LISTSTART(JSON,LABEL)
+"RTN","FMQLJSON",25,0)
+ D CONTSTART(JSON,""""_LABEL_""":[")
+"RTN","FMQLJSON",26,0)
+ Q
+"RTN","FMQLJSON",27,0)
+; Should really have label ala LIST.
+"RTN","FMQLJSON",28,0)
+DICTSTART(JSON)
+"RTN","FMQLJSON",29,0)
+ D CONTSTART(JSON,"{")
+"RTN","FMQLJSON",30,0)
+ Q
+"RTN","FMQLJSON",31,0)
+; List or Dict: both are containers that increase the 'level'. 
+"RTN","FMQLJSON",32,0)
+; Level monitoring comes from JSON's need for commas between multiples, something XML avoids
+"RTN","FMQLJSON",33,0)
+CONTSTART(JSON,MARK)
+"RTN","FMQLJSON",34,0)
+ D PUTDATA(JSON,@JSON@("LSTLVL",@JSON@("LSTLVL")))
+"RTN","FMQLJSON",35,0)
+ S @JSON@("LSTLVL",@JSON@("LSTLVL"))=","
+"RTN","FMQLJSON",36,0)
+ S @JSON@("LSTLVL")=@JSON@("LSTLVL")+1
+"RTN","FMQLJSON",37,0)
+ S @JSON@("LSTLVL",@JSON@("LSTLVL"))=""
+"RTN","FMQLJSON",38,0)
+ D PUTDATA(JSON,MARK)
+"RTN","FMQLJSON",39,0)
+ Q
+"RTN","FMQLJSON",40,0)
+; TBD: 0.8 form will change
+"RTN","FMQLJSON",41,0)
+; Old form is #,type (literal,uri),fmqlFMType (fmql type #),value,label [ptr],sameas [ptr]
+"RTN","FMQLJSON",42,0)
+; New form is epred (# is id),type (fmql type subset - one ptr),value,label [ptr],sameas [ptr]
+"RTN","FMQLJSON",43,0)
+; ex/ "0.2": {"plabel":"date happened","type":"date","value":"2008-..."}
+"RTN","FMQLJSON",44,0)
+; TBD: change to ASSERT vs TASSERT (with type - pass in type) FIELD,IFIELD,VALUE,[TYPE]
+"RTN","FMQLJSON",45,0)
+ASSERT(JSON,FIELD,IFIELD,FMTYPE,VALUE,PLABEL,PSAMEAS)
+"RTN","FMQLJSON",46,0)
+ D PUTDATA(JSON,@JSON@("LSTLVL",@JSON@("LSTLVL")))
+"RTN","FMQLJSON",47,0)
+ S @JSON@("LSTLVL",@JSON@("LSTLVL"))="," ; if next el then put a col before it
+"RTN","FMQLJSON",48,0)
+ S PRED=$$FIELDTOPRED^FMQLUTIL(FIELD)
+"RTN","FMQLJSON",49,0)
+ D PUTDATA(JSON,""""_PRED_""":{""#"":"""_IFIELD_""",""fmqlFMType"":"""_FMTYPE_""",""value"":"""_$$JSONSTRING(VALUE)_"""")
+"RTN","FMQLJSON",50,0)
+ I $G(PLABEL)'="" D
+"RTN","FMQLJSON",51,0)
+ . D PUTDATA(JSON,",""type"":""uri"",""fmqlLabel"":"""_$$JSONSTRING(PLABEL)_"""")
+"RTN","FMQLJSON",52,0)
+ . ; Buggy - debug when doing all VUIDs
+"RTN","FMQLJSON",53,0)
+ . I $D(PSAMEAS) D PUTDATA(JSON,",""fmqlSameAs"":"""_PSAMEAS("URI")_""",""fmqlSameAsLabel"":"""_$$JSONSTRING(PSAMEAS("LABEL"))_"""")
+"RTN","FMQLJSON",54,0)
+ . Q
+"RTN","FMQLJSON",55,0)
+ E  D
+"RTN","FMQLJSON",56,0)
+ . I FMTYPE="1" D PUTDATA(JSON,",""type"":""typed-literal"",""datatype"":""http://www.w3.org/1999/02/22-rdf-syntax-ns#dateTime""") Q
+"RTN","FMQLJSON",57,0)
+ . D PUTDATA(JSON,",""type"":""literal""")
+"RTN","FMQLJSON",58,0)
+ . Q
+"RTN","FMQLJSON",59,0)
+ D PUTDATA(JSON,"}")
+"RTN","FMQLJSON",60,0)
+ Q
+"RTN","FMQLJSON",61,0)
+DASSERT(JSON,LVALUE,RVALUE)
+"RTN","FMQLJSON",62,0)
+ D PUTDATA(JSON,@JSON@("LSTLVL",@JSON@("LSTLVL")))
+"RTN","FMQLJSON",63,0)
+ S @JSON@("LSTLVL",@JSON@("LSTLVL"))="," ; if next el then put a col before it
+"RTN","FMQLJSON",64,0)
+ D PUTDATA(JSON,""""_LVALUE_""":"""_$$JSONSTRING(RVALUE)_"""")
+"RTN","FMQLJSON",65,0)
+ Q
+"RTN","FMQLJSON",66,0)
+VASSERT(JSON,LVALUE,VALUE)
+"RTN","FMQLJSON",67,0)
+ D PUTDATA(JSON,@JSON@("LSTLVL",@JSON@("LSTLVL")))
+"RTN","FMQLJSON",68,0)
+ S @JSON@("LSTLVL",@JSON@("LSTLVL"))="," ; if next el then put a col before it
+"RTN","FMQLJSON",69,0)
+ D PUTDATA(JSON,""""_LVALUE_""":{""type"":""literal"",""value"":"""_VALUE_"""}")
+"RTN","FMQLJSON",70,0)
+ Q
+"RTN","FMQLJSON",71,0)
+; TBD - can this become a "container start?"
+"RTN","FMQLJSON",72,0)
+WPASTART(JSON,FIELD,IFIELD)
+"RTN","FMQLJSON",73,0)
+ D PUTDATA(JSON,@JSON@("LSTLVL",@JSON@("LSTLVL")))
+"RTN","FMQLJSON",74,0)
+ S @JSON@("LSTLVL",@JSON@("LSTLVL"))="," ; if next el then put a col before it
+"RTN","FMQLJSON",75,0)
+ S @JSON@("LSTLVL")=@JSON@("LSTLVL")+1
+"RTN","FMQLJSON",76,0)
+ S @JSON@("LSTLVL",@JSON@("LSTLVL"))=""
+"RTN","FMQLJSON",77,0)
+ D PUTDATA(JSON,""""_$$FIELDTOPRED^FMQLUTIL(FIELD)_""":{""#"":"""_IFIELD_""",""fmqlFMType"":""5"",""type"":""typed-literal"",""datatype"":""http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"",""value"":""")
+"RTN","FMQLJSON",78,0)
+ Q
+"RTN","FMQLJSON",79,0)
+; May add $$HTML^DILF escape
+"RTN","FMQLJSON",80,0)
+WPALINE(JSON,LINE)
+"RTN","FMQLJSON",81,0)
+ D PUTDATA(JSON,@JSON@("LSTLVL",@JSON@("LSTLVL")))
+"RTN","FMQLJSON",82,0)
+ S @JSON@("LSTLVL",@JSON@("LSTLVL"))="\r" ; if next el then put a col before it
+"RTN","FMQLJSON",83,0)
+ D PUTDATA(JSON,$$JSONSTRING(LINE))
+"RTN","FMQLJSON",84,0)
+ Q
+"RTN","FMQLJSON",85,0)
+WPAEND(JSON)
+"RTN","FMQLJSON",86,0)
+ D CONTEND(JSON,"""}")
+"RTN","FMQLJSON",87,0)
+ Q
+"RTN","FMQLJSON",88,0)
+; TBD: use container to make this ...
+"RTN","FMQLJSON",89,0)
+; TBD: new form will not inline these
+"RTN","FMQLJSON",90,0)
+BNLISTSTART(JSON,BFDLBL,BFD)
+"RTN","FMQLJSON",91,0)
+ D PUTDATA(JSON,@JSON@("LSTLVL",@JSON@("LSTLVL")))
+"RTN","FMQLJSON",92,0)
+ S @JSON@("LSTLVL",@JSON@("LSTLVL"))=","
+"RTN","FMQLJSON",93,0)
+ S @JSON@("LSTLVL")=@JSON@("LSTLVL")+1
+"RTN","FMQLJSON",94,0)
+ S @JSON@("LSTLVL",@JSON@("LSTLVL"))=""
+"RTN","FMQLJSON",95,0)
+ D PUTDATA(JSON,""""_$$FIELDTOPRED^FMQLUTIL(BFDLBL)_""":{""#"":"""_BFD_""",""type"":""fmqlbnodelist"",""value"":[")
+"RTN","FMQLJSON",96,0)
+ Q
+"RTN","FMQLJSON",97,0)
+; TBD: break out. Doesn't deserve first class method
+"RTN","FMQLJSON",98,0)
+BNLISTEND(JSON)
+"RTN","FMQLJSON",99,0)
+ D CONTEND(JSON,"]}")
+"RTN","FMQLJSON",100,0)
+ Q
+"RTN","FMQLJSON",101,0)
+DICTEND(JSON)
+"RTN","FMQLJSON",102,0)
+ D CONTEND(JSON,"}")
+"RTN","FMQLJSON",103,0)
+ Q
+"RTN","FMQLJSON",104,0)
+LISTEND(JSON)
+"RTN","FMQLJSON",105,0)
+ D CONTEND(JSON,"]")
+"RTN","FMQLJSON",106,0)
+ Q
+"RTN","FMQLJSON",107,0)
+CONTEND(JSON,MARKUP)
+"RTN","FMQLJSON",108,0)
+ D PUTDATA(JSON,MARKUP)
+"RTN","FMQLJSON",109,0)
+ K @JSON@("LSTLVL",@JSON@("LSTLVL"))
+"RTN","FMQLJSON",110,0)
+ S @JSON@("LSTLVL")=@JSON@("LSTLVL")-1
+"RTN","FMQLJSON",111,0)
+ Q
+"RTN","FMQLJSON",112,0)
+REPLYEND(JSON)
+"RTN","FMQLJSON",113,0)
+ D PUTDATA(JSON,"}")
+"RTN","FMQLJSON",114,0)
+ K @JSON@("LSTLVL")
+"RTN","FMQLJSON",115,0)
+ K @JSON@("INDEX")
+"RTN","FMQLJSON",116,0)
+ K @JSON@("OFFSET")
+"RTN","FMQLJSON",117,0)
+ Q
+"RTN","FMQLJSON",118,0)
+PUTDATA(JSON,DATA)
+"RTN","FMQLJSON",119,0)
+ S NODESIZE=201 ; TBD: lower (10) slows replies. But little advan over 1024, even slows the small.
+"RTN","FMQLJSON",120,0)
+ N LEN S LEN=$L(DATA)
+"RTN","FMQLJSON",121,0)
+ N NUM S NUM=LEN
+"RTN","FMQLJSON",122,0)
+ N OFFSET S OFFSET=@JSON@("OFFSET")
+"RTN","FMQLJSON",123,0)
+ N INDEX S INDEX=@JSON@("INDEX")
+"RTN","FMQLJSON",124,0)
+ I NUM+OFFSET-1>NODESIZE D
+"RTN","FMQLJSON",125,0)
+ . S NUM=NODESIZE-OFFSET+1 
+"RTN","FMQLJSON",126,0)
+ . S @JSON@(@JSON@("INDEX"))=@JSON@(@JSON@("INDEX"))_$E(DATA,1,NUM) 
+"RTN","FMQLJSON",127,0)
+ . S @JSON@("OFFSET")=1 S @JSON@("INDEX")=INDEX+1 S @JSON@(@JSON@("INDEX"))="" 
+"RTN","FMQLJSON",128,0)
+ . D PUTDATA(JSON,$E(DATA,NUM+1,LEN))
+"RTN","FMQLJSON",129,0)
+ . Q
+"RTN","FMQLJSON",130,0)
+ E  D
+"RTN","FMQLJSON",131,0)
+ . S @JSON@(@JSON@("INDEX"))=@JSON@(@JSON@("INDEX"))_DATA
+"RTN","FMQLJSON",132,0)
+ . S @JSON@("OFFSET")=@JSON@("OFFSET")+NUM
+"RTN","FMQLJSON",133,0)
+ . Q
+"RTN","FMQLJSON",134,0)
+ Q
+"RTN","FMQLJSON",135,0)
+;
+"RTN","FMQLJSON",136,0)
+; Rules for JSON Values from www.json.org
+"RTN","FMQLJSON",137,0)
+; A JSON Value can be a string in double quotes, number, array, object (dictionary), 
+"RTN","FMQLJSON",138,0)
+; true|false|null. Here we are interesting in string value in double quotes
+"RTN","FMQLJSON",139,0)
+;
+"RTN","FMQLJSON",140,0)
+; For string values
+"RTN","FMQLJSON",141,0)
+; 1. CTRL characters (0-31 except the escaped noted below) are not allowed as themselves.
+"RTN","FMQLJSON",142,0)
+;    GT/M using UTF2HEX, Cache using ZHEX
+"RTN","FMQLJSON",143,0)
+; 2. Escape the following with a \
+"RTN","FMQLJSON",144,0)
+; - QUOTE 34 "
+"RTN","FMQLJSON",145,0)
+; - Backslash 92 \
+"RTN","FMQLJSON",146,0)
+; - BS 8 ^H	Backspace, works on HP terminals/computers (b)
+"RTN","FMQLJSON",147,0)
+; - HT 9 ^I	Horizontal tab, move to next tab stop (t)
+"RTN","FMQLJSON",148,0)
+; - LF 10 ^J Line Feed (n)
+"RTN","FMQLJSON",149,0)
+; - FF 12 ^L Form Feed, page eject (f) 
+"RTN","FMQLJSON",150,0)
+; - CR 13 ^M Carriage Return (r)
+"RTN","FMQLJSON",151,0)
+; 3. From 128->255+. Turn to \u0080 on. Note that "M" or "ASCII"
+"RTN","FMQLJSON",152,0)
+; is just to 255.
+"RTN","FMQLJSON",153,0)
+;
+"RTN","FMQLJSON",154,0)
+; Note: 
+"RTN","FMQLJSON",155,0)
+; - If character set is utf-8, then $L(($C(256))=1 (cheap check).
+"RTN","FMQLJSON",156,0)
+; - not escaping forward slash (47). JSON standard seems to say yes but few encoders
+"RTN","FMQLJSON",157,0)
+;   do this and all decoders accept it as is.
+"RTN","FMQLJSON",158,0)
+;
+"RTN","FMQLJSON",159,0)
+JSONSTRING(MSTR)
+"RTN","FMQLJSON",160,0)
+ N JSTR S JSTR=""
+"RTN","FMQLJSON",161,0)
+ N I F I=1:1:$L(MSTR) D
+"RTN","FMQLJSON",162,0)
+ . N NC S NC=$E(MSTR,I) 
+"RTN","FMQLJSON",163,0)
+ . N CD S CD=$A(NC) Q:CD=""  ; Check "" though GT/M and Cache say $A works for all unicode
+"RTN","FMQLJSON",164,0)
+ . ; \b,\t,\n,\f,\r separated - ",\ escaped with \ - 32 to 126 themselves; others 4 hex unicode. 
+"RTN","FMQLJSON",165,0)
+ . S JSTR=JSTR_$S(CD=8:"\b",CD=9:"\t",CD=10:"\n",CD=12:"\f",CD=13:"\r",CD=34:$C(92)_$C(34),CD=92:$C(92)_$C(92),(CD>31&(CD<127)):NC,$L($T(FUNC^%UTF2HEX)):"\u"_$TR($J($$FUNC^%UTF2HEX(NC),4)," ","0"),1:"\u"_$TR($J($ZHEX(CD),4)," ","0"))
+"RTN","FMQLJSON",166,0)
+ Q JSTR
+"RTN","FMQLJSON",167,0)
+ 
+"RTN","FMQLJSON",168,0)
+ 
+"RTN","FMQLQP")
+0^1^B378654
+"RTN","FMQLQP",1,0)
+FMQLQP; Caregraf - FMQL Query Processor RPC Entry Point ; Dec 15th, 2010
+"RTN","FMQLQP",2,0)
+ ;;0.8;FMQLQP;;Dec 15th, 2010
+"RTN","FMQLQP",3,0)
+ 
+"RTN","FMQLQP",4,0)
+; FMQL RPC
+"RTN","FMQLQP",5,0)
+; 
+"RTN","FMQLQP",6,0)
+; Entry point for FMQL RPC
+"RTN","FMQLQP",7,0)
+; 
+"RTN","FMQLQP",8,0)
+; FMQL Query Processor (c) Caregraf 2010-2011 AGPL
+"RTN","FMQLQP",9,0)
+ 
+"RTN","FMQLQP",10,0)
+FMQLRPC(RPCREPLY,RPCPARAMS)
+"RTN","FMQLQP",11,0)
+ N FMQLPARAMS,RPCPARAM
+"RTN","FMQLQP",12,0)
+ K ^TMP($J,"FMQLJSON")  ; VistA Coding Convention
+"RTN","FMQLQP",13,0)
+ I $G(RPCPARAMS)'="" D
+"RTN","FMQLQP",14,0)
+ . N RPCPN S RPCPN=1
+"RTN","FMQLQP",15,0)
+ . F  S RPCPARAM=$P(RPCPARAMS,"^",RPCPN) Q:RPCPARAM=""  D
+"RTN","FMQLQP",16,0)
+ . . S RPCPN=RPCPN+1
+"RTN","FMQLQP",17,0)
+ . . S FMQLPARAMS($P(RPCPARAM,":",1))=$P(RPCPARAM,":",2)
+"RTN","FMQLQP",18,0)
+ D PROCQRY($NA(^TMP($J,"FMQLJSON")),.FMQLPARAMS)
+"RTN","FMQLQP",19,0)
+ S RPCREPLY=$NA(^TMP($J,"FMQLJSON"))
+"RTN","FMQLQP",20,0)
+ Q
+"RTN","FMQLQP",21,0)
+ 
+"RTN","FMQLQP",22,0)
+PROCQRY(REPLY,FMQLPARAMS)
+"RTN","FMQLQP",23,0)
+ I '$D(FMQLPARAMS("OP")) S @REPLY@(0)="{""error"":""No Operation Specified""}" Q
+"RTN","FMQLQP",24,0)
+ ; Schema
+"RTN","FMQLQP",25,0)
+ I FMQLPARAMS("OP")="SELECTALLTYPES" D ALLTYPES^FMQLSCH(REPLY) Q
+"RTN","FMQLQP",26,0)
+ I FMQLPARAMS("OP")="SELECTALLREFERRERSTOTYPE" D ALLREFERRERSTOTYPE^FMQLSCH(.REPLY,.FMQLPARAMS) Q
+"RTN","FMQLQP",27,0)
+ I FMQLPARAMS("OP")="DESCRIBETYPE" D DESCRIBETYPE^FMQLSCH(REPLY,.FMQLPARAMS) Q
+"RTN","FMQLQP",28,0)
+ ; Data
+"RTN","FMQLQP",29,0)
+ I FMQLPARAMS("OP")="SELECTALLREFERRERS" D REFRS^FMQLDATA(REPLY,.FMQLPARAMS) Q
+"RTN","FMQLQP",30,0)
+ I ((FMQLPARAMS("OP")="DESCRIBE")&($D(FMQLPARAMS("ID")))) D DESONE^FMQLDATA(REPLY,.FMQLPARAMS) Q
+"RTN","FMQLQP",31,0)
+ I ((FMQLPARAMS("OP")="SELECT")!(FMQLPARAMS("OP")="COUNT")!(FMQLPARAMS("OP")="DESCRIBE")) D ALL^FMQLDATA(REPLY,.FMQLPARAMS) Q
+"RTN","FMQLQP",32,0)
+ S @REPLY@(0)="{""error"":""No Such Operation""}"
+"RTN","FMQLQP",33,0)
+ Q
+"RTN","FMQLSCH")
+0^8^B3196157
+"RTN","FMQLSCH",1,0)
+FMQLSCH; Caregraf - FMQL Schema Query Processor ; Dec 15th, 2010
+"RTN","FMQLSCH",2,0)
+ ;;0.8;FMQLQP;;Dec 15th, 2010
+"RTN","FMQLSCH",3,0)
+ 
+"RTN","FMQLSCH",4,0)
+; FMQL Schema Query Processor
+"RTN","FMQLSCH",5,0)
+; 
+"RTN","FMQLSCH",6,0)
+; Companion of FMQLDATA - this resolves schema queries
+"RTN","FMQLSCH",7,0)
+; 
+"RTN","FMQLSCH",8,0)
+; FMQL Query Processor (c) Caregraf 2010-2011 AGPL
+"RTN","FMQLSCH",9,0)
+ 
+"RTN","FMQLSCH",10,0)
+ALLTYPES(REPLY) 
+"RTN","FMQLSCH",11,0)
+ N FILE,FILELABEL
+"RTN","FMQLSCH",12,0)
+ D REPLYSTART^FMQLJSON(REPLY)
+"RTN","FMQLSCH",13,0)
+ S FILE=1
+"RTN","FMQLSCH",14,0)
+ D LISTSTART^FMQLJSON(REPLY,"results")
+"RTN","FMQLSCH",15,0)
+ F  S FILE=$O(^DD(FILE)) Q:FILE'=+FILE  D
+"RTN","FMQLSCH",16,0)
+ . Q:'$$VFILE^DILFD(FILE)  ; checks .01's flags if W. Skip W subfile.
+"RTN","FMQLSCH",17,0)
+ . ; Skip if GL is set but missing details (ex/ of 3.076 TX)
+"RTN","FMQLSCH",18,0)
+ . I $D(^DIC(FILE,0,"GL")),'$D(@$$CREF^DILF(^DIC(FILE,0,"GL"))) Q
+"RTN","FMQLSCH",19,0)
+ . Q:'$D(^DD(FILE,0,"NM"))
+"RTN","FMQLSCH",20,0)
+ . D DICTSTART^FMQLJSON(REPLY)
+"RTN","FMQLSCH",21,0)
+ . S FILELABEL=$O(^DD(FILE,0,"NM",""))
+"RTN","FMQLSCH",22,0)
+ . D DASSERT^FMQLJSON(REPLY,"name",FILELABEL)
+"RTN","FMQLSCH",23,0)
+ . D DASSERT^FMQLJSON(REPLY,"number",FILE)
+"RTN","FMQLSCH",24,0)
+ . D:$G(^DD(FILE,0,"UP")) DASSERT^FMQLJSON(REPLY,"parent",^DD(FILE,0,"UP"))
+"RTN","FMQLSCH",25,0)
+ . ; TBD: catch invalid counts (-) and empty counts
+"RTN","FMQLSCH",26,0)
+ . D:$D(^DIC(FILE,0,"GL")) DASSERT^FMQLJSON(REPLY,"count",$P(@(^DIC(FILE,0,"GL")_"0)"),"^",4))
+"RTN","FMQLSCH",27,0)
+ . D DICTEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",28,0)
+ . Q
+"RTN","FMQLSCH",29,0)
+ D LISTEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",30,0)
+ D REPLYEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",31,0)
+ Q
+"RTN","FMQLSCH",32,0)
+ 
+"RTN","FMQLSCH",33,0)
+ALLREFERRERSTOTYPE(REPLY,FMQLPARAMS)
+"RTN","FMQLSCH",34,0)
+ N FILE,FILELABEL,RFILE,RFILELABEL,RFIELD,RFIELDLABEL
+"RTN","FMQLSCH",35,0)
+ I '$D(FMQLPARAMS("TYPE")) D ERRORREPLY(REPLY,"No File Type") Q
+"RTN","FMQLSCH",36,0)
+ S FILE=$TR(FMQLPARAMS("TYPE"),"_",".")
+"RTN","FMQLSCH",37,0)
+ I '$D(^DIC(FILE,0,"GL")) D ERRORREPLY(REPLY,"Invalid Global File Type: "_FILE) Q  ; top level only
+"RTN","FMQLSCH",38,0)
+ D REPLYSTART^FMQLJSON(REPLY)
+"RTN","FMQLSCH",39,0)
+ S FILELABEL=$O(^DD(FILE,0,"NM",""))
+"RTN","FMQLSCH",40,0)
+ D DASSERT^FMQLJSON(REPLY,"fmqlFileName",FILELABEL) ; always file name back
+"RTN","FMQLSCH",41,0)
+ D LISTSTART^FMQLJSON(REPLY,"results")
+"RTN","FMQLSCH",42,0)
+    S RFILE="" F  S RFILE=$O(^DD(FILE,0,"PT",RFILE)) Q:RFILE'=+RFILE  D  ; Order ala IEN Order
+"RTN","FMQLSCH",43,0)
+ . Q:'$D(^DIC(RFILE,0,"GL"))  ; TBD: only do globals for now
+"RTN","FMQLSCH",44,0)
+ . Q:'$D(^DD(RFILE,0,"NM")) ; rfile must be named
+"RTN","FMQLSCH",45,0)
+ . D DICTSTART^FMQLJSON(REPLY)
+"RTN","FMQLSCH",46,0)
+ . S RFILELABEL=$O(^DD(RFILE,0,"NM",""))
+"RTN","FMQLSCH",47,0)
+ . D DASSERT^FMQLJSON(REPLY,"rfile",RFILE)
+"RTN","FMQLSCH",48,0)
+ . D DASSERT^FMQLJSON(REPLY,"rfileLabel",RFILELABEL)
+"RTN","FMQLSCH",49,0)
+ . D LISTSTART^FMQLJSON(REPLY,"rfields")
+"RTN","FMQLSCH",50,0)
+    . S RFIELD="" F  S RFIELD=$O(^DD(FILE,0,"PT",RFILE,RFIELD)) Q:RFIELD'=+RFIELD  D
+"RTN","FMQLSCH",51,0)
+ . . Q:'$D(^DD(RFILE,RFIELD,0)) ; Skip Corruption
+"RTN","FMQLSCH",52,0)
+ . . D DICTSTART^FMQLJSON(REPLY)
+"RTN","FMQLSCH",53,0)
+ . . S RFIELDLABEL=$P(^DD(RFILE,RFIELD,0),"^") ; TBD quit if no label
+"RTN","FMQLSCH",54,0)
+ . . D DASSERT^FMQLJSON(REPLY,"rfield",RFIELD)
+"RTN","FMQLSCH",55,0)
+ . . D DASSERT^FMQLJSON(REPLY,"rfieldLabel",RFIELDLABEL)
+"RTN","FMQLSCH",56,0)
+ . . D DICTEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",57,0)
+ . . Q
+"RTN","FMQLSCH",58,0)
+ . D LISTEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",59,0)
+ . D DICTEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",60,0)
+ . Q
+"RTN","FMQLSCH",61,0)
+ D LISTEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",62,0)
+ D REPLYEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",63,0)
+ Q
+"RTN","FMQLSCH",64,0)
+ 
+"RTN","FMQLSCH",65,0)
+ERRORREPLY(REPLY,MSG)
+"RTN","FMQLSCH",66,0)
+ D REPLYSTART^FMQLJSON(REPLY) 
+"RTN","FMQLSCH",67,0)
+ D DASSERT^FMQLJSON(REPLY,"error",MSG) 
+"RTN","FMQLSCH",68,0)
+ D REPLYEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",69,0)
+ Q
+"RTN","FMQLSCH",70,0)
+ 
+"RTN","FMQLSCH",71,0)
+DESCRIBETYPE(REPLY,FMQLPARAMS)
+"RTN","FMQLSCH",72,0)
+ N FILE
+"RTN","FMQLSCH",73,0)
+ I '$D(FMQLPARAMS("TYPE")) D ERRORREPLY(REPLY,"No File Type") Q
+"RTN","FMQLSCH",74,0)
+ S FILE=$TR(FMQLPARAMS("TYPE"),"_",".")
+"RTN","FMQLSCH",75,0)
+ I $D(^DIC(FILE,0,"GL")) D TOPFILEINFO(REPLY,FILE) Q
+"RTN","FMQLSCH",76,0)
+ I $D(^DD(FILE,0,"UP")) D SUBFILEINFO(REPLY,FILE) Q
+"RTN","FMQLSCH",77,0)
+ D ERRORREPLY(REPLY,"Invalid File Type: "_FILE)
+"RTN","FMQLSCH",78,0)
+ Q
+"RTN","FMQLSCH",79,0)
+ 
+"RTN","FMQLSCH",80,0)
+TOPFILEINFO(REPLY,FILE) ; TBD - add more corruption checks ala the above
+"RTN","FMQLSCH",81,0)
+ N FILELABEL,FILEAR,FILEHDR,FILEFLAGS,APGSVAL
+"RTN","FMQLSCH",82,0)
+ D REPLYSTART^FMQLJSON(REPLY)
+"RTN","FMQLSCH",83,0)
+ S FILELABEL=$O(^DD(FILE,0,"NM",""))
+"RTN","FMQLSCH",84,0)
+ S FILEAR=^DIC(FILE,0,"GL")
+"RTN","FMQLSCH",85,0)
+ S FILEHDR=@(FILEAR_"0)")
+"RTN","FMQLSCH",86,0)
+ D DASSERT^FMQLJSON(REPLY,"name",FILELABEL)
+"RTN","FMQLSCH",87,0)
+ D DASSERT^FMQLJSON(REPLY,"number",FILE)
+"RTN","FMQLSCH",88,0)
+ D DASSERT^FMQLJSON(REPLY,"location",FILEAR)
+"RTN","FMQLSCH",89,0)
+ I $L(FILEHDR,"^")>3 D DASSERT^FMQLJSON(REPLY,"count",$P(FILEHDR,"^",4)) 
+"RTN","FMQLSCH",90,0)
+ E  D DASSERT^FMQLJSON(REPLY,"count","0")
+"RTN","FMQLSCH",91,0)
+ S FILEFLAGS=$P(FILEHDR,"^",2)
+"RTN","FMQLSCH",92,0)
+ I $D(^DIC(FILE,"%D",0))  D  ; DESCRIPTION
+"RTN","FMQLSCH",93,0)
+ . D WPASTART^FMQLJSON(REPLY,"DESCRIPTION","-1")
+"RTN","FMQLSCH",94,0)
+ . S I=0 F  S I=$O(^DIC(FILE,"%D",I)) Q:I'=+I  D
+"RTN","FMQLSCH",95,0)
+ . . D WPALINE^FMQLJSON(REPLY,^DIC(FILE,"%D",I,0))
+"RTN","FMQLSCH",96,0)
+ . . Q
+"RTN","FMQLSCH",97,0)
+ . D WPAEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",98,0)
+ . Q
+"RTN","FMQLSCH",99,0)
+ I $D(^DIC(FILE,"%",1))  D  ; APP GROUPS
+"RTN","FMQLSCH",100,0)
+ . S APGSVAL=""
+"RTN","FMQLSCH",101,0)
+ . S I=0 F  S I=$O(^DIC(FILE,"%",I)) Q:I'=+I  D 
+"RTN","FMQLSCH",102,0)
+ . . I APGSVAL'="" S APGSVAL=APGSVAL_";"
+"RTN","FMQLSCH",103,0)
+ . . S APGSVAL=APGSVAL_^DIC(FILE,"%",I,0)
+"RTN","FMQLSCH",104,0)
+ . . Q
+"RTN","FMQLSCH",105,0)
+ . D DASSERT^FMQLJSON(REPLY,"applicationGroups",APGSVAL)
+"RTN","FMQLSCH",106,0)
+ . Q
+"RTN","FMQLSCH",107,0)
+ D FIELDSINFO(FILE)
+"RTN","FMQLSCH",108,0)
+ D REPLYEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",109,0)
+ Q
+"RTN","FMQLSCH",110,0)
+ 
+"RTN","FMQLSCH",111,0)
+SUBFILEINFO(REPLY,FILE)
+"RTN","FMQLSCH",112,0)
+ D REPLYSTART^FMQLJSON(REPLY)
+"RTN","FMQLSCH",113,0)
+ S FILELABEL=$O(^DD(FILE,0,"NM",""))
+"RTN","FMQLSCH",114,0)
+ S CFILE=^DD(FILE,0,"UP") ; TBD: search up for whole path
+"RTN","FMQLSCH",115,0)
+ D DASSERT^FMQLJSON(REPLY,"name",FILELABEL)
+"RTN","FMQLSCH",116,0)
+ D DASSERT^FMQLJSON(REPLY,"number",FILE)
+"RTN","FMQLSCH",117,0)
+ D DASSERT^FMQLJSON(REPLY,"parent",CFILE)
+"RTN","FMQLSCH",118,0)
+ ; TBD: Search CFILE for field that contains this one. Get field and description.
+"RTN","FMQLSCH",119,0)
+ D FIELDSINFO(FILE)
+"RTN","FMQLSCH",120,0)
+ D REPLYEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",121,0)
+ Q
+"RTN","FMQLSCH",122,0)
+ 
+"RTN","FMQLSCH",123,0)
+; TBD: leverage SAMEAS. If field has same as, make that clear.
+"RTN","FMQLSCH",124,0)
+FIELDSINFO(FILE)
+"RTN","FMQLSCH",125,0)
+ N I
+"RTN","FMQLSCH",126,0)
+ D LISTSTART^FMQLJSON(REPLY,"fields")
+"RTN","FMQLSCH",127,0)
+    S FIELD=0 F  S FIELD=$O(^DD(FILE,FIELD)) Q:FIELD'=+FIELD  D 
+"RTN","FMQLSCH",128,0)
+ . Q:'$D(^DD(FILE,FIELD,0))
+"RTN","FMQLSCH",129,0)
+ . D DICTSTART^FMQLJSON(REPLY)
+"RTN","FMQLSCH",130,0)
+ . D DASSERT^FMQLJSON(REPLY,"number",FIELD)
+"RTN","FMQLSCH",131,0)
+    . S FLDFLAGS=$P(^DD(FILE,FIELD,0),"^",2) ; includes type - V,P etc.
+"RTN","FMQLSCH",132,0)
+ . D DASSERT^FMQLJSON(REPLY,"flags",FLDFLAGS)
+"RTN","FMQLSCH",133,0)
+ . ; Add ^DD(FILE,FIELD,1,1,...)
+"RTN","FMQLSCH",134,0)
+ . ; For now, only note simple indexes. Not all ^DD(FILE,"IX",FIELD) as MUMPS there too
+"RTN","FMQLSCH",135,0)
+ . S IDX=$$FIELDIDX^FMQLUTIL(FILE,FIELD)
+"RTN","FMQLSCH",136,0)
+ . D:IDX'="" DASSERT^FMQLJSON(REPLY,"index",IDX)
+"RTN","FMQLSCH",137,0)
+    . S FLDLABEL=$P(^DD(FILE,FIELD,0),"^")
+"RTN","FMQLSCH",138,0)
+ . D DASSERT^FMQLJSON(REPLY,"name",$$FIELDTOPRED^FMQLUTIL(FLDLABEL))
+"RTN","FMQLSCH",139,0)
+    . S FLDLOC=$P(^DD(FILE,FIELD,0),"^",4)
+"RTN","FMQLSCH",140,0)
+ . D:FLDLOC'=" ; " DASSERT^FMQLJSON(REPLY,"location",FLDLOC) ; Computed has "no location"
+"RTN","FMQLSCH",141,0)
+ . ; Careful: gfs_frm.htm not definite. Ex/ "S" in flags if multiple with only
+"RTN","FMQLSCH",142,0)
+ . ; one field, a set of codes (ex/ 120.506S for ^DD(120.5,4,0)
+"RTN","FMQLSCH",143,0)
+ . K FLDTYPE,FLDDETAILS
+"RTN","FMQLSCH",144,0)
+ . I +FLDFLAGS D  ; MULTIPLE or WORD PROCESSING
+"RTN","FMQLSCH",145,0)
+ . . ; To go direct - if "W" in flags of $P(FLDFLAGS,"P"). See function.
+"RTN","FMQLSCH",146,0)
+ . . I '$$VFILE^DILFD(+FLDFLAGS) S FLDTYPE=5 ; don't care about WP's "multiple"
+"RTN","FMQLSCH",147,0)
+ . . E  S FLDTYPE=9 S FLDDETAILS=+FLDFLAGS ; Multiple
+"RTN","FMQLSCH",148,0)
+ . E  D
+"RTN","FMQLSCH",149,0)
+ . . I FLDFLAGS["D" S FLDTYPE=1 ; Date 
+"RTN","FMQLSCH",150,0)
+ . . I FLDFLAGS["N" S FLDTYPE=2 ; Numeric
+"RTN","FMQLSCH",151,0)
+ . . I FLDFLAGS["S" S FLDTYPE=3 S FLDDETAILS=$P(^DD(FILE,FIELD,0),"^",3) ; Set
+"RTN","FMQLSCH",152,0)
+ . . I FLDFLAGS["F" S FLDTYPE=4 ; Free Text
+"RTN","FMQLSCH",153,0)
+ . . ; TBD: Final FMQL must isolate mumps properly.
+"RTN","FMQLSCH",154,0)
+ . . I FLDFLAGS["K" S FLDTYPE=10 ; MUMPS
+"RTN","FMQLSCH",155,0)
+ . . I FLDFLAGS["P" S FLDTYPE=7 S FLDDETAILS=+$P(FLDFLAGS,"P",2) ; Pointer
+"RTN","FMQLSCH",156,0)
+ . . ; TBD: Final FMQL won't distinguish vptr from ptr. MUMPS-side thing.
+"RTN","FMQLSCH",157,0)
+ . . I FLDFLAGS["V" S FLDTYPE=8 S FLDDETAILS=$$VARPOINTERRANGE(FILE,FIELD) ; V Pointer
+"RTN","FMQLSCH",158,0)
+ . . ; TBD: Computed (C) is DC,BC,C,Cm,Cmp. Must distinguish actual type. Correlate with no location.
+"RTN","FMQLSCH",159,0)
+ . . I '$D(FLDTYPE) S FLDTYPE=6 ; Computed: TBD: Break to BC, Cm, DC, C ie. qualifier
+"RTN","FMQLSCH",160,0)
+ . . Q
+"RTN","FMQLSCH",161,0)
+ . D DASSERT^FMQLJSON(REPLY,"type",FLDTYPE)
+"RTN","FMQLSCH",162,0)
+ . D:$D(FLDDETAILS) DASSERT^FMQLJSON(REPLY,"details",FLDDETAILS)
+"RTN","FMQLSCH",163,0)
+ . I $D(^DD(FILE,FIELD,21,1))  D
+"RTN","FMQLSCH",164,0)
+ . . D WPASTART^FMQLJSON(REPLY,"DESCRIPTION","-1")
+"RTN","FMQLSCH",165,0)
+ . . S I=0 F  S I=$O(^DD(FILE,FIELD,21,I)) Q:I'=+I  D 
+"RTN","FMQLSCH",166,0)
+ . . . D WPALINE^FMQLJSON(REPLY,^DD(FILE,FIELD,21,I,0))
+"RTN","FMQLSCH",167,0)
+ . . . Q
+"RTN","FMQLSCH",168,0)
+ . . D WPAEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",169,0)
+ . . Q
+"RTN","FMQLSCH",170,0)
+ . D DICTEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",171,0)
+ D LISTEND^FMQLJSON(REPLY)
+"RTN","FMQLSCH",172,0)
+ Q
+"RTN","FMQLSCH",173,0)
+ 
+"RTN","FMQLSCH",174,0)
+VARPOINTERRANGE(FILE,FIELD)
+"RTN","FMQLSCH",175,0)
+ N X,VPS,VP
+"RTN","FMQLSCH",176,0)
+ S VPS=""
+"RTN","FMQLSCH",177,0)
+ I '$D(^DD(FILE,FIELD,"V")) Q VPS ; TBD ERROR
+"RTN","FMQLSCH",178,0)
+ S X=0 F  S X=$O(^DD(FILE,FIELD,"V",X)) Q:X'=+X  D
+"RTN","FMQLSCH",179,0)
+ . S VP=$P(^DD(FILE,FIELD,"V",X,0),U,1)
+"RTN","FMQLSCH",180,0)
+ . I VPS'="" S VPS=VPS_";"
+"RTN","FMQLSCH",181,0)
+ . S VPS=VPS_VP
+"RTN","FMQLSCH",182,0)
+ Q VPS
+"RTN","FMQLSLAB")
+0^9^B187571
+"RTN","FMQLSLAB",1,0)
+FMQLSLAB; Caregraf - FMQL Schema Enhancement for Lab ; Dec 15th, 2010
+"RTN","FMQLSLAB",2,0)
+ ;;0.8;FMQLQP;;Dec 15th, 2010
+"RTN","FMQLSLAB",3,0)
+ 
+"RTN","FMQLSLAB",4,0)
+;
+"RTN","FMQLSLAB",5,0)
+; FMQL Schema Enhancement for Lab (SLAB). 
+"RTN","FMQLSLAB",6,0)
+; - peer of SSAM (SAMEAS), SORD (for Orders)
+"RTN","FMQLSLAB",7,0)
+;
+"RTN","FMQLSLAB",8,0)
+; FMQL Query Processor (c) Caregraf 2010-2011 AGPL
+"RTN","FMQLSLAB",9,0)
+; 
+"RTN","FMQLSLAB",10,0)
+; Exposes hidden Lab (CH) variables to a blank node pending a set of 
+"RTN","FMQLSLAB",11,0)
+; cross references that does this work in an enhanced lab schema. This makes
+"RTN","FMQLSLAB",12,0)
+; CH labs look like Radiology and Pharmacy.
+"RTN","FMQLSLAB",13,0)
+;
+"RTN","FMQLSLAB",14,0)
+; This does similar calculations to (lot's of redundancy in lab):
+"RTN","FMQLSLAB",15,0)
+; - HL7 lab: subroutines called from CH^LA7OBX1 from GCPR^LA7QRY
+"RTN","FMQLSLAB",16,0)
+; - Lab query routines: TSTRES^LRRPU called from CH^LR7OR2
+"RTN","FMQLSLAB",17,0)
+; - Other: CHNODE^LRPXAPI2.m
+"RTN","FMQLSLAB",18,0)
+; 
+"RTN","FMQLSLAB",19,0)
+; CH data is stored in a proprietary format in FileMan's location for a lab
+"RTN","FMQLSLAB",20,0)
+; value. Example ...
+"RTN","FMQLSLAB",21,0)
+;  "7.19^^81323.0000!!!4378!!!1^6877^70!4.8!10.8!2!50!!x10 3/uL!1!3^^^^1"
+"RTN","FMQLSLAB",22,0)
+; The structure of such values is explained in the code below.
+"RTN","FMQLSLAB",23,0)
+;
+"RTN","FMQLSLAB",24,0)
+; Note: unlike the VA routines, the code below DOES NOT account for older versions
+"RTN","FMQLSLAB",25,0)
+; of the lab package which failed to fill in certain values.
+"RTN","FMQLSLAB",26,0)
+;
+"RTN","FMQLSLAB",27,0)
+; Issue of inconsistent settings in 60:
+"RTN","FMQLSLAB",28,0)
+; VistA seems to allow meaningless definitions in file 60 ...
+"RTN","FMQLSLAB",29,0)
+; - numerics with no units? (ex/ MMH, 60-1100, 60-5173)
+"RTN","FMQLSLAB",30,0)
+; - references for free texts (ex/ MMH, 60-6135, 60-5826)
+"RTN","FMQLSLAB",31,0)
+; - set values with a mix of numeric and text and still get ref ranges and units
+"RTN","FMQLSLAB",32,0)
+;   (ex/ MMH, 60-151)
+"RTN","FMQLSLAB",33,0)
+; - numeric but interpretation is an explanation (60-5865)
+"RTN","FMQLSLAB",34,0)
+; - ... TBD: check type in 60 AND ONLY send ranges, units if numeric.
+"RTN","FMQLSLAB",35,0)
+; For now, this extractor DOES not remove such inconsistencies. Must choose the 
+"RTN","FMQLSLAB",36,0)
+; right balance between a consistent schema and exposing what the system has.
+"RTN","FMQLSLAB",37,0)
+;
+"RTN","FMQLSLAB",38,0)
+; TBD:
+"RTN","FMQLSLAB",39,0)
+; - label needs to be file name qualified (to be consistent with other BNodes)
+"RTN","FMQLSLAB",40,0)
+; - panel to lab order. Work correlation
+"RTN","FMQLSLAB",41,0)
+; - value of "see comment"
+"RTN","FMQLSLAB",42,0)
+; - TYPE: SET vs NUMERIC vs STRING from 60
+"RTN","FMQLSLAB",43,0)
+;   - LA7VOBX1: $S("canccomment"[$P(LA7VAL,"^"):1,1:0)
+"RTN","FMQLSLAB",44,0)
+;   - OBX2^LA7VOBXA: TYPE
+"RTN","FMQLSLAB",45,0)
+; - Partial or Final
+"RTN","FMQLSLAB",46,0)
+;   S LA7X=$S("canccommentpending"[$P(LA7VAL,"^"):$P(LA7VAL,"^"),1:"F")
+"RTN","FMQLSLAB",47,0)
+;   I LA7RS="C" S LA7X=LA7RS
+"RTN","FMQLSLAB",48,0)
+;   S LA7OBX(11)=$$OBX11^LA7VOBX(LA7X)
+"RTN","FMQLSLAB",49,0)
+; - Problem of "Free Text" 60 with a unit. ie. if non numeric nix unit
+"RTN","FMQLSLAB",50,0)
+; - Critical vs Reference: HL7 V3 HH (High Alert) vs H (High)? Or just expose
+"RTN","FMQLSLAB",51,0)
+;   critical and leave interpretation to the client?
+"RTN","FMQLSLAB",52,0)
+;
+"RTN","FMQLSLAB",53,0)
+ 
+"RTN","FMQLSLAB",54,0)
+ 
+"RTN","FMQLSLAB",55,0)
+BLDBNODES(FAR6304,FID)
+"RTN","FMQLSLAB",56,0)
+ N ID S ID=$P(FID,"_")
+"RTN","FMQLSLAB",57,0)
+ N BID S BID=1
+"RTN","FMQLSLAB",58,0)
+ D BNLISTSTART^FMQLJSON(REPLY,"CHVALS","9999999999")
+"RTN","FMQLSLAB",59,0)
+    N FLOC S FLOC=1 F  S FLOC=$O(@FAR6304@(ID,FLOC)) Q:FLOC'=+FLOC  D
+"RTN","FMQLSLAB",60,0)
+ . N VAL S VAL=@FAR@(ID,FLOC)
+"RTN","FMQLSLAB",61,0)
+ . D BLDBNODE(FLOC,VAL,BID_"_"_FID)
+"RTN","FMQLSLAB",62,0)
+ . S BID=BID+1
+"RTN","FMQLSLAB",63,0)
+ D BNLISTEND^FMQLJSON(REPLY)
+"RTN","FMQLSLAB",64,0)
+ Q
+"RTN","FMQLSLAB",65,0)
+ 
+"RTN","FMQLSLAB",66,0)
+BLDBNODE(FLOC,VAL,FID)
+"RTN","FMQLSLAB",67,0)
+ 
+"RTN","FMQLSLAB",68,0)
+ ; Start with 60 reference. Must have it or quit.
+"RTN","FMQLSLAB",69,0)
+  N LC S LC=$P(VAL,"^",3)  ; Codes
+"RTN","FMQLSLAB",70,0)
+ Q:LC=""
+"RTN","FMQLSLAB",71,0)
+ N LC60 S LC60=$P(LC,"!",7)  ; 60 ref is in 7th position of code section
+"RTN","FMQLSLAB",72,0)
+ Q:LC60=""
+"RTN","FMQLSLAB",73,0)
+ Q:'$D(^LAB(60,LC60))
+"RTN","FMQLSLAB",74,0)
+ N LABEL60 S LABEL60=$P(^LAB(60,LC60,0),"^")
+"RTN","FMQLSLAB",75,0)
+ 
+"RTN","FMQLSLAB",76,0)
+ N LVAL S LVAL=$P(VAL,"^")  ; Get Value. TBD: need to check if there is one?
+"RTN","FMQLSLAB",77,0)
+ 
+"RTN","FMQLSLAB",78,0)
+ ; TBD: FILTER (two values to pick)
+"RTN","FMQLSLAB",79,0)
+ ; Check if test is OK to send - (O)utput or (B)oth
+"RTN","FMQLSLAB",80,0)
+ ; S LA7X=$P(VAL,"^",12)
+"RTN","FMQLSLAB",81,0)
+ ; I LA7X]"","BO"'[LA7X Q
+"RTN","FMQLSLAB",82,0)
+ ; I LA7X="",'$$OKTOSND^LA7VHLU1(LRSS,LRSB,+$P($P(LA7VAL,"^",3),"!",7)) Q
+"RTN","FMQLSLAB",83,0)
+ 
+"RTN","FMQLSLAB",84,0)
+ D DICTSTART^FMQLJSON(REPLY)
+"RTN","FMQLSLAB",85,0)
+ 
+"RTN","FMQLSLAB",86,0)
+ ; TMP: giving self 9999999999 as context for FMQL files/subfiles
+"RTN","FMQLSLAB",87,0)
+ D ASSERT^FMQLJSON(REPLY,"URI",".01","7","9999999999_6304-"_$TR(FID,".","_"),"CHBNODE-"_LABEL60)
+"RTN","FMQLSLAB",88,0)
+ 
+"RTN","FMQLSLAB",89,0)
+ ; Codes (TBD: don't take 64/LOINC. Take from 60->64->95.3)
+"RTN","FMQLSLAB",90,0)
+ ; Result 64. Default to Order 64 (or ""). Nix NaN WKLD code
+"RTN","FMQLSLAB",91,0)
+  ; S:$P(LC,"!")="81323.0000" $P(LC,"!")=""
+"RTN","FMQLSLAB",92,0)
+  ; S:$P(LC,"!",2)="81323.0000" $P(LC,"!",2)=""
+"RTN","FMQLSLAB",93,0)
+ ; N LC64 S LC64=$S($P(LC,"!",2)'="":$P(LC,"!",2),1:$P(LC,"!"))
+"RTN","FMQLSLAB",94,0)
+ ; 0.1 IEN of 60
+"RTN","FMQLSLAB",95,0)
+ ; N SAMEAS60 ; LOINC (95.3) or NLT (64) if available
+"RTN","FMQLSLAB",96,0)
+ ; I $P(LC,"!",3)'="" S SAMEAS60("URI")="95_3-"_$P(LC,"!",3) S SAMEAS60("LABEL")="DUMMYLOINC"
+"RTN","FMQLSLAB",97,0)
+ ; E  I LC64'="" S SAMEAS60("URI")="64-"_LC64 S SAMEAS60("LABEL")="DUMMY64"
+"RTN","FMQLSLAB",98,0)
+ N SAMEAS60 
+"RTN","FMQLSLAB",99,0)
+ D RESOLVE60^FMQLSSAM(LC60,.SAMEAS60)
+"RTN","FMQLSLAB",100,0)
+ D ASSERT^FMQLJSON(REPLY,"TEST",".01","7","60-"_LC60,LABEL60,.SAMEAS60)
+"RTN","FMQLSLAB",101,0)
+ 
+"RTN","FMQLSLAB",102,0)
+ ; 0.2: Value (complication of "see comment" and type)
+"RTN","FMQLSLAB",103,0)
+ D ASSERT^FMQLJSON(REPLY,"VALUE",".02","4",LVAL)
+"RTN","FMQLSLAB",104,0)
+ 
+"RTN","FMQLSLAB",105,0)
+ ; 0.11: Method or Site - TBD redo per OBX17^LA7VOBX
+"RTN","FMQLSLAB",106,0)
+ ; Note: Mayo appears here in MMH as one of three options. Goes to WKLD suffix.
+"RTN","FMQLSLAB",107,0)
+ I $P(LC,"!",4) D
+"RTN","FMQLSLAB",108,0)
+ . Q:'$D(^LAB(64.2,$P(LC,"!",4)))
+"RTN","FMQLSLAB",109,0)
+ . N LABEL S LABEL=$P(^LAB(64.2,$P(LC,"!",4),0),"^")
+"RTN","FMQLSLAB",110,0)
+ . D ASSERT^FMQLJSON(REPLY,"METHOD",".11","7","64_2-"_$P(LC,"!",4),LABEL)
+"RTN","FMQLSLAB",111,0)
+ 
+"RTN","FMQLSLAB",112,0)
+ ; 0.4: Verify Person
+"RTN","FMQLSLAB",113,0)
+ I $P(VAL,"^",4) D
+"RTN","FMQLSLAB",114,0)
+ . Q:'$D(^DPT($P(VAL,"^",4)))
+"RTN","FMQLSLAB",115,0)
+ . N LABEL S LABEL=$P(^DPT($P(VAL,"^",4),0),"^")
+"RTN","FMQLSLAB",116,0)
+ . D ASSERT^FMQLJSON(REPLY,"VERIFY PERSON",".04","7","2-"_$P(VAL,"^",4),LABEL)
+"RTN","FMQLSLAB",117,0)
+ 
+"RTN","FMQLSLAB",118,0)
+  ; Reference Ranges and Unit (Configured in 60.01 Specimen)
+"RTN","FMQLSLAB",119,0)
+ ; take from value as 60.01 may have changed since interpretation
+"RTN","FMQLSLAB",120,0)
+ ; TBD: consider interpretation as coded value for ease of mapping to obsi/H, obsi/L
+"RTN","FMQLSLAB",121,0)
+  N LRU S LRU=$P(VAL,"^",5)  ; Reference Ranges and Unit
+"RTN","FMQLSLAB",122,0)
+ D:$P(LRU,"!",7)'="" ASSERT^FMQLJSON(REPLY,"UNITS",".07","4",$P(LRU,"!",7))
+"RTN","FMQLSLAB",123,0)
+ ; .08: Specimen (61). Also in $P(0,"^",5)
+"RTN","FMQLSLAB",124,0)
+ I $P(LRU,"!") D
+"RTN","FMQLSLAB",125,0)
+ . Q:'$D(^LAB(61,$P(LRU,"!")))
+"RTN","FMQLSLAB",126,0)
+ . N LABEL S LABEL=$P(^LAB(61,$P(LRU,"!"),0),"^")
+"RTN","FMQLSLAB",127,0)
+ . D ASSERT^FMQLJSON(REPLY,"SPECIMEN",".08","7","61-"_$P(LRU,"!"),LABEL)
+"RTN","FMQLSLAB",128,0)
+ ; .09,.10: Range - high and low
+"RTN","FMQLSLAB",129,0)
+ ; Ignore criticals (4/5). Use reference. If none, use therapeutic.
+"RTN","FMQLSLAB",130,0)
+ N LRLOW S LRLOW=$S($P(LRU,"!",2)'="":$P(LRU,"!",2),1:$P(LRU,"!",11))
+"RTN","FMQLSLAB",131,0)
+ D:LRLOW'="" ASSERT^FMQLJSON(REPLY,"RANGE LOW",".09","4",LRLOW)
+"RTN","FMQLSLAB",132,0)
+ N LRHIGH S LRHIGH=$S($P(LRU,"!",3)'="":$P(LRU,"!",3),1:$P(LRU,"!",12))
+"RTN","FMQLSLAB",133,0)
+ D:LRHIGH'="" ASSERT^FMQLJSON(REPLY,"RANGE HIGH",".10","4",LRHIGH)
+"RTN","FMQLSLAB",134,0)
+ 
+"RTN","FMQLSLAB",135,0)
+ ; 0.3: Interpretation (not there for NORMAL or no reference ranges)
+"RTN","FMQLSLAB",136,0)
+ D:$P(VAL,"^",2)'="" ASSERT^FMQLJSON(REPLY,"INTERPRETATION",".03","4",$P(VAL,"^",2))
+"RTN","FMQLSLAB",137,0)
+ 
+"RTN","FMQLSLAB",138,0)
+ D DICTEND^FMQLJSON(REPLY)
+"RTN","FMQLSLAB",139,0)
+ 
+"RTN","FMQLSLAB",140,0)
+ Q
+"RTN","FMQLSSAM")
+0^7^B262396
+"RTN","FMQLSSAM",1,0)
+FMQLSSAM; Caregraf - FMQL Schema Enhancement for Terminologies ; Dec 15th, 2010
+"RTN","FMQLSSAM",2,0)
+ ;;0.8;FMQLQP;;Dec 15th, 2010
+"RTN","FMQLSSAM",3,0)
+ 
+"RTN","FMQLSSAM",4,0)
+;
+"RTN","FMQLSSAM",5,0)
+; FMQL Schema Enhancement for Terminologies - sameas relationships
+"RTN","FMQLSSAM",6,0)
+; - peer of SSAM (SAMEAS), SORD (for Orders)
+"RTN","FMQLSSAM",7,0)
+;
+"RTN","FMQLSSAM",8,0)
+; FMQL Query Processor (c) Caregraf 2010-2011 AGPL
+"RTN","FMQLSSAM",9,0)
+;  
+"RTN","FMQLSSAM",10,0)
+; Link (declare sameas) local vocabulary to standard or national equivalents. 
+"RTN","FMQLSSAM",11,0)
+; This is part of FMQL's FileMan schema enhancements.
+"RTN","FMQLSSAM",12,0)
+; 
+"RTN","FMQLSSAM",13,0)
+; Note: Like other enhancements, the logic here will be migrated to FileMan's 
+"RTN","FMQLSSAM",14,0)
+; schema. Computed pointers called "sameas" will be added to relevant files.
+"RTN","FMQLSSAM",15,0)
+; 
+"RTN","FMQLSSAM",16,0)
+; TBD: change to be dictionary driven ie. from, to, byfield ... util uses DICT.
+"RTN","FMQLSSAM",17,0)
+;
+"RTN","FMQLSSAM",18,0)
+ 
+"RTN","FMQLSSAM",19,0)
+; TBD: DEFLABEL is used for VUID. Look up explicitly in V0.8 (with better .01 routine)
+"RTN","FMQLSSAM",20,0)
+; TBD: FMQLCORR - will largely go in V0.8 with proper DESCRIBE that catches and logs invalid pointers like 4-055
+"RTN","FMQLSSAM",21,0)
+RESOLVE(FILENUM,IEN,DEFLABEL,SAMEAS)
+"RTN","FMQLSSAM",22,0)
+ Q:'$D(^DIC(FILENUM,0,"GL"))  ; catches BNode etc.
+"RTN","FMQLSSAM",23,0)
+ ; Q:IEN'=+IEN ; catch non numeric IEN
+"RTN","FMQLSSAM",24,0)
+ I IEN'=+IEN S ^TMP("FMQLCORR","SAMEAS:IEN",FILENUM)=IEN Q
+"RTN","FMQLSSAM",25,0)
+ I FILENUM="50.7" D RESOLVE50dot7(IEN,.SAMEAS) Q  ; PHARMACY ORDERABLE
+"RTN","FMQLSSAM",26,0)
+ I FILENUM="50" D RESOLVE50(IEN,.SAMEAS) Q  ; DRUG
+"RTN","FMQLSSAM",27,0)
+ I FILENUM="71" D RESOLVE71(IEN,.SAMEAS) Q  ; RAD/NUC PROCEDURE
+"RTN","FMQLSSAM",28,0)
+ I FILENUM="790.2" D RESOLVE790dot2(IEN,.SAMEAS) Q  ; WV PROCEDURE
+"RTN","FMQLSSAM",29,0)
+ D RESOLVEVAFIXED(FILENUM,IEN,DEFLABEL,.SAMEAS) I $D(SAMEAS) Q
+"RTN","FMQLSSAM",30,0)
+ D RESOLVESTANDARD(FILENUM,IEN,DEFLABEL,.SAMEAS) I $D(SAMEAS) Q
+"RTN","FMQLSSAM",31,0)
+ D RESOLVEVUID(FILENUM,IEN,DEFLABEL,.SAMEAS) I $D(SAMEAS) Q
+"RTN","FMQLSSAM",32,0)
+ Q
+"RTN","FMQLSSAM",33,0)
+ 
+"RTN","FMQLSSAM",34,0)
+; TBD: issue of "national" or not. Ex/ "national allergy" in 120_83.
+"RTN","FMQLSSAM",35,0)
+; TBD: VUIDs for many coded-value fields, all given in 8985_1. Can LU with NS
+"RTN","FMQLSSAM",36,0)
+;      CR _11-537. Ex/ YES/NO fields etc. File#,Field#,IVALUE leads to VUID
+"RTN","FMQLSSAM",37,0)
+;      Note: complication of 63_04. Could local enum labs get VUIDs too?
+"RTN","FMQLSSAM",38,0)
+RESOLVEVUID(FILENUM,IEN,DEFLABEL,SAMEAS)
+"RTN","FMQLSSAM",39,0)
+ N VUID,VUIDE
+"RTN","FMQLSSAM",40,0)
+ I (($G(DEFLABEL)="")!($G(IEN)="")) Q  ; RESOLVEDRUG, maybe more need this
+"RTN","FMQLSSAM",41,0)
+ S VUIDE=^DIC(FILENUM,0,"GL")_IEN_","_"""VUID"""_")"
+"RTN","FMQLSSAM",42,0)
+ I DEFLABEL["/" S DEFLABEL=$TR(DEFLABEL,"/","-")  ; TMP: names with /. TBD fix.
+"RTN","FMQLSSAM",43,0)
+ I $G(@VUIDE) S SAMEAS("URI")="VA:"_$P($G(@VUIDE),"^",1) S SAMEAS("LABEL")=DEFLABEL  Q
+"RTN","FMQLSSAM",44,0)
+ ; For now, if VUID empty then return FILE-IEN
+"RTN","FMQLSSAM",45,0)
+ Q:'$D(^DD(FILENUM,99.99,0))
+"RTN","FMQLSSAM",46,0)
+ Q:'($P(^DD(FILENUM,99.99,0),"^",1)="VUID") 
+"RTN","FMQLSSAM",47,0)
+ S SAMEAS("URI")="VA:"_$TR(FILENUM,".","_")_"-"_IEN S SAMEAS("LABEL")=DEFLABEL
+"RTN","FMQLSSAM",48,0)
+ Q
+"RTN","FMQLSSAM",49,0)
+ 
+"RTN","FMQLSSAM",50,0)
+; Fixed files: 5,10,11, no VUID but VA standard
+"RTN","FMQLSSAM",51,0)
+RESOLVEVAFIXED(FILENUM,IEN,DEFLABEL,SAMEAS)
+"RTN","FMQLSSAM",52,0)
+ I '$D(^FMQLVASAMEAS) D
+"RTN","FMQLSSAM",53,0)
+ . S ^FMQLVASAMEAS("5")="5"  ; State
+"RTN","FMQLSSAM",54,0)
+ . ; S ^FMQLVASAMEAS("10")="10" TBD: Race Should have HL7 but doesn't. Recheck.
+"RTN","FMQLSSAM",55,0)
+ . S ^FMQLVASAMEAS("11")="11"  ; Coded Value for Marital Status so fixed
+"RTN","FMQLSSAM",56,0)
+ . Q
+"RTN","FMQLSSAM",57,0)
+ I $D(^FMQLVASAMEAS(FILENUM)) S SAMEAS("URI")="VA:"_$TR(FILENUM,".","_")_"-"_IEN S SAMEAS("LABEL")=$P(DEFLABEL,"/",2)
+"RTN","FMQLSSAM",58,0)
+ Q 
+"RTN","FMQLSSAM",59,0)
+ 
+"RTN","FMQLSSAM",60,0)
+; Standard files: 80 (ICD), 81 (CPT), 8932.1 (Provider Codes)
+"RTN","FMQLSSAM",61,0)
+RESOLVESTANDARD(FILENUM,IEN,DEFLABEL,SAMEAS)
+"RTN","FMQLSSAM",62,0)
+ I FILENUM="80" D
+"RTN","FMQLSSAM",63,0)
+ . Q:'$D(@("^ICD9("_IEN_",0)"))  ; TBD: log invalid
+"RTN","FMQLSSAM",64,0)
+ . S SAMEAS("URI")="ICD:"_$P(DEFLABEL,"/",2) 
+"RTN","FMQLSSAM",65,0)
+ . S SAMEAS("LABEL")=$P(@("^ICD9("_IEN_",0)"),"^",3)
+"RTN","FMQLSSAM",66,0)
+ I FILENUM="81" D
+"RTN","FMQLSSAM",67,0)
+ . Q:'$D(@("^ICPT("_IEN_",0)")) 
+"RTN","FMQLSSAM",68,0)
+ . S SAMEAS("URI")="CPT:"_$P(DEFLABEL,"/",2) 
+"RTN","FMQLSSAM",69,0)
+ . S SAMEAS("LABEL")=$P(@("^ICPT("_IEN_",0)"),"^",2)
+"RTN","FMQLSSAM",70,0)
+ I FILENUM="8932.1" D 
+"RTN","FMQLSSAM",71,0)
+ . Q:'$D(@("^USC(8932.1,"_IEN_",0)")) 
+"RTN","FMQLSSAM",72,0)
+ . S SAMEAS("URI")="PROVIDER:"_$P(@("^USC(8932.1,"_IEN_",0)"),"^",7) 
+"RTN","FMQLSSAM",73,0)
+ . S SAMEAS("LABEL")=$P(@("^USC(8932.1,"_IEN_",0)"),"^",2) 
+"RTN","FMQLSSAM",74,0)
+ Q
+"RTN","FMQLSSAM",75,0)
+ 
+"RTN","FMQLSSAM",76,0)
+; TBD: If no resolution of 50 then leave at that.
+"RTN","FMQLSSAM",77,0)
+RESOLVE50dot7(IEN,SAMEAS)
+"RTN","FMQLSSAM",78,0)
+ Q:'$D(^PSDRUG("ASP",IEN))
+"RTN","FMQLSSAM",79,0)
+ S DRUGIEN=$O(^PSDRUG("ASP",IEN,""))
+"RTN","FMQLSSAM",80,0)
+ D RESOLVE50(DRUGIEN,.SAMEAS)
+"RTN","FMQLSSAM",81,0)
+ Q:$D(SAMEAS)
+"RTN","FMQLSSAM",82,0)
+ S SAMEASLABEL=$P(^PSDRUG(DRUGIEN,0),"^")
+"RTN","FMQLSSAM",83,0)
+ Q:SAMEASLABEL=""
+"RTN","FMQLSSAM",84,0)
+ S SAMEAS("URI")="DRUG:"_DRUGIEN
+"RTN","FMQLSSAM",85,0)
+ S SAMEAS("LABEL")=SAMEASLABEL
+"RTN","FMQLSSAM",86,0)
+ Q
+"RTN","FMQLSSAM",87,0)
+ 
+"RTN","FMQLSSAM",88,0)
+; Special: VistA Drug 50 to Standard 50.68
+"RTN","FMQLSSAM",89,0)
+RESOLVE50(IEN,SAMEAS)
+"RTN","FMQLSSAM",90,0)
+ I '$D(^PSDRUG(IEN,"ND")) Q  ; Not mandatory to map to VA Product
+"RTN","FMQLSSAM",91,0)
+ S VAPIEN=$P(^PSDRUG(IEN,"ND"),"^",3)
+"RTN","FMQLSSAM",92,0)
+ ; Q:VAPIEN'=+VAPIEN ; catch corrupt IEN
+"RTN","FMQLSSAM",93,0)
+ I VAPIEN'=+VAPIEN S ^TMP("FMQLCORR","SAMEAS:50_IEN",IEN)=VAPIEN Q  ; VAPIEN may be zero so can't be subscript
+"RTN","FMQLSSAM",94,0)
+ D RESOLVEVUID("50.68",VAPIEN,$P(^PSDRUG(IEN,"ND"),"^",2),.SAMEAS)
+"RTN","FMQLSSAM",95,0)
+ Q
+"RTN","FMQLSSAM",96,0)
+ 
+"RTN","FMQLSSAM",97,0)
+; TBD: RESOLVE50_605 (DRUG CLASS). VA GETS hard codes a name map for this.
+"RTN","FMQLSSAM",98,0)
+ 
+"RTN","FMQLSSAM",99,0)
+; Special: VistA Rad/Nuc Procedures 71 to Standard CPT
+"RTN","FMQLSSAM",100,0)
+RESOLVE71(IEN,SAMEAS)
+"RTN","FMQLSSAM",101,0)
+ N CODEAR
+"RTN","FMQLSSAM",102,0)
+ Q:'$D(^DIC(71,0,"GL"))
+"RTN","FMQLSSAM",103,0)
+ S CODEAR=^DIC(71,0,"GL")
+"RTN","FMQLSSAM",104,0)
+ D RESOLVETOCPT(IEN,CODEAR,9,.SAMEAS)
+"RTN","FMQLSSAM",105,0)
+ Q
+"RTN","FMQLSSAM",106,0)
+ 
+"RTN","FMQLSSAM",107,0)
+; Special: VistA WV Procedures 790_2 to Standard CPT
+"RTN","FMQLSSAM",108,0)
+RESOLVE790dot2(IEN,SAMEAS)
+"RTN","FMQLSSAM",109,0)
+ N CODEAR
+"RTN","FMQLSSAM",110,0)
+ Q:'$D(^DIC(790.2,0,"GL"))
+"RTN","FMQLSSAM",111,0)
+ S CODEAR=^DIC(790.2,0,"GL")
+"RTN","FMQLSSAM",112,0)
+ D RESOLVETOCPT(IEN,CODEAR,8,.SAMEAS)
+"RTN","FMQLSSAM",113,0)
+ Q
+"RTN","FMQLSSAM",114,0)
+ 
+"RTN","FMQLSSAM",115,0)
+RESOLVETOCPT(IEN,CODEAR,CPTFI,SAMEAS)
+"RTN","FMQLSSAM",116,0)
+ N CPT
+"RTN","FMQLSSAM",117,0)
+ Q:'$D(@(CODEAR_IEN_",0)")) 
+"RTN","FMQLSSAM",118,0)
+ S CPT=$P(@(CODEAR_IEN_",0)"),"^",CPTFI)
+"RTN","FMQLSSAM",119,0)
+ Q:CPT=""
+"RTN","FMQLSSAM",120,0)
+ Q:'$D(^ICPT("B",CPT))
+"RTN","FMQLSSAM",121,0)
+ S CPTIEN=$O(^ICPT("B",CPT,""))
+"RTN","FMQLSSAM",122,0)
+ S SAMEASLABEL=$P(^ICPT(CPTIEN,0),"^",2)
+"RTN","FMQLSSAM",123,0)
+ Q:SAMEASLABEL=""
+"RTN","FMQLSSAM",124,0)
+ S SAMEAS("URI")="CPT:"_CPT
+"RTN","FMQLSSAM",125,0)
+ S SAMEAS("LABEL")=SAMEASLABEL
+"RTN","FMQLSSAM",126,0)
+ Q
+"RTN","FMQLSSAM",127,0)
+ 
+"RTN","FMQLSSAM",128,0)
+; External called: 63_04 to 60 (and maybe to 64)
+"RTN","FMQLSSAM",129,0)
+; TBD: Ptr fab - 63/.03-Name is NUMERIC but it is actually a pointer. Useful to map.
+"RTN","FMQLSSAM",130,0)
+; Note that GETS seems to hard code such a mapping.
+"RTN","FMQLSSAM",131,0)
+; TBD: turn lab with field=value to the typical code=x, value=y. 
+"RTN","FMQLSSAM",132,0)
+; ^LAB(60,"C","CH;6;1",5543)=""
+"RTN","FMQLSSAM",133,0)
+; REDO AS 60->64 (will get 60 from 63_04)
+"RTN","FMQLSSAM",134,0)
+RESOLVE6304(STFIELD,FCODE)
+"RTN","FMQLSSAM",135,0)
+ N SIXZERO
+"RTN","FMQLSSAM",136,0)
+ Q:'$D(^LAB(60,"C",STFIELD))  ; "C" INDEX is for 5, location_data_name
+"RTN","FMQLSSAM",137,0)
+ S SIXZERO=$O(^LAB(60,"C",STFIELD,""))
+"RTN","FMQLSSAM",138,0)
+ ; Issue for 64: in TX Vista, some verify_wkld_code multiple have it. Just 60 now
+"RTN","FMQLSSAM",139,0)
+ Q:'$D(^LAB(60,SIXZERO,0))
+"RTN","FMQLSSAM",140,0)
+ S LABEL=$P(^LAB(60,SIXZERO,0),"^")
+"RTN","FMQLSSAM",141,0)
+ Q:LABEL=""
+"RTN","FMQLSSAM",142,0)
+ S FCODE("URI")="60-"_SIXZERO
+"RTN","FMQLSSAM",143,0)
+ S FCODE("LABEL")=LABEL
+"RTN","FMQLSSAM",144,0)
+ Q
+"RTN","FMQLSSAM",145,0)
+ 
+"RTN","FMQLSSAM",146,0)
+; TBD: LU LRVER1
+"RTN","FMQLSSAM",147,0)
+RESOLVE60(IEN,SAMEAS)
+"RTN","FMQLSSAM",148,0)
+ Q:'$D(^LAB(60,IEN,64))
+"RTN","FMQLSSAM",149,0)
+ ; Take Result NLT over National NLT
+"RTN","FMQLSSAM",150,0)
+ N NLTIEN S NLTIEN=$S($P(^LAB(60,IEN,64),"^",2):$P(^LAB(60,IEN,64),"^",2),$P(^LAB(60,IEN,64),"^"):$P(^LAB(60,IEN,64),"^"),1:"")
+"RTN","FMQLSSAM",151,0)
+ Q:NLTIEN=""
+"RTN","FMQLSSAM",152,0)
+ Q:'$D(^LAM(NLTIEN))
+"RTN","FMQLSSAM",153,0)
+ N WKLDCODE S WKLDCODE=$P(^LAM(NLTIEN,0),"^",2)
+"RTN","FMQLSSAM",154,0)
+ S SAMEAS("URI")="NLT64:"_WKLDCODE
+"RTN","FMQLSSAM",155,0)
+ S SAMEAS("LABEL")=$P(^LAM(NLTIEN,0),"^")
+"RTN","FMQLSSAM",156,0)
+ D RESOLVE64(NLTIEN,.SAMEAS)
+"RTN","FMQLSSAM",157,0)
+ Q
+"RTN","FMQLSSAM",158,0)
+ 
+"RTN","FMQLSSAM",159,0)
+; TBD: LU LRVER1. See its logic.
+"RTN","FMQLSSAM",160,0)
+; TBD: Consider Code BNode which can point to CPT code etc.
+"RTN","FMQLSSAM",161,0)
+RESOLVE64(IEN,SAMEAS)
+"RTN","FMQLSSAM",162,0)
+ Q:'$D(^LAM(IEN,9))
+"RTN","FMQLSSAM",163,0)
+ N DEFLN S DEFLN=$P(^LAM(IEN,9),"^")
+"RTN","FMQLSSAM",164,0)
+ Q:DEFLN=""
+"RTN","FMQLSSAM",165,0)
+ Q:'$D(^LAB(95.3,DEFLN))
+"RTN","FMQLSSAM",166,0)
+ Q:'$D(^LAB(95.3,DEFLN,81))  ; shortname
+"RTN","FMQLSSAM",167,0)
+ S SAMEAS("URI")="LOINC:"_$P(^LAB(95.3,DEFLN,0),"^")_"-"_$P(^LAB(95.3,DEFLN,0),"^",15)  ; code and check_digit
+"RTN","FMQLSSAM",168,0)
+ S SAMEAS("LABEL")=^LAB(95.3,DEFLN,81)
+"RTN","FMQLSSAM",169,0)
+ Q
+"RTN","FMQLUTIL")
+0^4^B364444
+"RTN","FMQLUTIL",1,0)
+FMQLUTIL; Caregraf - FMQL Utilities ; Dec 15th, 2010
+"RTN","FMQLUTIL",2,0)
+ ;;0.8;FMQLQP;;Dec 15th, 2010
+"RTN","FMQLUTIL",3,0)
+ 
+"RTN","FMQLUTIL",4,0)
+; FMQL Utilities
+"RTN","FMQLUTIL",5,0)
+; 
+"RTN","FMQLUTIL",6,0)
+; Schema and data array walkers and checkers
+"RTN","FMQLUTIL",7,0)
+; 
+"RTN","FMQLUTIL",8,0)
+; FMQL Query Processor (c) Caregraf 2010-2011 AGPL
+"RTN","FMQLUTIL",9,0)
+ 
+"RTN","FMQLUTIL",10,0)
+;
+"RTN","FMQLUTIL",11,0)
+; Walk and execute routine TOX (to execute) over an IEN array (IENA)
+"RTN","FMQLUTIL",12,0)
+;
+"RTN","FMQLUTIL",13,0)
+; TBD: make logic more straightforward
+"RTN","FMQLUTIL",14,0)
+;
+"RTN","FMQLUTIL",15,0)
+; TOX:
+"RTN","FMQLUTIL",16,0)
+; - expect settings for FLINF,FAR,IEN. FAR is qualified array for BNodes.
+"RTN","FMQLUTIL",17,0)
+;
+"RTN","FMQLUTIL",18,0)
+; Choice of IENA
+"RTN","FMQLUTIL",19,0)
+; - file's index, either B of file or from FILTER [FLINF/FAR same]
+"RTN","FMQLUTIL",20,0)
+; - BNode file's qualified array passed in (checked by QP) [FLINF/FAR diff]
+"RTN","FMQLUTIL",21,0)
+; - file's IENs (straightforward walk) [FLINF/FAR same]
+"RTN","FMQLUTIL",22,0)
+;
+"RTN","FMQLUTIL",23,0)
+; Control the loop
+"RTN","FMQLUTIL",24,0)
+; - LIMIT = maximum number of entries to return. -1 means all.
+"RTN","FMQLUTIL",25,0)
+; - NOIDXMX = Maximum size of file to walk where no index exists. -1 means no max. This
+"RTN","FMQLUTIL",26,0)
+;   matters for filters. You don't want to make a linear search of a huge file looking 
+"RTN","FMQLUTIL",27,0)
+;   for a couple of entries.
+"RTN","FMQLUTIL",28,0)
+;   Note: no setting this in MUMPS right now. Set by FMQL QP in Apache.
+"RTN","FMQLUTIL",29,0)
+; - OFFSET: start from this point in a walk
+"RTN","FMQLUTIL",30,0)
+; 
+"RTN","FMQLUTIL",31,0)
+XIENA(FLINF,FILTER,IENA,LIMIT,OFFSET,NOIDXMX,TOX,PARAMS)
+"RTN","FMQLUTIL",32,0)
+ ; 01 FDINF of file must be ok. TBD: centralize in FLINF
+"RTN","FMQLUTIL",33,0)
+ N O1FDINF D BLDFDINF^FMQLUTIL(.FLINF,.01,.O1FDINF)
+"RTN","FMQLUTIL",34,0)
+ I $D(O1FDINF("BAD")) Q -2
+"RTN","FMQLUTIL",35,0)
+ N PLC S PLC("OFFLFT")=OFFSET,PLC("CNT")=0,PLC("LIMIT")=LIMIT,PLC("NOIDXMX")=NOIDXMX
+"RTN","FMQLUTIL",36,0)
+ N MFLT,IDXA,IDXSTART S MFLT="",IDXSTART=""
+"RTN","FMQLUTIL",37,0)
+ I FILTER'="" D ; TBD: support filters on BNodes
+"RTN","FMQLUTIL",38,0)
+ . S IENA="",IDXA=""
+"RTN","FMQLUTIL",39,0)
+ . S MFLT="S MFTEST="_$$FLTTOM^FMQLFILT(FILE,FILTER)
+"RTN","FMQLUTIL",40,0)
+ . D FLTIDX^FMQLFILT(.FLINF,FILTER,.IDXA,.IDXSTART)
+"RTN","FMQLUTIL",41,0)
+ . I $G(IDXSTART)="",$G(IDXA)'="" S IENA=IDXA,IDXA=""
+"RTN","FMQLUTIL",42,0)
+ . ; Fix for ORDERS. Must set MFLT to "" as doesn't apply properly
+"RTN","FMQLUTIL",43,0)
+ . I IENA="",IDXA="" D
+"RTN","FMQLUTIL",44,0)
+ . . D OFLTIDX^FMQLFILT(.FLINF,FILTER,.IDXA,.IDXSTART) 
+"RTN","FMQLUTIL",45,0)
+ . . I $G(IDXA)'="" S MFLT=""
+"RTN","FMQLUTIL",46,0)
+ I $G(IDXA)'="" D XBYIDX(.FLINF,IDXA,IDXSTART,MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
+"RTN","FMQLUTIL",47,0)
+ I $G(IENA)'="" D XBYIENA(.FLINF,IENA,MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
+"RTN","FMQLUTIL",48,0)
+ ; Won't walk B or File if file is too big for NOIDXMX setting
+"RTN","FMQLUTIL",49,0)
+ I NOIDXMX'=-1,FLINF("FMSIZE")>NOIDXMX Q -1
+"RTN","FMQLUTIL",50,0)
+ ; Use B Index
+"RTN","FMQLUTIL",51,0)
+ I $D(FLINF("BIDX")) D XBYIDX(.FLINF,FLINF("BIDX"),"",MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
+"RTN","FMQLUTIL",52,0)
+ ; Walk File IEN by IEN
+"RTN","FMQLUTIL",53,0)
+ D XBYIENA(.FLINF,FLINF("ARRAY"),MFLT,.PLC,TOX,.PARAMS)
+"RTN","FMQLUTIL",54,0)
+ Q PLC("CNT")
+"RTN","FMQLUTIL",55,0)
+ 
+"RTN","FMQLUTIL",56,0)
+; Xexecute over IDX. Must skip through the index values finding IEN arrays.
+"RTN","FMQLUTIL",57,0)
+; TBD: V0.9 - consider $Q
+"RTN","FMQLUTIL",58,0)
+XBYIDX(FLINF,IDXA,IDXSTART,MFLT,PLC,TOX,PARAMS)
+"RTN","FMQLUTIL",59,0)
+ Q:'$D(@IDXA)
+"RTN","FMQLUTIL",60,0)
+ N IDXV S IDXV=IDXSTART F  S IDXV=$O(@IDXA@(IDXV)) Q:IDXV=""  D
+"RTN","FMQLUTIL",61,0)
+ . N IENA S IENA=$NA(@IDXA@(IDXV))
+"RTN","FMQLUTIL",62,0)
+ . D XBYIENA(.FLINF,IENA,MFLT,.PLC,TOX,.PARAMS)
+"RTN","FMQLUTIL",63,0)
+ Q
+"RTN","FMQLUTIL",64,0)
+ 
+"RTN","FMQLUTIL",65,0)
+; Xexecute over an IEN array
+"RTN","FMQLUTIL",66,0)
+XBYIENA(FLINF,IENA,MFLT,PLC,TOX,PARAMS)
+"RTN","FMQLUTIL",67,0)
+ N IEN,MFTEST,FAR
+"RTN","FMQLUTIL",68,0)
+ ; For IENA in IDX where IEN is not last subscript. Need to skip duplicates.
+"RTN","FMQLUTIL",69,0)
+ S:'$D(PLC("LIEN")) PLC("LIEN")=0
+"RTN","FMQLUTIL",70,0)
+ S FAR=$S($D(FLINF("GL")):FLINF("ARRAY"),1:IENA)
+"RTN","FMQLUTIL",71,0)
+ S IEN=0 F  S IEN=$O(@IENA@(IEN)) Q:IEN'=+IEN!(PLC("CNT")=PLC("LIMIT"))  D
+"RTN","FMQLUTIL",72,0)
+ . Q:IEN=PLC("LIEN") ; IEN already in this IDX walk
+"RTN","FMQLUTIL",73,0)
+ . ; Despite what an index says, there is no such node.
+"RTN","FMQLUTIL",74,0)
+ . Q:'$D(@FAR@(IEN))
+"RTN","FMQLUTIL",75,0)
+ . ; Account for aliases in 2 and 68. ^DPT("B",NAME,IEN,"X")=1. TBD Generalize
+"RTN","FMQLUTIL",76,0)
+ . I ((FLINF("FILE")="2")!(FLINF("FILE")="68")),$G(@IENA@(IEN))'="" Q
+"RTN","FMQLUTIL",77,0)
+ . I MFLT'="" N IENA S IENA=FLINF("ARRAY") X MFLT Q:'MFTEST  ; Filter fails BNODE FIX
+"RTN","FMQLUTIL",78,0)
+ . I PLC("OFFLFT")>0 S PLC("OFFLFT")=PLC("OFFLFT")-1 Q
+"RTN","FMQLUTIL",79,0)
+ . S PLC("CNT")=PLC("CNT")+1
+"RTN","FMQLUTIL",80,0)
+ . S PLC("LIEN")=IEN  ; TBD replace with value of $D ie. 1,10 etc.
+"RTN","FMQLUTIL",81,0)
+ . X TOX  ; Takes .FLINF, IEN, FAR (FAR for BNodes), PARAMS (extras for builder)
+"RTN","FMQLUTIL",82,0)
+ Q
+"RTN","FMQLUTIL",83,0)
+ 
+"RTN","FMQLUTIL",84,0)
+; File's are globals (T files) or subfiles (S files)
+"RTN","FMQLUTIL",85,0)
+BLDFLINF(FILE,FLINF)
+"RTN","FMQLUTIL",86,0)
+ S FILE=$TR(FILE,"_",".")
+"RTN","FMQLUTIL",87,0)
+ S FLINF("FILE")=FILE
+"RTN","FMQLUTIL",88,0)
+ I $D(^DIC(FILE,0,"GL")) D BLDTFINF(FILE,.FLINF) Q
+"RTN","FMQLUTIL",89,0)
+ I $G(^DD(FILE,0,"UP"))'="" D BLDSFINF(FILE,.FLINF) Q
+"RTN","FMQLUTIL",90,0)
+ S FLINF("BAD")="No such file: "_FILE
+"RTN","FMQLUTIL",91,0)
+ Q
+"RTN","FMQLUTIL",92,0)
+ 
+"RTN","FMQLUTIL",93,0)
+; Top File Info
+"RTN","FMQLUTIL",94,0)
+BLDTFINF(FILE,FLINF)
+"RTN","FMQLUTIL",95,0)
+ I $G(^DIC(FILE,0))="" S FLINF("BAD")="^DIC 0 Has No Data for: "_FILE Q
+"RTN","FMQLUTIL",96,0)
+ S FLINF("GL")=^DIC(FILE,0,"GL")
+"RTN","FMQLUTIL",97,0)
+ ; Handle ^DPT( and ^GMR(120.5,
+"RTN","FMQLUTIL",98,0)
+ S FLINF("ARRAY")=$E(FLINF("GL"),1,$L(FLINF("GL"))-1)
+"RTN","FMQLUTIL",99,0)
+ I FLINF("ARRAY")["(" S FLINF("ARRAY")=FLINF("ARRAY")_")"
+"RTN","FMQLUTIL",100,0)
+ ; S FLINF("ARRAY")=$TR(FLINF("GL"),",",")")
+"RTN","FMQLUTIL",101,0)
+ I '$D(@FLINF("ARRAY")@(0)) S FLINF("BAD")="FM Corruption - bad array: "_FILE Q
+"RTN","FMQLUTIL",102,0)
+ S FLHDR=@FLINF("ARRAY")@(0)
+"RTN","FMQLUTIL",103,0)
+ S FLINF("LABEL")=$TR($P(FLHDR,"^"),"/","_")  ; alt is ^DD(FILE,0,"NM")
+"RTN","FMQLUTIL",104,0)
+ I FLINF("LABEL")="" S FLINF("BAD")="FM Corruption - no file name: "_FILE Q
+"RTN","FMQLUTIL",105,0)
+ S FLINF("FLAGS")=$P(FLHDR,"^",2)
+"RTN","FMQLUTIL",106,0)
+ S FLINF("FMSIZE")=+$P(FLHDR,"^",4)
+"RTN","FMQLUTIL",107,0)
+ ; I $D(@FLINF("ARRAY")@("B")) S FLINF("BIDX")=FLINF("GL")_"""B"")"
+"RTN","FMQLUTIL",108,0)
+ ; S:$P($G(@FLINF("ARRAY")@(.01,1,1,0)),"^",2)="B" FLINF("BIDX")=FLINF("GL")_"""B"")"
+"RTN","FMQLUTIL",109,0)
+ S:$$FIELDIDX(FILE,".01")="B" FLINF("BIDX")=FLINF("GL")_"""B"")"
+"RTN","FMQLUTIL",110,0)
+ ; # of fields is: $P(^DD(FILE,0),"^",0)
+"RTN","FMQLUTIL",111,0)
+ Q
+"RTN","FMQLUTIL",112,0)
+ 
+"RTN","FMQLUTIL",113,0)
+; TBD: look into this for more validity checks
+"RTN","FMQLUTIL",114,0)
+; - $$CREF^DILF
+"RTN","FMQLUTIL",115,0)
+; - N L,X1,X2,X3 S X1=$P(X,"("),X2=$P(X,"(",2,99),L=$L(X2),X3=$TR($E(X2,L),",)"),X2=$E(X2,1,(L-1))_X3 Q X1_$S(X2]"":"("_X2_")",1:"")
+"RTN","FMQLUTIL",116,0)
+ 
+"RTN","FMQLUTIL",117,0)
+;
+"RTN","FMQLUTIL",118,0)
+; Subfile Info
+"RTN","FMQLUTIL",119,0)
+; Most (all?) sub file's named in files ie. 120_81 inside 120_8 but can't key off that.
+"RTN","FMQLUTIL",120,0)
+;
+"RTN","FMQLUTIL",121,0)
+BLDSFINF(FILE,FLINF)
+"RTN","FMQLUTIL",122,0)
+ ; Ex/ ^DD(8925.02,.01,0)="REPORT TEXT^W^^0;1^Q"
+"RTN","FMQLUTIL",123,0)
+ I $P($G(^DD(FILE,.01,0)),"^",2)["W" S FLINF("BAD")="Word Processing File: "_FILE Q
+"RTN","FMQLUTIL",124,0)
+ I '$D(^DD(FILE,0,"NM")) S FLINF("BAD")="FM Corruption - no file name: "_FILE Q
+"RTN","FMQLUTIL",125,0)
+ S FLINF("LABEL")=$O(^DD(FILE,0,"NM",""))
+"RTN","FMQLUTIL",126,0)
+ S FLINF("PARENT")=^DD(FILE,0,"UP")  ; Existence checked by caller
+"RTN","FMQLUTIL",127,0)
+ I '$D(^DD(FLINF("PARENT"),"SB",FILE)) S FLINF("BAD")="FM Corruption - parent doesn't know sub file" Q
+"RTN","FMQLUTIL",128,0)
+ ; Get Field by Sub File id and not by sub file label in "B"
+"RTN","FMQLUTIL",129,0)
+ S FLINF("PFIELD")=$O(^DD(FLINF("PARENT"),"SB",FILE,""))  ; SubFile location in parent
+"RTN","FMQLUTIL",130,0)
+ I '$D(^DD(FLINF("PARENT"),FLINF("PFIELD"),0)) S FLINF("BAD")="FM Corruption - DD doesn't know parent's field for sub file" Q
+"RTN","FMQLUTIL",131,0)
+ S PLOCPOS=$P(^DD(FLINF("PARENT"),FLINF("PFIELD"),0),"^",4)
+"RTN","FMQLUTIL",132,0)
+ I PLOCPOS="" S FLINF("BAD")="FM Corruption - DD has no location information for subfile" Q
+"RTN","FMQLUTIL",133,0)
+ I $P(PLOCPOS,";",2)'="0" S FLINF("BAD")="FM Corruption - BNode not in position 0" Q
+"RTN","FMQLUTIL",134,0)
+ S FLINF("PLOCSUB")=$P(PLOCPOS,";")
+"RTN","FMQLUTIL",135,0)
+ Q
+"RTN","FMQLUTIL",136,0)
+ 
+"RTN","FMQLUTIL",137,0)
+; Field Info
+"RTN","FMQLUTIL",138,0)
+BLDFDINF(FLINF,FIELD,FDINF)
+"RTN","FMQLUTIL",139,0)
+ N FILE S FILE=FLINF("FILE")
+"RTN","FMQLUTIL",140,0)
+ S FIELD=$TR(FIELD,"_",".")
+"RTN","FMQLUTIL",141,0)
+    I '$D(^DD(FILE,FIELD,0)) S FDINF("BAD")="No 0 Definition: "_FILE_"/"_FIELD Q
+"RTN","FMQLUTIL",142,0)
+ S FDINF("FIELD")=FIELD
+"RTN","FMQLUTIL",143,0)
+ N FLAGS S FLAGS=$P(^DD(FILE,FIELD,0),"^",2)
+"RTN","FMQLUTIL",144,0)
+ S FDINF("FLAGS")=FLAGS
+"RTN","FMQLUTIL",145,0)
+    S FDINF("LABEL")=$P(^DD(FILE,FIELD,0),"^")
+"RTN","FMQLUTIL",146,0)
+ ; Date/Number/Codes/String/WP String/Pointer/V Pointer/MULT/MUMPS
+"RTN","FMQLUTIL",147,0)
+ ; TBD: Computed - B, m, D
+"RTN","FMQLUTIL",148,0)
+ I +FLAGS D  ; WP and MULT both refer to subfile in flags.
+"RTN","FMQLUTIL",149,0)
+ . I $P($G(^DD(+FLAGS,.01,0)),"^",2)["W" S FDINF("TYPE")=5
+"RTN","FMQLUTIL",150,0)
+ . E  S FDINF("TYPE")=9 S FDINF("SUBFILE")=+FLAGS  ; TBD: validate ["M ?
+"RTN","FMQLUTIL",151,0)
+ ; TBD: Default String even if no "F". Should log.
+"RTN","FMQLUTIL",152,0)
+ E  S FDINF("TYPE")=$S(FLAGS["D":1,FLAGS["N":2,FLAGS["S":3,FLAGS["F":4,FLAGS["C":6,FLAGS["P":7,FLAGS["V":8,FLAGS["K":10,1:"4") ; Default to String
+"RTN","FMQLUTIL",153,0)
+ I FDINF("TYPE")="" S FDINF("BAD")="No type set: "_FILE_"/"_FIELD Q
+"RTN","FMQLUTIL",154,0)
+ I FDINF("TYPE")'=6 D
+"RTN","FMQLUTIL",155,0)
+ . S FDLOC=$P(^DD(FILE,FIELD,0),"^",4) 
+"RTN","FMQLUTIL",156,0)
+ . S FDINF("LOCSUB")=$P(FDLOC,";") 
+"RTN","FMQLUTIL",157,0)
+ . ; Check for " ; "? ie. spaces even though field not given as computed
+"RTN","FMQLUTIL",158,0)
+ . I $TR(FDINF("LOCSUB")," ")="" S FDINF("BAD")="No location for field: "_FILE_"/"_FIELD Q
+"RTN","FMQLUTIL",159,0)
+ . I FDINF("TYPE")'=9 D
+"RTN","FMQLUTIL",160,0)
+ . . N LOCWHERE S LOCWHERE=$P(FDLOC,";",2)
+"RTN","FMQLUTIL",161,0)
+ . . I LOCWHERE="" S FDINF("BAD")="No location position for field: "_FILE_"/"_FIELD Q
+"RTN","FMQLUTIL",162,0)
+ . . ; Extract form for 63/.1 (E1,19) or 68/.1;E1,220 (limit for screenman?)
+"RTN","FMQLUTIL",163,0)
+ . . I LOCWHERE?1"E"1.N1","1.N S FDINF("LOCE")=$E(LOCWHERE,1,$L(LOCWHERE)) Q
+"RTN","FMQLUTIL",164,0)
+ . . I LOCWHERE=+LOCWHERE S FDINF("LOCPOS")=LOCWHERE Q
+"RTN","FMQLUTIL",165,0)
+ . . ; TBD: is there another position type? Return an error until I support it.
+"RTN","FMQLUTIL",166,0)
+ . . S FDINF("BAD")="Unsupported location position for field: "_FILE_"/"_FIELD_":"_LOCWHERE Q
+"RTN","FMQLUTIL",167,0)
+ I FDINF("TYPE")=3 D 
+"RTN","FMQLUTIL",168,0)
+ . N CODES S CODES=$P(^DD(FILE,FIELD,0),"^",3)
+"RTN","FMQLUTIL",169,0)
+ . I CODES="" S FDINF("BAD")="No codes specified: "_FILE_"/"_FIELD Q
+"RTN","FMQLUTIL",170,0)
+ . N C F C=1:1 Q:$P(CODES,";",C)=""  S FDINF("CODES",$P($P(CODES,";",C),":"))=$P($P(CODES,";",C),":",2)
+"RTN","FMQLUTIL",171,0)
+ I FDINF("TYPE")=7 S FDINF("PFILE")=+$P(FLAGS,"P",2) Q
+"RTN","FMQLUTIL",172,0)
+ I FDINF("TYPE")=9 S FDINF("BFILE")=+FLAGS Q
+"RTN","FMQLUTIL",173,0)
+ I FDINF("TYPE")=8 D
+"RTN","FMQLUTIL",174,0)
+ . I '$D(^DD(FILE,FIELD,"V")) S FDINF("BAD")="No VPTR Definition: "_FILE_"/"_FIELD Q
+"RTN","FMQLUTIL",175,0)
+ . S X=0 F  S X=$O(^DD(FILE,FIELD,"V",X)) Q:X'=+X  D
+"RTN","FMQLUTIL",176,0)
+ . . N PFILE S PFILE=$P(^DD(FILE,FIELD,"V",X,0),"^",1)
+"RTN","FMQLUTIL",177,0)
+ . . I '$D(^DIC(PFILE,0,"GL")) S FDINF("BAD")="No Global for VPTR target: "_PFILE Q
+"RTN","FMQLUTIL",178,0)
+ . . N PLOC S PLOC=^DIC(PFILE,0,"GL")
+"RTN","FMQLUTIL",179,0)
+ . . S FDINF("PLOC",PLOC)=PFILE
+"RTN","FMQLUTIL",180,0)
+ . . S FDINF("PFILE",PFILE)=PLOC
+"RTN","FMQLUTIL",181,0)
+ Q
+"RTN","FMQLUTIL",182,0)
+ 
+"RTN","FMQLUTIL",183,0)
+; Get first non-mumps index for a field.
+"RTN","FMQLUTIL",184,0)
+; TBD: check ^DD(FILE,"IX",FIELD)
+"RTN","FMQLUTIL",185,0)
+; TBD: support .11 ie. Walk ^DD("IX","B",FILE#) or ? ie. XREFs defined outside file.
+"RTN","FMQLUTIL",186,0)
+; TBD: meta format to define select MUMPS indexes for use here.
+"RTN","FMQLUTIL",187,0)
+FIELDIDX(FILE,FIELD)
+"RTN","FMQLUTIL",188,0)
+ N IDXID,IDXINF,IDX
+"RTN","FMQLUTIL",189,0)
+ S IDX=""
+"RTN","FMQLUTIL",190,0)
+ ; From '$D(^DD(FILE,FIELD,1))
+"RTN","FMQLUTIL",191,0)
+ I '$D(^DD(FILE,FIELD,1,1)) Q ""  ; indexes number 1 up
+"RTN","FMQLUTIL",192,0)
+ S IDXID=0 F  S IDXID=$O(^DD(FILE,FIELD,1,IDXID)) Q:((IDXID'=+IDXID)!(IDX'=""))  D  ; > 0 has indexes
+"RTN","FMQLUTIL",193,0)
+ . Q:'$D(^DD(FILE,FIELD,1,IDXID,0))  ; TBD Corruption note
+"RTN","FMQLUTIL",194,0)
+ . S IDXINF=^DD(FILE,FIELD,1,IDXID,0)
+"RTN","FMQLUTIL",195,0)
+ . I $P(IDXINF,"^",3)'="MUMPS" S IDX=$P(^DD(FILE,FIELD,1,IDXID,0),"^",2) Q
+"RTN","FMQLUTIL",196,0)
+ Q IDX
+"RTN","FMQLUTIL",197,0)
+ 
+"RTN","FMQLUTIL",198,0)
+; Get External Value
+"RTN","FMQLUTIL",199,0)
+; TBD: get vptr
+"RTN","FMQLUTIL",200,0)
+; TBD: GETS maps some .01's (50_605 to field 1 etc.) Is this in meta or ?
+"RTN","FMQLUTIL",201,0)
+; Another ex is 120_8 Allergy Type is a 4 but treated like a CODE. Ext form
+"RTN","FMQLUTIL",202,0)
+; comes from ^DD(120.8,3.1,2.1)="S Y=$$OUTTYPE^GMRAUTL(Y)" [this doesn't work
+"RTN","FMQLUTIL",203,0)
+; for lab's name map.]
+"RTN","FMQLUTIL",204,0)
+; TBD: catch the invalid - CODES beyond range, bad ptrs, dates etc.
+"RTN","FMQLUTIL",205,0)
+GETEVAL(FDINF,IVAL)
+"RTN","FMQLUTIL",206,0)
+ Q:FDINF("TYPE")=1 $$MAKEXMLDATE^FMQLUTIL(IVAL)
+"RTN","FMQLUTIL",207,0)
+ I FDINF("TYPE")=3,$D(FDINF("CODES",IVAL)) Q FDINF("CODES",IVAL)
+"RTN","FMQLUTIL",208,0)
+ N EVAL S EVAL=IVAL ; Fallback to internal value
+"RTN","FMQLUTIL",209,0)
+ I FDINF("TYPE")=7 D
+"RTN","FMQLUTIL",210,0)
+ . I IVAL="0" Q ; TBD Common NULL value that doesn't resolve
+"RTN","FMQLUTIL",211,0)
+ . N PFLINF D BLDFLINF(FDINF("PFILE"),.PFLINF)
+"RTN","FMQLUTIL",212,0)
+ . Q:$D(PFLINF("BAD"))
+"RTN","FMQLUTIL",213,0)
+ . N PFDINF D BLDFDINF(.PFLINF,.01,.PFDINF)
+"RTN","FMQLUTIL",214,0)
+ . Q:$D(PFDINF("BAD"))
+"RTN","FMQLUTIL",215,0)
+ . Q:$G(@PFLINF("ARRAY")@(IVAL,0))="" ; Invalid Pointer
+"RTN","FMQLUTIL",216,0)
+ . S IVAL=$P(@PFLINF("ARRAY")@(IVAL,0),"^")
+"RTN","FMQLUTIL",217,0)
+ . Q:IVAL=""
+"RTN","FMQLUTIL",218,0)
+ . S EVAL=$$GETEVAL(.PFDINF,IVAL)
+"RTN","FMQLUTIL",219,0)
+ ; VPTR very like PTR - once PFILE is know.
+"RTN","FMQLUTIL",220,0)
+ I FDINF("TYPE")=8 D
+"RTN","FMQLUTIL",221,0)
+ . N PLOC S PLOC="^"_$P(IVAL,";",2)
+"RTN","FMQLUTIL",222,0)
+ . Q:'$D(FDINF("PLOC",PLOC)) ; TBD: catch the buggy ptr instead
+"RTN","FMQLUTIL",223,0)
+ . N PFILE S PFILE=FDINF("PLOC",PLOC)
+"RTN","FMQLUTIL",224,0)
+ . N PFLINF D BLDFLINF(PFILE,.PFLINF)
+"RTN","FMQLUTIL",225,0)
+ . Q:$D(PFLINF("BAD"))
+"RTN","FMQLUTIL",226,0)
+ . N PID S PID=$P(IVAL,";")
+"RTN","FMQLUTIL",227,0)
+ . Q:$G(@PFLINF("ARRAY")@(PID,0))="" ; Invalid Pointer
+"RTN","FMQLUTIL",228,0)
+ . N PFDINF D BLDFDINF(.PFLINF,.01,.PFDINF)
+"RTN","FMQLUTIL",229,0)
+ . Q:$D(PFDINF("BAD"))
+"RTN","FMQLUTIL",230,0)
+ . N PIVAL S PIVAL=$P(@PFLINF("ARRAY")@(PID,0),"^")
+"RTN","FMQLUTIL",231,0)
+ . Q:PIVAL=""
+"RTN","FMQLUTIL",232,0)
+ . S EVAL=$$GETEVAL(.PFDINF,PIVAL)
+"RTN","FMQLUTIL",233,0)
+ Q EVAL
+"RTN","FMQLUTIL",234,0)
+ 
+"RTN","FMQLUTIL",235,0)
+;
+"RTN","FMQLUTIL",236,0)
+; Parse URL
+"RTN","FMQLUTIL",237,0)
+; TBD: BNode - S PFILE=$G(^DD(FILE,0,"UP")) Q:'PFILE
+"RTN","FMQLUTIL",238,0)
+; 
+"RTN","FMQLUTIL",239,0)
+PARSEURL(URL,FLINF,ID)
+"RTN","FMQLUTIL",240,0)
+ N FILE S FILE=$P(URL,"-")
+"RTN","FMQLUTIL",241,0)
+ D BLDFLINF(FILE,.FLINF)
+"RTN","FMQLUTIL",242,0)
+ I $D(FLINF("BAD")) Q
+"RTN","FMQLUTIL",243,0)
+ S ID=$P(URL,"-",2) ; TBD: support BNode Identification
+"RTN","FMQLUTIL",244,0)
+ Q
+"RTN","FMQLUTIL",245,0)
+ 
+"RTN","FMQLUTIL",246,0)
+; TBD: see ^DD("DD") in classic fileman for its date transforms
+"RTN","FMQLUTIL",247,0)
+MAKEXMLDATE(FMDATE)
+"RTN","FMQLUTIL",248,0)
+ S XMLDATE=(+$E(FMDATE,1,3)+1700)_"-"_$E(FMDATE,4,5)_"-"_$E(FMDATE,6,7)_"T"
+"RTN","FMQLUTIL",249,0)
+ S XMLDATE=XMLDATE_$S($E(FMDATE,8,10):$E(FMDATE,9,10),1:"00")_":"_$S($E(FMDATE,11,12):$E(FMDATE,11,12),1:"00")_":"_$S($E(FMDATE,13,14):$E(FMDATE,13,14),1:"00")_"Z"
+"RTN","FMQLUTIL",250,0)
+ Q XMLDATE
+"RTN","FMQLUTIL",251,0)
+ 
+"RTN","FMQLUTIL",252,0)
+MAKEFMDATE(XMLDATE) ; For now, ignore hours, seconds
+"RTN","FMQLUTIL",253,0)
+ S FMDATE=(+$E(XMLDATE,1,4)-1700)_$E(XMLDATE,6,7)_$E(XMLDATE,9,10)
+"RTN","FMQLUTIL",254,0)
+ Q FMDATE
+"RTN","FMQLUTIL",255,0)
+ 
+"RTN","FMQLUTIL",256,0)
+; Predicate is lower alphanum and _
+"RTN","FMQLUTIL",257,0)
+FIELDTOPRED(FIELD)
+"RTN","FMQLUTIL",258,0)
+ SET ALW="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz_ /"
+"RTN","FMQLUTIL",259,0)
+ SET UPC="ABCDEFGHIJKLMNOPQRSTUVWXYZ /"
+"RTN","FMQLUTIL",260,0)
+ SET LOC="abcdefghijklmnopqrstuvwxyz__"
+"RTN","FMQLUTIL",261,0)
+ S PRED=$TR($TR(FIELD,$TR(FIELD,ALW)),UPC,LOC)
+"RTN","FMQLUTIL",262,0)
+ Q PRED
+"RTN","FMQLUTIL",263,0)
+ 
+"RTN","FMQLUTIL",264,0)
+; $$FLDNUM^DILFD (locn map?)
+"RTN","FMQLUTIL",265,0)
+; $$VFILE^DILFD (file exists) and $$VFIELD^DILFD (field exists), $ROOT too
+"RTN","FMQLUTIL",266,0)
+; Consider: $ETRAP. Catch all error? (General Question of trapping and passing back)
+"RTN","FMQLUTIL",267,0)
+; ^$R doesn't seem to be supported (check external routines needed)
+"VER")
+8.0^22.0
+**END**
+**END**

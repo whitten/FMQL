@@ -1,0 +1,25 @@
+Changes in V0.9:
+================
+1. FMQL
+- New COUNT REFS primitive
+- Cleaner response (JSON) format including echo'ing of query
+- Vocabulary Management (SameAs) enhancement to distinguish mixed and national-only VA vocabularies and to support lexicon expressions (757)
+- Enhanced contained node (hierarchal schema) handling including cut-offs for scalable description
+- Better paging through large datasets with OFFSET and LIMIT
+- Filter enhanced for quoting complex strings
+- Configurable query-size parameter to avoid clients taxing a VistA
+
+2. Web Clients
+- New Query Maker client for making and viewing raw queries
+- Separate Rambler and Schema clients
+- Rambler links to query maker, exposing the FMQL it issues
+- Hash identifiers to avoid server-round trips (IE 8+, FF, Chrome, Safari)
+- IE7 support
+
+Known Issues:
+=============
+1. PR #191: need VA allocated name space for FMQL files like CHLAB. Currently CHLAB uses 9999999999_6304.
+2. PR #62: you can only page through first level contained nodes and you cannot DESCRIBE an individual contained node.
+3. PR #181: referring orders (100) are not counted by COUNT REFS
+4. PR #178: arabic unicode is garbled on GT/M
+5. PR #182: Expression (757.01) doesn't support filter by name because its index uses upper case values while the field supports mixed case (due to a fileman quirk)
