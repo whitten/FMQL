@@ -115,6 +115,10 @@ BLDTFINF(FILE,FLINF)
    ; don't always have size
    I $P(FLHDR,"^",4) S FLINF("FMSIZE")=+$P(FLHDR,"^",4)
    I $P(FLHDR,"^",3) S FLINF("LSTIEN")=$P(FLHDR,"^",3)
+   ; Version information
+   S:$D(^DD(FILE,0,"VR")) FLINF("VERSION")=^DD(FILE,0,"VR")
+   S:$D(^DD(FILE,0,"VRPK")) FLINF("PACKAGE")=^DD(FILE,0,"VRPK")
+   S:$D(^DD(FILE,0,"VRRV")) FLINF("VERLCL")=^DD(FILE,0,"VRRV")
    I $D(^DIC(FILE,"%",1))  D  ; APP GROUPS
    . S APGSVAL=""
    . S I=0 F  S I=$O(^DIC(FILE,"%",I)) Q:I'=+I  D 
