@@ -1,5 +1,5 @@
 FMQLSCH; Caregraf - FMQL Schema Query Processor ; May 31st, 2012
-    ;;0.95;FMQLQP;;May 31st, 2012
+    ;;0.96;FMQLQP;;Nov 12, 2012
  
 ; FMQL Schema Query Processor
 ; 
@@ -23,6 +23,7 @@ ALLTYPES(REPLY,FMQLPARAMS)
     . D DASSERT^FMQLJSON(REPLY,"name",FLINF("LABEL"))
     . D DASSERT^FMQLJSON(REPLY,"number",FLINF("FILE"))
     . D:$D(FLINF("PARENT")) DASSERT^FMQLJSON(REPLY,"parent",FLINF("PARENT"))
+    . D:$D(FLINF("GL")) DASSERT^FMQLJSON(REPLY,"global",FLINF("GL"))
     . D:$D(FLINF("FMSIZE")) DASSERT^FMQLJSON(REPLY,"count",FLINF("FMSIZE"))
     . D DICTEND^FMQLJSON(REPLY)
     . Q
@@ -103,8 +104,7 @@ TOPFILEINFO(REPLY,FLINF)
     . Q
     D:$D(FLINF("APPGRPS")) DASSERT^FMQLJSON(REPLY,"applicationGroups",FLINF("APPGRPS"))
     D:$D(FLINF("VERSION")) DASSERT^FMQLJSON(REPLY,"version",FLINF("VERSION"))
-    D:$D(FLINF("PACKAGE")) DASSERT^FMQLJSON(REPLY,"package",FLINF("PACKAGE"))
-    D:$D(FLINF("VERLCL")) DASSERT^FMQLJSON(REPLY,"versionLocal",FLINF("VERLCL"))
+    D:$D(FLINF("VPACKAGE")) DASSERT^FMQLJSON(REPLY,"vpackage",FLINF("VPACKAGE"))
     D FIELDSINFO(FLINF("FILE"))
     D DICTSTART^FMQLJSON(REPLY,"fmql")
     D DASSERT^FMQLJSON(REPLY,"OP","DESCRIBE TYPE")
@@ -129,6 +129,7 @@ SUBFILEINFO(REPLY,FLINF)
     D REPLYEND^FMQLJSON(REPLY)
     Q
  
+; TODO: move all to FLDINFO
 FIELDSINFO(FILE) 
     N I
     D LISTSTART^FMQLJSON(REPLY,"fields")
@@ -143,7 +144,10 @@ FIELDSINFO(FILE)
     . S IDX=$$FIELDIDX^FMQLUTIL(FILE,FIELD)
     . D:IDX'="" DASSERT^FMQLJSON(REPLY,"index",IDX)
     . S FLDLABEL=$P(^DD(FILE,FIELD,0),"^")
+    . ; TODO: remove name == predicate once worked through. Make a client thing
     . D DASSERT^FMQLJSON(REPLY,"name",$$FIELDTOPRED^FMQLUTIL(FLDLABEL))
+    . ; TODO: rename this straight filename label -> name to match file
+    . D DASSERT^FMQLJSON(REPLY,"label",FLDLABEL)
     . S FLDLOC=$P(^DD(FILE,FIELD,0),"^",4)
     . D:FLDLOC'=" ; " DASSERT^FMQLJSON(REPLY,"location",FLDLOC) ; Computed has "no location"
     . ; Careful: gfs_frm.htm not definite. Ex/ "S" in flags if multiple with only
@@ -165,6 +169,12 @@ FIELDSINFO(FILE)
     . . I FLDFLAGS["V" S FLDTYPE=8 S FLDDETAILS=$$VARPOINTERRANGE(FILE,FIELD) ; V Pointer
     . . ; TBD: Computed (C) is DC,BC,C,Cm,Cmp. Must distinguish actual type. Correlate with no location.
     . . I '$D(FLDTYPE) S FLDTYPE=6 ; Computed: TBD: Break to BC, Cm, DC, C ie. qualifier
+    . . I $L($P(^DD(FILE,FIELD,0),"^",5)) D
+    . . . ; TODO: calculate better - using length to get over all internal ^
+    . . . N CALC S CALC=$P(^DD(FILE,FIELD,0),"^",5,$L(^DD(FILE,FIELD,0)))
+    . . . Q:CALC="Q"
+    . . . N CALCTYPE S CALCTYPE=$S(FLDTYPE=6:"computation",1:"inputTransform")
+    . . . D DASSERT^FMQLJSON(REPLY,CALCTYPE,CALC)
     . . Q
     . D DASSERT^FMQLJSON(REPLY,"type",FLDTYPE)
     . D:$D(FLDDETAILS) DASSERT^FMQLJSON(REPLY,"details",FLDDETAILS)

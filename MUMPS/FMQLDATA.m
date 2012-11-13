@@ -1,5 +1,5 @@
 FMQLDATA; Caregraf - FMQL Data Query Processor ; May 31st, 2012
-    ;;0.95;FMQLQP;;May 31st, 2012
+    ;;0.96;FMQLQP;;Nov 12, 2012
 
 ;
 ; FMQL Data Query Processor
@@ -161,7 +161,6 @@ ONEFIELD(FAR,ID,FDINF)
     Q:FDINF("TYPE")=6 ; Computed (TBD: v0.9)
     Q:FDINF("FIELD")=".001"  ; TBD: extract properly
     Q:'$D(@FAR@(ID,FDINF("LOCSUB")))
-    I $D(FDINF("HIDE")) D ASSERT^FMQLJSON(REPLY,FDINF("LABEL"),FDINF("FIELD"),FDINF("TYPE"),"**HIDDEN**") Q
     I FDINF("TYPE")=5 D
     . ; Pharma+ case: WP location but no entries (ala special case for 9)
     . ; TBD: "" only entry. Seen in RAD, P/H. 
