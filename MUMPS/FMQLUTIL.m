@@ -1,5 +1,5 @@
 FMQLUTIL;Caregraf - FMQL Utilities ; May 31, 2012
-   ;;0.95;FMQLQP;;May 31, 2012
+   ;;0.96;FMQLQP;;Nov 12, 2012
 
 ; FMQL Utilities
 ; 
@@ -117,8 +117,8 @@ BLDTFINF(FILE,FLINF)
    I $P(FLHDR,"^",3) S FLINF("LSTIEN")=$P(FLHDR,"^",3)
    ; Version information
    S:$D(^DD(FILE,0,"VR")) FLINF("VERSION")=^DD(FILE,0,"VR")
-   S:$D(^DD(FILE,0,"VRPK")) FLINF("PACKAGE")=^DD(FILE,0,"VRPK")
-   S:$D(^DD(FILE,0,"VRRV")) FLINF("VERLCL")=^DD(FILE,0,"VRRV")
+   S:$D(^DD(FILE,0,"VRPK")) FLINF("VPACKAGE")=^DD(FILE,0,"VRPK")
+   ; Not sending VRRV as formats vary - ex/ 80 vs 798.1
    I $D(^DIC(FILE,"%",1))  D  ; APP GROUPS
    . S APGSVAL=""
    . S I=0 F  S I=$O(^DIC(FILE,"%",I)) Q:I'=+I  D 
@@ -239,6 +239,7 @@ FIELDIDX(FILE,FIELD)
 ; TBD: catch the invalid - CODES beyond range, bad ptrs, dates etc.
 ;
 GETEVAL(FDINF,IVAL)
+   Q:$D(FDINF("HIDE")) "**HIDDEN**"
    Q:FDINF("TYPE")=1 $$MAKEXMLDATE^FMQLUTIL(IVAL)
    I FDINF("TYPE")=3,$D(FDINF("CODES",IVAL)) Q FDINF("CODES",IVAL)
    N EVAL S EVAL=IVAL ; Fallback to internal value
