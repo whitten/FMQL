@@ -91,9 +91,10 @@ BLDFLINF(FILE,FLINF)
    S FILE=$TR(FILE,"_",".")
    S FLINF("FILE")=FILE
    S FLINF("EFILE")=$TR(FILE,".","_")
+   I '$D(^DD(FILE)) S FLINF("BAD")="No such file" Q
    I $D(^DIC(FILE,0,"GL")) D BLDTFINF(FILE,.FLINF) Q
    I $G(^DD(FILE,0,"UP"))'="" D BLDSFINF(FILE,.FLINF) Q
-   S FLINF("BAD")="No such file: "_FILE
+   S FLINF("BAD")="No global or multiple definition"
    Q
 
 ;
@@ -101,16 +102,16 @@ BLDFLINF(FILE,FLINF)
 ; Fields: ARRAY, BIDX, FILE, FLAGS, FMSIZE, GL, LABEL
 ;
 BLDTFINF(FILE,FLINF)
-   I $G(^DIC(FILE,0))="" S FLINF("BAD")="^DIC 0 Has No Data for: "_FILE Q
+   I $G(^DIC(FILE,0))="" S FLINF("BAD")="^DIC 0 Has No Data" Q
    S FLINF("GL")=^DIC(FILE,0,"GL")
    ; Handle ^DPT( and ^GMR(120.5,
    S FLINF("ARRAY")=$E(FLINF("GL"),1,$L(FLINF("GL"))-1)
    I FLINF("ARRAY")["(" S FLINF("ARRAY")=FLINF("ARRAY")_")"
    ; S FLINF("ARRAY")=$TR(FLINF("GL"),",",")")
-   I '$D(@FLINF("ARRAY")@(0)) S FLINF("BAD")="FM Corruption - bad array: "_FILE Q
+   I '$D(@FLINF("ARRAY")@(0)) S FLINF("BAD")="No 0 Entry for Array" Q
    S FLHDR=@FLINF("ARRAY")@(0)
    S FLINF("LABEL")=$TR($P(FLHDR,"^"),"/","_")  ; alt is ^DD(FILE,0,"NM")
-   I FLINF("LABEL")="" S FLINF("BAD")="FM Corruption - no file name: "_FILE Q
+   I FLINF("LABEL")="" S FLINF("BAD")="No Name" Q
    S FLINF("FLAGS")=$P(FLHDR,"^",2)
    ; don't always have size
    I $P(FLHDR,"^",4) S FLINF("FMSIZE")=+$P(FLHDR,"^",4)
@@ -142,17 +143,21 @@ BLDTFINF(FILE,FLINF)
 BLDSFINF(FILE,FLINF)
    ; Ex/ ^DD(8925.02,.01,0)="REPORT TEXT^W^^0;1^Q"
    ; Used '$$VFILE^DILFD(FILE) elsewhere to same effect
-   I $P($G(^DD(FILE,.01,0)),"^",2)["W" S FLINF("BAD")="Word Processing File: "_FILE Q
-   I '$D(^DD(FILE,0,"NM")) S FLINF("BAD")="FM Corruption - no file name: "_FILE Q
+   ; WP is a file (has DD entry) but not considered a file for FMQL
+   I $P($G(^DD(FILE,.01,0)),"^",2)["W" S FLINF("BAD")="WP FILE" Q
+   I '$D(^DD(FILE,0,"NM")) S FLINF("BAD")="No Name" Q
    S FLINF("LABEL")=$O(^DD(FILE,0,"NM",""))
-   S FLINF("PARENT")=^DD(FILE,0,"UP")  ; Existence checked by caller
-   I '$D(^DD(FLINF("PARENT"),"SB",FILE)) S FLINF("BAD")="FM Corruption - parent doesn't know sub file" Q
+   S FLINF("PARENT")=^DD(FILE,0,"UP")
+   ; TODO: check slow down but needed to get at Subfile Array anyhow
+   N PFLINF D BLDFLINF(FLINF("PARENT"),.PFLINF)
+   I $D(PFLINF("BAD")) S FLINF("BAD")="Corrupt Parent: "_PFLINF("BAD") Q
+   I '$D(^DD(FLINF("PARENT"),"SB",FILE)) S FLINF("BAD")="Parent doesn't know this multiple" Q
    ; Get Field by Sub File id and not by sub file label in "B"
    S FLINF("PFIELD")=$O(^DD(FLINF("PARENT"),"SB",FILE,""))  ; SubFile location in parent
-   I '$D(^DD(FLINF("PARENT"),FLINF("PFIELD"),0)) S FLINF("BAD")="FM Corruption - DD doesn't know parent's field for sub file" Q
+   I '$D(^DD(FLINF("PARENT"),FLINF("PFIELD"),0)) S FLINF("BAD")="Multiple doesn't know parent's field for it" Q
    S PLOCPOS=$P(^DD(FLINF("PARENT"),FLINF("PFIELD"),0),"^",4)
-   I PLOCPOS="" S FLINF("BAD")="FM Corruption - DD has no location information for subfile" Q
-   I $P(PLOCPOS,";",2)'="0" S FLINF("BAD")="FM Corruption - CNode not in position 0" Q
+   I PLOCPOS="" S FLINF("BAD")="No location information" Q
+   I $P(PLOCPOS,";",2)'="0" S FLINF("BAD")="Multiple not in position 0" Q
    S FLINF("PLOCSUB")=$P(PLOCPOS,";")
    Q
 
@@ -177,6 +182,7 @@ BLDFDINF(FLINF,FIELD,FDINF)
    . E  S FDINF("TYPE")=9 S FDINF("SUBFILE")=+FLAGS  ; TBD: validate ["M ?
    ; TBD: Default String even if no "F". Should log.
    E  S FDINF("TYPE")=$S(FLAGS["D":1,FLAGS["N":2,FLAGS["S":3,FLAGS["F":4,FLAGS["C":6,FLAGS["P":7,FLAGS["V":8,FLAGS["K":10,1:"4") ; Default to String
+   ; TODO: this BAD is never reached as type defaults to String
    I FDINF("TYPE")="" S FDINF("BAD")="No type set: "_FILE_"/"_FIELD Q
    ; Access, Verify in file 200 are sensitive. FM should support this formally and encrypt them
    I FILE=200,((FIELD=2)!(FIELD=11)) S FDINF("HIDE")="SENSITIVE"
@@ -184,16 +190,16 @@ BLDFDINF(FLINF,FIELD,FDINF)
    . S FDLOC=$P(^DD(FILE,FIELD,0),"^",4) 
    . S FDINF("LOCSUB")=$P(FDLOC,";") 
    . ; Check for " ; "? ie. spaces even though field not given as computed
-   . I $TR(FDINF("LOCSUB")," ")="" S FDINF("BAD")="No location for field: "_FILE_"/"_FIELD Q
+   . I $TR(FDINF("LOCSUB")," ")="" S FDINF("BAD")="Corrupt location: "_FILE_"/"_FIELD Q
    . ; Position of 9 is 1 but that's meaningless. Leave out position.
    . I FDINF("TYPE")'=9 D
    . . N LOCWHERE S LOCWHERE=$P(FDLOC,";",2)
-   . . I LOCWHERE="" S FDINF("BAD")="No location position for field: "_FILE_"/"_FIELD Q
+   . . I LOCWHERE="" S FDINF("BAD")="No location position: "_FILE_"/"_FIELD Q
    . . ; Extract form for 63/.1 (E1,19) or 68/.1;E1,220 (limit for screenman?)
    . . I LOCWHERE?1"E"1.N1","1.N S FDINF("LOCE")=$E(LOCWHERE,1,$L(LOCWHERE)) Q
    . . I LOCWHERE=+LOCWHERE S FDINF("LOCPOS")=LOCWHERE Q
    . . ; TBD: is there another position type? Return an error until I support it.
-   . . S FDINF("BAD")="Unsupported location position for field: "_FILE_"/"_FIELD_":"_LOCWHERE Q
+   . . S FDINF("BAD")="Unsupported location position: "_FILE_"/"_FIELD_":"_LOCWHERE Q
    I FDINF("TYPE")=3 D 
    . N CODES S CODES=$P(^DD(FILE,FIELD,0),"^",3)
    . I CODES="" S FDINF("BAD")="No codes specified: "_FILE_"/"_FIELD Q
