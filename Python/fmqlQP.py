@@ -18,7 +18,7 @@
 __author__ =  'Caregraf'
 __copyright__ = "Copyright 2010-2011, Caregraf"
 __license__ = "AGPL"
-__version__=  '0.9'
+__version__=  '0.96'
 __status__ = "Production"
 
 import urllib
@@ -120,6 +120,8 @@ class FMQLQueryProcessor:
         fmqlArgs = ["OP:SELECTALLTYPES"]
         if "toponly" in queryArgs:
             fmqlArgs[0] += "^TOPONLY:1"
+        if "badtoo" in queryArgs:
+            fmqlArgs[0] += "^BADTOO:1"
         reply = self.rpcc.invokeRPC("CG FMQL QP", fmqlArgs)
         return reply
 

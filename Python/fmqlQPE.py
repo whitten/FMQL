@@ -23,7 +23,7 @@ import json
 __author__ =  'Caregraf'
 __copyright__ = "Copyright 2011, Caregraf"
 __license__ = "AGPL"
-__version__=  '0.9'
+__version__=  '0.96'
 __status__ = "Development"
 
 class FMQLQPE:
@@ -111,7 +111,7 @@ class FMQLQPE:
     def __toV08SchemaQueryArgs(self, query):
         v08Query = None
         RE_DESCRIBETYPE = re.compile('DESCRIBE TYPE +([\d_]+)$')
-        RE_SELECTTYPES = re.compile('SELECT TYPES[ TOPONLY]?')
+        RE_SELECTTYPES = re.compile('SELECT TYPES') # allows args
         RE_SELECTALLREFERRERSTOTYPE = re.compile('SELECTALLREFERRERSTOTYPE +([\d_]+)')
         if RE_DESCRIBETYPE.match(query):
             nodeType = RE_DESCRIBETYPE.match(query).group(1)
@@ -120,6 +120,8 @@ class FMQLQPE:
             v08Query = {"op": ["SelectAllTypes"]}
             if re.search(r'TOPONLY', query):
                 v08Query["toponly"] = ["1"]
+            if re.search(r'BADTOO', query):
+                v08Query["badtoo"] = ["1"]
         elif RE_SELECTALLREFERRERSTOTYPE.match(query):
             nodeType = RE_SELECTALLREFERRERSTOTYPE.match(query).group(1)
             v08Query = {"op": ["SelectAllReferrersToType"], "typeId": [nodeType]}
