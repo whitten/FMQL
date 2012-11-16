@@ -92,6 +92,7 @@ class FMQLQPE:
         if RE_COUNTREFS.match(query):
             nodeType = RE_COUNTREFS.match(query).group(1)
             v08Query = {"op": ["COUNT REFS"], "url": [nodeType]}
+        # TODO: too aggressive as .12 will lead to this etc ie/ . form won't work!
         if not v08Query:
             raise Exception("QPERROR", "No Such Query Type") # move to MUMPS
         if RE_IN.search(query):
