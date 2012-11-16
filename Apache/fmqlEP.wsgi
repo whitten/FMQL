@@ -51,7 +51,8 @@ class FMQLEP:
         except Exception as e:
             print >> sys.stderr, "FMQLEP: %s" % e # internal errors
             status = '200 Error Handled'
-            reply = {"data": "Exception: %s" % e, "format": "json"}
+            reply = "{\"error\": " + str(e) + "}"
+            # reply = {"data": "Exception: %s" % str(e), "format": "json"}
         else:
             status = '200 OK'
         response_headers = [('Content-type', 'application/json'),
