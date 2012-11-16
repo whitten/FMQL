@@ -1,5 +1,5 @@
 #
-# fmqlEP wsgi v0.95
+# fmqlEP wsgi v0.96
 #
 # This class stitches together brokerRPC and an FMQLQueryProcessor to make 
 # an FMQL Endpoint that runs in Apache.
@@ -49,10 +49,9 @@ class FMQLEP:
             reply = self.qpe.processQuery(queryArgs)
         # Exceptions: setting up comms to VistA or even QP code error
         except Exception as e:
-            print >> sys.stderr, "FMQLEP: %s" % e # internal errors
+            print >> sys.stderr, "FMQLEP: %s" % e # internal or entry level errors
             status = '200 Error Handled'
-            reply = "{\"error\": " + str(e) + "}"
-            # reply = {"data": "Exception: %s" % str(e), "format": "json"}
+            reply = json.dumps({"error": "Exception: %s" % e})
         else:
             status = '200 OK'
         response_headers = [('Content-type', 'application/json'),
