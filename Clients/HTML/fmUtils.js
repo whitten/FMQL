@@ -561,26 +561,25 @@ function selectAllResultsToHTML(reply, useURIForm, base, topOnly)
 {
     var resultsMarkup = "<div id='results'>";
     resultsMarkup += "<table><thead><tr>";
-    if (topOnly)
-        fields = ["name", "number", "count"];
-    else
-        fields = ["name", "number", "parent", "count"];
     results = reply["results"];
-    for (var i = 0;i<fields.length;i++)
-    {   
-        label = "Name";
-        if (fields[i] == "number")
-            label = "Number";
-        else if (fields[i] == "parent")
-            label = "Parent";
-        else if (fields[i] == "count")
-            label = "Count";
-        resultsMarkup += "<th>" + label + "</th>";
+    var fields;
+    var ths = "<th>#</th><th>Name</th>";
+    if (topOnly)
+    {
+        fields = ["global", "count"];
+        ths += "<th>Global</th><th>Count</th>";
     }
-    resultsMarkup += "</tr></thead><tbody>";
+    else
+    {
+        fields = ["global", "parent", "count"];
+        ths += "<th>Global</th><th>Parent</th><td>Count</th>";
+    }
+    resultsMarkup += ths + "</tr></thead><tbody>";
     for (var i = 0;i<results.length;i++)
     {
-        rowMarkup = "<tr>";
+        rowMarkup = "<tr><td>" + results[i]["number"] + "</td><td>";
+        var url = base + results[i]["number"].replace(".", "_");
+        rowMarkup += "<a href=\"" + url + "\">" + results[i]["name"] + "</a></td>";
         for (var j = 0; j<fields.length; j++)
         {
             if (!(fields[j] in results[i]))
@@ -589,27 +588,12 @@ function selectAllResultsToHTML(reply, useURIForm, base, topOnly)
                 continue;
             }
             var value = results[i][fields[j]];
-            if (fields[j] == "number")
+            if (fields[j] == "parent")
             {
                 var url = base + value.replace(".", "_");
-                rowMarkup += "<td><a href=\"" + url +  "\">" + value + "</a></td>";
+                value = "<a href=\"" + url +  "\">" + value + "</a>";
             }
-            else if (fields[j] == "parent")
-            {
-                var url = base + value.replace(".", "_");
-                rowMarkup += "<td><a href=\"" + url +  "\">" + value + "</a></td>";
-            }
-            else if (fields[j] == "count")
-            {
-                rowMarkup += "<td>" + value + "</td>";
-            }
-            else
-            {
-                var suffix = "";
-                if ("parent" in results[i])
-                    suffix = " (SUBFILE)";
-                rowMarkup += "<td>" + value + suffix + "</td>";
-            }
+            rowMarkup += "<td>" + value + "</td>";
         }
         rowMarkup += "</tr>";
         resultsMarkup += rowMarkup;
@@ -673,6 +657,9 @@ function describeTypeResultToHTML(reply, useURIForm, base)
     resultsMarkup += "</tr></thead><tbody>";
     for (var i = 0;i<results.length;i++)
     {
+        // account for a corrupt field. TODO: "corruption" in ...
+        if (!("name" in results[i]))
+            continue;
         resultsMarkup += "<tr>";
         for (var j = 0; j<fields.length; j++)
         {
@@ -681,7 +668,7 @@ function describeTypeResultToHTML(reply, useURIForm, base)
                 value = results[i][fields[j]];
                 if (fields[j] == "name")
                 {
-                    var name = value.replace(/\_/g, ' ');
+                    var name = value.toLowerCase();
                     resultsMarkup += "<td>" + name;
                     if (results[i]["flags"].search(/R/) != -1)
                         resultsMarkup += "(+)";
