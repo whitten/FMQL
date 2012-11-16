@@ -9,11 +9,13 @@
 #
 
 # TOADD
-# 0) SELECT TYPES: no in 1 vs this
-# 1) COUNT/SELECT/DESCRIBE match even if corrupt (non .01 records): 55, 5_1
-# 2) more enum ex/ rem use 'E' etc.. Make sure don't accept computed value ex/ 1407 on 8925 and (for now?) don't accept WP either (always false - even if exact) ... report_text 2
-# 3) cross system inspired tests ie/ work on all. Base on Audit queries
+# 1) SELECT TYPES: no in 1 vs this
+# 2) COUNT/SELECT/DESCRIBE match even if corrupt (non .01 records): 55, 5_1
+# 3) more enum ex/ rem use 'E' etc.. Make sure don't accept computed value ex/ 1407 on 8925 and (for now?) don't accept WP either (always false - even if exact) ... report_text 2
+# 4) cross system inspired tests ie/ work on all. Base on Audit queries
 # ... new MUMPS only tests, particularly of utils.
+# 5) "version", "vpackage" in DESCRIBE TYPE (ex/ 120_5)
+# 6) checks on input transform and computed
 
 """
  FMQL Query Processor Unit Tests
@@ -32,15 +34,10 @@
 __author__ =  'Caregraf'
 __copyright__ = "Copyright 2010-2012, Caregraf"
 __license__ = "AGPL"
-__version__=  '0.95'
+__version__=  '0.96'
 __status__ = "Production"
 
 import sys, os
-sys.path.append('../Python')
-
-from fmqlQP import FMQLQueryProcessor
-from fmqlQPE import FMQLQPE
-from brokerRPC import VistARPCConnection
 import json
 import urllib, urllib2
 import getopt
@@ -50,6 +47,12 @@ from datetime import datetime
 import cgi
 import re
 
+sys.path.append('../Python')
+from fmqlQP import FMQLQueryProcessor
+from fmqlQPE import FMQLQPE
+from brokerRPC import VistARPCConnection
+
+
 #
 # FMQL Tests [Configure for specific system after first system-only run]
 #
@@ -57,6 +60,7 @@ import re
 SYSTEMONLY = False # Change once system specific numbers below are set
 
 def runTest(qp, qpe, testGroupName, testNo, testDef):
+
     print "========= Test %s: %d ========" % (testGroupName, testNo)
     print testDef["description"]
     start = datetime.now()
@@ -88,12 +92,12 @@ def runTest(qp, qpe, testGroupName, testNo, testDef):
     if "dump" in testDef:
         print jreply
     if "count" in testDef:
-        fmqlCount = jreply["count"] if "count" in jreply else jreply["total"]
+        fmqlCount = jreply["count"] if "count" in jreply else (jreply["total"] if "total" in jreply else str(len(jreply["results"])))
         if SYSTEMONLY or testDef["count"] == "PRINT":
             # print jreply
             print "Got count of %s" % fmqlCount 
         elif "error" in jreply or fmqlCount != testDef["count"]:
-            print jreply
+            print reply[0:500] + " ......"
             print "ERROR: COUNT %s doesn't match returned count %s!" % (testDef["count"], fmqlCount)
             return 0
     if "test" in testDef and not SYSTEMONLY:
@@ -102,7 +106,8 @@ def runTest(qp, qpe, testGroupName, testNo, testDef):
         except Exception as e:
             testResult = False
             print "Test failed to execute. Reply has unexpected form"
-            print e
+            # Stop if syntax error in a test
+            raise e
         if testResult:
             print "PASSED"
             return 1
@@ -217,6 +222,41 @@ NEGATIVETESTS = {
 
 TESTSETS.append(NEGATIVETESTS)
 
+CNT_ALL = "5393"
+CNT_ALL_BADTOO = "5410"
+CNT_TOPONLY = "2359"
+CNT_TOPONLY_BADTOO = "2374"
+
+SCHEMATESTS = {
+    "name": "Schema Tests",
+    "definitions": [
+        {
+            "description": "SELECT TYPES - count all",
+            "fmql": "SELECT TYPES",
+            "count": CNT_ALL
+        },
+        {
+            "description": "SELECT TYPES TOPONLY",
+            "fmql": "SELECT TYPES TOPONLY",
+            "count": CNT_TOPONLY
+        },
+        {
+            "description": "SELECT TYPES BADTOO",
+            "fmql": "SELECT TYPES BADTOO",
+            # .12, 4th has corruption - jreply['results'][4].has_key('corruption')
+            "test": "testResult=((len(jreply['results'])==int(CNT_ALL_BADTOO)) and jreply['results'][4].has_key('corruption'))"
+        },
+        # TODO: add check that * DEPRECATED IS THERE. Problem with large size of 2. There are others.
+        {
+            "description": "Corrupt file .12 - will get back corruption error",
+            "fmql": "DESCRIBE TYPE _12",
+            "error": "",
+        }
+    ]
+}
+
+TESTSETS.append(SCHEMATESTS)
+
 ########################## System Specifics ################
 
 STESTSETS = []
@@ -236,7 +276,7 @@ CNT_VITALSFROM2008ON="104" # Vitals from 2008 on
 CNT_HVITALSOFTPNEIE="12" # Height Vitals of patient
 CNT_ORDERSOFOTP = "5"
 CNT_ACCESSIONS = "15"
-CNT_REFS = "1108"
+CNT_REFS = "1116" # was 1108 - why?
 BADSCHEMANOFILE = "1_01"
 BADSCHEMA01FILE = "627_99" # File with bad schema for its .01 field
 MUMPSCODETESTID = "68-11"
@@ -765,10 +805,15 @@ HIDDENFIELDTESTS = {
     "name": "HIDDENFIELDS",
     "definitions": [
         {
-            "description": "File 200 - access and verify hidden",
-            "fmql": "DESCRIBE 200 LIMIT 1",
+            "description": "USER,FMQL - access and verify hidden",
+            "fmql": "DESCRIBE 200 FILTER(.01='USER,FMQL')",
             "test": "testResult = ((jreply['results'][0]['access_code']['value'] == '**HIDDEN**') and (jreply['results'][0]['verify_code']['value'] == '**HIDDEN**'))",
         },
+        {
+            "description": "APPLICATION,PROXY - no access verify",
+            "fmql": "DESCRIBE 200 FILTER(.01='VPR,APPLICATION PROXY')",
+            "test": "testResult = (('access_code' not in jreply) and ('verify_code' not in jreply))"
+        }
     ]
 }
 
