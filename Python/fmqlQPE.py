@@ -94,7 +94,7 @@ class FMQLQPE:
             v08Query = {"op": ["COUNT REFS"], "url": [nodeType]}
         # TODO: too aggressive as .12 will lead to this etc ie/ . form won't work!
         if not v08Query:
-            raise Exception("QPERROR", "No Such Query Type") # move to MUMPS
+            raise Exception("QPERROR", "No Such Query Type")
         if RE_IN.search(query):
             v08Query["in"] = [RE_IN.search(query).group(1)]
         if RE_LIMIT.search(query):
