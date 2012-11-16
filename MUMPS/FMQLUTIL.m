@@ -1,5 +1,5 @@
 FMQLUTIL;Caregraf - FMQL Utilities ; May 31, 2012
-   ;;0.96;FMQLQP;;Nov 12, 2012
+   ;;0.96;FMQLQP;;Nov 15, 2012
 
 ; FMQL Utilities
 ; 
@@ -110,8 +110,11 @@ BLDTFINF(FILE,FLINF)
    ; S FLINF("ARRAY")=$TR(FLINF("GL"),",",")")
    I '$D(@FLINF("ARRAY")@(0)) S FLINF("BAD")="No 0 Entry for Array" Q
    S FLHDR=@FLINF("ARRAY")@(0)
+   S FLINF("NLABEL")=$P(FLHDR,"^")
+   I $P(FLHDR,"^")="" S FLINF("BAD")="No Name" Q
+   ; TODO: have just LABEL. Do non native changes above this.
    S FLINF("LABEL")=$TR($P(FLHDR,"^"),"/","_")  ; alt is ^DD(FILE,0,"NM")
-   I FLINF("LABEL")="" S FLINF("BAD")="No Name" Q
+   S FLINF("NLABEL")=$P(FLHDR,"^")
    S FLINF("FLAGS")=$P(FLHDR,"^",2)
    ; don't always have size
    I $P(FLHDR,"^",4) S FLINF("FMSIZE")=+$P(FLHDR,"^",4)
@@ -165,6 +168,14 @@ BLDSFINF(FILE,FLINF)
 ; Field Info
 ; Fields: FIELD, FLAGS, LABEL, LOCPOS, LOCSUB, TYPE
 ; Specials fields: CODES (for type 3)
+; 
+; TODO: 
+; - Careful: gfs_frm.htm not definite. Ex/ "S" in flags if multiple with only
+; one field, a set of codes (ex/ 120.506S for ^DD(120.5,4,0)
+; - Computed (C) is DC,BC,C,Cm,Cmp. Must distinguish actual type. Correlate with no location
+; - move inputTransform in here from Sch serializer. Want for filter processing
+; - move IDX in here from Sch serializer: want for filters
+; - Add ^DD(FILE,FIELD,1,1,...)
 ;
 BLDFDINF(FLINF,FIELD,FDINF)
    N FILE S FILE=FLINF("FILE")
@@ -181,13 +192,17 @@ BLDFDINF(FLINF,FIELD,FDINF)
    . I $P($G(^DD(+FLAGS,.01,0)),"^",2)["W" S FDINF("TYPE")=5
    . E  S FDINF("TYPE")=9 S FDINF("SUBFILE")=+FLAGS  ; TBD: validate ["M ?
    ; TBD: Default String even if no "F". Should log.
-   E  S FDINF("TYPE")=$S(FLAGS["D":1,FLAGS["N":2,FLAGS["S":3,FLAGS["F":4,FLAGS["C":6,FLAGS["P":7,FLAGS["V":8,FLAGS["K":10,1:"4") ; Default to String
+   E  D
+   . S FDINF("TYPE")=$S(FLAGS["D":1,FLAGS["N":2,FLAGS["S":3,FLAGS["F":4,FLAGS["C":6,FLAGS["P":7,FLAGS["V":8,FLAGS["K":10,1:"4") ; Default to String
+   . N IDX S IDX=$$FIELDIDX^FMQLUTIL(FILE,FIELD)
+   . S:IDX'="" FDINF("IDX")=IDX
    ; TODO: this BAD is never reached as type defaults to String
    I FDINF("TYPE")="" S FDINF("BAD")="No type set: "_FILE_"/"_FIELD Q
    ; Access, Verify in file 200 are sensitive. FM should support this formally and encrypt them
    I FILE=200,((FIELD=2)!(FIELD=11)) S FDINF("HIDE")="SENSITIVE"
    I FDINF("TYPE")'=6 D
    . S FDLOC=$P(^DD(FILE,FIELD,0),"^",4) 
+   . S FDINF("LOC")=FDLOC
    . S FDINF("LOCSUB")=$P(FDLOC,";") 
    . ; Check for " ; "? ie. spaces even though field not given as computed
    . I $TR(FDINF("LOCSUB")," ")="" S FDINF("BAD")="Corrupt location: "_FILE_"/"_FIELD Q

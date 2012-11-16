@@ -1,5 +1,5 @@
 FMQLJSON; Caregraf - FMQL JSON Builder ; May 31st, 2012
-    ;;0.95;FMQLQP;;May 31st, 2012
+    ;;0.96;FMQLQP;;Nov 15th, 2012
 
 ; FMQL JSON Builder
 ; 
@@ -40,6 +40,9 @@ CONTSTART(JSON,MARK)
 ASSERT(JSON,FIELD,IFIELD,FMTYPE,VALUE,PLABEL,PSAMEAS) 
     D PUTDATA(JSON,@JSON@("LSTLVL",@JSON@("LSTLVL")))
     S @JSON@("LSTLVL",@JSON@("LSTLVL"))="," ; if next el then put a col before it
+    ; TODO: predicate used in data but straight label in schema view.
+    ; ... go with native in JSON everywhere and have RDF etc serializers
+    ; ... make changes appropriate to themselves
     S PRED=$$FIELDTOPRED^FMQLUTIL(FIELD)
     D PUTDATA(JSON,""""_PRED_""":{""fmId"":"""_IFIELD_""",""fmType"":"""_FMTYPE_""",""value"":"""_$$JSONSTRING(VALUE)_"""")
     I $G(PLABEL)'="" D

@@ -1,5 +1,5 @@
 FMQLSCH; Caregraf - FMQL Schema Query Processor ; May 31st, 2012
-    ;;0.96;FMQLQP;;Nov 12, 2012
+    ;;0.96;FMQLQP;;Nov 15, 2012
  
 ; FMQL Schema Query Processor
 ; 
@@ -90,7 +90,7 @@ DESCRIBETYPE(REPLY,FMQLPARAMS)
     N FILE S FILE=$TR(FMQLPARAMS("TYPE"),"_",".")
     N FLINF D BLDFLINF^FMQLUTIL(FILE,.FLINF)
     ; Note: corrupt file leads to an error with src of corruption
-    I $D(FLINF("BAD")) D ERRORREPLY(REPLY,"Corrupt or Invalid File Type "_FMQLPARAMS("TYPE")_":"_FLINF("BAD")) Q
+    I $D(FLINF("BAD")) D ERRORREPLY(REPLY,"Corrupt or Invalid File Type: "_FLINF("BAD")) Q
     I $D(FLINF("PARENT")) D SUBFILEINFO(REPLY,.FLINF) Q
     D TOPFILEINFO(REPLY,.FLINF)
     Q
@@ -113,7 +113,7 @@ TOPFILEINFO(REPLY,FLINF)
     D:$D(FLINF("APPGRPS")) DASSERT^FMQLJSON(REPLY,"applicationGroups",FLINF("APPGRPS"))
     D:$D(FLINF("VERSION")) DASSERT^FMQLJSON(REPLY,"version",FLINF("VERSION"))
     D:$D(FLINF("VPACKAGE")) DASSERT^FMQLJSON(REPLY,"vpackage",FLINF("VPACKAGE"))
-    D FIELDSINFO(FLINF("FILE"))
+    D FIELDSINFO(.FLINF)
     D DICTSTART^FMQLJSON(REPLY,"fmql")
     D DASSERT^FMQLJSON(REPLY,"OP","DESCRIBE TYPE")
     D DASSERT^FMQLJSON(REPLY,"TYPE",FLINF("EFILE"))
@@ -128,7 +128,7 @@ SUBFILEINFO(REPLY,FLINF)
     D DASSERT^FMQLJSON(REPLY,"number",FLINF("FILE"))
     D DASSERT^FMQLJSON(REPLY,"parent",FLINF("PARENT"))
     ; TBD: Search CFILE for field that contains this one. Get field and description.
-    D FIELDSINFO(FLINF("FILE"))
+    D FIELDSINFO(.FLINF)
     D DICTSTART^FMQLJSON(REPLY,"fmql")
     D DASSERT^FMQLJSON(REPLY,"OP","DESCRIBE TYPE")
     D DASSERT^FMQLJSON(REPLY,"TYPE",FLINF("EFILE"))
@@ -136,67 +136,51 @@ SUBFILEINFO(REPLY,FLINF)
     D DICTEND^FMQLJSON(REPLY)
     D REPLYEND^FMQLJSON(REPLY)
     Q
- 
-; TODO: move all to FLDINFO
-FIELDSINFO(FILE) 
-    N I
+
+FIELDSINFO(FLINF)
+    N FILE S FILE=FLINF("FILE")
     D LISTSTART^FMQLJSON(REPLY,"fields")
-    S FIELD=0 F  S FIELD=$O(^DD(FILE,FIELD)) Q:FIELD'=+FIELD  D 
-    . Q:'$D(^DD(FILE,FIELD,0))
+    S FIELD=0 F  S FIELD=$O(^DD(FILE,FIELD)) Q:FIELD'=+FIELD  D
+    . N FDINF D BLDFDINF^FMQLUTIL(.FLINF,FIELD,.FDINF)
     . D DICTSTART^FMQLJSON(REPLY)
-    . D DASSERT^FMQLJSON(REPLY,"number",FIELD)
-    . S FLDFLAGS=$P(^DD(FILE,FIELD,0),"^",2) ; includes type - V,P etc.
-    . D DASSERT^FMQLJSON(REPLY,"flags",FLDFLAGS)
-    . ; Add ^DD(FILE,FIELD,1,1,...)
+    . D DASSERT^FMQLJSON(REPLY,"number",FDINF("FIELD"))
+    . I $D(FDINF("BAD")) D DASSERT^FMQLJSON(REPLY,"corruption",FDINF("BAD")) D DICTEND^FMQLJSON(REPLY) Q
+    . ; Send over all the flags. May process more on client side
+    . D DASSERT^FMQLJSON(REPLY,"flags",FDINF("FLAGS"))
+    . D DASSERT^FMQLJSON(REPLY,"name",FDINF("LABEL"))
+    . D:FDINF("TYPE")'=6 DASSERT^FMQLJSON(REPLY,"location",FDINF("LOC"))
     . ; For now, only note simple indexes. Not all ^DD(FILE,"IX",FIELD) as MUMPS there too
-    . S IDX=$$FIELDIDX^FMQLUTIL(FILE,FIELD)
-    . D:IDX'="" DASSERT^FMQLJSON(REPLY,"index",IDX)
-    . S FLDLABEL=$P(^DD(FILE,FIELD,0),"^")
-    . ; TODO: remove name == predicate once worked through. Make a client thing
-    . D DASSERT^FMQLJSON(REPLY,"name",$$FIELDTOPRED^FMQLUTIL(FLDLABEL))
-    . ; TODO: rename this straight filename label -> name to match file
-    . D DASSERT^FMQLJSON(REPLY,"label",FLDLABEL)
-    . S FLDLOC=$P(^DD(FILE,FIELD,0),"^",4)
-    . D:FLDLOC'=" ; " DASSERT^FMQLJSON(REPLY,"location",FLDLOC) ; Computed has "no location"
-    . ; Careful: gfs_frm.htm not definite. Ex/ "S" in flags if multiple with only
-    . ; one field, a set of codes (ex/ 120.506S for ^DD(120.5,4,0)
-    . K FLDTYPE,FLDDETAILS
-    . I +FLDFLAGS D  ; MULTIPLE or WORD PROCESSING
-    . . ; To go direct - if "W" in flags of $P(FLDFLAGS,"P"). See function.
-    . . I '$$VFILE^DILFD(+FLDFLAGS) S FLDTYPE=5 ; don't care about WP's "multiple"
-    . . E  S FLDTYPE=9 S FLDDETAILS=+FLDFLAGS ; Multiple
-    . E  D
-    . . I FLDFLAGS["D" S FLDTYPE=1 ; Date 
-    . . I FLDFLAGS["N" S FLDTYPE=2 ; Numeric
-    . . I FLDFLAGS["S" S FLDTYPE=3 S FLDDETAILS=$P(^DD(FILE,FIELD,0),"^",3) ; Set
-    . . I FLDFLAGS["F" S FLDTYPE=4 ; Free Text
-    . . ; TBD: Final FMQL must isolate mumps properly.
-    . . I FLDFLAGS["K" S FLDTYPE=10 ; MUMPS
-    . . I FLDFLAGS["P" S FLDTYPE=7 S FLDDETAILS=+$P(FLDFLAGS,"P",2) ; Pointer
-    . . ; TBD: Final FMQL won't distinguish vptr from ptr. MUMPS-side thing.
-    . . I FLDFLAGS["V" S FLDTYPE=8 S FLDDETAILS=$$VARPOINTERRANGE(FILE,FIELD) ; V Pointer
-    . . ; TBD: Computed (C) is DC,BC,C,Cm,Cmp. Must distinguish actual type. Correlate with no location.
-    . . I '$D(FLDTYPE) S FLDTYPE=6 ; Computed: TBD: Break to BC, Cm, DC, C ie. qualifier
-    . . I $L($P(^DD(FILE,FIELD,0),"^",5)) D
-    . . . ; TODO: calculate better - using length to get over all internal ^
-    . . . N CALC S CALC=$P(^DD(FILE,FIELD,0),"^",5,$L(^DD(FILE,FIELD,0)))
-    . . . Q:CALC="Q"
-    . . . N CALCTYPE S CALCTYPE=$S(FLDTYPE=6:"computation",1:"inputTransform")
-    . . . D DASSERT^FMQLJSON(REPLY,CALCTYPE,CALC)
-    . . Q
-    . D DASSERT^FMQLJSON(REPLY,"type",FLDTYPE)
+    . D:$D(FDINF("IDX")) DASSERT^FMQLJSON(REPLY,"index",FDINF("IDX"))
+    . D DASSERT^FMQLJSON(REPLY,"type",FDINF("TYPE"))
+    . ; Extra details not in FDINF (yet)
+    . N FLDDETAILS
+    . I FDINF("TYPE")=9 S FLDDETAILS=+FDINF("FLAGS") ; Multiple
+    . I FDINF("TYPE")=3 S FLDDETAILS=$P(^DD(FILE,FIELD,0),"^",3) ; Set
+    . I FDINF("TYPE")=7 S FLDDETAILS=+$P(FDINF("FLAGS"),"P",2) ; Pointer
+    . ; TBD: Final FMQL won't distinguish vptr from ptr. MUMPS-side thing.
+    . I FDINF("TYPE")=8 D
+    . . S FLDDETAILS=$$VARPOINTERRANGE(FILE,FIELD) ; V Pointer
     . D:$D(FLDDETAILS) DASSERT^FMQLJSON(REPLY,"details",FLDDETAILS)
+    . ; TODO: move into FDINF as useful for filters
+    . I $L($P(^DD(FILE,FIELD,0),"^",5)) D
+    . . ; TODO: calculate better - using length to get over all internal ^
+    . . N CALC S CALC=$P(^DD(FILE,FIELD,0),"^",5,$L(^DD(FILE,FIELD,0)))
+    . . Q:CALC="Q"
+    . . N CALCTYPE S CALCTYPE=$S(FDINF("TYPE")=6:"computation",1:"inputTransform")
+    . . D DASSERT^FMQLJSON(REPLY,CALCTYPE,CALC)
+    . D:$D(FDINF("HIDE")) DASSERT^FMQLJSON(REPLY,"hidden","true")
+    . ; Keeping WP here. Not useful for checking and could be big.
     . I $D(^DD(FILE,FIELD,21,1))  D
     . . D WPASTART^FMQLJSON(REPLY,"DESCRIPTION","-1")
-    . . S I=0 F  S I=$O(^DD(FILE,FIELD,21,I)) Q:I'=+I  D 
+    . . N I S I=0 F  S I=$O(^DD(FILE,FIELD,21,I)) Q:I'=+I  D
     . . . D WPALINE^FMQLJSON(REPLY,^DD(FILE,FIELD,21,I,0))
     . . . Q
     . . D WPAEND^FMQLJSON(REPLY)
-    . . Q
     . D DICTEND^FMQLJSON(REPLY)
     D LISTEND^FMQLJSON(REPLY)
     Q
- 
+
+; TODO: use FMQLUTIL's instead (PLOC reassemble)
 VARPOINTERRANGE(FILE,FIELD) 
     N X,VPS,VP
     S VPS=""

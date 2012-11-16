@@ -1,5 +1,5 @@
 FMQLFILT; Caregraf - FMQL Filter Handling ; May 31st, 2012
-    ;;0.95;FMQLQP;;May 31st, 2012
+    ;;0.96;FMQLQP;;Nov 15th, 2012
  
  
 ;
