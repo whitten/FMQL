@@ -110,11 +110,10 @@ BLDTFINF(FILE,FLINF)
    ; S FLINF("ARRAY")=$TR(FLINF("GL"),",",")")
    I '$D(@FLINF("ARRAY")@(0)) S FLINF("BAD")="No 0 Entry for Array" Q
    S FLHDR=@FLINF("ARRAY")@(0)
-   S FLINF("NLABEL")=$P(FLHDR,"^")
    I $P(FLHDR,"^")="" S FLINF("BAD")="No Name" Q
    ; TODO: have just LABEL. Do non native changes above this.
-   S FLINF("LABEL")=$TR($P(FLHDR,"^"),"/","_")  ; alt is ^DD(FILE,0,"NM")
-   S FLINF("NLABEL")=$P(FLHDR,"^")
+   ; S FLINF("LABEL")=$TR($P(FLHDR,"^"),"/","_")  ; alt is ^DD(FILE,0,"NM")
+   S FLINF("LABEL")=$P(FLHDR,"^")
    S FLINF("FLAGS")=$P(FLHDR,"^",2)
    ; don't always have size
    I $P(FLHDR,"^",4) S FLINF("FMSIZE")=+$P(FLHDR,"^",4)
@@ -185,6 +184,7 @@ BLDFDINF(FLINF,FIELD,FDINF)
    N FLAGS S FLAGS=$P(^DD(FILE,FIELD,0),"^",2)
    S FDINF("FLAGS")=FLAGS
    S FDINF("LABEL")=$P(^DD(FILE,FIELD,0),"^")
+   ; Pred: use in XML fields/RDF and JSON. TODO: account for name reuse
    S FDINF("PRED")=$$FIELDTOPRED(FDINF("LABEL"))
    ; Date/Number/Codes/String/WP String/Pointer/V Pointer/MULT/MUMPS
    ; TBD: Computed - B, m, D
@@ -193,7 +193,8 @@ BLDFDINF(FLINF,FIELD,FDINF)
    . E  S FDINF("TYPE")=9 S FDINF("SUBFILE")=+FLAGS  ; TBD: validate ["M ?
    ; TBD: Default String even if no "F". Should log.
    E  D
-   . S FDINF("TYPE")=$S(FLAGS["D":1,FLAGS["N":2,FLAGS["S":3,FLAGS["F":4,FLAGS["C":6,FLAGS["P":7,FLAGS["V":8,FLAGS["K":10,1:"4") ; Default to String
+   . ; Even though .001 has a type, it is also "computed" so treat that way
+   . S FDINF("TYPE")=$S(FIELD=.001:6,FLAGS["D":1,FLAGS["N":2,FLAGS["S":3,FLAGS["F":4,FLAGS["C":6,FLAGS["P":7,FLAGS["V":8,FLAGS["K":10,1:"4") ; Default to String
    . N IDX S IDX=$$FIELDIDX^FMQLUTIL(FILE,FIELD)
    . S:IDX'="" FDINF("IDX")=IDX
    ; TODO: this BAD is never reached as type defaults to String

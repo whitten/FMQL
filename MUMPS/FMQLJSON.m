@@ -40,9 +40,7 @@ CONTSTART(JSON,MARK)
 ASSERT(JSON,FIELD,IFIELD,FMTYPE,VALUE,PLABEL,PSAMEAS) 
     D PUTDATA(JSON,@JSON@("LSTLVL",@JSON@("LSTLVL")))
     S @JSON@("LSTLVL",@JSON@("LSTLVL"))="," ; if next el then put a col before it
-    ; TODO: predicate used in data but straight label in schema view.
-    ; ... go with native in JSON everywhere and have RDF etc serializers
-    ; ... make changes appropriate to themselves
+    ; TODO: change to pass FDINF which has predicate
     S PRED=$$FIELDTOPRED^FMQLUTIL(FIELD)
     D PUTDATA(JSON,""""_PRED_""":{""fmId"":"""_IFIELD_""",""fmType"":"""_FMTYPE_""",""value"":"""_$$JSONSTRING(VALUE)_"""")
     I $G(PLABEL)'="" D
