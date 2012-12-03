@@ -403,6 +403,9 @@ class FMQLInterface(object):
     TODO: urllib2 etc timeout in seconds (instead of ? default)
     ... socket.setdefaulttimeout(default_timeout)
     
+    TODO: replace with direct invoke of FMQLQP.py ie/ let it deal with
+    formatting etc. ie/ merge with Apache hosted FMQL EP code.
+    
     Allow access to either the RPC directly (connection pool) or 
     to the FMQL EP. Note that you shouldn't invoke more RPCs than
     the RPC pool size at any one time.
@@ -420,11 +423,12 @@ class FMQLInterface(object):
             reply = self.rpcCPool.invokeRPC("CG FMQL QP", [self.__queryToRPCForm(query)])
             return reply
         return urllib2.urlopen(self.fmqlEP + "?" + urllib.urlencode({"fmql": query})).read()
-
+    
     QUERYFORMS = { # TODO: enforce mandatory
         "COUNT": ["COUNT", [("TYPE", "COUNT ([\d\_]+)")]],
         "DESCRIBE TYPE": ["DESCRIBETYPE", [("TYPE", "DESCRIBE TYPE ([\d\_]+)")]],
-        "DESCRIBE [\d\_]": ["DESCRIBE", [("TYPE", "DESCRIBE ([\d\_]+)"), ("LIMIT", "LIMIT (\d+)"), ("OFFSET", "OFFSET (\d+)"), ("CNODESTOP", "CSTOP (\d+)")]],
+        "DESCRIBE [\d\_]+": ["DESCRIBE", [("TYPE", "DESCRIBE ([\d\_]+)"), ("LIMIT", "LIMIT (\d+)"), ("OFFSET", "OFFSET (\d+)"), ("CNODESTOP", "CSTOP (\d+)")]],
+        "SELECT [\d\_]+": ["SELECT", [("TYPE", "SELECT ([\d\_]+)"), ("LIMIT", "LIMIT (\d+)")]],
         "SELECT TYPES BADTOO": ["SELECTALLTYPES^BADTOO:1", []]
     }
         
