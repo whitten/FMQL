@@ -158,8 +158,7 @@ IDFIELD(FLINF,FAR,ID,FID)
 ; Assume: FDINF is good
 ;
 ONEFIELD(FAR,ID,FDINF) 
-    Q:FDINF("TYPE")=6 ; Computed (TBD: v0.9)
-    Q:FDINF("FIELD")=".001"  ; TBD: extract properly
+    Q:FDINF("TYPE")=6 ; Computed - includes .001
     Q:'$D(@FAR@(ID,FDINF("LOCSUB")))
     I FDINF("TYPE")=5 D
     . ; Pharma+ case: WP location but no entries (ala special case for 9)
