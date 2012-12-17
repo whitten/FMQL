@@ -63,7 +63,7 @@ class FMQLQPE:
         RE_IN = re.compile(' +IN +([\d_]+\-[\d\.]+)')
         RE_LIMIT = re.compile(' +LIMIT +(\d+)')
         RE_OFFSET = re.compile(' +OFFSET +(\d+)')
-        RE_FILTER = re.compile(' +FILTER\((.+)\)')
+        RE_FILTER = re.compile(' +FILTER *\((.+)\)')
         RE_DESCRIBECSTOP = re.compile(' +CSTOP (\d+)')
         RE_SELECTFROM = re.compile('SELECT +([\.\d]+) +FROM +([\d_]+)')
         RE_NOIDXMAX = re.compile('NOIDXMAX +(\d+)')
