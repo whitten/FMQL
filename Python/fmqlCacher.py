@@ -9,7 +9,18 @@
 """
 Module for managing a Cache of FMQL responses. Responses can come from a full RESTful FMQL endpoint or directly from an FMQL RPC. Caches for named VistAs are managed in a named "cacheLocation" directory.
 
+Quicks to DO:
+- may make URI into dict of label + ... => {"id": ..., "label": } .fieldname.id or .label ... could then have sameas etc. Must know not simple ie/ literal is simple. Different walk.
+- merge with/fix up FMQL python site
+- .id -> goes to uri form ie/ X:...
+- dr as default saved form
+- look into zip ie/ get infos from zip, walk the contents etc. ZIP per file ie/ packed form. ie/ Cacher supports a packed form. May store FILE.schema too and allow index by any field => quick lookups of all data. ... http://docs.python.org/2/library/zipfile ... ZipFile.infolist()
+... setup for Mongo or other JSON db ie/ easy move over.
+... download ALL of FOIA in compact zip'ed file definitions ie/ 757_01.zip. See what size end up with.
+    ... Luis' method too. FMJSON is a form of JSON that represents the contents and schema of a VistA File. ie/ fits in with the model.
+
 TODO - Changes/Additions Planned:
+- dr = FMQLDescribeResult(entry) ... remove need for this. Always return
 - if access/verify etc wrong, do proper cleanup/exception
 - exceptions in thread:
   except: sys.exit()
@@ -81,7 +92,7 @@ class FMQLCacher:
             logging.critical(sys.exc_info()[0])
             raise
         rpcCPool = RPCConnectionPool("VistA", poolSize, host, port, access, verify, "CG FMQL QP USER", RPCLogger()) if host else None
-        self.__poolSize = poolSize # if rpc then # threads == conn pool size
+        self.__poolSize = poolSize # if rpc then # threads == conn pool size if # queries too big
         self.__fmqlIF = FMQLInterface(fmqlEP, rpcCPool) if (fmqlEP or rpcCPool) else None         
     
     def clearCache(self, vistaLabel):
@@ -161,7 +172,7 @@ class FMQLCacher:
         queriesQueue = Queue.Queue()
         for i in range(self.__poolSize):
             fmqlIF = self.__fmqlIF # TODO: shared makes no speed difference (make sure)
-            t = ThreadedQueriesCacher(fmqlIF, queriesQueue, self.__cacheLocation)
+            t = ThreadedQueriesCacher(i+1, fmqlIF, queriesQueue, self.__cacheLocation)
             t.setDaemon(True)
             t.start()
         # logging.info("Caching %d types at a time" % self.__poolSize)
@@ -174,20 +185,22 @@ class FMQLCacher:
         
     DESCRIBE_TEMPL = "DESCRIBE %s CSTOP %s LIMIT %d OFFSET %d"
         
-    def describeFileEntries(self, file, limit=200, cstop=100):
+    def describeFileEntries(self, file, limit=200, cstop=100, assumeCache=False):
         """
         This is a generator object that avoids the need for every one
         of the results of a query to be in memory for processing. 
                 
         Invoke with:
             for cnt, entry in enumerate(.describeFileEntries()) 
+            
+        - assumeCache: special to avoid doing count of entries from remote system. Just assume cache is there.
 
         TODO: 
         - may make iterator/generator more explicit by returning one.
           ex/ FMQLFileIterator
         - right now, if one fails (ie/ no cache of errored json) then will exception. Perhaps try again or more elegantly exit.
         """
-        if not self.__isDescribeCached(file, limit, cstop):
+        if not (assumeCache or self.__isDescribeCached(file, limit, cstop)):
             self.__cacheDescribe(file, limit, cstop)
         offset = 0
         # Ensure all wanted are in Cache. If not, recache EVERYTHING!
@@ -228,18 +241,17 @@ class FMQLCacher:
         # Never cache COUNT. Go direct.
         reply = self.__fmqlIF.query("COUNT " + file)
         total = int(json.loads(reply)["count"])
-        goes = total/limit + 1
-        # logging.info("Caching complete file %s in %d pieces" % (file, goes))
         queriesQueue = Queue.Queue()
         offset = 0
         noQueries = total/limit + 1
         noThreads = noQueries if noQueries < self.__poolSize else self.__poolSize
-        for i in range(goes):
+        logging.info("Caching complete file %s in %d pieces in %d threads" % (file, noQueries, noThreads))
+        for i in range(noThreads):
             fmqlIF = self.__fmqlIF # TODO: shared makes no speed difference (make sure)
-            t = ThreadedQueriesCacher(fmqlIF, queriesQueue, self.__cacheLocation)
+            t = ThreadedQueriesCacher(i+1, fmqlIF, queriesQueue, self.__cacheLocation)
             t.setDaemon(True)
             t.start()
-        for i in range(goes):
+        for i in range(noQueries):
             queriesQueue.put(FMQLCacher.DESCRIBE_TEMPL % (file, cstop, limit, offset))
             offset += limit
         queriesQueue.join()
@@ -249,18 +261,36 @@ class FMQLDescribeResult(object):
     """
     A simple facade for easy access to an FMQL Describe result
     
-    TODO: 
+    TODO:
+    - fix id to be like uri 
     - apply filters: yes/no -> true/false, apply defaults etc.
     - will move out: not intrinsic to Cache
     - jsona, qualify uri's, container name, typed fields
       - ie/ don't just flatten uri to literal form ... use : ie/ vista:2-24 etc.
+    - key element of FMJSON ... other piece is schema header
     """
     def __init__(self, result):
         self.__result = result
         
     def __getitem__(self, field):
         """Safe return of simple value - if field is not there returns empty string"""
-        return self.__result[field]["value"] if field in self.__result and self.__result[field]["type"] != "cnodes" else ""
+        if field not in self.__result or self.__result[field]["type"] == "cnodes":
+            return ""
+        return self.__result[field]["value"] + ":" + self.__result[field]["label"].split("/")[1] if self.__result[field]["type"] == "uri" else self.__result[field]["value"]
+        
+    def __contains__(self, field):
+        return True if field in self.__result else False
+                
+    def __str__(self):
+        mu = ""
+        for field in self.__result:
+            value = "[CNODE]" if not self[field] else self[field]
+            mu += "%s: %s\n" % (field, value)
+        return mu
+      
+    @property  
+    def raw(self):
+        return self.__result
         
     @property
     def id(self):
@@ -279,7 +309,9 @@ class FMQLDescribeResult(object):
         return self.__result["sameAsLabel"]["value"] if "sameAsLabel" in self.__result else ""    
         
     def fieldInfos(self):
-        """Schema from the reply"""
+        """
+        Schema from the reply: better than generic "keys()"
+        """
         return [(field, self.__result[field]["type"], self.__result[field]["fmId"]) for field in self.__result if field != "uri"]   
         
     def hasField(self, field):
@@ -294,7 +326,14 @@ class FMQLDescribeResult(object):
     
     def sameAsLabel(self, field):
         pass
+        
+    # TODO: just go to this ie/ no need to have separate methods for other stuff
+    # ie/ job is to flatten out/normalize out the FMQL response and produce a
+    # friendlier form
+    def data(self, useSameAs=False):
+        return self.__flatten(self, useSameAs=useSameAs)
                 
+    # TODO: replace with 
     def cstopped(self, flatten=False):
         """Return as if CSTOP=0"""
         return self.__flatten(self.__result, False)
@@ -321,22 +360,9 @@ class FMQLDescribeResult(object):
                 continue
             no += 1
         return no
-        
+                
+    # TODO: VOLDO FIX - old one didn't return DRs
     def cnodes(self, cnodeField):
-        if cnodeField not in self.__result:
-            return None
-        cnodes = []
-        # TODO: may exception
-        if "stopped" in self.__result[cnodeField]:
-            return cnodes
-        for cr in self.__result[cnodeField]["value"]:
-            fcnode = self.__flatten(cr, nixURI=True)
-            fcnode["vse:container"] = self.id
-            cnodes.append(fcnode)
-        return cnodes
-        
-    # TODO: merge with cnodes (need to change VDM use first)
-    def cnodesFD(self, cnodeField):
         if cnodeField not in self.__result:
             return [] # makes it easier to traverse
         # TODO: may exception
@@ -344,7 +370,7 @@ class FMQLDescribeResult(object):
             return []
         return [FMQLDescribeResult(cr) for cr in self.__result[cnodeField]["value"]]
         
-    def __flatten(self, dr, includeCNodes=True, nixURI=False):
+    def __flatten(self, dr, includeCNodes=True, nixURI=False, useSameAs=False):
         fdr = {}
         for field, value in dr.items():
             if nixURI and field == "uri": # CNodes - no need
@@ -353,8 +379,12 @@ class FMQLDescribeResult(object):
                 if includeCNodes and "stopped" not in value:
                     fdr[field] = [self.__flatten(cnode, nixURI=True) for cnode in value["value"]]
                 continue
-            # TODO: if "uri" - preserve label ie field + "_Label" = "label" or
-            # use () ie/ (9_6-2, "XXX")
+            if value["type"] == "uri":
+                if useSameAs and "sameAs" in value:
+                    fdr[field] = value["sameAs"] + ":" + value["sameAsLabel"]
+                    continue
+                fdr[field] = value["value"] + ":" + value["label"].split("/")[1]
+                continue
             fdr[field] = value["value"]
         return fdr
                 
@@ -374,8 +404,8 @@ class ThreadedQueriesCacher(threading.Thread):
       - pool manages the overall task queue ie/ queriesQueue ie/ ala tie in to rpc pool
     - check out Twisted as an alternative
     """
-    def __init__(self, fmqlIF, queriesQueue, cacheLocation):
-        threading.Thread.__init__(self)
+    def __init__(self, id, fmqlIF, queriesQueue, cacheLocation):
+        threading.Thread.__init__(self, name=id)
         self.__fmqlIF = fmqlIF
         self.__queriesQueue = queriesQueue
         self.__cacheLocation = cacheLocation
@@ -393,7 +423,7 @@ class ThreadedQueriesCacher(threading.Thread):
                 jcache = open(self.__cacheLocation + "/" + query + ".json", "w")
                 jcache.write(reply)
                 jcache.close()
-                logging.info("Caching data from query %s" % query)
+                logging.info("%s: Caching data from query %s" % (self.name, query))
                 # Monitoring progress with self.__queriesQueue.qsize():
                 # - Problem with pool == 20 or so. Get 0 for last ones and then a hang.
             self.__queriesQueue.task_done()
@@ -402,6 +432,8 @@ class FMQLInterface(object):
     """
     TODO: urllib2 etc timeout in seconds (instead of ? default)
     ... socket.setdefaulttimeout(default_timeout)
+    
+    TODO: merge with FMQL's Python side ie/ FMQLQP.
     
     TODO: replace with direct invoke of FMQLQP.py ie/ let it deal with
     formatting etc. ie/ merge with Apache hosted FMQL EP code.
