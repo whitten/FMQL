@@ -19,6 +19,7 @@ ALLTYPES(REPLY,FMQLPARAMS)
     D LISTSTART^FMQLJSON(REPLY,"results")
     F  S FILE=$O(^DD(FILE)) Q:FILE'=+FILE  D
     . N FLINF D BLDFLINF^FMQLUTIL(FILE,.FLINF)
+    . ; WP is a file (has DD entry) but not considered a file for FMQL
     . I $D(FLINF("BAD")),FLINF("BAD")="WP FILE" Q
     . I BADTOO=0,$D(FLINF("BAD")) Q
     . I TOPONLY,$D(FLINF("PARENT")) Q
@@ -142,9 +143,10 @@ FIELDSINFO(FLINF)
     D LISTSTART^FMQLJSON(REPLY,"fields")
     S FIELD=0 F  S FIELD=$O(^DD(FILE,FIELD)) Q:FIELD'=+FIELD  D
     . N FDINF D BLDFDINF^FMQLUTIL(.FLINF,FIELD,.FDINF)
-    . I $D(FDINF("BAD")) D DASSERT^FMQLJSON(REPLY,"corruption",FDINF("BAD")) D DICTEND^FMQLJSON(REPLY) Q
     . D DICTSTART^FMQLJSON(REPLY)
+    . ; FDINF guarantees to at least have field set
     . D DASSERT^FMQLJSON(REPLY,"number",FDINF("FIELD"))
+    . I $D(FDINF("BAD")) D DASSERT^FMQLJSON(REPLY,"corruption",FDINF("BAD")) D DICTEND^FMQLJSON(REPLY) Q
     . ; Send over all the flags. May process more on client side
     . D DASSERT^FMQLJSON(REPLY,"flags",FDINF("FLAGS"))
     . D DASSERT^FMQLJSON(REPLY,"name",FDINF("LABEL"))
