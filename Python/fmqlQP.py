@@ -56,6 +56,10 @@ class FMQLQueryProcessor:
             offset=""
             if queryArgs.has_key("offset"):
                 offset = "^OFFSET:%s" % queryArgs["offset"][0]
+            # TODO: more testing on afterien - NOT appropriate for indexed filters so for now turning off for all filters
+            afterien=""
+            if queryArgs.has_key("afterien") and not (queryArgs.has_key("offset") or queryArgs.has_key("filter")): # afterien only for straight selects for now
+                afterien = "^AFTERIEN:%s" % queryArgs["afterien"][0]
             orderBy = ""
             if queryArgs.has_key("orderby"):
                 orderBy = "^ORDERBY:%s" % queryArgs["orderby"][0]
@@ -63,7 +67,7 @@ class FMQLQueryProcessor:
             # Only take one for now
             if queryArgs.has_key("predicate"):
                 pred = "^PREDICATE:%s" % queryArgs["predicate"][0]
-            return self.__Select(queryArgs["typeId"][0], ip, flt, limit, offset, pred, orderBy)
+            return self.__Select(queryArgs["typeId"][0], ip, flt, limit, offset, pred, orderBy, afterien)
         elif queryArgs["op"][0] == "Count":
             if not queryArgs.has_key("typeId"):
                 raise Exception("QPERROR", "No typeId specified for Count")
@@ -82,7 +86,11 @@ class FMQLQueryProcessor:
             offset=""
             if queryArgs.has_key("offset"):
                 offset = "^OFFSET:%s" % queryArgs["offset"][0]
-            return self.__Count(queryArgs["typeId"][0], ip, flt, limit, offset, noidxmx)
+            # TODO: more testing on afterien - NOT appropriate for indexed filters so for now turning off for all filters
+            afterien=""
+            if queryArgs.has_key("afterien") and not (queryArgs.has_key("offset") or queryArgs.has_key("filter")): # afterien only for straight selects for now
+                afterien = "^AFTERIEN:%s" % queryArgs["afterien"][0]
+            return self.__Count(queryArgs["typeId"][0], ip, flt, limit, offset, noidxmx, afterien)
         elif queryArgs["op"][0] == "DescribeType":
             if not queryArgs.has_key("typeId"):
                 raise Exception("QPERROR", "No typeId specified for DescribeType")
@@ -125,17 +133,17 @@ class FMQLQueryProcessor:
         reply = self.rpcc.invokeRPC("CG FMQL QP", fmqlArgs)
         return reply
 
-    def __Select(self, classId, ip="", flt=None, limit="", offset="", pred="", orderBy=""):
+    def __Select(self, classId, ip="", flt=None, limit="", offset="", pred="", orderBy="", afterien=""):
         if not flt:
-            fmqlArgs = ["OP:SELECT^TYPE:%s%s%s%s%s%s" % (self.__makeTypeId(classId), ip, limit, offset, pred, orderBy)]
+            fmqlArgs = ["OP:SELECT^TYPE:%s%s%s%s%s%s%s" % (self.__makeTypeId(classId), ip, limit, offset, pred, orderBy,afterien)]
         else:
             fmqlArgs = ["OP:SELECT^TYPE:%s%s^FILTER:%s%s%s%s" % (self.__makeTypeId(classId), ip, self.__uncolonFilter(flt), limit, offset, pred)]
         reply = self.rpcc.invokeRPC("CG FMQL QP", fmqlArgs)
         return reply
 
-    def __Count(self, classId, ip="", flt=None, limit="", offset="", noidxmx=""):
+    def __Count(self, classId, ip="", flt=None, limit="", offset="", noidxmx="", afterien=""):
         if not flt:
-            fmqlArgs = ["OP:COUNT^TYPE:%s%s%s%s" % (self.__makeTypeId(classId), ip, limit, offset)]
+            fmqlArgs = ["OP:COUNT^TYPE:%s%s%s%s" % (self.__makeTypeId(classId), ip, limit, offset, afterien)]
         else:
             fmqlArgs = ["OP:COUNT^TYPE:%s%s^FILTER:%s%s%s%s" % (self.__makeTypeId(classId), ip, self.__uncolonFilter(flt), limit, offset, noidxmx)]
         reply = self.rpcc.invokeRPC("CG FMQL QP", fmqlArgs)
@@ -165,6 +173,10 @@ class FMQLQueryProcessor:
             offset = ""
             if queryArgs.has_key("offset"):
                 offset = "^OFFSET:%s" % queryArgs["offset"][0]
+            # TODO: more testing on afterien - NOT appropriate for indexed filters so for now turning off for all filters
+            afterien=""
+            if queryArgs.has_key("afterien") and not (queryArgs.has_key("offset") or queryArgs.has_key("filter")): # afterien only for straight selects for now
+                afterien = "^AFTERIEN:%s" % queryArgs["afterien"][0]
             orderBy = ""
             if queryArgs.has_key("orderby"):
                 orderBy = "^ORDERBY:%s" % queryArgs["orderby"][0]
@@ -178,7 +190,7 @@ class FMQLQueryProcessor:
                 flt = urllib.unquote(queryArgs["filter"][0])
                 fmqlArgs = ["OP:DESCRIBE^TYPE:%s%s^FILTER:%s%s%s%s" % (self.__makeTypeId(classId), ip, self.__uncolonFilter(flt), limit, offset, cstop)]
             else:
-                fmqlArgs=["OP:DESCRIBE^TYPE:%s%s%s%s%s%s" % (self.__makeTypeId(classId), ip, limit, offset, orderBy, cstop)]
+                fmqlArgs=["OP:DESCRIBE^TYPE:%s%s%s%s%s%s%s" % (self.__makeTypeId(classId), ip, limit, offset, afterien, orderBy, cstop)]
         else:
             raise Exception("QPERROR", "No typeId specified for Describe")
         reply = self.rpcc.invokeRPC("CG FMQL QP", fmqlArgs)

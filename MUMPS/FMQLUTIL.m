@@ -25,6 +25,7 @@ FMQLUTIL;Caregraf - FMQL Utilities ; May 31, 2012
 ;   for a couple of entries.
 ;   Note: no setting this in MUMPS right now. Set by FMQL QP in Apache.
 ; - OFFSET: start from this point in a walk
+; - FROMIEN: start at or above this IEN in a walk (doesn't apply to indexed walks for now)
 ; 
 XIENA(FLINF,FILTER,IENA,LIMIT,OFFSET,NOIDXMX,TOX,PARAMS)
    ; 01 FDINF of file must be ok. TBD: centralize in FLINF
@@ -51,7 +52,6 @@ XIENA(FLINF,FILTER,IENA,LIMIT,OFFSET,NOIDXMX,TOX,PARAMS)
    ; Use B Index if told to order by it and it is there.
    ; For now, only support order by .01
    I $G(PARAMS("ORDERBY"))=".01",$D(FLINF("BIDX")) D XBYIDX(.FLINF,FLINF("BIDX"),"",MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
-   ; Walk File IEN by IEN
    D XBYIENA(.FLINF,FLINF("ARRAY"),MFLT,.PLC,TOX,.PARAMS)
    Q PLC("CNT")
 
@@ -65,11 +65,14 @@ XBYIDX(FLINF,IDXA,IDXSTART,MFLT,PLC,TOX,PARAMS)
 
 ; Xexecute over an IEN array
 XBYIENA(FLINF,IENA,MFLT,PLC,TOX,PARAMS)
-   N IEN,MFTEST,FAR
+   N IEN,MFTEST,FAR,FIEN
    ; For IENA in IDX where IEN is not last subscript. Need to skip duplicates.
    S:'$D(PLC("LIEN")) PLC("LIEN")=0
    S FAR=$S($D(FLINF("GL")):FLINF("ARRAY"),1:IENA)
-   S IEN=0 F  S IEN=$O(@IENA@(IEN)) Q:IEN'=+IEN!(PLC("CNT")=PLC("LIMIT"))  D
+   S FIEN=0
+   ; TODO: quick intro of AFTERIEN: NEEDS A LOT MORE TESTING. If specified (won't be for any filters now - can change once indexed/non indexed filters clear) then OFFSET becomes mute. 
+   I MFLT="",$D(PARAMS("AFTERIEN")) S FIEN=PARAMS("AFTERIEN") S PLC("OFFLFT")=0
+   S IEN=FIEN F  S IEN=$O(@IENA@(IEN)) Q:IEN'=+IEN!(PLC("CNT")=PLC("LIMIT"))  D
    . Q:IEN=PLC("LIEN") ; IEN already in this IDX walk
    . ; Despite what an index says, there is no such node.
    . Q:'$D(@FAR@(IEN))

@@ -63,6 +63,7 @@ class FMQLQPE:
         RE_IN = re.compile(' +IN +([\d_]+\-[\d\.]+)')
         RE_LIMIT = re.compile(' +LIMIT +(\d+)')
         RE_OFFSET = re.compile(' +OFFSET +(\d+)')
+        RE_AFTERIEN = re.compile(' +AFTERIEN +(\d+)')
         RE_FILTER = re.compile(' +FILTER *\((.+)\)')
         RE_DESCRIBECSTOP = re.compile(' +CSTOP (\d+)')
         RE_SELECTFROM = re.compile('SELECT +([\.\d]+) +FROM +([\d_]+)')
@@ -101,6 +102,8 @@ class FMQLQPE:
             v08Query["limit"] = [RE_LIMIT.search(query).group(1)]
         if RE_OFFSET.search(query):
             v08Query["offset"] = [RE_OFFSET.search(query).group(1)]
+        if RE_OFFSET.search(query):
+            v08Query["afterien"] = [RE_AFTERIEN.search(query).group(1)]
         if RE_FILTER.search(query):
             v08Query["filter"] = [RE_FILTER.search(query).group(1)]
         if RE_NOIDXMAX.search(query):
@@ -113,6 +116,7 @@ class FMQLQPE:
         v08Query = None
         RE_DESCRIBETYPE = re.compile('DESCRIBE TYPE +([\d_]+)$')
         RE_SELECTTYPES = re.compile('SELECT TYPES') # allows args
+        # TODO: change to SELECT TYPE REFS (vs COUNT REFS)
         RE_SELECTALLREFERRERSTOTYPE = re.compile('SELECTALLREFERRERSTOTYPE +([\d_]+)')
         if RE_DESCRIBETYPE.match(query):
             nodeType = RE_DESCRIBETYPE.match(query).group(1)
