@@ -143,7 +143,7 @@ class FMQLQueryProcessor:
 
     def __Count(self, classId, ip="", flt=None, limit="", offset="", noidxmx="", afterien=""):
         if not flt:
-            fmqlArgs = ["OP:COUNT^TYPE:%s%s%s%s" % (self.__makeTypeId(classId), ip, limit, offset, afterien)]
+            fmqlArgs = ["OP:COUNT^TYPE:%s%s%s%s%s" % (self.__makeTypeId(classId), ip, limit, offset, afterien)]
         else:
             fmqlArgs = ["OP:COUNT^TYPE:%s%s^FILTER:%s%s%s%s" % (self.__makeTypeId(classId), ip, self.__uncolonFilter(flt), limit, offset, noidxmx)]
         reply = self.rpcc.invokeRPC("CG FMQL QP", fmqlArgs)

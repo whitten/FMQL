@@ -102,7 +102,7 @@ class FMQLQPE:
             v08Query["limit"] = [RE_LIMIT.search(query).group(1)]
         if RE_OFFSET.search(query):
             v08Query["offset"] = [RE_OFFSET.search(query).group(1)]
-        if RE_OFFSET.search(query):
+        if RE_AFTERIEN.search(query):
             v08Query["afterien"] = [RE_AFTERIEN.search(query).group(1)]
         if RE_FILTER.search(query):
             v08Query["filter"] = [RE_FILTER.search(query).group(1)]
