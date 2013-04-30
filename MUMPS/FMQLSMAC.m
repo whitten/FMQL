@@ -19,7 +19,6 @@ RESOLVE(IEN,SAMEAS)
  ;
 RESOLVE50(IEN,SAMEAS) ; VistA Drug 50 to NDC or NDDF equivalent or mark as local
  S:'$D(SAMEAS("URI")) SAMEAS("URI")="LOCAL"
- Q:'$D(^PSDRUG(IEN,"ND")) ; Should be but not presuming mandatory to map to primary NDC
  N PNDCIEN S PNDCIEN=$P(^PSDRUG(IEN,0),"^",4)
  Q:PNDCIEN'=+PNDCIEN
  Q:PNDCIEN=0 ; catch corrupt IEN
