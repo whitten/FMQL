@@ -92,7 +92,7 @@ if __name__ == '__main__':
     try:
         # create a simple WSGI server and run the application
         from wsgiref import simple_server
-        print "Running test application - point your browser at http://localhost:8000/ ..."
+        print "Running test application - point your browser at http://localhost:8000/fmqlEP?fmql=DESCRIBE 2-1 ..."
         httpd = simple_server.WSGIServer(('', 8000), simple_server.WSGIRequestHandler)
         fmqlEnviron = {"rpcbroker": "VistA", "rpchost": "localhost", "rpcport": "9201", "rpcaccess": "QLFM1234", "rpcverify": "QLFM1234!!"}
         application.setFMQLEnviron(fmqlEnviron)
