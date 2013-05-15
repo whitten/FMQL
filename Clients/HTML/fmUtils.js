@@ -12,13 +12,12 @@
  * the GNU Affero General Public License version 3 (AGPL) as published by the Free Software 
  * Foundation. Modified or not:
  * - as required under Section 5, its source must retain appropriate legal notices
- * - in accordance with Section 7(b), its display must retain the "powered by FMQL" slogan with
- *   its link to http://www.caregraf.org/fmql.
- * (c) 2010-2012 caregraf.org
+ * - in accordance with Section 7(b), its display must retain the "Mastering VistA's Data" slogan with its link to http://vista.caregraf.info
+ * (c) 2013 Caregraf
  */
 
 // SAMEASBASE
-var SAMEASBASE = "http://datasets.caregraf.org/";
+var SAMEASBASE = "http://schemes.caregraf.info/";
 // FMQL EP
 var ENDPOINT = location.protocol + "//" + location.host + "/fmqlEP";
 // hash to use
