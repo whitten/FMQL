@@ -63,7 +63,6 @@
 
 <IfModule mod_wsgi.c>
     # Always runs embedded in one process, in the multi-threading "winnt MPM". 
-    # - IMPORTANT: inside fmqlEP.wsgi, reset the sys.path setting
     WSGIScriptAlias /fmqlEP C:/<fmql location>/fmqlEP.wsgi
 </IfModule>
 
