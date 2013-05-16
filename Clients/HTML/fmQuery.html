@@ -88,7 +88,7 @@ th, td {
 
 /*
  * Invocation Cases:
- * - URL bar chooses query (and output): fmql= 
+ * - URL bar chooses query (and format): fmql= 
  *   - get query from url and send to fmqlEP
  *   - make sure query box matches
  * - User manually fills in/chooses a query and hits send
@@ -126,7 +126,7 @@ function sendQueryInURLBar()
     var srch = location.search.substring(1);
     var pairs = srch.split("&");
     var query = "";
-    var output = "";
+    var format = "";
     for(var i=0; i < pairs.length; i++)
     {
         var pos = pairs[i].indexOf("=");
@@ -137,8 +137,8 @@ function sendQueryInURLBar()
         value = decodeURIComponent(value);
         if (argname == "fmql")
             query = value;
-        else if (argname == "output")
-            output = value;
+        else if (argname == "format")
+            format = value;
         else
         {
             location.search = "";
@@ -150,10 +150,10 @@ function sendQueryInURLBar()
          location.search = "";
          return;
     }
-    if (!output)
-         output = "JSON";
+    if (!format)
+         format = "JSON";
 
-    boxQuery(query, output);
+    boxQuery(query, format);
 
     var xhr = getXMLHttpRequest();
     xhr.onreadystatechange = function()
@@ -162,7 +162,7 @@ function sendQueryInURLBar()
          {
               if(xhr.status == 200) 
               {
-                  if (output == "JSON")
+                  if (format == "JSON")
                       html("results", "<pre>" + makeJSONPretty(xhr.responseText) + "</pre>"); 
                   else
                       html("results", makeHTMLFromJSON(xhr.responseText, query));
@@ -183,15 +183,15 @@ function sendQueryInURLBar()
  * in the query box and hitting send and updating the query
  * box from the location bar.
  */
-function boxQuery(query, output)
+function boxQuery(query, format)
 {
     document.getElementById('query').value = query;
-    if (!output)
+    if (!format)
         return; // leave at selected index
-    if (output == "JSON")
-        document.getElementById('output').selectedIndex = 1;
+    if (format == "JSON")
+        document.getElementById('format').selectedIndex = 1;
     else
-        document.getElementById("output").selectedIndex = 0; // HTML
+        document.getElementById("format").selectedIndex = 0; // HTML
 }
 
 function handleSendQuery()
@@ -199,16 +199,16 @@ function handleSendQuery()
     var query = document.getElementById("query").value;
     if (!query)
         return;
-    var outputIndex = document.getElementById("output").selectedIndex;
-    var output =  document.getElementById("output")[outputIndex].text;
+    var formatIndex = document.getElementById("format").selectedIndex;
+    var format =  document.getElementById("format")[formatIndex].text;
     var queryArgs = "fmql=" + encodeURIComponent(query);
-    if (output != "JSON")
-        queryArgs += "&output=" + output;
+    if (format != "JSON")
+        queryArgs += "&format=" + format;
     location.search = queryArgs;
 }
 
 /*
- * JSON Output: make it "pretty"
+ * JSON format: make it "pretty"
  *
  * TBD: MUMPS side pretty up
  */
@@ -221,7 +221,7 @@ function makeJSONPretty(jsonReply)
 }
 
 /*
- * HTML Output - client side from JSON. 
+ * HTML format - client side from JSON. 
  *
  * Calls into shared library with Rambler. See URLs to be query form
  */
@@ -274,8 +274,8 @@ function makeHTMLFromJSON(jsonReply, query)
 </select>
 </div>
 <div class="option"> 
-<span class="option-title">Output: </span> 
-<select id="output" name="output">
+<span class="option-title">Format: </span> 
+<select id="format" name="format">
 <option value="html" selected="selected">HTML</option> 
 <option value="json">JSON</option> 
 </select> 
