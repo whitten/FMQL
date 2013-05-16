@@ -49,6 +49,7 @@
 
     # Trace problems in FMQL in this error log
     LogLevel warn
+    # In Windows, logs is a peer of the conf directory
     ErrorLog logs/error_fmql.log
 
 <ifmodule mod_rewrite.c>
