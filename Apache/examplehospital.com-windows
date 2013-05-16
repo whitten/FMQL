@@ -3,7 +3,7 @@
 #
 # This typically applies to VistA or RPMS running on Cache/Windows.
 #
-# First edit <apache locn>\conf\httpd.conf to
+# After installing Apache, first edit <apache locn>\conf\httpd.conf to
 # (Apache Locn is normally Programmer Files/Apache ...)
 # - enable mod_rewrite
 #   (uncomment: #LoadModule rewrite_module modules/mod_rewrite.so)
@@ -20,6 +20,8 @@
 # Remember to reset port (####) and directory settings
 # <apache locn> and <fmql location> which only have
 # placeholders below. 
+#
+# In windows, use 'services' to start and stop Apache.
 #
 # Official Apache docs: http://httpd.apache.org/docs/2.2/vhosts/
 #
