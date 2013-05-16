@@ -12,7 +12,7 @@
  * the GNU Affero General Public License version 3 (AGPL) as published by the Free Software 
  * Foundation. Modified or not:
  * - as required under Section 5, its source must retain appropriate legal notices
- * - in accordance with Section 7(b), its display must retain the "Mastering VistA's Data" slogan with its link to http://vista.caregraf.info
+ * - in accordance with Section 7(b), its display must retain the "Master FileMan's Data" slogan with its link to http://vista.caregraf.info
  * (c) 2013 Caregraf
  */
 
@@ -352,7 +352,7 @@ function sameAsLink(uriValue, base, label)
     if (lMatch)
         return "<a href='" + base + lMatch[1] + "'>" + label + "</a>";
     // TBD: HL7, ICD, CPT etc.
-    sameas = sameasURI.replace(".", "_").replace("VA:", SAMEASBASE + "va/").replace("ICD9:", SAMEASBASE + "icd9cm/").replace("CPT:", SAMEASBASE + "cpt/").replace("PROVIDER:", SAMEASBASE + "provider/");
+    sameas = sameasURI.replace(".", "_").replace("VA:", SAMEASBASE + "va/").replace("ICD9:", SAMEASBASE + "icd9cm/").replace("CPT:", SAMEASBASE + "cpt/").replace("PROVIDER:", SAMEASBASE + "provider/").replace("nddf:", SAMEASBASE + "nddf/");
     return "<a href='" + sameas + "'>" + label + "</a>";
 }
 
