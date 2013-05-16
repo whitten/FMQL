@@ -323,7 +323,7 @@ function selectResultToHTML(reply, useURIForm, base, excludes)
             if (useURIForm) // use URL format
                 resultsMarkup += base + result["uri"]["value"];
             else
-                resultsMarkup += base + "?fmql=DESCRIBE " + result["uri"]["value"] + "&output=HTML";
+                resultsMarkup += base + "?fmql=DESCRIBE " + result["uri"]["value"] + "&format=HTML";
             resultsMarkup += "\">" + label + "</a></td>";
             if ("sameAs" in result["uri"])
                 resultsMarkup += "<td>" + sameAsLink(result["uri"], base) + "</td>";
@@ -388,7 +388,7 @@ function makeNavMarkup(useURIForm, base, reply)
                 pargs["OFFSET"] = poffset.toString();
             else
                 delete pargs["OFFSET"]
-            prevURI = base + "?fmql=" + makeQuery(pargs) + "&output=HTML";
+            prevURI = base + "?fmql=" + makeQuery(pargs) + "&format=HTML";
         }
         navMarkup += "<a href='" + prevURI + "' rel='prev'>PREV</a>";
     }
@@ -415,7 +415,7 @@ function makeNavMarkup(useURIForm, base, reply)
             for (key in args)
                 nargs[key] = args[key];
             nargs["OFFSET"] = noffset;
-            nextURI = base + "?fmql=" + makeQuery(nargs) + "&output=HTML";
+            nextURI = base + "?fmql=" + makeQuery(nargs) + "&format=HTML";
         }
         navMarkup += "<a href='" + nextURI + "' rel='next'>NEXT</a>";
     }
@@ -473,7 +473,7 @@ function describeFieldsToHTML(fields, result, useURIForm, base, excludes)
             if (useURIForm) 
                 resultsMarkup += base + result[field]["value"];
             else
-                resultsMarkup += base + "?fmql=DESCRIBE " + result[field]["value"] + "&output=HTML";
+                resultsMarkup += base + "?fmql=DESCRIBE " + result[field]["value"] + "&format=HTML";
             resultsMarkup += "\">" + result[field]["label"] + "</a></dd>";
         }
         else if (result[field]["type"] == "typed-literal")
@@ -495,7 +495,7 @@ function describeFieldsToHTML(fields, result, useURIForm, base, excludes)
                 if (!/\_/.exec((result["uri"]["value"].split("-")[1])))
                 {
                     var cNodeQuery = "DESCRIBE " + result[field]["file"] + " IN " + result["uri"]["value"] + " LIMIT 10";
-                    resultsMarkup += " <a href='/query?fmql=" + cNodeQuery + "&output=HTML'>View in Query Maker</a></dd>";
+                    resultsMarkup += " <a href='/query?fmql=" + cNodeQuery + "&format=HTML'>View in Query Maker</a></dd>";
                 }
             }
             else
@@ -544,7 +544,7 @@ function countRefsResultToHTML(reply, useURIForm, base, limit, excludes)
             var query = "SELECT " + result["file"] + " FILTER(" + result["field"] + "=" + reply["fmql"]["URI"] + ")";
             if (limit < parseInt(result["count"]))
                 query += " LIMIT " + limit;
-            resultsMarkup += base + "?fmql=" + query + "&output=HTML";
+            resultsMarkup += base + "?fmql=" + query + "&format=HTML";
         }
         else
             resultsMarkup += base + result["file"] + "/" + limit + "/0/" + result["field"] + "=" + reply["fmql"]["URI"];
