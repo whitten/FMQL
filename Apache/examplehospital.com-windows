@@ -61,7 +61,7 @@
     RewriteRule ^/([0-9\.\_\-]+)$ /rambler
     RewriteRule ^/rambler.* /fmRambler.html [L]
     RewriteRule ^/schema.* /fmSchema.html [L]
-    RewriteRule ^/query.* /fmQuery.html [L]
+    RewriteRule ^/query /fmQuery.html [L]
 </IfModule>
 
 <IfModule mod_wsgi.c>
