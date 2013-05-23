@@ -11,11 +11,10 @@
 import re
 from collections import defaultdict
 
-class DescribeTypeResult(object):
+class FileInfo(object):
 
     """
     TODO: 
-    - may rename "FileInfo" (ala "FieldInfo")
     - the easy access provided here will inform improvements to the raw FMQL JSON scheduled for V1.1.
     - handle "corrupt" file and "corrupt" field info properly for easy reports
     
@@ -329,6 +328,8 @@ class FieldInfo(object):
 	- 4.03 PROVIDERS INTERVENTION CODE (u'M0', u'PRESCRIBER CONSULTED')
 	- 5.07 PHARMACIST INTERVENTION CODE (u'R0', u'PHARMACIST CONSULTED')
 	- 28 AVAILABLE (u'1', u'NOT AVAILABLE')
+	
+	BUG: <rdfs:label>Observed/Historical</rdfs:label> ... 120_8 should have left this as an Enum
     """  
     def __codeValueBooleanCompatible(self, codeValue):
         # mn is Y/N
@@ -364,8 +365,8 @@ def main():
 
     queryURL = FMQLEP + "?" + urllib.urlencode({"fmql": "DESCRIBE TYPE 2"}) 
     reply = json.loads(urllib2.urlopen(queryURL).read())
-    dtr = DescribeTypeResult(reply)
-    print dtr
+    fi = FileInfo(reply)
+    print fi
 
 if __name__ == "__main__":
     main()
