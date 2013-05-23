@@ -5,7 +5,7 @@
 # This program is free software; you can redistribute it and/or modify it 
 # under the terms of the GNU Affero General Public License version 3 (AGPL) 
 # as published by the Free Software Foundation.
-# (c) 2010-2011 caregraf.org
+# (c) 2010-2013 caregraf
 #
 
 """
@@ -16,9 +16,9 @@
 """
 
 __author__ =  'Caregraf'
-__copyright__ = "Copyright 2010-2011, Caregraf"
+__copyright__ = "Copyright 2010-2013, Caregraf"
 __license__ = "AGPL"
-__version__=  '0.96'
+__version__=  'v1.0b'
 __status__ = "Production"
 
 import urllib
