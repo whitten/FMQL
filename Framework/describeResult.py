@@ -328,9 +328,6 @@ def main():
         print "It contains:"
         for i, cRecord in enumerate(record.contains(), 1):
             print i, cRecord
-        print "It contains 2.06:"
-        crecord = record.contains("2_06")[0]
-        print crecord
 
 if __name__ == "__main__":
     main()
