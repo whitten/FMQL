@@ -154,6 +154,12 @@ class FileInfo(object):
             namesSoFar.add(fieldResult["name"])
         return self.__fieldInfos
         
+    def fieldInfo(self, id):
+        for fieldInfo in self.fieldInfos():
+            if fieldInfo.id == id:
+                return fieldInfo
+        return None
+        
     @property
     def hasDuplicatedFieldNames(self):
         """
@@ -171,6 +177,7 @@ class FieldInfo(object):
 
     # TMP Til FMQL uses .8. ie/ I FLDFLAGS["D" S FLDTYPE=1 ; Date 
     # will look into file .81/^DI(.81,"C","D")
+    # TODO: add "BOOLEAN" ... "FREE TEXT" -> STRING, FORMATTED STRING, POINTER etc.
     FIELDTYPES = {
         "1": "DATE-TIME",
         "2": "NUMERIC",
@@ -310,47 +317,30 @@ class FieldInfo(object):
         Many coded fields amount to booleans. Better to represent them that way than as mini terminologies. ie/ distinguish boolean coded values from first class, larger cousins.
         
         Two variations: 1 value (ie/ bound or not) and 2 value (Y/N). Not all 2 value are boolean. They may be of form, "XorY" with values of X or Y. This can't be a boolean unless it is renamed "isX" or "X".
+        
+	    May add:
+	    - 28 AVAILABLE (u'1', u'NOT AVAILABLE')
         """
         codes = self.codes()
         if not len(codes):
             return False
-        if len(codes) == 1 and self.__codeValueBooleanCompatible(codes[0]):
+        if len(codes) == 1:
+            if codes[0][0] in ["Y", "N", "1", "0"] and codes[0][1] in ["Y", "YES", "N", "NO", self.__result["name"]]:
+                return True
+        if len(codes) == 2:
+            for code in codes:
+                if not (code[0] in ["Y", "N", "1", "0"] and code[1] in ["Y", "YES", "N", "NO"]):
+                    return False    
             return True
-        if len(codes) == 2 and sum(1 for code in codes if self.__codeValueBooleanCompatible(code)):
+        return False
+        
+    def booleanOfValue(self, value):
+        if not self.isBooleanCoded:
+            raise Exception("Not boolean coded")
+        if value in ["Y", "YES", "1", self.__result["name"]]:
             return True
         return False
            
-    """
-    Notes on singleton boolean:
-    TODO: more specials or leave for singletons ie/ CODEs vs ...
-    - 8.19 WITHOLD DISPLAY OF TIMING TEXT (u'1', u'WITHHOLD DISPLAY OF TIMING TEXT')
-    - 4 TYPE (u'D', u'DEPARTURE STATUS')
-	- 4.03 PROVIDERS INTERVENTION CODE (u'M0', u'PRESCRIBER CONSULTED')
-	- 5.07 PHARMACIST INTERVENTION CODE (u'R0', u'PHARMACIST CONSULTED')
-	- 28 AVAILABLE (u'1', u'NOT AVAILABLE')
-	
-	BUG: <rdfs:label>Observed/Historical</rdfs:label> ... 120_8 should have left this as an Enum
-    """  
-    def __codeValueBooleanCompatible(self, codeValue):
-        # mn is Y/N
-        if codeValue[0] in ["Y", "N"]:
-            return True
-        # label is Y or N (sometimes MN is 1 or 0)
-        if codeValue[1] in ["Y", "YES", "N", "NO"]:
-            return True
-        # field name ends in FLAG or INDICATOR
-        if re.search(r'[FLAG|INDICATOR]$', self.name, re.IGNORECASE):
-            return True
-        # SPECIAL CASE EXCLUDE: Individual/Group Policy in 2.
-        if re.search(r'\/', self.name):
-            return False
-        # If escaped label is contained in the field name (typical is INACTIVE)
-        # Escaped and past participle-less form - used to check if label of enum is embedded in a field name
-        ppfl = re.escape(codeValue[1]) if not re.search(r'ED$', codeValue[1]) else codeValue[1][-1]
-        if re.search(ppfl, self.name, re.IGNORECASE):
-            return True
-        return False    
-
 # ############################# Test Driver ####################################
 
 import sys
