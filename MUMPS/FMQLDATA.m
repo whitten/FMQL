@@ -1,5 +1,5 @@
-FMQLDATA; Caregraf - FMQL Data Query Processor ; Apr, 2013
- ;;v1.0b;FMQLQP;;Apr 29th, 2013
+FMQLDATA; Caregraf - FMQL Data Query Processor ; Jul, 2013
+ ;;v1.1;FMQLQP;;July 3rd, 2013
  ;
  ;
  ; FMQL Data Query Processor
@@ -35,11 +35,11 @@ DESONE(REPLY,PARAMS) ;
  ;
  ;
 ALL(REPLY,PARAMS) ;
+ N FLINF,BPERR,PFLINF,PID,IENA,LIMIT,OFFSET,NOIDXMX,ORDERBY,AFTERIEN,CNODESTOP,TOX,CNT
  I '$D(PARAMS("TYPE")) D ERRORREPLY^FMQLJSON(REPLY,"Type Not Specified") Q
  S FILE=$TR(PARAMS("TYPE"),"_",".")
- N FLINF D BLDFLINF^FMQLUTIL(FILE,.FLINF)
+ D BLDFLINF^FMQLUTIL(FILE,.FLINF)
  I $D(FLINF("BAD")) D ERRORREPLY^FMQLJSON(REPLY,FLINF("BAD")) Q
- N BPERR,PFLINF,PID,IENA
  I '$D(FLINF("GL")) D  ; Handle Describe or Count of contained nodes.
  . I '$D(PARAMS("IN")) S BPERR="Missing: Contained Node Selection requires 'IN'" Q
  . D PARSEURL^FMQLUTIL(PARAMS("IN"),.PFLINF,.PID)
@@ -50,16 +50,19 @@ ALL(REPLY,PARAMS) ;
  E  S IENA=""
  I $D(BPERR) D ERRORREPLY^FMQLJSON(REPLY,BPERR) Q
  ; Defaults of -1,0,-1 for no LIMIT, no offset, no max cut off if no IDX, 
- N LIMIT S LIMIT=$S($G(PARAMS("LIMIT"))?0.1"-"1.N:PARAMS("LIMIT"),1:-1)
- N OFFSET S OFFSET=$S($G(PARAMS("OFFSET"))?1.N:PARAMS("OFFSET"),1:0)
- N NOIDXMX S NOIDXMX=$S($G(PARAMS("NOIDXMX"))?1.N:PARAMS("NOIDXMX"),1:-1)
- N CNODESTOP 
+ S LIMIT=$S($G(PARAMS("LIMIT"))?0.1"-"1.N:PARAMS("LIMIT"),1:-1)
+ S OFFSET=$S($G(PARAMS("OFFSET"))?1.N:PARAMS("OFFSET"),1:0)
+ S NOIDXMX=$S($G(PARAMS("NOIDXMX"))?1.N:PARAMS("NOIDXMX"),1:-1)
+ S ORDERBY=$G(PARAMS("ORDERBY"))
+ S AFTERIEN=$S($G(PARAMS("AFTERIEN"))?1.N:PARAMS("AFTERIEN"),1:"")
+ I AFTERIEN'="" S OFFSET=0  ; Make sure AFTERIEN takes precedence
+ ; Forcing default CNODESTOP to be 10
  I PARAMS("OP")="DESCRIBE" S CNODESTOP=$S($D(PARAMS("CNODESTOP")):$G(PARAMS("CNODESTOP")),1:10)
- N TOX ; Default value is "" for COUNT
+ ; Default value is "" for COUNT
  S TOX=$S((PARAMS("OP")="SELECT"):"D JSEL^FMQLDATA(REPLY,.FLINF,FAR,IEN,.PARAMS)",(PARAMS("OP")="DESCRIBE"):"D JDES^FMQLDATA(REPLY,.FLINF,FAR,IEN,CNODESTOP,.PARAMS)","1":"")
  D REPLYSTART^FMQLJSON(REPLY)
  D LISTSTART^FMQLJSON(REPLY,"results")
- N CNT S CNT=$$XIENA^FMQLUTIL(.FLINF,$G(PARAMS("FILTER")),IENA,LIMIT,OFFSET,NOIDXMX,TOX,.PARAMS)
+ S CNT=$$XONFL^FMQLUTIL(.FLINF,$G(PARAMS("FILTER")),IENA,LIMIT,OFFSET,AFTERIEN,ORDERBY,NOIDXMX,TOX,.PARAMS)
  D LISTEND^FMQLJSON(REPLY)
  ; Note: if problem listing (no indexed filter), CNT<0
  D DASSERT^FMQLJSON(REPLY,"count",CNT)
@@ -81,11 +84,26 @@ ALL(REPLY,PARAMS) ;
  Q
  ;
  ;
+ ; COUNT TYP BY PRED
+ ; # of distinct values of a predicate of a type
+ ; ... This is a simple but powerful aggregate counter
+ ; If the predicate is missing from a result, just skip. 
+ ;
+ ; TODO: SBYPRED too
+ ; 
+CBYPRED(REPLY,FAR,IEN,FDINF) ;
+ Q
+ ;
+ ;
  ; Build JSON for one selection
  ; - FAR = FLINF("ARRAY") for Global; FAR = Qualified location for CNode
  ; Note: supports only top level CNodes
  ; Note: "g"]"H" in MUMPS ie. lower case follows upper case. This means
  ;       selection order is case sensitive. This may be unexpected.
+ ; 
+ ; Note: MAY DEPRECATE AS SBYPRED is more useful, DESCRIBE CSTOP 0 is succinct enough
+ ; or expand to take a list of predicates.
+ ; 
  ; 
 JSEL(REPLY,FLINF,FAR,IEN,PARAMS) ;
  D DICTSTART^FMQLJSON(REPLY)
@@ -256,7 +274,7 @@ CNTREFS(REPLY,PARAMS) ;
  . . . I $D(FDINF("BAD")) Q
  . . . I FDINF("TYPE")'=7 Q  ; PTR only for now (no vptr)
  . . . N FLT S FLT=FIELD_"="_NTINF("FILE")_"-"_PARAMS("ID")
- . . . N CNT S CNT=$$XIENA^FMQLUTIL(.FLINF,FLT,"",-1,0,NOIDXMX,"")
+ . . . N CNT S CNT=$$XONFL^FMQLUTIL(.FLINF,FLT,"",-1,0,"","",NOIDXMX,"")
  . . . Q:CNT=-1 ; means no idx max exceeded.
  . . . Q:CNT=0 
  . . . D DICTSTART^FMQLJSON(REPLY)
