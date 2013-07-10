@@ -1,5 +1,5 @@
-FMQLSMAC; Caregraf - FMQL Schema Enhancement for Terminologies (Other) ; Apr, 2013
- ;;v1.0b;FMQLQP;;Apr 29th, 2013
+FMQLSMAC; Caregraf - FMQL Schema Enhancement for Terminologies (Other) ; Jul, 2013
+ ;;1.0;FMQLQP;;Jul 12th, 2013
  ;
  ;
  ; FMQL Schema Enhancement for Terminologies - sameas relationships
@@ -32,3 +32,4 @@ RESOLVE50(IEN,SAMEAS) ; VistA Drug 50 to NDC or NDDF equivalent or mark as local
  S SAMEAS("URI")="nddf:"_CDCID
  S SAMEAS("LABEL")="TODO" ; TODO: label - doesn't seem to always or ever have itself. Get from MIN or leave?
  Q
+ ;

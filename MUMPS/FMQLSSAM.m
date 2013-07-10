@@ -1,5 +1,5 @@
-FMQLSSAM; Caregraf - FMQL Schema Enhancement for Terminologies ; Apr, 2013
- ;;v1.0b;FMQLQP;;Apr 29th, 2013
+FMQLSSAM; Caregraf - FMQL Schema Enhancement for Terminologies ; Jul, 2013
+ ;;1.0;FMQLQP;;Jul 12th, 2013
  ;
  ;
  ; FMQL Schema Enhancement for Terminologies - sameas relationships
@@ -211,3 +211,4 @@ RESOLVE64(IEN,SAMEAS) ;
  S SAMEAS("URI")="LOINC:"_$P(^LAB(95.3,DEFLN,0),"^")_"-"_$P(^LAB(95.3,DEFLN,0),"^",15)  ; code and check_digit
  S SAMEAS("LABEL")=^LAB(95.3,DEFLN,81)
  Q
+ ;
