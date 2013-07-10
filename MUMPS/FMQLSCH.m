@@ -22,7 +22,7 @@ ALLTYPES(REPLY,FMQLPARAMS)
  . ; WP is a file (has DD entry) but not considered a file for FMQL
  . I $D(FLINF("BAD")),FLINF("BAD")="WP FILE" Q
  . S CNT=CNT+1
- . S:'$D(FLINF("BAD"),'$D(FLINF("PARENT")) TCNT=TCNT+1
+ . S:'$D(FLINF("PARENT")) TCNT=TCNT+1
  . I BADTOO=0,$D(FLINF("BAD")) Q
  . I TOPONLY=1,$D(FLINF("PARENT")) Q
  . I POPONLY=1,'$D(FLINF("FMSIZE")) Q
