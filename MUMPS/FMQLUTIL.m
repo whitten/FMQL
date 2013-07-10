@@ -1,5 +1,5 @@
 FMQLUTIL;Caregraf - FMQL Utilities ; Jul, 2013
- ;;1.1;FMQLQP;;July 3, 2013
+ ;;1.1;FMQLQP;;July 9, 2013
  ;
  ; FMQL Utilities
  ; 
@@ -9,81 +9,104 @@ FMQLUTIL;Caregraf - FMQL Utilities ; Jul, 2013
  ;
  ;
  ;
- ; eXecute a routine, TOX (TO eXecute) on members of a file. Flexible because TOX
- ; can do anything from a straightforward exposure of file contents to counting to
- ; aggregations of various kinds.
+ ; eXecute a routine, TOX (TO eXecute) on members of a file. Flexible - TOX
+ ; can do anything from a straightforward exposure of file contents to 
+ ; counting to aggregations of various kinds.
  ; - for both globals and cnodes
  ;   - IENA="" if GL - ie/ only set for CNODE
  ; - Controls position in file with LIMIT, OFFSET, AFTERIEN
  ; - PARAMS allows extra values to be passed to TOX
- ; - NOIDXMX = Maximum size of file to walk where no index exists. -1 means no max. This
+ ; - NOIDXMX = Maximum size of file to filter where no index exists. -1 means no max. This
  ;   matters for filters. You don't want to make a linear search of a huge file looking 
  ;   for a couple of entries. Note: not being set in MUMPS - upper bound set in Apache
  ; - Special case: ORDERBY - for now only on .01 if the B Index
  ;
 XONFL(FLINF,FILTER,IENA,LIMIT,OFFSET,AFTERIEN,ORDERBY,NOIDXMX,TOX,PARAMS) 
- N PLC,CNT,MFLT,
- S PLC("LIMIT")=LIMIT,PLC("OFFLFT")=OFFSET,PLC("AFTERIEN")=AFTERIEN
- Q:$D(PLC("AFTERIEN"),PLC("OFFLFT")'=0  ; double check offset off if AFTERIEN
- S MFLT=$S(FILTER'="":"S MFTEST="_$$FLTTOM^FMQLFILT(.FLINF,FILTER,IENA)",1:"")
- ; CNode not indexed. Walk IENA.
- I '$D(FLINF("GL") S CNT=$$XONIENA(.FLINF,IENA,MFLT,.PLC,TOX,.PARAMS) Q CNT
+ N PLC,MFLT
+ I AFTERIEN'="" S OFFSET=0  ; Ensure OFFSET off if AFTERIEN
+ S ^TMP("FMQLE","AFTERIEN")=AFTERIEN
+ S PLC("LIMIT")=LIMIT,PLC("OFFLFT")=OFFSET,PLC("AFTERIEN")=AFTERIEN,PLC("CNT")=0
+ ; Build filter expression
+ S MFLT=$S(FILTER'="":"S MFTEST="_$$FLTTOM^FMQLFILT(.FLINF,FILTER,IENA),1:"")
+ ; CNodes walk IENA.
+ I '$D(FLINF("GL")) D XIENA(.FLINF,IENA,MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
  ; Special case: ORDER BY .01 and BIDX supported
- I ORDERBY=".01",$D(FLINF("BIDX")) S CNT=$$XBYIDX(.FLINF,FLINF("BIDX"),"",MFLT,.PLC,TOX,.PARAMS) Q CNT
- D:MFLT'="" FLTIDX^FMQLFILT(.FLINF,FILTER,.IDXA,.IDXSTART)  ; Get IDXA if present
- ; Special IDX for 100/52. Must set MFLT to "" as doesn't apply properly
- I $G(IDXA)="" D MFLTIDX^FMQLFILT(.FLINF,FILTER,.IDXA,.IDXSTART) S MFLT=""
- ; Optimization - IDX <=> just a different order on the file
- I $G(IDXA)'="",$G(IDXSTART)="" S CNT=$$XONIENA(.FLINF,IDXA,MFLT,.PLC,TOX,.PARAMS) Q CNT
- I $G(IDXA)'="" S CNT=$$XBYIDX(.FLINF,IDXA,IDXSTART,MFLT,.PLC,TOX,.PARAMS) Q CNT
- ; No index available - check if file too big to filter
- I MFLT'="",NOIDXMX'=-1,($S($D(FLINF("FMSIZE")):FLINF("FMSIZE")>NOIDXMX,1:1)) Q -1
- ; File not too big - can do linear walk even with a filter
- S CNT=$$XONIENA(.FLINF,FLINF("ARRAY"),MFLT,.PLC,TOX,.PARAMS)
- Q CNT
+ I ORDERBY=".01",$D(FLINF("BIDX")) D XIDXA(.FLINF,FLINF("BIDX"),"",MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
+ ; Global but no filter - walk IENA
+ I MFLT="" D XIENA(.FLINF,"","",.PLC,TOX,.PARAMS) Q PLC("CNT")
+ ; See if filter yields an IDXA(V)
+ D FLTIDX^FMQLFILT(.FLINF,FILTER,.IDXA,.IDXSTART)
+ ; 5 Cases:
+ ; - a. non > filter gives IDXAV (IDXSTART="")
+ I $G(IDXA)'="",$G(IDXSTART)="" D XIENA(.FLINF,IDXA,MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
+ ; - b. > filter gives IDXA (IDXSTART'="")
+ I $G(IDXA)'="" D XIDXA(.FLINF,IDXA,IDXSTART,MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
+ ; - c. manual IDXA (100,52). Though = filter, still use XIDXA. No MFLT
+ D MFLTIDX^FMQLFILT(.FLINF,FILTER,.IDXA,.IDXSTART)
+ I $G(IDXA)'="" D XIDXA(.FLINF,IDXA,"","",.PLC,TOX,.PARAMS) Q PLC("CNT")
+ ; - d. No IDXA(V) but filter. See if file too big to filter
+ I NOIDXMX'=-1,($S($D(FLINF("FMSIZE")):FLINF("FMSIZE")>NOIDXMX,1:1)) Q -1
+ ; - e. file not to big to filter, row by row
+ D XIENA(.FLINF,"",MFLT,.PLC,TOX,.PARAMS)
+ Q PLC("CNT")
  ;
  ;
- ; Apply TOX on entries in an IEN array
+ ; Apply TOX on entries in a simple IEN Array, a file in IEN order
+ ; 
+ ; Used for plain walks of files in IEN order, for contained node walks and 
+ ; for non-indexed filtering of smaller files.
  ;
-XONIENA(FLINF,IENA,MFLT,PLC,TOX,PARAMS) 
- N FAR,FIEN,CNT,IEN,MFTEST
+XIENA(FLINF,IENA,MFLT,PLC,TOX,PARAMS) 
+ N FAR,AIEN,IEN,MFTEST
  S FAR=$S($D(FLINF("GL")):FLINF("ARRAY"),1:IENA)  ; Global or CNode
  ; Assumption: OFFLFT=0 if AFTERIEN as it takes precedence
- S FIEN=$S($D(PLC("AFTERIEN")):PLC("AFTERIEN"),1:0)
- S IEN=FIEN,CNT=0 F  S IEN=$O(@IENA@(IEN)) Q:IEN'=+IEN!(PLC("CNT")=PLC("LIMIT"))  D
+ S AIEN=$S($D(PLC("AFTERIEN")):PLC("AFTERIEN"),1:0)
+ S IEN=AIEN F  S IEN=$O(@FAR@(IEN)) Q:IEN'=+IEN!(PLC("CNT")=PLC("LIMIT"))  D
  . Q:($P($G(@FAR@(IEN,0)),"^")="")  ; All must have .01 value
- . ; [SPECIAL] Account for aliases in 2 and 68. ^DPT("B",NAME,IEN,"X")=1.
- . I ((FLINF("FILE")="2")!(FLINF("FILE")="68")),$G(@IENA@(IEN))'="" Q
  . I MFLT'="" X MFLT Q:'MFTEST  ; Quit if filter fails
  . I PLC("OFFLFT")>0 S PLC("OFFLFT")=PLC("OFFLFT")-1 Q  ; Quit if not at offset
- . S CNT=CNT+1
+ . S PLC("CNT")=PLC("CNT")+1
  . X TOX  ; Takes .FLINF, IEN, FAR (for CNodes), PARAMS (extras)
- Q CNT
+ Q
  ;
  ;
- ; Apply TOX on indexed entries of a file. 
- ;
- ; This allows filtering to be efficient.
+ ; An IDX Value Array (IDXAV) is more involved than a simple IEN array
+ ; - IDX's can embed alias' ex/ ^DPT("B",NAME,IEN,"X")=1
+ ; - IENs may not be in the leaf/last position
  ; 
-XBYIDX(FLINF,IDXA,IDXSTART,MFLT,PLC,TOX,PARAMS) 
- N FAR,LIEN,CNT,IDXV,IDXVA,IEN,MFTEST
- Q:'$D(@IDXA)
- Q:'$D(FLINF("GL"))  ; Index only applies to globals (non cnodes)
- S FAR=FLINF("GL")
- S LIEN=$S($D(PLC("AFTERIEN")):PLC("AFTERIEN"),1:0)
- ; Loop index - if not looping leaf then will skip one by one
- S IDXV=IDXSTART,CNT=0 F  S IDXV=$O(@IDXA@(IDXV)) Q:IDXV=""  D
+ ; Used for equality filters where the predicate asserted is indexed. Key 
+ ; for efficiently traversing the graph arrangements (Vital points to Patient)
+ ; 
+XIDXAV(FLINF,IDXAV,MFLT,PLC,TOX,PARAMS) 
+ N FAR,AIEN,IEN,MFTEST
+ I '$D(FLINF("GL")) Q -1  ; globals only, CNodes walked in XIENA
+ S FAR=FLINF("ARRAY")  ; ^DPT() not ^DPT(
+ ; Assumption: OFFLFT=0 if AFTERIEN as it takes precedence
+ S AIEN=$S($D(PLC("AFTERIEN")):PLC("AFTERIEN"),1:0)
+ I '$D(PLC("LIEN")) S PLC("LIEN")=AIEN
+ S IEN=AIEN F  S IEN=$O(@IDXAV@(IEN)) Q:IEN'=+IEN!(PLC("CNT")=PLC("LIMIT"))  D
+ . Q:IEN=PLC("LIEN")  ; Traverse above leaves means same IEN > once in order
+ . S PLC("LIEN")=IEN  ; Need to track across walks if 2 step IDXA
+ . Q:$G(@IDXAV@(IEN))'=""  ; Skip all aliases. Aliases appear out of order
+ . Q:($P($G(@FAR@(IEN,0)),"^")="")  ; All must have .01 value
+ . I MFLT'="" X MFLT Q:'MFTEST  ; Quit if filter fails
+ . I PLC("OFFLFT")>0 S PLC("OFFLFT")=PLC("OFFLFT")-1 Q  ; Quit if not at offset
+ . S PLC("CNT")=PLC("CNT")+1
+ . X TOX  ; Takes .FLINF, IEN, FAR (for CNodes), PARAMS (extras)
+ Q
+ ;
+ ;
+ ; IDX Array traversal is a two stepper: walk the array in value order and
+ ; step down into the value arrays.
+ ;
+ ; Used for > filters and ORDERBY (which is equivalent to > "") 
+ ;
+XIDXA(FLINF,IDXA,IDXSTART,MFLT,PLC,TOX,PARAMS)
+ N IDXV,IDXVA
+ S IDXV=IDXSTART F  S IDXV=$O(@IDXA@(IDXV)) Q:IDXV=""  D
  . S IDXVA=$NA(@IDXA@(IDXV))
- . S IEN=LIEN F  S IEN=$O(@IDXVA@(IEN)) Q:IEN'=+IEN!(PLC("CNT")=PLC("LIMIT"))  D
- . . Q:IEN=LIEN  ; IEN already in this IDX walk - IDXVA may not be a IENA
- . . Q:'$D(@FAR@(IEN))  ; IDX thinks IEN is valid but no entry in array
- . . Q:($P($G(@FAR@(IEN,0)),"^")="")  ; All must have .01
- . . I MFLT'="" X MFLT Q:'MFTEST  ; Filter fails
- . . I PLC("OFFLFT")>0 S PLC("OFFLFT")=PLC("OFFLFT")-1 Q  ; Not at offset yet
- . . S CNT=CNT+1
- . . S LIEN=IEN
- . . X TOX  ; Takes .FLINF, IEN, FAR, PARAMS (extras)
- Q CNT
+ . D XIDXAV(.FLINF,IDXVA,MFLT,.PLC,TOX,.PARAMS)
+ Q
  ;
  ;
  ; File's are globals (T files) or subfiles (S files)

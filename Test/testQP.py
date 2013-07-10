@@ -5,17 +5,8 @@
 # This program is free software; you can redistribute it and/or modify it 
 # under the terms of the GNU Affero General Public License version 3 (AGPL) 
 # as published by the Free Software Foundation.
-# (c) 2010-2012 caregraf.org
+# (c) 2010-2013 caregraf.org
 #
-
-# TOADD
-# 1) SELECT TYPES: no in 1 vs this
-# 2) COUNT/SELECT/DESCRIBE match even if corrupt (non .01 records): 55, 5_1
-# 3) more enum ex/ rem use 'E' etc.. Make sure don't accept computed value ex/ 1407 on 8925 and (for now?) don't accept WP either (always false - even if exact) ... report_text 2
-# 4) cross system inspired tests ie/ work on all. Base on Audit queries
-# ... new MUMPS only tests, particularly of utils.
-# 5) "version", "vpackage" in DESCRIBE TYPE (ex/ 120_5)
-# 6) checks on input transform and computed
 
 """
  FMQL Query Processor Unit Tests
@@ -31,12 +22,6 @@
  resident endpoint.
 """
 
-__author__ =  'Caregraf'
-__copyright__ = "Copyright 2010-2012, Caregraf"
-__license__ = "AGPL"
-__version__=  '0.96'
-__status__ = "Production"
-
 import sys, os
 import json
 import urllib, urllib2
@@ -47,11 +32,10 @@ from datetime import datetime
 import cgi
 import re
 
-sys.path.append('../Python')
+sys.path.append('../Framework')
 from fmqlQP import FMQLQueryProcessor
 from fmqlQPE import FMQLQPE
 from brokerRPC import VistARPCConnection
-
 
 #
 # FMQL Tests [Configure for specific system after first system-only run]
@@ -59,17 +43,12 @@ from brokerRPC import VistARPCConnection
 
 SYSTEMONLY = False # Change once system specific numbers below are set
 
-def runTest(qp, qpe, testGroupName, testNo, testDef):
-
+def runTest(qpe, testGroupName, testNo, testDef):
     print "========= Test %s: %d ========" % (testGroupName, testNo)
     print testDef["description"]
     start = datetime.now()
     try: 
-        # Old and new form. Move all to new.
-        if "query" in testDef:
-            reply = qp.processQuery(testDef["query"])
-        else:
-            reply = qpe.processQuery({"fmql": [testDef["fmql"]]})
+        reply = qpe.processQuery({"fmql": [testDef["fmql"]]})
         end = datetime.now()
         delta = end-start
         jreply = json.loads(reply)
@@ -92,12 +71,12 @@ def runTest(qp, qpe, testGroupName, testNo, testDef):
     if "dump" in testDef:
         print jreply
     if "count" in testDef:
-        fmqlCount = jreply["count"] if "count" in jreply else (jreply["total"] if "total" in jreply else str(len(jreply["results"])))
+        fmqlCount = jreply["count"] if "count" in jreply else jreply["total"]
         if SYSTEMONLY or testDef["count"] == "PRINT":
             # print jreply
             print "Got count of %s" % fmqlCount 
         elif "error" in jreply or fmqlCount != testDef["count"]:
-            print reply[0:500] + " ......"
+            print jreply
             print "ERROR: COUNT %s doesn't match returned count %s!" % (testDef["count"], fmqlCount)
             return 0
     if "test" in testDef and not SYSTEMONLY:
@@ -106,8 +85,7 @@ def runTest(qp, qpe, testGroupName, testNo, testDef):
         except Exception as e:
             testResult = False
             print "Test failed to execute. Reply has unexpected form"
-            # Stop if syntax error in a test
-            raise e
+            print e
         if testResult:
             print "PASSED"
             return 1
@@ -168,23 +146,23 @@ NEGATIVETESTS = {
     "definitions": [
         {
             "description": "Select: Bad file",
-            "query": {"op": ["Select"], "typeId": ["999999999999999999"]},
+            "fmql": "SELECT 999999999999999999",
             "error": ""
         },
         # Note: not doing typeId only to Describe as QP catches that.
         {
             "description": "Describe: Good file, bad ID",
-            "query": {"op": ["Describe"], "url": ["2-99999999999999999"]},
+            "fmql": "DESCRIBE 2-99999999999999999",
             "error": ""
         },
         { 
             "description": "Describe: Good file, 0 (bad) ID (0 can be tricky as it is in the array - as meta data)",
-            "query": {"op": ["Describe"], "url": ["2-0"]},
+            "fmql": "DESCRIBE 2-0",
             "error": ""
         },
         {
             "description": "Describe: Bad file, bad ID",
-            "query": {"op": ["Describe"], "url": ["999999999999999999-99999999999999999"]},
+            "fmql": "DESCRIBE 999999999999999999-99999999999999999",
             "error": ""
         },
         { 
@@ -199,63 +177,28 @@ NEGATIVETESTS = {
         },
         {
             "description": "Select: BNode file",
-            "query": {"op": ["Select"], "typeId": ["63_04"]},
+            "fmql": "SELECT 63_04",
             "error": ""
         },
         {
             "description": "DescribeType: Bad file",
-            "query": {"op": ["DescribeType"], "typeId": ["9999999999999999"]},
+            "fmql": "DESCRIBE TYPE 9999999999999999",
             "error": ""
         },
         {
             "description": "SelectAllReferrersToType: Bad file",
-            "query": {"op": ["SelectAllReferrersToType"], "typeId": ["9999999999999999"]},
+            "fmql": "SELECTALLREFERRERSTOTYPE 9999999999999999",
             "error": ""
         },
         {
             "description": "SelectAllReferrersToType: BNode file",
-            "query": {"op": ["SelectAllReferrersToType"], "typeId": ["63_04"]},
+            "fmql": "SELECTALLREFERRERSTOTYPE 63_04",
             "error": ""
         },
     ]
 }
 
 TESTSETS.append(NEGATIVETESTS)
-
-CNT_ALL = "5393"
-CNT_ALL_BADTOO = "5410"
-CNT_TOPONLY = "2359"
-CNT_TOPONLY_BADTOO = "2374"
-
-SCHEMATESTS = {
-    "name": "Schema Tests",
-    "definitions": [
-        {
-            "description": "SELECT TYPES - count all",
-            "fmql": "SELECT TYPES",
-            "count": CNT_ALL
-        },
-        {
-            "description": "SELECT TYPES TOPONLY",
-            "fmql": "SELECT TYPES TOPONLY",
-            "count": CNT_TOPONLY
-        },
-        {
-            "description": "SELECT TYPES BADTOO",
-            "fmql": "SELECT TYPES BADTOO",
-            # .12, 4th has corruption - jreply['results'][4].has_key('corruption')
-            "test": "testResult=((len(jreply['results'])==int(CNT_ALL_BADTOO)) and jreply['results'][4].has_key('corruption'))"
-        },
-        # TODO: add check that * DEPRECATED IS THERE. Problem with large size of 2. There are others.
-        {
-            "description": "Corrupt file .12 - will get back corruption error",
-            "fmql": "DESCRIBE TYPE _12",
-            "error": "",
-        }
-    ]
-}
-
-TESTSETS.append(SCHEMATESTS)
 
 ########################## System Specifics ################
 
@@ -276,7 +219,7 @@ CNT_VITALSFROM2008ON="104" # Vitals from 2008 on
 CNT_HVITALSOFTPNEIE="12" # Height Vitals of patient
 CNT_ORDERSOFOTP = "5"
 CNT_ACCESSIONS = "15"
-CNT_REFS = "1116" # was 1108 - why?
+CNT_REFS = "1116"
 BADSCHEMANOFILE = "1_01"
 BADSCHEMA01FILE = "627_99" # File with bad schema for its .01 field
 MUMPSCODETESTID = "68-11"
@@ -297,7 +240,7 @@ TESTPATIENTTESTS = {
     "definitions": [
         {
             "description": "Describe %s" % TESTPATIENTID,
-            "query": {"op": ["Describe"], "url": [TESTPATIENTID]},
+            "fmql": "DESCRIBE " + TESTPATIENTID, 
         },
         {
             "description": "COUNT REFS to %s" % TESTPATIENTID,
@@ -315,7 +258,7 @@ PATIENTALIASTEST = {
     "definitions": [
         {
             "description": "Patient Alias should be skipped",
-            "query": {"op": ["Count"], "typeId": ["68"]},
+            "fmql": "COUNT 68",
             "count": CNT_ACCESSIONS
         }
     ]
@@ -334,48 +277,48 @@ CNODETESTS = {
     "name": "CNODE",
     "definitions": [
         {
-            "description": "Describe all CHEM in 63",
-            "query": {"op": ["Describe"], "typeId": ["63_04"], "in":["63-4"]},
+            "description": "Describe all CHEM in 63 - count em",
+            "fmql": "DESCRIBE 63_04 IN 63-4",
             "count": CNT_CHLAB
         },
         {
             "description": "Count all CHEM in 63",
-            "query": {"op": ["Count"], "typeId": ["63_04"], "in": ["63-4"]},
+            "fmql": "COUNT 63_04 IN 63-4",
             "count": CNT_CHLAB
         },
         {
-            "description": "Select all CHEM in 63",
-            "query": {"op": ["Select"], "typeId": ["63_04"], "in": ["63-4"]},
+            "description": "Select all CHEM in 63 - count em",
+            "fmql": "SELECT 63_04 IN 63-4",
             "count": CNT_CHLAB
         },
         { # Note: in my test system, chvals is empty
             "description": "Describe all CHEM in 63 - ensure Lab BNode generation works",
-            "query": {"op": ["Describe"], "typeId": ["63_04"], "in":["63-4"]},
+            "fmql": "DESCRIBE 63_04 IN 63-4",
             "test": "testResult=('chvals' in jreply['results'][0])"
         },
         {
             "description": "Select All CHEM in 63 - ensure URI format is 'right'",
-            "query": {"op": ["Select"], "typeId": ["63_04"], "in": ["63-4"]},
+            "fmql": "SELECT 63_04 IN 63-4",
             "test": "testResult=re.search(r'%s', jreply['results'][0]['uri']['value'])" % CHLAB_URIFORMAT,
         },
         {
             "description": "Count CHEM in 63, Offset %d" % (int(CNT_CHLAB)-9),
-            "query": {"op": ["Count"], "typeId": ["63_04"], "in": ["63-4"], "offset": [str(int(CNT_CHLAB)-9)]},
+            "fmql": "COUNT 63_04 IN 63-4 OFFSET " + str(int(CNT_CHLAB)-9),
             "count": str(int(CNT_CHLAB)-10)
         },
         {
             "description": "Select CHEM in 63, Limit 10",
-            "query": {"op": ["Select"], "typeId": ["63_04"], "in": ["63-4"], "limit": ["10"]},
+            "fmql": "SELECT 63_04 IN 63-4 LIMIT 10",
             "count": "10"
         },
         {
             "description": "Select 2_141 - expect 0",
-            "query": {"op": ["Select"], "typeId": ["2_141"], "in": [TESTPATIENTID]},
+            "fmql": "SELECT 2_141 IN " + TESTPATIENTID,
             "count": "0"
         },
         {
             "description": "Select sub sub node 70_03 - expect error",
-            "query": {"op": ["Select"], "typeId": ["70_03"], "in": ["70-1"]},
+            "fmql": "SELECT 70_03 IN 70-1",
             "error": ""
         },
         {
@@ -426,52 +369,51 @@ FILTERTESTS = {
     "definitions": [
         {
             "description": "All Vitals of Patient 9, not entered in error",
-            "query": {"op": ["Describe"], "typeId": ["120_5"], "filter": [".02=" + TESTPATIENTID + "&!bound(2)"]},
+            "fmql": "DESCRIBE 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2))",
             "count": CNT_VITALSOFTPNEIE
         },
         {
             "description": "All Height Vitals of Patient 9, not entered in error",
-            "query": {"op": ["Select"], "typeId": ["120_5"], "filter": [".02=" + TESTPATIENTID + "&!bound(2)&.03=120_51-8"]},
+            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)&.03=120_51-8)",
             "count": CNT_HVITALSOFTPNEIE
         },
         {
             "description": "All Vitals of Patient 9, from 2008 on",
-            "query": {"op": ["Select"], "typeId": ["120_5"], "filter": [".02=" + TESTPATIENTID + "&!bound(2)&.01>2008-01-01"]},
+            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)&.01>2008-01-01)",
             "count": CNT_VITALSFROM2008ON
         },
         {
             "description": "All Vitals of Patient 9, before 2008",
-            "query": {"op": ["Select"], "typeId": ["120_5"], "filter": [".02=" + TESTPATIENTID + "&!bound(2)&.01<2008-01-01"]},
+            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)&.01<2008-01-01)",
             "count": str(int(CNT_VITALSOFTPNEIE)-int(CNT_VITALSFROM2008ON))
         },
         {
             "description": "First 12 Patients with names beginning with P on",
-            "query": {"op": ["Select"], "typeId": ["2"], "filter": [".01>P"], "limit": ["12"]},
+            "fmql": "SELECT 2 FILTER(.01>P) LIMIT 12",
             "count": "12"
         },
         {
             "description": "Labs with bound CHEM, HEM ie/ top level bound cnode test",
-            "query": {"op": ["Count"], "typeId": ["63"], "filter": ["bound(4)"]},
+            "fmql": "COUNT 63 FILTER(bound(4))",
             "count": "1" # only 9 has labs
         },
         {
             "description": "Labs without bound CHEM, HEM ie/ top level bound cnode test",
-            "query": {"op": ["Count"], "typeId": ["63"], "filter": ["!bound(4)"]},
+            "fmql": "COUNT 63 FILTER(!bound(4))",
             "count": "21"
         },
         {
             "description": "Contained Node Non VA Meds with route 'MOUTH'",
-            "query": {"op": ["Select"], "typeId": ["55_05"], "in": ["55-9"], "filter": ["3=MOUTH"]},
+            "fmql": "SELECT 55_05 IN 55-9 FILTER(3=MOUTH)",
             "count": "6"
         },      
         {
             "description": "Contained Node CHEM, HEM with bound creatinine (4).",
-            "query": {"op": ["Count"], "typeId": ["63_04"], "in": ["63-4"], "filter": ["bound(4)"]},
+            "fmql": "COUNT 63_04 IN 63-4 FILTER(bound(4))",
             "count": "2"
         },  
         {
             "description": "Contained Node CHEM, HEM before 1/1/2007. TBD [add to triple of all, before and after and carry totals as a variable]",
-            "query": {"op": ["Count"], "typeId": ["63_04"], "in": ["63-4"], "filter": [".01<2007-01-01T000000"]},
             "fmql": "COUNT 63_04 IN 63-4 FILTER(.01<'2007-01-01T000000')",
             "count": "15"
         },  
@@ -482,32 +424,32 @@ FILTERTESTS = {
         },  
         { # TBD: V0.9 - should raise error
             "description": "Bad filter (no such field) on select patients",
-            "query": {"op": ["Select"], "typeId": ["2"], "filter": [".999999=X"]},
+            "fmql": "SELECT 2 FILTER(.999999=X)",
             "count": "0"
         },
         {
             "description": "Month filter: HL7 Exceptions in a month (2005/11)",
-            "query": {"op": ["Select"], "typeId": ["79_3"], "filter": [".01>2005-11&.01<2005-12"]},
+            "fmql": "SELECT 79_3 FILTER(.01>2005-11&.01<2005-12)",
             "count": "17"
         },
         {
             "description": "HL7 Exceptions on a day (2005/11/01)",
-            "query": {"op": ["Select"], "typeId": ["79_3"], "filter": [".01>2005-11&.01<2005-11-02"]},
+            "fmql": "SELECT 79_3 FILTER(.01>2005-11&.01<2005-11-02)",
             "count": "14"
         },
         {
             "description": "HL7 Exceptions after an hour of a day (2005/11/01:17))",
-            "query": {"op": ["Select"], "typeId": ["79_3"], "filter": [".01>2005-11-01T17&.01<2005-11-02"]},
+            "fmql": "SELECT 79_3 FILTER(.01>2005-11-01T17&.01<2005-11-02)",
             "count": "6"
         },
         {
             "description": "HL7 Exceptions in a year (2005)",
-            "query": {"op": ["Select"], "typeId": ["79_3"], "filter": [".01>2004&.01<2006"]},
+            "fmql": "SELECT 79_3 FILTER(.01>2004&.01<2006)",
             "count": "107"
         },
         {
             "description": "HL7 Exceptions after a precise time (down to seconds)",
-            "query": {"op": ["Select"], "typeId": ["79_3"], "filter": [".01>2005-11-01T17:46:09"]},
+            "fmql": "SELECT 79_3 FILTER(.01>2005-11-01T17:46:09)",
             "count": "10"
         },
         {
@@ -551,32 +493,32 @@ LIMITTESTS = {
     "definitions": [
         {
             "description": "Vitals of a Patient, limit 5",
-            "query": {"op": ["Describe"], "typeId": ["120_5"], "filter": [".02=" + TESTPATIENTID + "&!bound(2)"], "limit": ["5"]},
+            "fmql": "DESCRIBE 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) LIMIT 5",
             "count": "5"
         },
         {
             "description": "Vitals of a Patient, limit 5, offset 3",
-            "query": {"op": ["Describe"], "typeId": ["120_5"], "filter": [".02=" + TESTPATIENTID + "&!bound(2)"], "limit": ["5"], "offset": ["3"]},
+            "fmql": "DESCRIBE 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) LIMIT 5 OFFSET 3",
             "count": "5"
         },
         {
             "description": "Select Vitals of a Patient, offset CNT_VITALSOFTPNEIE - 1 (ie. start one off end)",
-            "query": {"op": ["Select"], "typeId": ["120_5"], "filter": [".02=" + TESTPATIENTID + "&!bound(2)"], "offset": [str(int(CNT_VITALSOFTPNEIE)-1)]},
+            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) OFFSET " + str(int(CNT_VITALSOFTPNEIE)-1),
             "count": "1"
         },
         {
             "description": "Select Vitals of a Patient, offset 1 past end",
-            "query": {"op": ["Select"], "typeId": ["120_5"], "filter": [".02=" + TESTPATIENTID + "&!bound(2)"], "offset": [str(int(CNT_VITALSOFTPNEIE)+1)]},
+            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) OFFSET " + str(int(CNT_VITALSOFTPNEIE)+1),
             "count": "0"
         },
         {
             "description": "Count Patients, offset 5",
-            "query": {"op": ["Count"], "typeId": ["2"], "offset": ["5"]},
+            "fmql": "COUNT 2 OFFSET 5",
             "count": str(int(CNT_PATIENTS)-5)
         },
         {
             "description": "Select all Patients, offset 3, limit 2",
-            "query": {"op": ["Select"], "typeId": ["2"], "limit": ["2"], "offset": ["3"]},
+            "fmql": "SELECT 2 LIMIT 2 OFFSET 3",
             "count": "2"
         },
     ]
@@ -584,12 +526,41 @@ LIMITTESTS = {
 
 STESTSETS.append(LIMITTESTS)
 
+# AFTERIEN - alternative to OFFSET 
+AFTERIENTESTS = {
+    "name": "AFTERIEN",
+    "definitions": [
+        {
+            "description": "Vitals of a Patient, AFTER 6th last IEN",
+            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) AFTERIEN 290",
+            "count": "5"
+        },
+        {
+            "description": "Vitals of a Patient, AFTER 6th last IEN, limit 2",
+            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) AFTERIEN 290 LIMIT 2",
+            "count": "2"
+        },
+        {
+            "description": "Vitals of a Patient, AFTER 6th last IEN, set OFFSET but expect it to be reset",
+            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) AFTERIEN 290 OFFSET 22",
+            "test": "testResult=(jreply['fmql']['OFFSET']=='0')"
+        },
+        {
+            "description": "Vitals of a Patient, AFTER last IEN, expect no entries",
+            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) AFTERIEN 295",
+            "count": "0"
+        },
+    ]
+}
+
+STESTSETS.append(AFTERIENTESTS)
+
 FORMATTESTS = {
     "name": "Format (date) tests",
     "definitions": [
         {
             "description": "Date with trailing '1' which is rendered as 1, not 01 in FileMan's internal format. Is it flipped in the XML?", 
-            "query": {"op": ["Describe"], "url": ["79_3-14"]},
+            "fmql": "DESCRIBE 79_3-14",
             "test": "testResult = (jreply['results'][0]['exception_date_time']['value']=='2005-04-18T08:06:01Z')",
         },
     ]
@@ -607,12 +578,12 @@ NOIDXMXTESTS = {
     "definitions": [
         {
             "description": "No Index Max for patients set to 1 (there are 39). Filter on non indexed field and expect to be rejected", 
-            "query": {"op": ["Count"], "typeId": ["50_68"], "filter": [".05=11-2"],"noidxmx": ["1"]},
+            "fmql": "COUNT 50_68 FILTER(.05=11-2) NOIDXMAX 1",
             "count": "-1"
         },
         {
             "description": "No index max for patients set to 1 (there are 39). Filter on name. Expect result of 1 as .01 name is indexed.", 
-            "query": {"op": ["Count"], "typeId": ["2"], "filter": [".01=AYERS,ASHLEY"],"noidxmx": ["1"]},
+            "fmql": "COUNT 2 FILTER(.01=AYERS,ASHLEY) NOIDXMAX 1",
             "count": "1"
         }
     ]
@@ -626,18 +597,18 @@ ORDERBYTESTS = {
     "definitions": [
         {
             "description": "2 with ORDER BY (Z should be last)",
-            "query": {"op": ["Select"], "typeId": ["2"], "orderby": [".01"]},
+            "fmql": "SELECT 2 ORDERBY .01",
             "test": "testResult = (jreply['results'][len(jreply['results'])-1]['uri']['value']=='2-1')",
         },
         {
             "description": "2 without ORDER BY (Z should be first)",
-            "query": {"op": ["Select"], "typeId": ["2"]},
+            "fmql": "SELECT 2",
             "test": "testResult = (jreply['results'][0]['uri']['value']=='2-1')",
         },
         {
-             "description": "8985_1 has no simple, inline B Index. It can be listed but the list is in IEN order. Note: ICD Diagnosis 80 has no B Index either!",
-            "query": {"op": ["Select"], "typeId": ["8985_1"], "orderBy": [".01"]},
-             "test": "testResult = (jreply['results'][0]['uri']['value']=='8985_1-1')",
+            "description": "8985_1 has no simple, inline B Index. It can be listed but the list is in IEN order. Note: ICD Diagnosis 80 has no B Index either!",
+            "fmql": "SELECT 8985_1 ORDERBY .01",
+            "test": "testResult = (jreply['results'][0]['uri']['value']=='8985_1-1')",
         }
     ]
 }
@@ -649,7 +620,7 @@ SELECTPREDTESTS = {
     "definitions": [
         {
             "description": "Select patient id for 100 problems",
-            "query": {"op": ["Select"], "typeId": ["9000011"], "predicate": [".02"], "limit": ["10"]},
+            "fmql": "SELECT .02 FROM 9000011 LIMIT 10",
             "test": "testResult = (jreply['count']=='10' and 'patient_name' in jreply['results'][0])",
         },
         # TMP
@@ -668,18 +639,18 @@ ORDERTESTS = {
     "name": "ORDERS",
     "definitions": [
         {
-            "description": "Select orders, filtered. For V0.8, test if hard coded filter works by setting noidxmx low",
-            "query": {"op": ["Select"], "typeId": ["100"], "filter": [".02=%s" % TESTOPATIENTID], "noidxmx": ["1"]},
-            "count": "5"
+            "description": "Select orders, filtered. Test if hard coded filter works by setting noidxmx low",
+            "fmql": "SELECT 100 FILTER(.02=" + TESTOPATIENTID + ") NOIDXMAX 1",
+            "count": CNT_ORDERSOFOTP
         },
         {
             "description": "Describe orders, filtered. Same as Select but Describe",
-            "query": {"op": ["Describe"], "typeId": ["100"], "filter": [".02=%s" % TESTOPATIENTID]},
+            "fmql": "DESCRIBE 100 FILTER(.02=" + TESTOPATIENTID + ")",
             "count": CNT_ORDERSOFOTP
         },
         {
             "description": "Count orders - filtered on non-index, noidxmx low. Should be refused.", 
-            "query": {"op": ["Count"], "typeId": ["100"], "filter": ["1=200-1"],"noidxmx": ["1"]},
+            "fmql": "COUNT 100 FILTER(1=200-1) NOIDXMAX 1",
             "count": "-1"
         }
     ]
@@ -724,7 +695,7 @@ SAMEASTESTS = {
         {
             # TBD: GMR Allergy with VUID (2 Choc) once added properly
             "description": "VUID FILE: most GMR Allergies have VUIDs. Picking one (Other 1) with LOCAL only", 
-            "query": {"op": ["Describe"], "url": ["120_82-1"]},
+            "fmql": "DESCRIBE 120_82-1",
             "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'LOCAL')",
         },
         {
@@ -797,29 +768,6 @@ SAMEASTESTS = {
 
 STESTSETS.append(SAMEASTESTS)
 
-# 
-# Sensitive field (access/verify) test
-# 
-# SAMEAS Tests
-HIDDENFIELDTESTS = {
-    "name": "HIDDENFIELDS",
-    "definitions": [
-        {
-            "description": "USER,FMQL - access and verify hidden",
-            "fmql": "DESCRIBE 200 FILTER(.01='USER,FMQL')",
-            "test": "testResult = ((jreply['results'][0]['access_code']['value'] == '**HIDDEN**') and (jreply['results'][0]['verify_code']['value'] == '**HIDDEN**'))",
-        },
-        {
-            "description": "APPLICATION,PROXY - no access verify",
-            "fmql": "DESCRIBE 200 FILTER(.01='VPR,APPLICATION PROXY')",
-            "test": "testResult = (('access_code' not in jreply) and ('verify_code' not in jreply))"
-        }
-    ]
-}
-
-# TBD: not really system specific. Should move up.
-STESTSETS.append(HIDDENFIELDTESTS)
-
 #
 # NOTE: \x and \u interchange for <255
 #
@@ -849,7 +797,7 @@ CHARACTERTESTS = {
     "definitions": [
         {
             "description": "MUMPS code",
-            "query": {"op": ["Describe"], "url": [MUMPSCODETESTID]},
+            "fmql": "DESCRIBE " + MUMPSCODETESTID,
             "test": "testResult = " + MUMPSCODETEST
         },
         # CTRL < 32 TEST (3_075-60698)
@@ -874,24 +822,20 @@ CHARACTERTESTS = {
 STESTSETS.append(CHARACTERTESTS)
 
 # Small now: in V9, enhanced Schema Graph will support a full schema audit.
+# TODO: add in DESCRIBE TYPE 394_4 - file with no COUNT/FMSIZE
 BADSCHEMATESTS = {
     "name": "Bad Schema Tests",
     "definitions": [
         {
-            "description": "File with bad .01 schema. Try to list it. Should get back count of -2",
-            "query": {"op": ["Select"], "typeId": [BADSCHEMA01FILE]},
-            "count": "-2",
+            "description": "File with bad .01 schema. Try to list it. Get back count 0",
+            "fmql": "SELECT " + BADSCHEMA01FILE,
+            "count": "0",
         },
         {
             "description": "File defined but it doesn't exist",
-            "query": {"op": ["Select"], "typeId": [BADSCHEMANOFILE]},
+            "fmql": "SELECT " + BADSCHEMANOFILE,
             "error": "",
         },
-        {
-            "description": "File with no COUNT/FMSIZE",
-            "fmql": "DESCRIBE TYPE 394_4",
-            "test": "testResult=('count' not in jreply)"
-        }
     ]
 }
 
@@ -933,7 +877,7 @@ TESTSETS.extend(STESTSETS)
 def orderPatientReturnTest(qp):
     fileId = "2"
     print "Going to ensure returns file %s in order" % fileId
-    reply = qp.processQuery({"op": ["Select"], "typeId": [fileId]})
+    reply = qp.processQuery("SELECT " + fileId)
     jreply = json.loads(reply)
     print "Checking %d results" % len(jreply["results"])
     lastResult = None
@@ -973,8 +917,7 @@ def main():
     try:
         rpcc = VistARPCConnection(args[0], int(args[1]), args[2], args[3], "CG FMQL QP USER", DefaultLogger())
         logger = DefaultLogger()
-        fmqlQP = FMQLQueryProcessor(rpcc, logger)
-        fmqlQPE = FMQLQPE(fmqlQP, logger)
+        fmqlQPE = FMQLQPE(rpcc, logger)
     except Exception as e:
         print "Failed to log in to VistA (bad parameters?): %s ... exiting" % e
         return
@@ -988,7 +931,7 @@ def main():
         for testSet in TESTSETS:
             for testNo, testDef in enumerate(testSet["definitions"]):
                 total += total
-                if not runTest(fmqlQP, fmqlQPE, testSet["name"], testNo + 1, testDef):
+                if not runTest(fmqlQPE, testSet["name"], testNo + 1, testDef):
                     fails += 1
         print "=== All Done: %d of %d failed ===" % (fails, total)
 
