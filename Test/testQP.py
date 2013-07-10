@@ -250,6 +250,7 @@ TESTSCHEMATESTS = {
             "description": "SELECT TYPES BADTOO",
             "fmql": "SELECT TYPES BADTOO",
             "count": "5410",
+            "test": "testResult=(len(jreply['results']) == int(jreply['allCount']))" # 5410 for test system
         },
         {
             "description": "SELECT TYPES TOPONLY",
@@ -259,7 +260,7 @@ TESTSCHEMATESTS = {
         {
             "description": "SELECT TYPES TOPONLY BADTOO",
             "fmql": "SELECT TYPES TOPONLY BADTOO",
-            "count": "2375"
+            "test": "testResult=(len(jreply['results']) == int(jreply['topCount']))" # 2375 for test system
         },
         {
             "description": "SELECT TYPES POPONLY",
