@@ -1,19 +1,19 @@
-FMQLSCH; Caregraf - FMQL Schema Query Processor ; May 31st, 2012
-    ;;0.96;FMQLQP;;Nov 15, 2012
+FMQLSCH; Caregraf - FMQL Schema Query Processor ; July 10th, 2013
+    ;;v1.0;FMQLQP;;July 10th, 2013
  
 ; FMQL Schema Query Processor
 ; 
 ; Companion of FMQLDATA - this resolves schema queries. Like its
 ; peer, it uses FLINF utilities rather than reading FM's raw dicts.
 ; 
-; FMQL Query Processor (c) Caregraf 2010-2012 AGPL
+; FMQL Query Processor (c) Caregraf 2010-2013 AGPL
 
 ALLTYPES(REPLY,FMQLPARAMS)  
-    N FILE,FILELABEL
-    N TOPONLY S TOPONLY=0
-    N BADTOO S BADTOO=0
+    N FILE,FILELABEL,TOPONLY,BADTOO,POPONLY
+    S TOPONLY=0,BADTOO=0,POPONLY=0
     I $D(FMQLPARAMS("TOPONLY")),FMQLPARAMS("TOPONLY")="1" S TOPONLY=1
     I $D(FMQLPARAMS("BADTOO")),FMQLPARAMS("BADTOO")="1" S BADTOO=1
+    I $D(FMQLPARAMS("POPONLY")),FMQLPARAMS("POPONLY")="1" S POPONLY=1
     D REPLYSTART^FMQLJSON(REPLY)
     S FILE=.109 ; allow .11 on but no .001 -> .1
     D LISTSTART^FMQLJSON(REPLY,"results")
@@ -22,7 +22,8 @@ ALLTYPES(REPLY,FMQLPARAMS)
     . ; WP is a file (has DD entry) but not considered a file for FMQL
     . I $D(FLINF("BAD")),FLINF("BAD")="WP FILE" Q
     . I BADTOO=0,$D(FLINF("BAD")) Q
-    . I TOPONLY,$D(FLINF("PARENT")) Q
+    . I TOPONLY=1,$D(FLINF("PARENT")) Q
+    . I POPONLY=1,'$D(FLINF("FMSIZE")) Q
     . D DICTSTART^FMQLJSON(REPLY)
     . D DASSERT^FMQLJSON(REPLY,"number",FILE)
     . I '$D(FLINF("BAD")) D
@@ -39,6 +40,7 @@ ALLTYPES(REPLY,FMQLPARAMS)
     D DASSERT^FMQLJSON(REPLY,"OP","SELECT TYPES")
     I TOPONLY=1 D DASSERT^FMQLJSON(REPLY,"TOPONLY","true")
     I BADTOO=1 D DASSERT^FMQLJSON(REPLY,"BADTOO","true")
+    I POPONLY=1 D DASSERT^FMQLJSON(REPLY,"POPONLY","true")
     D DICTEND^FMQLJSON(REPLY)
     D REPLYEND^FMQLJSON(REPLY)
     Q

@@ -9,10 +9,9 @@
 #
 
 """
- FMQL Query Processor Enhanced
+FMQL Query Processor
 
- Query data graph using SPARQL-like query format. Returns JSON.
- query format.
+Query data and schema of FileMan using SPARQL-like query format. Returns JSON.
  
 """
 
@@ -20,7 +19,7 @@ import urllib
 import re
 import json
 
-class FMQLQPE:
+class FMQLQP:
 
     def __init__(self, rpcc, logger):
         self.rpcc = rpcc
@@ -34,11 +33,11 @@ class FMQLQPE:
         """
         if "fmql" not in queryArgs:
             raise Exception("Expect fmql=")
-        query = queryArgs["fmql"]
+        query = queryArgs["fmql"][0]
         fmqlArgs = self.__schemaQueryToFMQLArgs(query)
-        if fmqlArgs:
-            return fmqlArgs
-        fmqlArgs self.__dataQueryToFMQLArgs(query)
+        if not fmqlArgs:
+            fmqlArgs = self.__dataQueryToFMQLArgs(query)
+        print fmqlArgs
         reply = self.rpcc.invokeRPC("CG FMQL QP", [fmqlArgs])
         return reply        
 
@@ -48,9 +47,11 @@ class FMQLQPE:
             return fmqlArgs
         return self.__dataQueryToFMQLArgs(query)
         
-    def __dataQueryToFMQLArgs(query):
+    def __dataQueryToFMQLArgs(self, query):
     
         # Operations (test in order)
+        # ENFORCES ONLY _ form ie/ not . form for type id. 
+        # So ex/ 120.82 -> 120 and you'll get a no file error.
         RE_DESCRIBENODE = re.compile('DESCRIBE +([\d_]+\-[\d\.]+)')
         RE_DESCRIBENODES = re.compile('DESCRIBE +([\d_]+)')
         RE_SELECTFROM = re.compile('SELECT +([\.\d]+) +FROM +([\d_]+)')
@@ -78,17 +79,17 @@ class FMQLQPE:
         if RE_COUNTREFS.match(query):
             nodeId = RE_COUNTREFS.match(query).group(1)
             nodeType, recordId = self.__makeFileRecordId(nodeId)
-            fmqlArgs = "OP:COUNTREFS^TYPE:%s^ID:%s^NOIDXMX:0" % (fileId,recordId)
+            fmqlArgs = "OP:COUNTREFS^TYPE:%s^ID:%s^NOIDXMX:0" % (nodeType,recordId)
             return fmqlArgs
             
         quals = []
         quals.append("^IN:" + RE_IN.search(query).group(1) if RE_IN.search(query) else "")
-        quals.append("^FILTER:" + self.__uncolonFilter(RE_FILTER.search(query).group(1)) if RE_FILTER.search(query) else ""
-        quals.append("^LIMIT:" + RE_LIMIT.search(query).group(1) if RE_IN.search(query) else "")
-        quals.append("^OFFSET:" + RE_OFFSET.search(query).group(1) if RE_IN.search(query) else "")
-        quals.append("^AFTERIEN:" + RE_AFTERIEN.search(query).group(1) if RE_IN.search(query) else "")
-        quals.append("^NOIDXMX:" + RE_NOIDXMAX.search(query).group(1) if RE_IN.search(query) else "")
-        quals.append("^ORDERBY:" + RE_ORDERBY.search(query).group(1) if RE_IN.search(query) else "")
+        quals.append("^FILTER:" + self.__uncolonFilter(RE_FILTER.search(query).group(1)) if RE_FILTER.search(query) else "")
+        quals.append("^LIMIT:" + RE_LIMIT.search(query).group(1) if RE_LIMIT.search(query) else "")
+        quals.append("^OFFSET:" + RE_OFFSET.search(query).group(1) if RE_OFFSET.search(query) else "")
+        quals.append("^AFTERIEN:" + RE_AFTERIEN.search(query).group(1) if RE_AFTERIEN.search(query) else "")
+        quals.append("^NOIDXMX:" + RE_NOIDXMAX.search(query).group(1) if RE_NOIDXMAX.search(query) else "")
+        quals.append("^ORDERBY:" + RE_ORDERBY.search(query).group(1) if RE_ORDERBY.search(query) else "")
         
         # ip, flt, limit, offset, afterien, orderBy, cstop
         if RE_DESCRIBENODES.match(query):
@@ -116,7 +117,7 @@ class FMQLQPE:
             return fmqlArgs
                 
         if RE_SELECT.match(query):
-            nodeType = RE_COUNT.match(query).group(1)
+            nodeType = RE_SELECT.match(query).group(1)
             fmqlArgs = "OP:SELECT^TYPE:" + self.__makeTypeId(nodeType)
             for qual in quals:
                 fmqlArgs += qual
@@ -126,42 +127,44 @@ class FMQLQPE:
         
     def __schemaQueryToFMQLArgs(self, query):
         
-        RE_DESCRIBETYPE = re.compile('DESCRIBE TYPE +([\d_]+)$')        
+        RE_DESCRIBETYPE = re.compile('DESCRIBE TYPE +([\d_]+)$')
         if RE_DESCRIBETYPE.match(query):
             nodeType = RE_DESCRIBETYPE.match(query).group(1)
-            fmqlArgs = ["OP:DESCRIBETYPE^TYPE:%s" % nodeType]
+            fmqlArgs = "OP:DESCRIBETYPE^TYPE:%s" % nodeType
             return fmqlArgs
 
         RE_SELECTTYPES = re.compile('SELECT TYPES') # allows args        
         if RE_SELECTTYPES.match(query):
-            fmqlArgs = ["OP:SELECTALLTYPES"]
+            fmqlArgs = "OP:SELECTTYPES"
             if re.search(r'TOPONLY', query):
-                fmqlArgs[0] += "^TOPONLY:1"
+                fmqlArgs += "^TOPONLY:1"
             if re.search(r'BADTOO', query):
-                fmqlArgs[0] += "^BADTOO:1"
+                fmqlArgs += "^BADTOO:1"
+            if re.search(r'POPONLY', query):
+                fmqlArgs += "^POPONLY:1"
             return fmqlArgs
             
-        # TODO: change to SELECT TYPE REFS (vs COUNT REFS)
-        RE_SELECTALLREFERRERSTOTYPE = re.compile('SELECTALLREFERRERSTOTYPE +([\d_]+)')
-        if RE_SELECTALLREFERRERSTOTYPE.match(query):
-            nodeType = RE_SELECTALLREFERRERSTOTYPE.match(query).group(1)
-            fmqlArgs = ["OP:SELECTALLREFERRERSTOTYPE^TYPE:%s" % nodeType]
+        RE_SELECTTYPEREFS = re.compile('SELECT TYPE REFS +([\d_]+)')
+        if RE_SELECTTYPEREFS.match(query):
+            nodeType = RE_SELECTTYPEREFS.match(query).group(1)
+            fmqlArgs = "OP:SELECTTYPEREFS^TYPE:%s" % nodeType
             return fmqlArgs
             
         return None
         
     def __makeTypeId(self, nodeId):
-        return re.sub(r'\_', ".", urllib.unquote(nodeId))
+        # Unquote turns web URL form into spaces and other regular characters
+        return urllib.unquote(nodeId)
         
     def __makeFileRecordId(self, url):
         url = urllib.unquote(url)
         pieces = re.search(r'([^\/\-]+)\-([^\-\/]+)$', url)
         if not pieces:
-            raise Exception("QPERROR", "Invalid url - must be X-Y")
-        nodeId = re.sub(r'\_', '.', pieces.group(1))
+            raise Exception("QPRROR", "Invalid url - must be X-Y")
+        nodeType = pieces.group(1)
         # recordId = re.sub(r'\_', '.', pieces.group(2))
         recordId = pieces.group(2)
-        return nodeId, recordId
+        return nodeType, recordId
         
     # current format over RPC separates with : but what
     # if it is used in a filter argument. Usually occurs for
@@ -201,12 +204,12 @@ def main():
         return
 
     logger = DefaultLogger()
-    qpe = FMQLQPE(rpcc, logger)
+    qp = FMQLQP(rpcc, logger)
     
     queries = ["DESCRIBE 2-1", "DESCRIBE 2", "SELECT 2", "COUNT 2", "DESCRIBE 2_0361 IN 2-3", "SELECT 2 LIMIT 3 OFFSET 1", "SELECT .01 FROM 2 LIMIT 3", "DESCRIBE 79_3 FILTER(.03=2-1)", "COUNT 50_68 FILTER(.05=11-2) NOIDXMAX 1"]
     for query in queries:
         print "=========================================================="
-        reply = qpe.processQuery({"fmql": [query]})
+        reply = qp.processQuery({"fmql": [query]})
         # jreply = json.loads(reply["data"])
         print reply
 

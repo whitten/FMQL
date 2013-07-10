@@ -1,3 +1,13 @@
+#!/usr/bin/env python
+
+#
+# LICENSE:
+# This program is free software; you can redistribute it and/or modify it 
+# under the terms of the GNU Affero General Public License version 3 (AGPL) 
+# as published by the Free Software Foundation.
+# (c) 2010-2013 caregraf
+#
+
 """
 Do EP tests that match the stand-alone QP tests: use delegator
 so same tests will work with both (better).
@@ -31,7 +41,7 @@ def simpleEPTests():
         print reply
         if output == "json":
             json.loads(reply)
-    oqueries = ["SELECT TYPES TOPONLY", "SELECT TYPES", "DESCRIBE TYPE 2", "SELECTALLREFERRERSTOTYPE 2", "BADOP"]
+    oqueries = ["SELECT TYPES TOPONLY", "SELECT TYPES", "DESCRIBE TYPE 2", "SELECT TYPE REFS 2", "BADOP"]
     for oquery in oqueries:
         print "=========================================================="
         print oquery

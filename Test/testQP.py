@@ -5,7 +5,7 @@
 # This program is free software; you can redistribute it and/or modify it 
 # under the terms of the GNU Affero General Public License version 3 (AGPL) 
 # as published by the Free Software Foundation.
-# (c) 2010-2013 caregraf.org
+# (c) 2010-2013 caregraf
 #
 
 """
@@ -33,8 +33,7 @@ import cgi
 import re
 
 sys.path.append('../Framework')
-from fmqlQP import FMQLQueryProcessor
-from fmqlQPE import FMQLQPE
+from fmqlQP import FMQLQP
 from brokerRPC import VistARPCConnection
 
 #
@@ -43,12 +42,12 @@ from brokerRPC import VistARPCConnection
 
 SYSTEMONLY = False # Change once system specific numbers below are set
 
-def runTest(qpe, testGroupName, testNo, testDef):
-    print "========= Test %s: %d ========" % (testGroupName, testNo)
+def runTest(qp, testGroupName, testId, testDef):
+    print "========= Test %s: %s ========" % (testGroupName, testId)
     print testDef["description"]
     start = datetime.now()
     try: 
-        reply = qpe.processQuery({"fmql": [testDef["fmql"]]})
+        reply = qp.processQuery({"fmql": [testDef["fmql"]]})
         end = datetime.now()
         delta = end-start
         jreply = json.loads(reply)
@@ -58,7 +57,7 @@ def runTest(qpe, testGroupName, testNo, testDef):
     except Exception as e:
         traceback.print_stack()
         print "ERROR: %s" % e
-        print reply
+        print "REPLY", reply
         return 0
     if "error" in testDef:
         if "error" in jreply:
@@ -71,10 +70,16 @@ def runTest(qpe, testGroupName, testNo, testDef):
     if "dump" in testDef:
         print jreply
     if "count" in testDef:
-        fmqlCount = jreply["count"] if "count" in jreply else jreply["total"]
+        fmqlCount = "-1"
+        if "count" in jreply:
+            fmqlCount = jreply["count"]
+        elif "total" in jreply:
+            fmqlCount = jreply["total"]
+        elif "results" in jreply:
+            fmqlCount = str(len(jreply["results"]))
         if SYSTEMONLY or testDef["count"] == "PRINT":
             # print jreply
-            print "Got count of %s" % fmqlCount 
+            print "Got count of %s" % fmqlCount
         elif "error" in jreply or fmqlCount != testDef["count"]:
             print jreply
             print "ERROR: COUNT %s doesn't match returned count %s!" % (testDef["count"], fmqlCount)
@@ -108,7 +113,7 @@ GENERICTESTS = {
     "name": "BASIC",
     "definitions": [
         {   
-            "description": "Schema: SelectAllTypes",
+            "description": "Schema: Select Types",
             "fmql": "SELECT TYPES",
         },
         {
@@ -116,8 +121,8 @@ GENERICTESTS = {
             "fmql": "DESCRIBE TYPE 2",
         },
         {
-            "description": "Schema: SelectAllReferrersToType 2",
-            "fmql": "SELECTALLREFERRERSTOTYPE 2",
+            "description": "Schema: Select Type Refs 2",
+            "fmql": "SELECT TYPE REFS 2",
         },
         {
             "description": "Count Patients",
@@ -186,13 +191,13 @@ NEGATIVETESTS = {
             "error": ""
         },
         {
-            "description": "SelectAllReferrersToType: Bad file",
-            "fmql": "SELECTALLREFERRERSTOTYPE 9999999999999999",
+            "description": "Select Type Refs: Bad file",
+            "fmql": "SELECT TYPE REFS 9999999999999999",
             "error": ""
         },
         {
-            "description": "SelectAllReferrersToType: BNode file",
-            "fmql": "SELECTALLREFERRERSTOTYPE 63_04",
+            "description": "Select Type Refs: BNode file",
+            "fmql": "SELECT TYPE REFS 63_04",
             "error": ""
         },
     ]
@@ -230,6 +235,41 @@ CTRLUDR32TEST="re.search(r'\x1b', jreply['results'][0]['error_number']['value'][
 NODEWITHSUCNODES="63-4"
 CNODEFIELD="chem_hem_tox_ria_ser_etc"
 TESTPROBLEMDIAGNOSIS="80-62"
+
+# TODO: upgrade to test if FMQL response has BADTOO:true etc
+# TODO: add for FILE=.109 ; allow .11 on but no .001 -> .1
+TESTSCHEMATESTS = {
+    "name": "SELECT TYPES in all its forms",
+    "definitions": [
+        {
+            "description": "SELECT TYPES - no args (all good, no bad)",
+            "fmql": "SELECT TYPES", 
+            "count": "5393",
+        },
+        {
+            "description": "SELECT TYPES BADTOO",
+            "fmql": "SELECT TYPES BADTOO",
+            "count": "5410",
+        },
+        {
+            "description": "SELECT TYPES TOPONLY",
+            "fmql": "SELECT TYPES TOPONLY",
+            "count": "2359"
+        },
+        {
+            "description": "SELECT TYPES TOPONLY BADTOO",
+            "fmql": "SELECT TYPES TOPONLY BADTOO",
+            "count": "2375"
+        },
+        {
+            "description": "SELECT TYPES POPONLY",
+            "fmql": "SELECT TYPES POPONLY",
+            "count": "1245"
+        }
+    ]
+}
+
+STESTSETS.append(TESTSCHEMATESTS)
 
 # OTHERS TO ADD:
 # - 80_3-2 ... MUMPS (6) is .01 value. Seems to show properly
@@ -917,7 +957,7 @@ def main():
     try:
         rpcc = VistARPCConnection(args[0], int(args[1]), args[2], args[3], "CG FMQL QP USER", DefaultLogger())
         logger = DefaultLogger()
-        fmqlQPE = FMQLQPE(rpcc, logger)
+        fmqlQP = FMQLQP(rpcc, logger)
     except Exception as e:
         print "Failed to log in to VistA (bad parameters?): %s ... exiting" % e
         return
@@ -928,10 +968,11 @@ def main():
 
         fails = 0
         total = 0
-        for testSet in TESTSETS:
-            for testNo, testDef in enumerate(testSet["definitions"]):
-                total += total
-                if not runTest(fmqlQPE, testSet["name"], testNo + 1, testDef):
+        testNo = 0
+        for i, testSet in enumerate(TESTSETS, 1):
+            for j, testDef in enumerate(testSet["definitions"], 1):
+                total += 1
+                if not runTest(fmqlQP, testSet["name"], str(i) + ":" + str(j), testDef):
                     fails += 1
         print "=== All Done: %d of %d failed ===" % (fails, total)
 

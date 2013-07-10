@@ -216,13 +216,13 @@ function parseQueryURI(uri)
         return null;
 
     if (/^schema\/?$/.test(uri))
-        return {"OP": "SELECT TYPES", "TOPONLY": "True"};
+        return {"OP": "SELECT TYPES", "POPONLY": "True"};
 
     var schMatch = /^schema\/([\d\_]+)$/.exec(uri);
     if (schMatch)
         return {"OP": "DESCRIBE TYPE", "TYPE": schMatch[1]};
 
-    // Never do SELECTALLREFERRERSTOTYPE
+    // Never do SELECT TYPE REFS
 
     var urlMatch = /^([\d\_]+\-[\d\.]+)$/.exec(uri);
     if (urlMatch)
@@ -268,6 +268,11 @@ function makeQuery(args)
     if ("TOPONLY" in args)
     {
         query += " TOPONLY True";
+        return query;
+    }
+    if ("POPONLY" in args)
+    {
+        query += " POPONLY True";
         return query;
     }
     if ("TYPE" in args)

@@ -5,7 +5,7 @@
 # This program is free software; you can redistribute it and/or modify it 
 # under the terms of the GNU Affero General Public License version 3 (AGPL) 
 # as published by the Free Software Foundation.
-# (c) 2010-2011 caregraf.org
+# (c) 2010-2013 caregraf
 #
 
 """
@@ -25,17 +25,11 @@
  resident endpoint.
 """
 
-__author__ =  'Caregraf'
-__copyright__ = "Copyright 2010-2011, Caregraf"
-__license__ = "AGPL"
-__version__=  '0.8'
-__status__ = "Production"
-
 import json
 import urllib, urllib2
 import re
 from brokerRPC import VistARPCConnection, RPCLogger
-from fmqlQP import FMQLQueryProcessor
+from fmqlQP import FMQLQP
 
 ###################### Walk all entries #######################
 
@@ -47,10 +41,10 @@ INCREMENTLIMIT = -1 # no limit
 # - add check that every reply node has a "uri" ie. check for {} in JSON. Shouldn't happen.
 
 # For first tests: op="CountAllOfType", then do "SelectAllOfType".
-def walkAll(qp, op="Describe", useLowerLimits=True):
+def walkAll(qp, op="DESCRIBE", useLowerLimits=True):
 	problemFiles = []
 	print "Get all the types ..."
-	query = {"op": ["SelectAllTypes"]}
+    query = "SELECT TYPES"
 	reply = qp.processQuery(query)
 	jreply = json.loads(reply)
 	for result in jreply["results"]:
@@ -67,8 +61,8 @@ def walkAll(qp, op="Describe", useLowerLimits=True):
 		try: 
 			while True:
 				# walk limit at a time. Do offset
-				query = {"op": [op], "typeId": [fileType], "limit": [ulimit], "offset": [offset]}
-				print "Sending query"
+                query = op + " " + fileType + " LIMIT " + ulimit + " OFFSET " + offset
+				print "Sending query", query
 				reply = qp.processQuery(query)
 				jreply = json.loads(reply)
 				if "error" in jreply:
@@ -101,7 +95,7 @@ def main():
 		print "Failed to log in to System for FMQL RPC (bad parameters?): %s ... exiting" % e
 		return
 
-	fmqlQP = FMQLQueryProcessor(rpcc, RPCLogger())
+	fmqlQP = FMQLQP(rpcc, RPCLogger())
 		
 	walkAll(fmqlQP)
 	

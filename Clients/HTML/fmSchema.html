@@ -89,9 +89,8 @@ function handleFMQLReply(index, reply)
         var typeId = args["TYPE"];
         if (!("parent" in reply))
         {
-            // Rambler does a SelectAllReferrersToType for all top level files 
             var cargs = {};
-            cargs["OP"] = "SELECTALLREFERRERSTOTYPE";
+            cargs["OP"] = "SELECT TYPE REFS";
             cargs["TYPE"] = typeId; 
             htmla("fmql", "<hr/>");
             htmla("fmql", "<div class='fmqlResults' id=\"" + "fmql2" + "\"></div>");

@@ -231,7 +231,7 @@ function makeHTMLFromJSON(jsonReply, query)
     var json = toJSON(jsonReply);
     if ("error" in json)
         return ("<pre>" + jsonReply + "</pre>");
-    if (query.match(/SELECT TYPES/) || query.match(/DESCRIBE TYPE/) || query.match(/SELECTALLREFERRERSTOTYPE/))
+    if (query.match(/SELECT TYPES/) || query.match(/DESCRIBE TYPE/) || query.match(/SELECT TYPE REFS/))
         return "<p>Cannot Display HTML for Schema Queries. Select JSON.</p>";
     if (query.match(/^SELECT /))
         return selectResultToHTML(json, false, "/query");
