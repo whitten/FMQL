@@ -81,7 +81,8 @@ function handleFMQLReply(index, reply)
     if (args["OP"] == "SELECT TYPES")
     {
         ALLFILESREPLY = reply;
-        resultsMarkup += "<div><h1>Main Files (" + reply["results"].length + ")</h1></div>";
+        resultsMarkup += "<div><h1>Populated Files</h1>";
+        resultsMarkup += "<p>In this system " + reply["results"].length + " out of " + reply["topCount"] + " have entries.</p></div>"; 
         resultsMarkup += selectAllResultsToHTML(reply, true, URISEP, true);
     }
     else if (args["OP"] == "DESCRIBE TYPE")
