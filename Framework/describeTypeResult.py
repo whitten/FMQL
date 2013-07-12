@@ -11,13 +11,13 @@
 import re
 from collections import defaultdict
 
+"""
+The schema companion of DescribeReply: a utility to cross the protocol-model boundary. This turns a DESCRIBE TYPE reply into FileInfos, FileMan schema definitions.
+"""
+
 class FileInfo(object):
 
     """
-    TODO: 
-    - the easy access provided here will inform improvements to the raw FMQL JSON scheduled for V1.1.
-    - handle "corrupt" file and "corrupt" field info properly for easy reports
-    
     A simple facade for easy access to an FMQL Describe Type result, a peer of FMQLDescribeResult. To FMQL's exposure of FileMan's Native Schema, it highlights:
     - list multiple: multiples with only one field - these 'sub files' represent simple lists of items
     - does a field "own" its name ie/ is it the first user of a name. Remember that 
@@ -26,8 +26,15 @@ class FileInfo(object):
     Fixes FMQL quirks:
     - file id returned in . form in Schema but Data uses _ form. _ form used here
     - lot's of "detail" stuffed into one 'detail' field. Expanded in FieldInfo
+
+    TODO: 
+    - the easy access provided here will inform improvements to the raw FMQL JSON scheduled for V1.1.
+    - handle "corrupt" file and "corrupt" field info properly for easy reports
+    - dinum etc and a lot more nuance in fields including ranges [for fuller schema defn]
     """ 
     def __init__(self, describeTypeResult):
+        if "error" in describeTypeResult:
+            raise Exception("Can't access error results")
         self.__result = describeTypeResult
         
     def __str__(self):
@@ -135,6 +142,15 @@ class FileInfo(object):
         return [fieldInfo.multipleId for fieldInfo in self.fieldInfos() if fieldInfo.type == "MULTIPLE"]
         
     def references(self):
+        """
+        Note: unlike DESCRIBE for data, DESCRIBE TYPE does not return the (meta) data about contained entities. You need to explicitly go through DescribeTypeReply's for contained multiples to get all the references of the tree represented by this type of record.
+        ie/ 
+        allReferences(fId, fileInfoManager):
+            references = fileInfoManager.fileInfo(fId).references()
+            for cFId in fi.multiples():
+                references |= allReferences(cFId, fileInfoManager)
+            return references
+        """
         return set(range for fieldInfo in self.fieldInfos() if fieldInfo.type in ["POINTER TO A FILE", "VARIABLE-POINTER"] for range in fieldInfo.ranges())
                 
     def fieldInfos(self): # only non corrupt
@@ -175,6 +191,13 @@ class FileInfo(object):
                     
 class FieldInfo(object):
 
+    """
+    TODO: more on data typing to distinguish a field <class> (COMPUTED) with the range/type of that computed thing. Perhaps: IEN|COMPUTED|SPECIFIC and then the data types from flags?
+    
+    Note on "IEN" == .001/NUMBER field
+        in VistA FM (but not C***), .001 is reserved as a field for IENs. It serves both as an identifier for "IEN" in the FileMan API (ie/ ask for IEN just like any other field) and in its computation, it sets a range for IENs. Not that not all files (284 out of 5743 in FOIA 2013) have this field. Even where they don't, FileMan's API treats the keyword "NUMBER" to mean IEN - even if the IEN is a date or other format.
+    """
+
     # TMP Til FMQL uses .8. ie/ I FLDFLAGS["D" S FLDTYPE=1 ; Date 
     # will look into file .81/^DI(.81,"C","D")
     # TODO: add "BOOLEAN" ... "FREE TEXT" -> STRING, FORMATTED STRING, POINTER etc.
@@ -188,7 +211,8 @@ class FieldInfo(object):
         "7": "POINTER TO A FILE",
         "8": "VARIABLE-POINTER",
         "9": "MULTIPLE",
-        "10": "MUMPS"
+        "10": "MUMPS",
+        "11": "IEN" # ie/ NUMBER FIELD (VistA only)
     }
 
     # a name owner is the FIRST field in the file to use a name. All others don't 'own' the name
@@ -196,6 +220,10 @@ class FieldInfo(object):
         self.__fileId = fileId
         self.__result = describeFieldResult   
         self.__isNameOwner = isNameOwner
+        
+    def __str__(self):
+        mu = "Field: " + self.name + " (" + self.id + ")\n"
+        return mu
                 
     @property
     def id(self):
@@ -249,17 +277,46 @@ class FieldInfo(object):
     
     @property 
     def type(self):
+        # TODO: split into CLASS and TYPE ie. better nuance in flags.
         return self.FIELDTYPES[self.__result["type"]]
         
     @property
     def flags(self):
         """
         TODO: replace with proper breakout ALA Rambler/Schema Browser
+        
+        Key for rangeType of Computed:
+        - C
         """
         return self.__result["flags"]
+        
+    @property
+    def rangeType(self):
+        """
+        This coincides with TYPE for all but COMPUTED or IEN. It refers to the data type that a concrete value would have.
+        
+        TODO: redo when split out COMPUTED|IEN|CONCRETE vs data types. 
+        
+        TODO IEN FLAGS:
+        - NJ12,0 ... 999999999999 is max; NJ2,0 ... 999 but X>100 for NJ3,0
+        (ie/ loop IEN fields for patterns)
+        """
+        # IEN: go off flags
+        if self.__result["type"] == "11":
+            # Most .001's are #'s with computations like 'K:+X'=X!(X>999999)!(X<1)!(X?.E1"."1N.N) X'
+            if re.match(r'N', self.__result["flags"]):
+                return "NUMBER"
+            # ex/ 2_98 Field: Appointment Date/Time
+            if re.match(r'D', self.__result["flags"]):
+                return "DATE"
+            return "OTHER" # TBD: range check
+        return "OTHER" # TODO - fill out, particularly for computed.
                 
     @property
     def location(self):
+        """
+        Computed/IEN have no location.
+        """
         if "location" in self.__result:
             return self.__result["location"]
         return ""
@@ -270,6 +327,9 @@ class FieldInfo(object):
         
     @property
     def inputTransform(self):
+        """
+        An INPUT transform is M code for a particular field that is executed to determine if the data for that field is valid
+        """
         return self.__result["inputTransform"] if "inputTransform" in self.__result else ""
 
     @property

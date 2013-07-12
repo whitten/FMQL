@@ -156,7 +156,7 @@ FIELDSINFO(FLINF)
  . ; Send over all the flags. May process more on client side
  . D DASSERT^FMQLJSON(REPLY,"flags",FDINF("FLAGS"))
  . D DASSERT^FMQLJSON(REPLY,"name",FDINF("LABEL"))
- . D:FDINF("TYPE")'=6 DASSERT^FMQLJSON(REPLY,"location",FDINF("LOC"))
+ . D:$D(FDINF("LOC")) DASSERT^FMQLJSON(REPLY,"location",FDINF("LOC"))
  . ; For now, only note simple indexes. Not all ^DD(FILE,"IX",FIELD) as MUMPS there too
  . D:$D(FDINF("IDX")) DASSERT^FMQLJSON(REPLY,"index",FDINF("IDX"))
  . D DASSERT^FMQLJSON(REPLY,"type",FDINF("TYPE"))
@@ -165,6 +165,7 @@ FIELDSINFO(FLINF)
  . I FDINF("TYPE")=9 S FLDDETAILS=+FDINF("FLAGS") ; Multiple
  . I FDINF("TYPE")=3 S FLDDETAILS=$P(^DD(FILE,FIELD,0),"^",3) ; Set
  . I FDINF("TYPE")=7 S FLDDETAILS=+$P(FDINF("FLAGS"),"P",2) ; Pointer
+ . I FDINF("TYPE")=11,FDINF("FLAGS")["P" S FLDDETAILS=+$P(FDINF("FLAGS"),"P",2) ; Pointer (IEN pts)
  . ; TBD: Final FMQL won't distinguish vptr from ptr. MUMPS-side thing.
  . I FDINF("TYPE")=8 D
  . . S FLDDETAILS=$$VARPOINTERRANGE(FILE,FIELD) ; V Pointer

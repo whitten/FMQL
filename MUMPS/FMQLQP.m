@@ -10,6 +10,8 @@ FMQLQP; Caregraf - FMQL Query Processor RPC Entry Point ; Jul, 2013
 FMQLRPC(RPCREPLY,RPCPARAMS) 
  N FMQLPARAMS,RPCPARAM
  K ^TMP($J,"FMQLJSON")  ; VistA Coding Convention
+ ; Need to identify namespace of FM (VISTA or C***)
+ K ^TMP($J,"NS") S ^TMP($J,"NS")=$S($P(^DIC(4.3,0),"^")="KERNEL SITE PARAMETERS":"C***",1:"VS")
  I $G(RPCPARAMS)'="" D
  . N RPCPN S RPCPN=1
  . F  S RPCPARAM=$P(RPCPARAMS,"^",RPCPN) Q:RPCPARAM=""  D

@@ -705,6 +705,8 @@ until fill arrays in test system. Test where narrative maps
 and where it doesn't. By side effect, testing when 757_01 maps
 and when it doesn't.
 
+HPTC: problem of many not in kgraf - Osteopath/207P00000X is but many others are not! ... find out range match and range not.
+
 OPEN>S ^AUTNPOV(352,0)="Chronic Fatigue Syndrome^"
 OPEN>S ^AUTNPOV(352,757)=304659    
 
@@ -742,7 +744,7 @@ SAMEASTESTS = {
         {
             "description": "ICD (same goes for CPT 81).",
             "fmql": "DESCRIBE 80-1",
-            "test": "testResult = (('ICD9:' + jreply['results'][0]['code_number']['value']) == jreply['results'][0]['uri']['sameAs'])",
+            "test": "testResult = (('ICD9CM:' + jreply['results'][0]['code_number']['value']) == jreply['results'][0]['uri']['sameAs'])",
         },
         {
             "description": "Major Concept sameas out",
@@ -913,6 +915,48 @@ DOTIENTESTS = {
 
 STESTSETS.append(DOTIENTESTS)
 
+# .001's are special - reaches into Schema view displaying them and data where value is a pointer or a date. Current test system has no example of the pointer form which is in three places in C***'s Lab schema.
+# SELECT .001 FROM 50_6 LIMIT 10
+OO1IENTESTS = {
+    "name": ".001 IEN Tests",
+    "definitions": [
+        {
+            "description": "SCHEMA 50_6 - .001 shows up",
+            "fmql": "DESCRIBE TYPE 50_6",
+            "test": "testResult=(jreply['fields'][0]['number'] == '.001')"
+        },
+        {
+            "description": "DATA 50_6-95 - .001 field is numeric and ignored",
+            "fmql": "DESCRIBE 50_6-95",
+            "test": "testResult=('number' not in jreply['results'][0])",
+        },
+        { # 2.98 may be better candidate if fill in scheduling
+            "description": "SCHEMA 3_07 - .001 field is Date",
+            "fmql": "DESCRIBE TYPE 3_07",
+            "test": "testResult=((jreply['fields'][0]['flags'] == 'D') and (jreply['fields'][0]['number'] == '.001'))",
+        },
+        {
+            "description": "DATA 3_07 - .001 field is Date exposed",
+            "fmql": "DESCRIBE 3_07 LIMIT 1",
+            "test": "testResult=(('date_time' in jreply['results'][0]) and (jreply['results'][0]['date_time']['fmType'] == '1'))",
+        },
+        {
+            "description": "DATA 3_07 - even its .001 can't be isolated in SELECT FROM",
+            "fmql": "SELECT .001 FROM 3_07 LIMIT 2",
+            "test": "testResult=('date_time' not in jreply['results'][0])",
+        },
+        {
+            "description": "Schema 2006_552 - .001 is a pointer",
+            "fmql": "DESCRIBE TYPE 2006_552",
+            "test": "testResult=(jreply['fields'][0]['details'] == '2')",
+        }
+        # TODO: add ex of this pointer being resolved. Only one in FOIA - not yet populated in test system. 2006_552
+        
+    ]
+}
+
+STESTSETS.append(OO1IENTESTS)
+
 TESTSETS.extend(STESTSETS)
 
 def orderPatientReturnTest(qp):
@@ -970,11 +1014,14 @@ def main():
         fails = 0
         total = 0
         testNo = 0
+        stopOnFail = True
         for i, testSet in enumerate(TESTSETS, 1):
             for j, testDef in enumerate(testSet["definitions"], 1):
                 total += 1
                 if not runTest(fmqlQP, testSet["name"], str(i) + ":" + str(j), testDef):
                     fails += 1
+                    if stopOnFail:
+                        break
         print "=== All Done: %d of %d failed ===" % (fails, total)
 
     except Exception as e:

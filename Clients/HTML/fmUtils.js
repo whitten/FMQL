@@ -357,7 +357,7 @@ function sameAsLink(uriValue, base, label)
     if (lMatch)
         return "<a href='" + base + lMatch[1] + "'>" + label + "</a>";
     // TBD: HL7, ICD, CPT etc.
-    sameas = sameasURI.replace(".", "_").replace("VA:", SAMEASBASE + "va/").replace("ICD9:", SAMEASBASE + "icd9cm/").replace("CPT:", SAMEASBASE + "cpt/").replace("PROVIDER:", SAMEASBASE + "provider/").replace("nddf:", SAMEASBASE + "nddf/");
+    sameas = sameasURI.replace(".", "_").replace("VA:", SAMEASBASE + "va/").replace("ICD9CM:", SAMEASBASE + "icd9cm/").replace("CPT:", SAMEASBASE + "cpt/").replace("HPTC:", SAMEASBASE + "hptc/").replace("nddf:", SAMEASBASE + "nddf/");
     return "<a href='" + sameas + "'>" + label + "</a>";
 }
 
@@ -742,7 +742,8 @@ function typeIdToLabel(typeId)
         "7": "POINTER",
         "8": "VARIABLE-POINTER",
         "9": "MULTIPLE",
-        "10": "MUMPS"
+        "10": "MUMPS",
+        "11": "IEN"
     }  
     if (!(typeId in FIELDTYPES))
         return typeId

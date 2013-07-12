@@ -216,15 +216,15 @@ BLDFDINF(FLINF,FIELD,FDINF) ;
  . E  S FDINF("TYPE")=9 S FDINF("SUBFILE")=+FLAGS  ; TBD: validate ["M ?
  ; TBD: Default String even if no "F". Should log.
  E  D
- . ; Even though .001 has a type, it is also "computed" so treat that way
- . S FDINF("TYPE")=$S(FIELD=.001:6,FLAGS["D":1,FLAGS["N":2,FLAGS["S":3,FLAGS["F":4,FLAGS["C":6,FLAGS["P":7,FLAGS["V":8,FLAGS["K":10,1:"4") ; Default to String
+ . ; .001 in FM is IEN - may be more than a # ie/ a date or a pointer
+ . S FDINF("TYPE")=$S(FIELD=.001:11,FLAGS["D":1,FLAGS["N":2,FLAGS["S":3,FLAGS["F":4,FLAGS["C":6,FLAGS["P":7,FLAGS["V":8,FLAGS["K":10,1:"4") ; Default to String
  . N IDX S IDX=$$FIELDIDX^FMQLUTIL(FILE,FIELD)
  . S:IDX'="" FDINF("IDX")=IDX
  ; TODO: this BAD is never reached as type defaults to String
  I FDINF("TYPE")="" S FDINF("BAD")="No type set: "_FILE_"/"_FIELD Q
  ; Access, Verify in file 200 are sensitive. FM should support this formally and encrypt them
  I FILE=200,((FIELD=2)!(FIELD=11)) S FDINF("HIDE")="SENSITIVE"
- I FDINF("TYPE")'=6 D
+ I '((FDINF("TYPE")=6)!(FDINF("TYPE")=11)) D
  . S FDLOC=$P(^DD(FILE,FIELD,0),"^",4) 
  . S FDINF("LOC")=FDLOC
  . S FDINF("LOCSUB")=$P(FDLOC,";") 
@@ -244,6 +244,8 @@ BLDFDINF(FLINF,FIELD,FDINF) ;
  . I CODES="" S FDINF("BAD")="No codes specified: "_FILE_"/"_FIELD Q
  . N C F C=1:1 Q:$P(CODES,";",C)=""  S FDINF("CODES",$P($P(CODES,";",C),":"))=$P($P(CODES,";",C),":",2)
  I FDINF("TYPE")=7 S FDINF("PFILE")=+$P(FLAGS,"P",2) Q
+ ; .001 can be a P(ointer), D(ate), F(string), N(numeric)
+ I FDINF("TYPE")=11,FLAGS["P" S FDINF("PFILE")=+$P(FLAGS,"P",2) Q
  I FDINF("TYPE")=9 S FDINF("BFILE")=+FLAGS Q
  I FDINF("TYPE")=8 D
  . I '$D(^DD(FILE,FIELD,"V")) S FDINF("BAD")="No VPTR Definition: "_FILE_"/"_FIELD Q
@@ -289,7 +291,7 @@ GETEVAL(FDINF,IVAL) ;
  I FDINF("TYPE")=3,$D(FDINF("CODES",IVAL)) Q FDINF("CODES",IVAL)
  N EVAL S EVAL=IVAL ; Fallback to internal value
  I FDINF("TYPE")=7 D
- . I IVAL="0" Q ; TBD Common NULL value that doesn't resolve
+ . I IVAL="0" Q ; TODO NULL value that doesn't resolve (consider leaving out PTR)
  . N PFLINF D BLDFLINF(FDINF("PFILE"),.PFLINF)
  . Q:$D(PFLINF("BAD"))
  . N PFDINF D BLDFDINF(.PFLINF,.01,.PFDINF)
@@ -382,3 +384,5 @@ FIELDTOPRED(FIELD) ;
  S PRED=$TR($TR(FIELD,$TR(FIELD,ALW)),UPC,LOC)
  Q PRED
  ;
+ 
+
