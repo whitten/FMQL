@@ -222,7 +222,6 @@ RESVS64(IEN,SAMEAS) ;
  ; Providers have NPIs
  ;
 RESVS200(IEN,SAMEAS) ;
- S ^TMP("FMQL","HERE")=IEN
  S:'$D(SAMEAS("URI")) SAMEAS("URI")="LOCAL"
  Q:'$D(^VA(200,IEN,"NPI"))
  N NPI S NPI=$P(^VA(200,IEN,"NPI"),"^")
