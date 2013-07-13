@@ -1,4 +1,4 @@
-FMQLSSAM; Caregraf - FMQL Schema Enhancement for Terminologies ; Jul, 2013
+FMQLSSAM ;CG/CD - Caregraf - FMQL Schema Enhancement for Terminologies; 07/12/2013  11:30
  ;;1.0;FMQLQP;;Jul 12th, 2013
  ;
  ;
@@ -22,9 +22,9 @@ FMQLSSAM; Caregraf - FMQL Schema Enhancement for Terminologies ; Jul, 2013
  ;
  ; IMPORTANT: pass in empty SAMEAS
  ;
-RESOLVE(FILENUM,IEN,DEFLABEL,SAMEAS)
+RESOLVE(FILENUM,IEN,DEFLABEL,SAMEAS) ;
  Q:'$D(^DIC(FILENUM,0,"GL"))  ; catches CNode
- Q:IEN'=+IEN ; catch non numeric IEN
+ Q:IEN'=+IEN  ; catch non numeric IEN
  ; Could just check $D(^PSDFDB)
  I ^TMP($J,"NS")="VS" D RESVS(FILENUM,IEN,DEFLABEL,.SAMEAS) Q
  D RESC(FILENUM,IEN,DEFLABEL,.SAMEAS)  ; C*** Vocabs
@@ -39,11 +39,11 @@ RESVS(FILENUM,IEN,DEFLABEL,SAMEAS) ;
  I FILENUM="71" D RESVS71(IEN,.SAMEAS) Q  ; RAD/NUC PROCEDURE
  I FILENUM="790.2" D RESVS790dot2(IEN,.SAMEAS) Q  ; WV PROCEDURE
  I FILENUM="757" D RESVS757(IEN,.SAMEAS) Q  ; Major Concept
- I FILENUM="757.01" D RESVS757dot01(IEN,.SAMEAS) Q ; EXP
- I FILENUM="9999999.27" D RESVS9999999dot27(IEN,.SAMEAS) Q ; Prov Nav
- I FILENUM="60" D RESVS60(IEN,.SAMEAS) Q ; Lab Local
- I FILENUM="64" D RESVS64(IEN,.SAMEAS) Q ; Lab National WKLD
- I FILENUM="200" D RESVS200(IEN,.SAMEAS) Q ; NPI for Providers
+ I FILENUM="757.01" D RESVS757dot01(IEN,.SAMEAS) Q  ; EXP
+ I FILENUM="9999999.27" D RESVS9999999dot27(IEN,.SAMEAS) Q  ; Prov Nav
+ I FILENUM="60" D RESVS60(IEN,.SAMEAS) Q  ; Lab Local
+ I FILENUM="64" D RESVS64(IEN,.SAMEAS) Q  ; Lab National WKLD
+ I FILENUM="200" D RESVS200(IEN,.SAMEAS) Q  ; NPI for Providers
  D RESVSVAFIXED(FILENUM,IEN,DEFLABEL,.SAMEAS) Q:$D(SAMEAS("URI"))
  D RESVSSTANDARD(FILENUM,IEN,DEFLABEL,.SAMEAS) Q:$D(SAMEAS("URI"))
  D RESVSVUID(FILENUM,IEN,DEFLABEL,.SAMEAS) Q:$D(SAMEAS("URI"))
@@ -70,7 +70,7 @@ RESVSVUID(FILENUM,IEN,DEFLABEL,SAMEAS) ;
  ; Unlike VUIDes will make SAMEAS take same value as IEN.
 RESVSVAFIXED(FILENUM,IEN,DEFLABEL,SAMEAS) ;
  I FILENUM="5"!(FILENUM="11")!(FILENUM="13")  D
- . S SAMEAS("URI")="VA:"_$TR(FILENUM,".","_")_"-"_IEN 
+ . S SAMEAS("URI")="VA:"_$TR(FILENUM,".","_")_"-"_IEN
  . S SAMEAS("LABEL")=$P(DEFLABEL,"/",2)
  Q 
  ;
@@ -107,7 +107,7 @@ RESVS9999999dot27(IEN,SAMEAS) ;
  N SEVEN5701 S SEVEN5701=$P(^AUTNPOV(IEN,757),"^")
  Q:SEVEN5701=""
  D RESVS757dot01(SEVEN5701,.SAMEAS)
- Q ; don't fall back on a 757.01 that doesn't resolve to 757
+ Q  ; don't fall back on a 757.01 that doesn't resolve to 757
  ;
  ; Lexicon expressions: turn expression (757_01) into major concept (757)
 RESVS757dot01(IEN,SAMEAS) ;
@@ -148,10 +148,10 @@ RESVS50dot7(IEN,SAMEAS) ;
  ; VistA Drug 50 to Standard 50.68 or mark as local
 RESVS50(IEN,SAMEAS) ;
  S:'$D(SAMEAS("URI")) SAMEAS("URI")="LOCAL"
- Q:'$D(^PSDRUG(IEN,"ND")) ; Not mandatory to map to VA Product
+ Q:'$D(^PSDRUG(IEN,"ND"))  ; Not mandatory to map to VA Product
  N VAPIEN S VAPIEN=$P(^PSDRUG(IEN,"ND"),"^",3)
  ; Q:VAPIEN'=+VAPIEN ; catch corrupt IEN
- Q:VAPIEN'=+VAPIEN ; VAPIEN may be zero so can't be subscript
+ Q:VAPIEN'=+VAPIEN  ; VAPIEN may be zero so can't be subscript
  D RESVSVUID("50.68",VAPIEN,$P(^PSDRUG(IEN,"ND"),"^",2),.SAMEAS)
  Q
  ;
@@ -207,7 +207,7 @@ RESVS60(IEN,SAMEAS) ;
 RESVS64(IEN,SAMEAS) ;
  S:'$D(SAMEAS("URI")) SAMEAS("URI")="LOCAL"
  N WKLDCODE S WKLDCODE=$P(^LAM(IEN,0),"^",2)
- Q:'WKLDCODE?5N1".0000" ; leave local codes
+ Q:'WKLDCODE?5N1".0000"  ; leave local codes
  S SAMEAS("URI")="VA:wkld"_$P(WKLDCODE,".",1) ; 00000 dropped
  S SAMEAS("LABEL")=$P(^LAM(IEN,0),"^")
  Q:'$D(^LAM(IEN,9))
@@ -227,7 +227,7 @@ RESVS200(IEN,SAMEAS) ;
  Q:'$D(^VA(200,IEN,"NPI"))
  N NPI S NPI=$P(^VA(200,IEN,"NPI"),"^")
  Q:NPI=""
- S SAMEAS("URI")="NPI":_NPI
+ S SAMEAS("URI")="NPI:"_NPI
  S SAMEAS("LABEL")=$P(^VA(200,IEN,0),"^")
  Q
  ;

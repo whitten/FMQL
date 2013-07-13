@@ -1,4 +1,4 @@
-FMQLDATA; Caregraf - FMQL Data Query Processor ; Jul, 2013
+FMQLDATA ;CG/CD - Caregraf - FMQL Data Query Processor; 07/12/2013  11:30
  ;;1.0;FMQLQP;;Jul 12th, 2013
  ;
  ;
@@ -84,17 +84,6 @@ ALL(REPLY,PARAMS) ;
  Q
  ;
  ;
- ; COUNT TYP BY PRED
- ; # of distinct values of a predicate of a type
- ; ... This is a simple but powerful aggregate counter
- ; If the predicate is missing from a result, just skip. 
- ;
- ; TODO: SBYPRED too
- ; 
-CBYPRED(REPLY,FAR,IEN,FDINF) ;
- Q
- ;
- ;
  ; Build JSON for one selection
  ; - FAR = FLINF("ARRAY") for Global; FAR = Qualified location for CNode
  ; Note: supports only top level CNodes
@@ -176,7 +165,9 @@ IDFIELD(FLINF,FAR,ID,FID) ;
  N PLABEL S PLABEL=$TR(FLINF("LABEL"),"/","_")_"/"_$TR(EVALUE,"/","_")
  ; SAMEAS ONLY FOR GLOBALS
  N PSAMEAS I $D(FLINF("GL")),$L($T(RESOLVE^FMQLSSAM)) D RESOLVE^FMQLSSAM(FLINF("FILE"),ID,PLABEL,.PSAMEAS)
- D ASSERT^FMQLJSON(REPLY,"URI",".01","7",PVALUE,PLABEL,.PSAMEAS)
+ ; For CNODE's only - are they list elements. Will move up with other meta
+ N NODETYPE S NODETYPE=$S(FLINF("NOFIELDS")=1:"LISTEL",1:"")
+ D ASSERT^FMQLJSON(REPLY,"URI",".01","7",PVALUE,PLABEL,.PSAMEAS,NODETYPE)
  Q
  ;
  ;
@@ -185,7 +176,7 @@ IDFIELD(FLINF,FAR,ID,FID) ;
  ; Assume: FDINF is good
  ;
 ONEFIELD(FAR,ID,FDINF) ;
- Q:FDINF("TYPE")=6 ; Computed - includes .001
+ Q:FDINF("TYPE")=6  ; Computed - includes .001
  Q:'$D(@FAR@(ID,FDINF("LOCSUB")))
  I FDINF("TYPE")=5 D
  . ; Pharma+ case: WP location but no entries (ala special case for 9)
@@ -303,7 +294,7 @@ CNTREFS(REPLY,PARAMS) ;
  . . . I FDINF("TYPE")'=7 Q  ; PTR only for now (no vptr)
  . . . N FLT S FLT=FIELD_"="_NTINF("FILE")_"-"_PARAMS("ID")
  . . . N CNT S CNT=$$XONFL^FMQLUTIL(.FLINF,FLT,"",-1,0,"","",NOIDXMX,"")
- . . . Q:CNT=-1 ; means no idx max exceeded.
+ . . . Q:CNT=-1  ; means no idx max exceeded.
  . . . Q:CNT=0 
  . . . D DICTSTART^FMQLJSON(REPLY)
  . . . N FLDLABEL S FLDLABEL=FDINF("LABEL") ; Add predicate

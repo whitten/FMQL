@@ -1,4 +1,4 @@
-FMQLQP; Caregraf - FMQL Query Processor RPC Entry Point ; Jul, 2013
+FMQLQP ;CG/CD - Caregraf - FMQL Query Processor RPC Entry Point; 07.12.2013  11:30
  ;;1.0;FMQLQP;;Jul 12th, 2013
  ;
  ; FMQL RPC
@@ -7,7 +7,7 @@ FMQLQP; Caregraf - FMQL Query Processor RPC Entry Point ; Jul, 2013
  ; 
  ; FMQL Query Processor (c) Caregraf 2010-2012 AGPL
  ; 
-FMQLRPC(RPCREPLY,RPCPARAMS) 
+FMQLRPC(RPCREPLY,RPCPARAMS) ;
  N FMQLPARAMS,RPCPARAM
  K ^TMP($J,"FMQLJSON")  ; VistA Coding Convention
  ; Need to identify namespace of FM (VISTA or C***)
@@ -21,7 +21,7 @@ FMQLRPC(RPCREPLY,RPCPARAMS)
  S RPCREPLY=$NA(^TMP($J,"FMQLJSON"))
  Q
  ;
-PROCQRY(REPLY,FMQLPARAMS) 
+PROCQRY(REPLY,FMQLPARAMS) ;
  I '$D(FMQLPARAMS("OP")) S @REPLY@(0)="{""error"":""No Operation Specified""}" Q
  ; Schema
  I FMQLPARAMS("OP")="SELECTTYPES" D ALLTYPES^FMQLSCH(REPLY,.FMQLPARAMS) Q

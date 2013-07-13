@@ -1,4 +1,4 @@
-FMQLSLAB ; Caregraf - FMQL Schema Enhancement for Lab ; Jul, 2013
+FMQLSLAB ;CG/CD - Caregraf - FMQL Schema Enhancement for Lab; 07/12/2013  11:30
  ;;1.0;FMQLQP;;Jul 12th, 2013
  ;
  ;
@@ -64,7 +64,7 @@ BLDBNODES(FAR6304,FID) N BID,FLOC,ID,VAL
  D BNLISTEND^FMQLJSON(REPLY)
  Q
  ;
-BLDBNODE(FLOC,VAL,FID) 
+BLDBNODE(FLOC,VAL,FID) ;
  ; Start with 60 reference. Must have it or quit.
  N LC S LC=$P(VAL,"^",3)  ; Codes
  Q:LC=""
@@ -95,7 +95,7 @@ BLDBNODE(FLOC,VAL,FID)
  ; N SAMEAS60 ; LOINC (95.3) or NLT (64) if available
  ; I $P(LC,"!",3)'="" S SAMEAS60("URI")="95_3-"_$P(LC,"!",3) S SAMEAS60("LABEL")="DUMMYLOINC"
  ; E  I LC64'="" S SAMEAS60("URI")="64-"_LC64 S SAMEAS60("LABEL")="DUMMY64"
- N SAMEAS60 
+ N SAMEAS60
  D RESVS60^FMQLSSAM(LC60,.SAMEAS60)
  D ASSERT^FMQLJSON(REPLY,"TEST",".01","7","60-"_LC60,LABEL60,.SAMEAS60)
  ;

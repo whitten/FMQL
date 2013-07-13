@@ -1,4 +1,4 @@
-FMQLFILT ; Caregraf - FMQL Filter Handling ; Jul, 2012
+FMQLFILT ;CG/CD - Caregraf - FMQL Filter Handling; 07/12/2013  11:30
  ;;1.0;FMQLQP;;July 12th,2012
  ;
  ;
@@ -20,13 +20,13 @@ FMQLFILT ; Caregraf - FMQL Filter Handling ; Jul, 2012
  ;
  ; Note: must be careful with MUMPS evaluation precedence - lot's of brackets
  ;
-FLTTOM(FLINF,FLT,IENA) 
+FLTTOM(FLINF,FLT,IENA) ;
  Q:$D(FLINF("BAD")) "0"
  N FLTP,FLTN,TST S FLTN=1,TST="("
  ; V0.9: temp support for & while allowing missing quotes
  S FLT=$$ESCAND(FLT) ; Escape & inside
  ; V0.9. Moving to &&. Still support & for now
- N AND S AND=$S(FLT["&&":"&&","1":"&") 
+ N AND S AND=$S(FLT["&&":"&&","1":"&")
  F  S FLTP=$P(FLT,AND,FLTN) Q:FLTP=""  D
  . I FLTN>1 S TST=TST_"&"
  . S FLTN=FLTN+1
@@ -42,7 +42,7 @@ FLTTOM(FLINF,FLT,IENA)
  ; - FLT: the LVAL OP RVALUE filter
  ; - IENA mandatory for CNodes
  ; 
-FLTLRTOM(FLINF,FLT,IENA) 
+FLTLRTOM(FLINF,FLT,IENA) ;
  N OP S OP=$S($F(FLT,"="):"=",$F(FLT,"["):"[",$F(FLT,">"):">",$F(FLT,"<"):"<",1:"")
  Q:OP="" "0"
  N FIELD S FIELD=$P(FLT,OP)
@@ -70,7 +70,7 @@ FLTLRTOM(FLINF,FLT,IENA)
  ; fields don't get default values. One key filter is to check if a field has
  ; a value - is a field 'bound'?
  ;
-FLTBOUNDTOM(FLINF,FLT,IENA) 
+FLTBOUNDTOM(FLINF,FLT,IENA) ;
  N FIELD S FIELD=$P($P(FLT,"(",2),")")
  N FDINF D BLDFDINF^FMQLUTIL(.FLINF,FIELD,.FDINF)
  Q:$D(FDINF("BAD")) "0"
@@ -87,7 +87,7 @@ FLTBOUNDTOM(FLINF,FLT,IENA)
  ;
  ; Note: Globals only
  ;
-FLTIDX(FLINF,FLT,IDXA,IDXSTART) 
+FLTIDX(FLINF,FLT,IDXA,IDXSTART) ;
  Q:'$D(FLINF("GL"))
  N FLTP,FLTN
  S FLTN=1,IDXA="",IDXSTART=""
@@ -124,12 +124,12 @@ FLTIDX(FLINF,FLT,IDXA,IDXSTART)
  Q
  ;
  ; Manual Index finding - TBD: move to own file ala manual SSAM
-MFLTIDX(FLINF,FLT,IDXA,IDXSTART)
+MFLTIDX(FLINF,FLT,IDXA,IDXSTART) ;
  I FLINF("FILE")="100" D OFLTIDX(.FLINF,FLT,.IDXA,.IDXSTART) Q
  D RXFLTIDX(.FLINF,FLT,.IDXA,.IDXSTART)
  Q
  ;
-OFLTIDX(FLINF,FLT,IDXA,IDXSTART) 
+OFLTIDX(FLINF,FLT,IDXA,IDXSTART) ;
  N FLTP,FLTN
  Q:FLINF("FILE")'="100"
  S IDXA="",IDXSTART=""
@@ -142,12 +142,12 @@ OFLTIDX(FLINF,FLT,IDXA,IDXSTART)
  . Q:OP'="="
  . N FIELD S FIELD=$P(FLTP,OP)
  . Q:FIELD'=".02"
- . I $P($P(FLTP,"=",2),"-")'="2" Q ; must be patient filter for now
- . N PID S PID=$P($P(FLTP,"=",2),"-",2) 
+ . I $P($P(FLTP,"=",2),"-")'="2" Q  ; must be patient filter for now
+ . N PID S PID=$P($P(FLTP,"=",2),"-",2)
  . S IDXA="^OR(100,""AR"","""_PID_";DPT("")" Q
  Q
  ;
-RXFLTIDX(FLINF,FLT,IDXA,IDXSTART)
+RXFLTIDX(FLINF,FLT,IDXA,IDXSTART) ;
  ; Rely on ^PS(55,PID,"P","A"... hidden RX index in the "P" multiple of 55
  N FLTP,FLTN
  Q:FLINF("FILE")'="52"
@@ -161,7 +161,7 @@ RXFLTIDX(FLINF,FLT,IDXA,IDXSTART)
  . Q:OP'="="
  . N FIELD S FIELD=$P(FLTP,OP)
  . Q:FIELD'="2"
- . I $P($P(FLTP,"=",2),"-")'="2" Q ; must be patient filter
+ . I $P($P(FLTP,"=",2),"-")'="2" Q  ; must be patient filter
  . N PID S PID=$P($P(FLTP,"=",2),"-",2)
  . S IDXA="^PS(55,"_PID_",""P"",""A"")" Q
  Q
@@ -170,7 +170,7 @@ RXFLTIDX(FLINF,FLT,IDXA,IDXSTART)
  ; FLT piece with form X\&Y
  ; Crude: some combinations (leading, trailing, multiple) won't work
  ; Will go when escaping becomes unnecessary in V1.0
-ESCAND(FLTE) 
+ESCAND(FLTE) ;
  N FLT S FLT=""
  N BIT,I S I=1
  F  S BIT=$P(FLTE,"\&",I) Q:BIT=""  D

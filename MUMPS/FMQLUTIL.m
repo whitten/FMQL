@@ -1,4 +1,4 @@
-FMQLUTIL;Caregraf - FMQL Utilities ; Jul, 2013
+FMQLUTIL ;CG/CD - Caregraf - FMQL Utilities; 07/12/2013  11:30
  ;;1.0;FMQLQP;;Jul 12th, 2013
  ;
  ; FMQL Utilities
@@ -21,7 +21,7 @@ FMQLUTIL;Caregraf - FMQL Utilities ; Jul, 2013
  ;   for a couple of entries. Note: not being set in MUMPS - upper bound set in Apache
  ; - Special case: ORDERBY - for now only on .01 if the B Index
  ;
-XONFL(FLINF,FILTER,IENA,LIMIT,OFFSET,AFTERIEN,ORDERBY,NOIDXMX,TOX,PARAMS) 
+XONFL(FLINF,FILTER,IENA,LIMIT,OFFSET,AFTERIEN,ORDERBY,NOIDXMX,TOX,PARAMS) ;
  N PLC,MFLT
  I AFTERIEN'="" S OFFSET=0  ; Ensure OFFSET off if AFTERIEN
  S PLC("LIMIT")=LIMIT,PLC("OFFLFT")=OFFSET,PLC("AFTERIEN")=AFTERIEN,PLC("CNT")=0
@@ -55,7 +55,7 @@ XONFL(FLINF,FILTER,IENA,LIMIT,OFFSET,AFTERIEN,ORDERBY,NOIDXMX,TOX,PARAMS)
  ; Used for plain walks of files in IEN order, for contained node walks and 
  ; for non-indexed filtering of smaller files.
  ;
-XIENA(FLINF,IENA,MFLT,PLC,TOX,PARAMS) 
+XIENA(FLINF,IENA,MFLT,PLC,TOX,PARAMS) ;
  N FAR,AIEN,IEN,MFTEST
  S FAR=$S($D(FLINF("GL")):FLINF("ARRAY"),1:IENA)  ; Global or CNode
  ; Assumption: OFFLFT=0 if AFTERIEN as it takes precedence
@@ -76,7 +76,7 @@ XIENA(FLINF,IENA,MFLT,PLC,TOX,PARAMS)
  ; Used for equality filters where the predicate asserted is indexed. Key 
  ; for efficiently traversing the graph arrangements (Vital points to Patient)
  ; 
-XIDXAV(FLINF,IDXAV,MFLT,PLC,TOX,PARAMS) 
+XIDXAV(FLINF,IDXAV,MFLT,PLC,TOX,PARAMS) ;
  N FAR,AIEN,IEN,MFTEST
  I '$D(FLINF("GL")) Q -1  ; globals only, CNodes walked in XIENA
  S FAR=FLINF("ARRAY")  ; ^DPT() not ^DPT(
@@ -100,7 +100,7 @@ XIDXAV(FLINF,IDXAV,MFLT,PLC,TOX,PARAMS)
  ;
  ; Used for > filters and ORDERBY (which is equivalent to > "") 
  ;
-XIDXA(FLINF,IDXA,IDXSTART,MFLT,PLC,TOX,PARAMS)
+XIDXA(FLINF,IDXA,IDXSTART,MFLT,PLC,TOX,PARAMS) ;
  N IDXV,IDXVA
  S IDXV=IDXSTART F  S IDXV=$O(@IDXA@(IDXV)) Q:IDXV=""  D
  . S IDXVA=$NA(@IDXA@(IDXV))
@@ -116,6 +116,12 @@ BLDFLINF(FILE,FLINF) ;
  S FLINF("EFILE")=$TR(FILE,".","_")
  I '$D(^DD(FILE)) S FLINF("BAD")="No such file" Q
  I '$D(^DD(FILE,.01,0)) S FLINF("BAD")=".01 corrupt" Q
+ ; Note 1 field for Multiple means list element
+ N FIELD,NOFIELDS
+ S FIELD=0,NOFIELDS=0 F  S FIELD=$O(^DD(FILE,FIELD)) Q:FIELD'=+FIELD  D
+ . S NOFIELDS=NOFIELDS+1
+ I NOFIELDS=0 S FLINF("BAD")="No fields" Q
+ S FLINF("NOFIELDS")=NOFIELDS
  I $D(^DIC(FILE,0,"GL")) D BLDTFINF(FILE,.FLINF) Q
  I $G(^DD(FILE,0,"UP"))'="" D BLDSFINF(FILE,.FLINF) Q
  S FLINF("BAD")="No global or multiple definition"
@@ -225,9 +231,9 @@ BLDFDINF(FLINF,FIELD,FDINF) ;
  ; Access, Verify in file 200 are sensitive. FM should support this formally and encrypt them
  I FILE=200,((FIELD=2)!(FIELD=11)) S FDINF("HIDE")="SENSITIVE"
  I '((FDINF("TYPE")=6)!(FDINF("TYPE")=11)) D
- . S FDLOC=$P(^DD(FILE,FIELD,0),"^",4) 
+ . S FDLOC=$P(^DD(FILE,FIELD,0),"^",4)
  . S FDINF("LOC")=FDLOC
- . S FDINF("LOCSUB")=$P(FDLOC,";") 
+ . S FDINF("LOCSUB")=$P(FDLOC,";")
  . ; Check for " ; "? ie. spaces even though field not given as computed
  . I $TR(FDINF("LOCSUB")," ")="" S FDINF("BAD")="Corrupt location: "_FILE_"/"_FIELD Q
  . ; Position of 9 is 1 but that's meaningless. Leave out position.
@@ -291,24 +297,24 @@ GETEVAL(FDINF,IVAL) ;
  I FDINF("TYPE")=3,$D(FDINF("CODES",IVAL)) Q FDINF("CODES",IVAL)
  N EVAL S EVAL=IVAL ; Fallback to internal value
  I FDINF("TYPE")=7 D
- . I IVAL="0" Q ; TODO NULL value that doesn't resolve (consider leaving out PTR)
+ . I IVAL="0" Q  ; TODO NULL value that doesn't resolve (consider leaving out PTR)
  . N PFLINF D BLDFLINF(FDINF("PFILE"),.PFLINF)
  . Q:$D(PFLINF("BAD"))
  . N PFDINF D BLDFDINF(.PFLINF,.01,.PFDINF)
  . Q:$D(PFDINF("BAD"))
- . Q:$G(@PFLINF("ARRAY")@(IVAL,0))="" ; Invalid Pointer
+ . Q:$G(@PFLINF("ARRAY")@(IVAL,0))=""  ; Invalid Pointer
  . S IVAL=$P(@PFLINF("ARRAY")@(IVAL,0),"^")
  . Q:IVAL=""
  . S EVAL=$$GETEVAL(.PFDINF,IVAL)
  ; VPTR very like PTR - once PFILE is know.
  I FDINF("TYPE")=8 D
  . N PLOC S PLOC="^"_$P(IVAL,";",2)
- . Q:'$D(FDINF("PLOC",PLOC)) ; TBD: catch the buggy ptr instead
+ . Q:'$D(FDINF("PLOC",PLOC))  ; TBD: catch the buggy ptr instead
  . N PFILE S PFILE=FDINF("PLOC",PLOC)
  . N PFLINF D BLDFLINF(PFILE,.PFLINF)
  . Q:$D(PFLINF("BAD"))
  . N PID S PID=$P(IVAL,";")
- . Q:$G(@PFLINF("ARRAY")@(PID,0))="" ; Invalid Pointer
+ . Q:$G(@PFLINF("ARRAY")@(PID,0))=""  ; Invalid Pointer
  . N PFDINF D BLDFDINF(.PFLINF,.01,.PFDINF)
  . Q:$D(PFDINF("BAD"))
  . N PIVAL S PIVAL=$P(@PFLINF("ARRAY")@(PID,0),"^")
@@ -384,5 +390,3 @@ FIELDTOPRED(FIELD) ;
  S PRED=$TR($TR(FIELD,$TR(FIELD,ALW)),UPC,LOC)
  Q PRED
  ;
- 
-
