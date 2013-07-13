@@ -397,6 +397,11 @@ CNODETESTS = {
             "description": "Describe a Node without a CSTOP. 10 (default) is imposed by MUMPS QP",
             "fmql": "DESCRIBE %s" % NODEWITHSUCNODES,
             "test": "testResult = (jreply['fmql']['CSTOP'] == '10')"
+        },
+        {
+            "description": "CNode List Element - set in URI",
+            "fmql": "DESCRIBE 120_8-4",
+            "test": "testResult = ('fmCType' in jreply['results'][0]['drug_classes']['value'][0]['uri'])"
         }
     ]
 }
