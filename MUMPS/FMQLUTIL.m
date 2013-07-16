@@ -118,8 +118,7 @@ BLDFLINF(FILE,FLINF) ;
  I '$D(^DD(FILE,.01,0)) S FLINF("BAD")=".01 corrupt" Q
  ; Note 1 field for Multiple means list element
  N FIELD,NOFIELDS
- S FIELD=0,NOFIELDS=0 F  S FIELD=$O(^DD(FILE,FIELD)) Q:FIELD'=+FIELD  D
- . S NOFIELDS=NOFIELDS+1
+ S FIELD=0,NOFIELDS=0 F  S FIELD=$O(^DD(FILE,FIELD)) Q:FIELD'=+FIELD  S NOFIELDS=NOFIELDS+1
  I NOFIELDS=0 S FLINF("BAD")="No fields" Q
  S FLINF("NOFIELDS")=NOFIELDS
  I $D(^DIC(FILE,0,"GL")) D BLDTFINF(FILE,.FLINF) Q
@@ -228,7 +227,7 @@ BLDFDINF(FLINF,FIELD,FDINF) ;
  . S:IDX'="" FDINF("IDX")=IDX
  ; TODO: this BAD is never reached as type defaults to String
  I FDINF("TYPE")="" S FDINF("BAD")="No type set: "_FILE_"/"_FIELD Q
- ; Access, Verify in file 200 are sensitive. FM should support this formally and encrypt them
+ ; In VistA, Access, Verify in file 200 are not always encrypted (C*** encrypts its equivalents). Explicitly mark as sensitive.
  I FILE=200,((FIELD=2)!(FIELD=11)) S FDINF("HIDE")="SENSITIVE"
  I '((FDINF("TYPE")=6)!(FDINF("TYPE")=11)) D
  . S FDLOC=$P(^DD(FILE,FIELD,0),"^",4)
@@ -246,9 +245,22 @@ BLDFDINF(FLINF,FIELD,FDINF) ;
  . . ; TBD: is there another position type? Return an error until I support it.
  . . S FDINF("BAD")="Unsupported location position: "_FILE_"/"_FIELD_":"_LOCWHERE Q
  I FDINF("TYPE")=3 D 
- . N CODES S CODES=$P(^DD(FILE,FIELD,0),"^",3)
- . I CODES="" S FDINF("BAD")="No codes specified: "_FILE_"/"_FIELD Q
- . N C F C=1:1 Q:$P(CODES,";",C)=""  S FDINF("CODES",$P($P(CODES,";",C),":"))=$P($P(CODES,";",C),":",2)
+ . ; Exposes codes as either Enums or Booleans
+ . N CODES,UCODES,C,MN,CLABEL
+ . S CODES=$P(^DD(FILE,FIELD,0),"^",3)
+ . S UCODES=$TR(CODES,"yesno","YESNO") ; Yes to YES, No to NO
+ . ; Boolean if 2 values Y:YES;N:NO etc.
+ . I $L(UCODES,";")=3,((UCODES["Y:YES;"&(UCODES["N:NO;"))!(UCODES["Y:Y;"&(UCODES["N:N;"))!(UCODES["1:YES;"&(UCODES["0:NO;"))!(UCODES["1:Y;"&(UCODES["0:N;"))) S FDINF("TYPE")=12
+ . ; or Boolean if 1 value Y:YES etc or name of field is name of value
+ . ; label check is simple: won't catch "X Flag"/"1:X" etc.
+ . E  I $L(UCODES,";")=2,((UCODES="1:"_FDINF("LABEL")_";")!(UCODES="Y:YES;")!(UCODES="N:NO;")!(UCODES="Y:Y;")!(UCODES="N:N;")!(UCODES="1:YES;")!(UCODES="0:NO;")!(UCODES="1:Y;")!(UCODES="0:N;")) S FDINF("TYPE")=12
+ . F C=1:1 Q:$P(CODES,";",C)=""  D
+ . . S MN=$P($P(CODES,";",C),":")
+ . . S CLABEL=$P($P(CODES,";",C),":",2)
+ . . I FDINF("TYPE")=12 S FDINF("CODES",MN)=$S(MN["1"!(MN["Y"):"true",FDINF("LABEL")=CLABEL:"true",1:"false") Q
+ . . S FDINF("CODES",MN)=CLABEL
+ . . Q
+ . Q
  I FDINF("TYPE")=7 S FDINF("PFILE")=+$P(FLAGS,"P",2) Q
  ; .001 can be a P(ointer), D(ate), F(string), N(numeric)
  I FDINF("TYPE")=11,FLAGS["P" S FDINF("PFILE")=+$P(FLAGS,"P",2) Q
@@ -294,7 +306,8 @@ FIELDIDX(FILE,FIELD) ;
 GETEVAL(FDINF,IVAL) ;
  Q:$D(FDINF("HIDE")) "**HIDDEN**"
  Q:FDINF("TYPE")=1 $$MAKEXMLDATE^FMQLUTIL(IVAL)
- I FDINF("TYPE")=3,$D(FDINF("CODES",IVAL)) Q FDINF("CODES",IVAL)
+ ; If coded value is out of schema's range will fall back to literal
+ I ((FDINF("TYPE")=3)!(FDINF("TYPE")=12)),$D(FDINF("CODES",IVAL)) Q FDINF("CODES",IVAL)
  N EVAL S EVAL=IVAL ; Fallback to internal value
  I FDINF("TYPE")=7 D
  . I IVAL="0" Q  ; TODO NULL value that doesn't resolve (consider leaving out PTR)

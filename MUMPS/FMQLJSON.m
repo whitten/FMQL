@@ -51,7 +51,8 @@ ASSERT(JSON,FIELD,IFIELD,FMTYPE,VALUE,PLABEL,PSAMEAS,NODETYPE) ;
  . ; Meta just for CNodes (List Element)
  . I $G(NODETYPE)'="" D PUTDATA(JSON,",""fmCType"":"""_NODETYPE_"""")
  E  D
- . I FMTYPE="1" D PUTDATA(JSON,",""type"":""typed-literal"",""datatype"":""http://www.w3.org/1999/02/22-rdf-syntax-ns#dateTime""") Q
+ . I FMTYPE="1" D PUTDATA(JSON,",""type"":""typed-literal"",""datatype"":""xsd:dateTime""") Q
+ . I FMTYPE="12" D PUTDATA(JSON,",""type"":""typed-literal"",""datatype"":""xsd:boolean""") Q
  . D PUTDATA(JSON,",""type"":""literal""")
  D PUTDATA(JSON,"}")
  Q

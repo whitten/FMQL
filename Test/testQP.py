@@ -99,6 +99,13 @@ def runTest(qp, testGroupName, testId, testDef):
     print "PASSED"
     return 1
     
+# Utility to make testing DESCRIBE TYPE easy - comes back as array
+def schemaField(jreply, fieldNumber):
+    for fieldInfo in jreply["fields"]:
+        if fieldInfo["number"] == fieldNumber:
+            return fieldInfo
+    return None
+    
 TESTSETS = []
 
 # ####################### Generic/Cross System #############
@@ -961,6 +968,45 @@ OO1IENTESTS = {
 }
 
 STESTSETS.append(OO1IENTESTS)
+
+# Boolean 'set of codes' apply fixed maps (Y->true etc) to turn binary and unary valued set of codes into booleans. This cuts down on the number of coded-values/enums needed in a graph or its schema.
+BOOLEANCODETESTS = {
+    "name": "Boolean Code Tests",
+    "definitions": [
+        {
+            "description": "1:YES;0:NO - 52/10.1",
+            "fmql": "DESCRIBE TYPE 52",
+            "test": "testResult=(jreply['fields'][12]['type'] == '12')"
+        },
+        {
+            "description": "1:YES - 52/34.1",
+            "fmql": "DESCRIBE TYPE 52",
+            "test": "testResult=(schemaField(jreply,'34.1')['type'] == '12')"
+        },
+        {
+            "description": "0:NO;1:YES (order different) - 52/116",
+            "fmql": "DESCRIBE TYPE 52",
+            "test": "testResult=(schemaField(jreply,'116')['type'] == '12')"
+        },
+        {
+            "description": "MALE:FEMALE SEX is Enum not boolean - 2/.02",
+            "fmql": "DESCRIBE TYPE 2",
+            "test": "testResult=(schemaField(jreply,'.02')['type'] == '3')"
+        },
+        {
+            "description": "YES/NO/UNKNOWN is Enum not boolean - 2/3025",
+            "fmql": "DESCRIBE TYPE 2",
+            "test": "testResult=(schemaField(jreply,'.3025')['type'] == '3')"
+        },
+        {
+            "description": "1;Yes:0;No (lowers) - 120.86/1",
+            "fmql": "DESCRIBE TYPE 120_86",
+            "test": "testResult=(schemaField(jreply,'1')['type'] == '12')"
+        }
+    ]
+}
+
+STESTSETS.append(BOOLEANCODETESTS)
 
 TESTSETS.extend(STESTSETS)
 

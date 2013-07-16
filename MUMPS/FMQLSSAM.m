@@ -235,22 +235,88 @@ RESVS200(IEN,SAMEAS) ;
  ;
 RESC(FILENUM,IEN,DEFLABEL,SAMEAS) ; 
  I FILENUM="50" D RESC50(IEN,.SAMEAS) Q ; DRUG
+ I FILENUM="8252" D RESC8252(IEN,.SAMEAS) Q ; NDC
+ I FILENUM="8250" D RESC8250(IEN,.SAMEAS) Q ; HICL
+ I FILENUM="8254_01" D RESC8254_01(IEN,.SAMEAS) Q ; All Sel
+ D RESCSTDS(FILENUM,IEN,DEFLABEL,.SAMEAS) Q:$D(SAMEAS("URI"))
  Q
  ;
  ;
-RESC50(IEN,SAMEAS) ; VistA Drug 50 to NDC or NDDF equivalent or mark as local
- S:'$D(SAMEAS("URI")) SAMEAS("URI")="LOCAL"
+ ; Drug 50 to NDC or NDDF equivalent or mark as local
+ ; TOADD: 8251 on own - must reach back to NDC for label
+ ;
+RESC50(IEN,SAMEAS) ;
  N PNDCIEN S PNDCIEN=$P(^PSDRUG(IEN,0),"^",4)
- Q:PNDCIEN'=+PNDCIEN
- Q:PNDCIEN=0 ; catch corrupt IEN
- Q:'$D(^PSDFDB(8252,PNDCIEN,0))
- ; TODO: pad the NDC as fallback sameas
+ D RESC8252(IEN,.SAMEAS)
+ Q SAMEAS("URI")="LOCAL"
  N GCNSEQNO S GCNSEQNO=$P(^PSDFDB(8252,PNDCIEN,0),"^")
  Q:GCNSEQNO'=+GCNSEQNO
  Q:GCNSEQNO=0
  ; Pad the id to 6 + cdc extension for NDDF
- N CDCID S CDCID="cdc"_$TR($J(GCNSEQNO,6)," ","0")
- S SAMEAS("URI")="nddf:"_CDCID
- S SAMEAS("LABEL")="TODO" ; TODO: label - doesn't seem to always or ever have itself. Get from MIN or leave?
+ S SAMEAS("URI")="nddf:"_"cdc"_$TR($J(GCNSEQNO,6)," ","0")
+ ; Leave SAMEAS LABEL == NDC Label
  Q
  ;
+ ;
+ ; NDC - separate from other standards as reused
+ ;     
+RESC8252(IEN,SAMEAS) ; NDC
+ S:'$D(SAMEAS("URI")) SAMEAS("URI")="LOCAL"
+ Q:'$D(^PSDFDB(8252,IEN,0))
+ N NDCLBL S NDCLBL=$P(^PSDFDB(8252,IEN,0),"^",4)
+ Q:NDCLBL=""
+ ; NDC is IEN without -'s and leading 0's removed
+ S SAMEAS("URI")="ndc:"_$TR($J(GCNSEQNO,11)," ","0")
+ S SAMEAS("LABEL")=NDCLBL
+ Q
+ ;
+ ;
+ ; HICL - sequence of HICs
+ ;
+RESC8250(IEN,SAMEAS) ; NDDF INS (HIC Seq)
+ S:'$D(SAMEAS("URI")) SAMEAS("URI")="LOCAL"
+ Q:'$D(^PSDFDB(8250,IEN,0))
+ N LBL S LBL=$P(^PSDFDB(8250,IEN,0),"^")
+ Q:LBL=""
+ ; HICL (seq no) is IEN padded ie/ leading 0's back
+ S SAMEAS("URI")="nddf:ins"_$TR($J(IEN,6)," ","0")
+ S SAMEAS("LABEL")=LBL
+ Q
+ ;
+ ;
+ ; Allergy Selection (8254.01) straight to HICL
+ ;
+RESC8254_01(IEN,SAMEAS) ;
+ ; No Q for LOCAL as valid to have no HICL
+ Q:'$D(^PSDC(8254.01,IEN,0))
+ N HICLIEN S HICL=$P(^PSDC(8254.01,IEN,0),"^",3)
+ ; Ex/ 8254_01-1160 (marked obsolete so!)
+ Q:HICLIEN=""
+ D RESC8250(HICLIEN,.SAMEAS)
+ Q 
+ ;
+ ;
+ ; Standard files: 80 (ICDCM Diag), 80.1 (ICDCM Proc), 8188 (LOINC)
+ ; 
+ ; TOADD: 8171 (HPTC), 8151 (cpt/hcpcs)
+ ;
+RESCSTDS(FILENUM,IEN,DEFLABEL,SAMEAS) ;
+ S:'$D(SAMEAS("URI")) SAMEAS("URI")="LOCAL"
+ I FILENUM="80" D
+ . Q:'$D(@("^ICD9("_IEN_",0)"))
+ . S SAMEAS("URI")="ICD9CM:"_$P(DEFLABEL,"/",2)
+ . S SAMEAS("LABEL")=$P(@("^ICD9("_IEN_",0)"),"^",3)
+ I FILENUM="80.1" D
+ . Q:'$D(@("^ICD0("_IEN_",0)"))
+ . S SAMEAS("URI")="ICD9CM:"_$P(DEFLABEL,"/",2)
+ . S SAMEAS("LABEL")=$P(@("^ICD0("_IEN_",0)"),"^",4)
+ Q
+ I FILENUM="8188" D
+ . Q:'$D(@("^DALOINC(8188"_IEN_",0)"))
+ . Q:'$D(@("^DALOINC(8188"_IEN_",1)"))
+ . S SAMEAS("URI")="LOINC:"_$P(DEFLABEL,"/",2)
+ . S SAMEAS("LABEL")=$P(@("^DALOINC(8188"_IEN_",1)"),"^",3)
+ Q
+ ;
+
+ 

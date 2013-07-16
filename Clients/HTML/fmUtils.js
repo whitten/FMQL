@@ -1,5 +1,5 @@
 /*
- * Simple utilities for Basic FMQL HTML/JS clients V0.9
+ * Simple utilities for Basic FMQL HTML/JS clients V1.0
  *
  * Highlights:
  * - support FMQL query and result display for IE 7+, FF 3.5+, Safari 4+,
@@ -487,7 +487,10 @@ function describeFieldsToHTML(fields, result, useURIForm, base, excludes)
             {
                 resultsMarkup += "<dt>" + displayField + "</dt><dd><pre>" + result[field]["value"] + "</pre></dd>";         
             }
-            else // Date: http://www.w3.org/1999/02/22-rdf-syntax-ns#dateTime
+            // Either xsd:date or xsd:boolean - just show
+            else if (result[field]["datatype"] == "xsd:boolean")
+                resultsMarkup += "<dt>" + displayField + "</dt><dd>" + result[field]["value"].toUpperCase() + "</dd>";
+            else
                 resultsMarkup += "<dt>" + displayField + "</dt><dd>" + result[field]["value"] + "</dd>";                
         }
         else if (result[field]["type"] == "cnodes")
@@ -687,7 +690,7 @@ function describeTypeResultToHTML(reply, useURIForm, base)
                     {
                         resultsMarkup += "<td><a href=\"" + base + values.replace(".", "_") + "\">" + values + "</a></td>"
                     }
-                    else if (results[i]["type"] == "3")
+                    else if ((results[i]["type"] == "3") || (results[i]["type"] == "12"))
                     {
                         var values = values.split(";");
                         resultsMarkup += "<td>";
@@ -743,7 +746,8 @@ function typeIdToLabel(typeId)
         "8": "VARIABLE-POINTER",
         "9": "MULTIPLE",
         "10": "MUMPS",
-        "11": "IEN"
+        "11": "IEN",
+        "12": "BOOLEAN"
     }  
     if (!(typeId in FIELDTYPES))
         return typeId
@@ -777,3 +781,4 @@ function selectAllReferrersToHTML(reply, useURIForm, base)
     resultsMarkup += "</div>";
     return resultsMarkup;
 }
+

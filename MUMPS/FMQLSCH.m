@@ -163,7 +163,8 @@ FIELDSINFO(FLINF) ;
  . ; Extra details not in FDINF (yet)
  . N FLDDETAILS
  . I FDINF("TYPE")=9 S FLDDETAILS=+FDINF("FLAGS") ; Multiple
- . I FDINF("TYPE")=3 S FLDDETAILS=$P(^DD(FILE,FIELD,0),"^",3) ; Set
+ . ; For now, pass back original values even for boolean
+ . I ((FDINF("TYPE")=3)!(FDINF("TYPE")=12)) S FLDDETAILS=$P(^DD(FILE,FIELD,0),"^",3) ; Set
  . I FDINF("TYPE")=7 S FLDDETAILS=+$P(FDINF("FLAGS"),"P",2) ; Pointer
  . I FDINF("TYPE")=11,FDINF("FLAGS")["P" S FLDDETAILS=+$P(FDINF("FLAGS"),"P",2) ; Pointer (IEN pts)
  . ; TBD: Final FMQL won't distinguish vptr from ptr. MUMPS-side thing.
