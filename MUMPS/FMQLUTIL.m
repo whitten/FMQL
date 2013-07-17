@@ -32,21 +32,21 @@ XONFL(FLINF,FILTER,IENA,LIMIT,OFFSET,AFTERIEN,ORDERBY,NOIDXMX,TOX,PARAMS) ;
  ; Special case: ORDER BY .01 and BIDX supported
  I ORDERBY=".01",$D(FLINF("BIDX")) D XIDXA(.FLINF,FLINF("BIDX"),"",MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
  ; Global but no filter - walk IENA
- I MFLT="" D XIENA(.FLINF,"","",.PLC,TOX,.PARAMS) Q PLC("CNT")
+ I MFLT="" D XIENA(.FLINF,FLINF("ARRAY"),"",.PLC,TOX,.PARAMS) Q PLC("CNT")
  ; See if filter yields an IDXA(V)
  D FLTIDX^FMQLFILT(.FLINF,FILTER,.IDXA,.IDXSTART)
  ; 5 Cases:
  ; - a. non > filter gives IDXAV (IDXSTART="")
- I $G(IDXA)'="",$G(IDXSTART)="" D XIENA(.FLINF,IDXA,MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
+ I $G(IDXA)'="",$G(IDXSTART)="" D XIDXAV(.FLINF,IDXA,MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
  ; - b. > filter gives IDXA (IDXSTART'="")
  I $G(IDXA)'="" D XIDXA(.FLINF,IDXA,IDXSTART,MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
- ; - c. manual IDXA (100,52). Though = filter, still use XIDXA. No MFLT
+ ; - c. manual IDXA (100,52). Use XIDXA non leaf indexes. No MFLT
  D MFLTIDX^FMQLFILT(.FLINF,FILTER,.IDXA,.IDXSTART)
  I $G(IDXA)'="" D XIDXA(.FLINF,IDXA,"","",.PLC,TOX,.PARAMS) Q PLC("CNT")
  ; - d. No IDXA(V) but filter. See if file too big to filter
  I NOIDXMX'=-1,($S($D(FLINF("FMSIZE")):FLINF("FMSIZE")>NOIDXMX,1:1)) Q -1
  ; - e. file not to big to filter, row by row
- D XIENA(.FLINF,"",MFLT,.PLC,TOX,.PARAMS)
+ D XIENA(.FLINF,FLINF("ARRAY"),MFLT,.PLC,TOX,.PARAMS)
  Q PLC("CNT")
  ;
  ;
@@ -55,9 +55,8 @@ XONFL(FLINF,FILTER,IENA,LIMIT,OFFSET,AFTERIEN,ORDERBY,NOIDXMX,TOX,PARAMS) ;
  ; Used for plain walks of files in IEN order, for contained node walks and 
  ; for non-indexed filtering of smaller files.
  ;
-XIENA(FLINF,IENA,MFLT,PLC,TOX,PARAMS) ;
- N FAR,AIEN,IEN,MFTEST
- S FAR=$S($D(FLINF("GL")):FLINF("ARRAY"),1:IENA)  ; Global or CNode
+XIENA(FLINF,FAR,MFLT,PLC,TOX,PARAMS) ;
+ N AIEN,IEN,MFTEST
  ; Assumption: OFFLFT=0 if AFTERIEN as it takes precedence
  S AIEN=$S($D(PLC("AFTERIEN")):PLC("AFTERIEN"),1:0)
  S IEN=AIEN F  S IEN=$O(@FAR@(IEN)) Q:IEN'=+IEN!(PLC("CNT")=PLC("LIMIT"))  D
@@ -72,14 +71,15 @@ XIENA(FLINF,IENA,MFLT,PLC,TOX,PARAMS) ;
  ; An IDX Value Array (IDXAV) is more involved than a simple IEN array
  ; - IDX's can embed alias' ex/ ^DPT("B",NAME,IEN,"X")=1
  ; - IENs may not be in the leaf/last position
+ ; and though we walk the IDXAV, we apply TOX to the global
  ; 
- ; Used for equality filters where the predicate asserted is indexed. Key 
+ ; Directly for = filters where the predicate asserted is indexed. Key 
  ; for efficiently traversing the graph arrangements (Vital points to Patient)
  ; 
 XIDXAV(FLINF,IDXAV,MFLT,PLC,TOX,PARAMS) ;
  N FAR,AIEN,IEN,MFTEST
  I '$D(FLINF("GL")) Q -1  ; globals only, CNodes walked in XIENA
- S FAR=FLINF("ARRAY")  ; ^DPT() not ^DPT(
+ S FAR=FLINF("ARRAY")  ; FAR != IDXAV
  ; Assumption: OFFLFT=0 if AFTERIEN as it takes precedence
  S AIEN=$S($D(PLC("AFTERIEN")):PLC("AFTERIEN"),1:0)
  I '$D(PLC("LIEN")) S PLC("LIEN")=AIEN

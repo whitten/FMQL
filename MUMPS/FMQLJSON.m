@@ -165,7 +165,7 @@ PUTDATA(JSON,DATA) ;
 JSONSTRING(MSTR) ;
  N JSTR S JSTR=""
  N I F I=1:1:$L(MSTR) D
- . N NC S NC=$E(MSTR,I) 
+ . N NC S NC=$E(MSTR,I)
  . N CD S CD=$A(NC) Q:CD=""  ; Check "" though GT/M and Cache say $A works for all unicode
  . ; \b,\t,\n,\f,\r separated - ",\ escaped with \ - 32 to 126 themselves; others 4 hex unicode.
  . S JSTR=JSTR_$S(CD=8:"\b",CD=9:"\t",CD=10:"\n",CD=12:"\f",CD=13:"\r",CD=34:$C(92)_$C(34),CD=92:$C(92)_$C(92),(CD>31&(CD<127)):NC,$L($T(FUNC^%UTF2HEX)):"\u"_$TR($J($$FUNC^%UTF2HEX(NC),4)," ","0"),1:"\u"_$TR($J($ZHEX(CD),4)," ","0"))

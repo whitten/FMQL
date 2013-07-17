@@ -94,9 +94,19 @@ SAMEASTESTS = {
             "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'NDDF:in000118')",
         },
         {
-            "description": "Allergy Selection SAMEAS 8250_1", 
+            "description": "Allergy Selection SAMEAS 8254_01", 
             "fmql": "DESCRIBE 8254_01-7174001",
             "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'NDDF:ins025025')",
+        },
+        {
+            "description": "Allergy Selections - no map DAC",
+            "fmql": "DESCRIBE 8254_01-1000",
+            "test": "testResult = ('sameAs' not in jreply['results'][0]['uri'])",
+        },
+        {
+            "description": "Allergy Selections LOCAL - CDC id'ed is invalid",
+            "fmql": "DESCRIBE 8254_01-1160",
+            "test": "testResult = (jreply['results'][0]['uri']['sameAs']=='LOCAL')",
         },
         {
             "description": "NDDF/CDC SAMEAS 50", 
@@ -107,7 +117,7 @@ SAMEASTESTS = {
             # Has NDCs in a multiple - only one. Appears to be a config bug
             "description": "50-19 - no primary NDC ie/ LOCAL", 
             "fmql": "DESCRIBE 50-19",
-            "test": "testResult = ('sameAs' not in jreply['results'][0]['uri'])",
+            "test": "testResult = (jreply['results'][0]['uri']['sameAs']=='LOCAL')",
         },
     ]
 }
@@ -127,7 +137,7 @@ class DefaultLogger:
     def __log(self, tag, msg):
         print "Test QP -- %s %s" % (tag, msg)
         
-FMQLEP = "http://X.X.X.116:57772/csp/fmquery/FMQL.csp"
+FMQLEP = "http://10.255.167.116:57772/csp/fmquery/FMQL.csp"
 
 def main():
  
