@@ -23,7 +23,7 @@ class CacheObjectInterface:
         
     def invokeRPC(self, name, params):
         # to match broker if for now
-        return self.invokeQuery(params)
+        return self.invokeQuery(params[0]).read()
         
     def invokeQuery(self, query):
         queryDict = {"query": query}

@@ -38,7 +38,7 @@ class FMQLQP:
         if not fmqlArgs:
             fmqlArgs = self.__dataQueryToFMQLArgs(query)
         reply = self.rpcc.invokeRPC("CG FMQL QP", [fmqlArgs])
-        return reply        
+        return reply
 
     def __toFMQLArgs(self, query):
         fmqlArgs = self.__schemaQueryToFMQLArgs(query)

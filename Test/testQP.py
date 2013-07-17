@@ -8,20 +8,6 @@
 # (c) 2010-2013 caregraf
 #
 
-"""
- FMQL Query Processor Unit Tests
-
- Two sorts of test:
- - generic: no assertions particular to a system (count patients)
- - system specific: assertions specific to a system (number of patients is 50000)
- 
- To run the system specific tests on your system, you must change
- the constants set at the beginning of the system test section.
-
- Note: these tests run directly against the FMQL RPC and not the Apache
- resident endpoint.
-"""
-
 import sys, os
 import json
 import urllib, urllib2
@@ -35,6 +21,20 @@ import re
 sys.path.append('../Framework')
 from fmqlQP import FMQLQP
 from brokerRPC import VistARPCConnection
+
+"""
+ FMQL Query Processor Unit Tests
+
+ Two sorts of test:
+ - generic: no assertions particular to a system (count patients)
+ - system specific: assertions specific to a system (number of patients is 50000)
+ 
+ To run the system specific tests on your system, you must change
+ the constants set at the beginning of the system test section.
+
+ Note: these tests run directly against the FMQL RPC and not the Apache
+ resident endpoint.
+"""
 
 #
 # FMQL Tests [Configure for specific system after first system-only run]
