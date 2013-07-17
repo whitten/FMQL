@@ -301,13 +301,15 @@ TESTPATIENTTESTS = {
 STESTSETS.append(TESTPATIENTTESTS)
 
 # Special case: "B" index 2 and 68 overloaded with alias names
+# 68 has "SEND","SEND OUT" for same record in B index. Only exercised with >
+# as it forces full walk of B
 PATIENTALIASTEST = {
-    "name": "Ensure don't count patient aliases of 'B'",
+    "name": "Ensure don't count aliases of 'B'",
     "definitions": [
         {
             "description": "Patient Alias should be skipped",
-            "fmql": "COUNT 68",
-            "count": CNT_ACCESSIONS
+            "fmql": "SELECT 68 FILTER(.01>R)",
+            "count": "4"
         }
     ]
 }
@@ -638,7 +640,17 @@ NOIDXMXTESTS = {
             "description": "No index max for patients set to 1 (there are 39). Filter on name. Expect result of 1 as .01 name is indexed.", 
             "fmql": "COUNT 2 FILTER(.01=AYERS,ASHLEY) NOIDXMAX 1",
             "count": "1"
-        }
+        },
+        {
+            "description": "No index max for array kicks in for < filter, even on an idx (won't for follow on > filter ie/ < can't use indexes",
+            "fmql": "SELECT 79_3 FILTER(.01<2005-10) NOIDXMAX 10",
+            "count": "-1"
+        },
+        {
+            "description": "No index max doesn't matter for indexed > filter. Will pull index",
+            "fmql": "SELECT 79_3 FILTER(.01>2005-10) NOIDXMAX 10",
+            "test": "testResult= (len(jreply['results']) > 0)"
+        },
     ]
 }
 
