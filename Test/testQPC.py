@@ -25,6 +25,13 @@ from cacheObjectInterface import CacheObjectInterface
 
 """
 Unit tests for FMQL running on C***
+
+TODO: order_multiple in DESCRIBE 109 FILTER(.01=2-21206) CSTOP 1000 has a rogue field 'activated_leave' with no URI etc. ... need to check if .01 and skip?
+...
+ ; Same as JSEL except returns full description
+ ; JDES passes in to one of type
+ ... need to come out if no .01
+ Q:$P($G(@FAR@(ID,0)),"^")=""
 """
 
 CTESTSETS = []
@@ -123,6 +130,20 @@ SAMEASTESTS = {
 }
 
 CTESTSETS.append(SAMEASTESTS)
+
+CORRUPTIONTESTS = {
+    "name": "Test CHCS corruption - skipped",
+    "definitions": [
+        {
+            # DESCRIBE 109 FILTER(.01=2-21206) CSTOP 1000: 109_01-4948884_93959 and then 109_01-4955101_93959 in order multiple field. Skips rogue, stand alone "activated_leave" (3-99617) field ie/ a 'record' with no IEN/no .01.
+            "description": "Skip .01-less multiple",
+            "fmql": "COUNT 109_01 IN 109-93959",
+            "count": "806"
+        },
+    ]
+}
+
+CTESTSETS.append(CORRUPTIONTESTS)
 
 # ##########################################################################
 

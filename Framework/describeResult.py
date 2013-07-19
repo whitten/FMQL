@@ -196,10 +196,6 @@ class Record(object):
         return True if field in self.__result else False
                 
     def __str__(self):
-        try:
-            self.id # Tmp FMQL v1 will ensure all have .01's
-        except:
-            return ""
         indent = ""
         for i in range(1, self.level):
             indent += "\t\t"

@@ -38,13 +38,6 @@ class DescribeReplyToRDF:
             self.__processRecord(record)
 
     def __processRecord(self, record):  
-    
-        # TEMPORARY - until FMQL stops .01-less records (shouldn't exist)
-        # C*** 109 multiple issue
-        try:
-            record.id
-        except:
-            return
                 
         # Already there
         if not self.rdfb.startNode(self.systemBase + record.id, ""):
