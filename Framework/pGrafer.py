@@ -25,7 +25,7 @@ class PGrafer:
 
     # These queries are either filter based (graph style) or dinum-based (containment style)
     # Problem demo system: 55-1 for Pharma and 63-4 for Lab ... want 9
-    DEFAULT_QUERY_TEMPLATES = ["DESCRIBE 2-%(patientId)s CSTOP 100", "DESCRIBE 120_5 FILTER(.02=2-%(patientId)s) CSTOP 100", "DESCRIBE 120_8 FILTER(.01=2-%(patientId)s) CSTOP 100", "DESCRIBE 55 FILTER(.01=2-%(patientId)s) CSTOP 100", "DESCRIBE 52 FILTER(.02=2-%(patientId)s) CSTOP 100", "DESCRIBE 74 FILTER(2=2-%(patientId)s) CSTOP 100", "DESCRIBE 63-%(patientId)s) CSTOP 100", "DESCRIBE 9000011 FILTER(.02=9000001-%(patientId)s) CSTOP 100", "DESCRIBE 8925 FILTER(.02=9000001-%(patientId)s) CSTOP 100"]
+    DEFAULT_QUERY_TEMPLATES = ["DESCRIBE 2-%(patientId)s CSTOP 100", "DESCRIBE 120_5 FILTER(.02=2-%(patientId)s) CSTOP 100", "DESCRIBE 120_8 FILTER(.01=2-%(patientId)s) CSTOP 100", "DESCRIBE 55 FILTER(.01=2-%(patientId)s) CSTOP 100", "DESCRIBE 52 FILTER(2=2-%(patientId)s) CSTOP 100", "DESCRIBE 74 FILTER(2=2-%(patientId)s) CSTOP 100", "DESCRIBE 63-%(patientId)s) CSTOP 100", "DESCRIBE 9000011 FILTER(.02=9000001-%(patientId)s) CSTOP 100", "DESCRIBE 8925 FILTER(.02=9000001-%(patientId)s) CSTOP 100"]
 
     """
     fmqlEP: Endpoint
