@@ -24,7 +24,7 @@ PGrafer leverages the more granular DescribeReply and DescribeRepliesToSGraph to
 class PGrafer:
 
     # These queries are either filter based (graph style) or dinum-based (containment style)
-    # Problem: 55-1 for Pharma and 63-4 for Lab ... want 9
+    # Problem demo system: 55-1 for Pharma and 63-4 for Lab ... want 9
     DEFAULT_QUERY_TEMPLATES = ["DESCRIBE 2-%(patientId)s CSTOP 100", "DESCRIBE 120_5 FILTER(.02=2-%(patientId)s) CSTOP 100", "DESCRIBE 120_8 FILTER(.01=2-%(patientId)s) CSTOP 100", "DESCRIBE 55 FILTER(.01=2-%(patientId)s) CSTOP 100", "DESCRIBE 52 FILTER(.02=2-%(patientId)s) CSTOP 100", "DESCRIBE 74 FILTER(2=2-%(patientId)s) CSTOP 100", "DESCRIBE 63-%(patientId)s) CSTOP 100", "DESCRIBE 9000011 FILTER(.02=9000001-%(patientId)s) CSTOP 100", "DESCRIBE 8925 FILTER(.02=9000001-%(patientId)s) CSTOP 100"]
 
     """
@@ -64,72 +64,6 @@ class PGrafer:
             gdRDF.processReply(dr)
             
         return gdRDF.done()
-        
-    """
-    What's available to graph for a patient?
-    """
-    def reportPatientData(self, patientId):
-    
-        totalAssertions = 0
-        noIncomplete = 0
-        noRecords = 0
-        noTopRecords = 0
-        reportMU = ""
-        recordsPerYear = defaultdict(int)
-        recordsPerType = set()
-        
-        for noQueries, queryTemplate in enumerate(self.queryTemplates, 1):
-        
-            # Hack for CG Test system til fix to reflect dinum's
-            if re.match(r'DESCRIBE 63', queryTemplate):
-                query = queryTemplate % {"patientId": "4"}
-            else:      
-                query = queryTemplate % {"patientId": patientId}
-            queryURL = self.fmqlEP + "?" + urllib.urlencode({"fmql": query}) 
-            reply = json.loads(urllib2.urlopen(queryURL).read())
-            dr = DescribeReply(reply)
-            if dr.stopped():
-                
-
-    for dr in cacheIterator(patientId, describeReplyEnhancer=describeReplyEnhancer):
-        
-        mu = "\n=============================================\n"
-        mu += "Type: " + dr.fileType[1] + " (" + dr.fileType[0] + ")\n"
-        mu += "From FMQL: " + dr.query() + "\n"
-        mu += "Number of records: " + str(len(dr.records())) + "\n"
-        recordsPerType.add((dr.fileType, len(dr.records())))
-        for i, record in enumerate(dr.records(), 1):
-            mu += reportRecord(record)  
-            noRecords += len(record.contains()) + 1
-            noTopRecords += 1
-            totalAssertions += record.numberAssertions() 
-            recordDates = record.dates()
-            for year in set(dt.year for dt in recordDates):
-                recordsPerYear[year] += 1
-            if record.isComplete:
-                noIncomplete += 1      
-        if record.fileType == "2" and not patientMU:
-            patientMU = mu
-        else:
-            reportMU += mu
-
-    recordsPerTypeMU = "\nRecords per type\n"
-    for i, (typ, no) in enumerate(sorted(list(recordsPerType), key=lambda x: x[1], reverse=True), 1):
-        recordsPerTypeMU += "\t" + str(i) + ". " + typ[1] + " (" + typ[0] + "): " + str(no) + "\n"
-
-    recordsPerYearMU = "\nRecords per year\n"
-    years = sorted(recordsPerYear.keys())
-    for i, year in enumerate(sorted(recordsPerYear.keys()), 1):
-        recordsPerYearMU += "\t" + str(i) + ". " + str(year) + ": " + str(recordsPerYear[year]) + "\n"
-    recordsPerYearMU += "\n"
-
-    totalsMU = "\nTotal number top records: " + str(noTopRecords) + "\n" 
-    totalsMU = "\nTotal all records (includes contained): " + str(noRecords) + "\n"       
-    totalsMU += "No Incomplete/stopped: " + str(noIncomplete) + "\n"            
-    totalsMU += "Total assertions: " + str(totalAssertions) + "\n"
-
-    reportMU = "==== PATIENT " + patientId + " =====\n" + totalsMU + recordsPerTypeMU + recordsPerYearMU + patientMU + reportMU
-    open(RDFDIR + "patient" + patientId + "Report.txt", "w").write(reportMU)
             
 # ##################### DEMO ######################
 
