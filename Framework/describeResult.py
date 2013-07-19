@@ -15,10 +15,10 @@ from describeTypeResult import FieldInfo
 
 """
 Quick TODO:
-- internally supports RDF serialization (two flavors of coded - may hide completely)
-- support HTML too by fields (so can walk twice seeing what's there - or have on top)
+- setItem for non core field ie/ pass in [mn]: if not reseting an existing value
+  i/e want vse: or chcsse: etc.
 
-Accessors and utilities for processing an FMQL DESCRIBE Reply. 
+Accessors and utilities to cross the protocol-model boundary, Specifically, turn an FMQL DESCRIBE Reply into one or more Record definitions:
 - Distinguishes Record, Reference, CodedValue, Date, StringOrNumeric
 - Easy to see all the contents of a reply:
   - the tree of records it contains
@@ -28,6 +28,7 @@ Accessors and utilities for processing an FMQL DESCRIBE Reply.
 - Supports the partial transformation of FileMan data arrangements (boolean coded values, list multiples) where these are indicated in the FileMan schema.
 
 TODO:
+- key multiple: > 2, at least one URI
 - typLabel = lsearch.group(1) if lsearch else "CHBNODE" # fix for 9999 synth ... special handling for VistA 63.04 ... fix for that
 - impl: consider custom dict (derived class of dict)
 - IEN ordering for multiples
@@ -35,21 +36,17 @@ TODO:
 - split assertion object types down for better reports [BOOLEAN, POINTER from FieldInfo]
 - when FMQL fixed:
   - should be xsd:dateTime
-  - nix fileInfoRepository once singletons and enums are labeled in data.
   - note: ambiguous field naming will be handled seamlessly
-- __setitem__ for adding new properties ex/ fms:patient for new direct references to a patient's description. These as added as a prelude to generating RDF.
-- see jsona
 """
 
 class DescribeReply(object):
     """
     A describe reply has one or more results.
     """
-    def __init__(self, reply, fileInfoRepository=None):
+    def __init__(self, reply):
         if "results" not in reply:
             raise Exception("No results in reply")
         self.__reply = reply
-        self.__fileInfoRepository = fileInfoRepository
         
     def __iter__(self):
         for record in self.records():
@@ -93,7 +90,7 @@ class DescribeReply(object):
         
         TODO: for DESCRIBE IN, will want the container record noted (and the index).
         """
-        return [Record(result, fileInfoRepository=self.__fileInfoRepository) for result in self.__reply["results"]]  
+        return [Record(result) for result in self.__reply["results"]]  
         
     def fieldInfos(self):
         """
@@ -108,6 +105,18 @@ class DescribeReply(object):
         for record in self:
             fieldInfos |= set((fieldInfo for fieldInfo in record.fieldInfos() if fieldInfo[1] != "cnode"))
         return sorted(list(fieldInfos), key=lambda x: float(x[2]))
+        
+    def stopped(self):
+        for record in self.records():
+            if not record.isComplete:
+                return True
+        return False
+        
+    def maxContainment(self):
+        """
+        What is the maximum number of contained entities in its hierarchy
+        """
+        return max(record.maxContainment() for record in self.records())
                 
     def query(self):
         if "URI" in self.__reply["fmql"]:
@@ -134,15 +143,13 @@ class Record(object):
         for crecord in record.contains():
             print crecord
     
-    TODO: fileInfoRepository is a temporary add on that augments the meta returned in FMQL replies with schema information they don't yet embed. Need to pass in whole repository as a single Record may embed many types (multiples).
     """
-    def __init__(self, result, container=None, index=-1, fileInfoRepository=None):
+    def __init__(self, result, container=None, index=-1):
         self.__result = result
         if container and index == -1:
             raise Exception("If a contained record then need both container and index")
         self.__container = container # another record or none
         self.__index = index # position of contained record in order
-        self.__fileInfoRepository = fileInfoRepository # only used for coded values and multiple questions
         
     def __iter__(self):
         for fieldInfo in self.fieldInfos():
@@ -151,20 +158,24 @@ class Record(object):
             yield fieldInfo[0], self[fieldInfo[0]]
         
     def __getitem__(self, field):
-        """Safe return of simple value - if field is not there returns empty string"""
-        # TODO: consider removing support for getting contained nodes by field name
+        """
+        Safe return of values as structured FieldValues - if field is not there returns None. 
+        """
+        # TODO: consider removing support for getting contained nodes by field name ie/ as need to do type(fieldValue) == list. 
         if field not in self.__result:
-            return ""
+            return None
         if self.__result[field]["type"] == "cnodes":
-            return [Record(cnode, self, i) for i, cnode in enumerate(self.__result[field]["value"], 1, self.__fileInfoRepository)]
+            if "stopped" not in self.__result[field]:
+                return [Record(cnode, self, i) for i, cnode in enumerate(self.__result[field]["value"], 1)]
+            else:
+                return []
         # TODO: unicode all the way through
         # For simple, non date values need to account for non ASCII where FMQL (TODO) seems to encode wrong on Cache. ex/ \xabH1N1 Vaccine\xbb for 44_2-9921254/reason_for_appointment
-        self.__result[field]["value"] = self.__result[field]["value"].encode("ascii", "ignore")        
+        self.__result[field]["value"] = "".join(c for c in self.__result[field]["value"].encode("ascii", "ignore") if ord(c) >= 32)
         if self.__result[field]["fmType"] == "3":
             fieldId = self.fieldInfo(field)[2]
-            fieldInfo = self.__fileInfoRepository.fileInfo(self.fileType).fieldInfo(fieldId) if self.__fileInfoRepository else None
             # TODO: fieldInfo from Record itself should be enough ie/ enough meta to do everything OR format of coded answer (boolean or enum form) should be in the response
-            return CodedValue(self.__result[field], self.fileType, fieldInfo)
+            return CodedValue(self.__result[field], self.fileType)
         if self.__result[field]["fmType"] == "1":
             return DateValue(self.__result[field])
         if self.__result[field]["fmType"] in ["2", "4"]:
@@ -173,14 +184,28 @@ class Record(object):
             return Reference(self.__result[field])
         return Literal(self.__result[field])
         
+    def __setitem__(self, field, value):
+        """
+        TODO: pass in Literal or Reference or ... (they need setItems)
+        """
+        # This will either reset a field value or ...
+        # TODO: check that fieldInfo if already recorded, matches the value
+        self.__result[field] = value            
+        
     def __contains__(self, field):
         return True if field in self.__result else False
                 
     def __str__(self):
+        try:
+            self.id # Tmp FMQL v1 will ensure all have .01's
+        except:
+            return ""
         indent = ""
         for i in range(1, self.level):
             indent += "\t\t"
-        mu = indent + self.fileTypeLabel + " (" + self.id + ")" + (" -- Level: " + str(self.level) if indent != "" else "") + "\n"
+        mu = indent + self.fileTypeLabel + " (" + self.id + ")" + (" -- Level: " + str(self.level) if indent != "" else "")
+        mu += " [LIST ELEMENT]" if self.isListElement else "" 
+        mu += "\n"
         indent += "\t"
         if self.container:
             mu += indent + "fms:index: " + str(self.index) + "\n"
@@ -190,7 +215,7 @@ class Record(object):
                 if "stopped" in self.__result[fieldInfo[0]]:
                     mu += indent + "\t" + "** STOPPED **\n"
                     continue
-                for crecord in [Record(cnode, self, i, self.__fileInfoRepository) for i, cnode in enumerate(self.__result[fieldInfo[0]]["value"], 1)]:
+                for crecord in [Record(cnode, self, i) for i, cnode in enumerate(self.__result[fieldInfo[0]]["value"], 1)]:
                     mu += str(crecord)
                 continue
             mu += indent + "%s: %s\n" % (fieldInfo[0], self[fieldInfo[0]])
@@ -207,7 +232,8 @@ class Record(object):
         
     @property
     def label(self):
-        return self.__result["uri"]["label"].split("/")[1]
+        # TMP til FMQL 1.0 - CH sub doesn't have qualifier
+        return self.__result["uri"]["label"].split("/")[1] if re.search(r'\/', self.__result["uri"]["label"]) else self.__result["uri"]["label"]
         
     @property
     def fileType(self):
@@ -237,7 +263,7 @@ class Record(object):
             if not (value["type"] == "cnodes" and "stopped" not in value):
                 continue
             for i, cnode in enumerate(value["value"], 1):
-                cRecord = Record(cnode, self, i, self.__fileInfoRepository)
+                cRecord = Record(cnode, self, i)
                 fileTypes |= cRecord.fileTypes()
                 break
         return fileTypes        
@@ -248,6 +274,8 @@ class Record(object):
     def fieldInfos(self):
         """
         Schema from the reply: better than generic "keys()"
+        
+        TODO: turn into tuples
         """
         return sorted([(field, self.__result[field]["type"], self.__result[field]["fmId"], FieldInfo.FIELDTYPES[self.__result[field]["fmType"]] if "fmType" in self.__result[field] else "") for field in self.__result if field != "uri"], key=lambda x: float(x[2]))  
         
@@ -265,6 +293,10 @@ class Record(object):
         return self.__container # may be None
         
     @property
+    def isListElement(self):
+        return True if "fmCType" in self.__result["uri"] and self.__result["uri"]["fmCType"] == "LISTEL" else False 
+        
+    @property
     def index(self):
         return self.__index # may be -1 (goes with container)
         
@@ -280,12 +312,14 @@ class Record(object):
         
     def contains(self, fileType=""):
         """
-        Note that this will build a tree which you can walk ie.
+        Note that this will build one level of a tree which you can walk ie.
         [x, y, z]
             [a, b]
                 [h, i] etc.
                 
         Note: containment depth = max level of contained record ...
+        
+        Note due to order in FMQL/FileMan, will get records of one type and then of another
                 
         One application of this is to decide if a multiple is "TOO POPULAR" to just be a contained or "in context" record. An example is 63.04 in VistA FileMan, a lab record that should be a first class file that points to PATIENT (2).
         """
@@ -294,12 +328,22 @@ class Record(object):
             if value["type"] == "cnodes":
                 if "stopped" not in value:
                     for i, cnode in enumerate(value["value"], 1):
-                        cRecord = Record(cnode, self, i, self.__fileInfoRepository)
+                        cRecord = Record(cnode, self, i)
                         if fileType and cRecord.fileType != fileType:
                             continue
                         contains.append(cRecord)
         return contains
         
+    def maxContainment(self):
+        cFileTypes = [value["file"] for field, value in self.__result.iteritems() if value["type"] == "cnodes"]
+        if not len(cFileTypes):
+            return 0
+        # Own immediate containment
+        mcs = [len(self.contains(cFileType)) for cFileType in cFileTypes]
+        # Contained record's containment
+        mcs.extend([crecord.maxContainment() for cFileType in cFileTypes for crecord in self.contains(cFileType)])
+        return max(mcs)
+                
     @property
     def isComplete(self):
         # is this record or any of its contained records incomplete (ie/ cstopped)
@@ -308,7 +352,7 @@ class Record(object):
                 if "stopped" in value:
                     return False
                 for i, cnode in enumerate(value["value"], 1):
-                    cRecord = Record(cnode, self, i, self.__fileInfoRepository)
+                    cRecord = Record(cnode, self, i)
                     if not cRecord.isComplete:
                         return False
         return True
@@ -326,7 +370,7 @@ class Record(object):
             if value["type"] == "cnodes":
                 if "stopped" not in value:
                     for i, cnode in enumerate(value["value"], 1):
-                        cRecord = Record(cnode, self, i, self.__fileInfoRepository)
+                        cRecord = Record(cnode, self, i)
                         references |= cRecord.references(fileTypes, sameAsOnly)
                 continue
             if value["type"] != "uri":
@@ -350,11 +394,11 @@ class Record(object):
             if value["type"] == "cnodes":
                 if "stopped" not in value:
                     for i, cnode in enumerate(value["value"], 1):
-                        cRecord = Record(cnode, self, i, self.__fileInfoRepository)
+                        cRecord = Record(cnode, self, i)
                         dates.extend(cRecord.dates())
                 continue
-            # TODO - bug to fix - should be xsd:dateTime
-            if not (value["type"] == "typed-literal" and value["datatype"] == "http://www.w3.org/1999/02/22-rdf-syntax-ns#dateTime"):
+            # Note: old versions had bug with http://www.w3.org/1999/02/22-rdf-syntax-ns#dateTime
+            if not (value["type"] == "typed-literal" and value["datatype"] == "xsd:dateTime"):
                 continue
             dtValue = DateValue(value)
             if not dtValue.isValid:
@@ -391,7 +435,7 @@ class Record(object):
             if value["type"] == "cnodes":
                 if "stopped" not in value:
                     for i, cnode in enumerate(value["value"], 1):
-                        cRecord = Record(cnode, self, i, self.__fileInfoRepository)
+                        cRecord = Record(cnode, self, i)
                         no += cRecord.numberAssertions(assertionObjectType)
                 continue
             no += 1
@@ -409,6 +453,10 @@ class FieldValue(object):
     @property
     def fmType(self):
         return FieldInfo.FIELDTYPES[self._result["fmType"]]
+
+    @property
+    def fmTypeId(self):
+        return self._result["fmType"]
         
     @property
     def type(self):
@@ -417,7 +465,7 @@ class FieldValue(object):
     @property
     def value(self):
         return self._result["value"]
-        
+                
 class Literal(FieldValue):
 
     # TODO: consider merging all literal variations into this one class
@@ -428,6 +476,9 @@ class Literal(FieldValue):
             raise Exception("Must create Literals with Literals")
         self._type = "LITERAL"
         self._datatype = "" if "datatype" not in result else result["datatype"]
+        
+    def __repr__(self):
+        return self._result["value"]
         
     @property
     def datatype(self):
@@ -448,6 +499,11 @@ class Reference(FieldValue):
         mu = self.label + " ({system}:" + self.id + ")"
         mu += " <=> " + self.sameAsLabel + " (" + self.sameAs + ")" if self.sameAs else ""
         return mu
+        
+    def __setitem__(self, field, value):
+        if field not in ["sameAs", "sameAsLabel"]:
+            raise Exception("Can't change anything but sameAs'")
+        self._result[field] = value
         
     def __hash__(self):
         return self.id.__hash__()
@@ -474,8 +530,18 @@ class Reference(FieldValue):
         return self._result["value"]
         
     @property
+    def valid(self):
+        ienStr = self.id.split("-")[1]
+        if ienStr == "0":
+            return False
+        if ienStr == self._result["label"].split("/")[1]: # Label == IEN for invalids (but can it be valid too?)
+            return False
+        return True
+        
+    @property
     def ien(self):
         """
+        # As float!
         # Form: 9999999999_6304-1_1_4 ie/ 1st under 1st under 4th. For now, only doing last => order will only work in the context records from one walk.
         # TODO: expand multiple id comparison
         # TODO: what about built-in's/coded values
@@ -483,11 +549,17 @@ class Reference(FieldValue):
         ien = self.id.split("-")[1]
         if re.search(r'\_', ien):
             ien = re.split(r'\_', ien)[0]
-        return float(ien)
+        try:
+            return int(ien)
+        except:
+            return float(ien)
+        else:
+            return ien
                 
     @property
     def label(self):
-        return self._result["label"].split("/")[1]
+        # TMP til FMQL 1.0 - CH sub doesn't have qualifier
+        return self._result["label"].split("/")[1] if re.search(r'\/', self._result["label"]) else self._result["label"]
         
     @property
     def fileType(self):
@@ -524,11 +596,10 @@ class CodedValue(Literal):
     - FMQL - must add more information to a coded value - specifically what is the index of the value and MN too.
     - Change instantiation - just have CODED References and CODED Literals
     """
-    def __init__(self, result, fileType, fieldInfo=None):
+    def __init__(self, result, fileType):
         Literal.__init__(self, result)
         if result["fmType"] != "3":
             raise Exception("Must create CodedValues with CodedValues!")
-        self.__fieldInfo = fieldInfo
         if self.isBoolean:
             self._datatype = "xsd:boolean" 
         else:
@@ -542,8 +613,8 @@ class CodedValue(Literal):
 
     @property
     def value(self):
-        if self.isBoolean: # TODO: what if value is NOT in schema range?
-            return self.__fieldInfo.booleanOfValue(self._result["value"])      
+        if self.isBoolean:
+            return True if self._result["value"] == "true" else False
         return self._result["value"]
     
     @property
@@ -552,12 +623,9 @@ class CodedValue(Literal):
         
     @property
     def isBoolean(self):
-        """
-        Temporary need to pass in fieldInfo. 
-        """
-        if not self.__fieldInfo:
-            return False
-        return self.__fieldInfo.isBooleanCoded
+        if "datatype" in self._result and self._result["datatype"] == "xsd:boolean":
+            return True
+        return False
         
     def asReference(self):
         if self.isBoolean:
@@ -579,6 +647,11 @@ class DateValue(Literal):
         mu = self._result["value"]
         mu += " [DATE]" if self.isValid else " [INVALID DATE]"
         return mu
+        
+    def __repr__(self):
+        if isValid:
+            return self.dateTimeValue
+        return self._result["value"] + " [INVALID DATE]"
         
     @property
     def isValid(self):
@@ -611,7 +684,10 @@ class StringOrNumericValue(Literal):
         mu = self._result["value"]
         mu += " [NUMERIC in STRING]" if self._result["fmType"] == "4" and self.isNumeric else ""
         mu += " [STRING in NUMERIC]" if self._result["fmType"] == "2" and not self.isNumeric else ""
-        return mu
+        return mu 
+        
+    def __repr__(self):
+        return self.value    
             
     @property
     def value(self):
@@ -657,6 +733,7 @@ def main():
             print
         print 
         print "Number Assertions:", record.numberAssertions()
+        print "Max containment:", record.maxContainment()
         print
         print "Contents:"
         print record

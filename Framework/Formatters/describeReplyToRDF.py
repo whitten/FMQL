@@ -20,7 +20,6 @@ One of a series of formatters of Records (toHTML, toText ...). This makes RDF fr
 How to use? See example code in "main" at the bottom of this file.
 """
                    
-# From DescribeToRDF
 class DescribeReplyToRDF:
     """
     - Serialize records as RDF
@@ -39,6 +38,13 @@ class DescribeReplyToRDF:
             self.__processRecord(record)
 
     def __processRecord(self, record):  
+    
+        # TEMPORARY - until FMQL stops .01-less records (shouldn't exist)
+        # C*** 109 multiple issue
+        try:
+            record.id
+        except:
+            return
                 
         # Already there
         if not self.rdfb.startNode(self.systemBase + record.id, ""):
@@ -75,7 +81,6 @@ class DescribeReplyToRDF:
                 continue
             self.__processRecord(crecord)
             
-# Was DataGraphMaker
 class DescribeRepliesToSGraph:
     """
     This builds on DescribeReplyToRDF to produce a self contained (all URI's labeled) graph from one or more Describe Replies. These replies may be about a Patient or a Ward or System information.
@@ -84,6 +89,8 @@ class DescribeRepliesToSGraph:
     - FIX TO DescribeReply: needs to count Enum values in outside references
     - add support for SAMEAS described things ie/ even though described, still sameas
     - add a Dataset/Graph header
+    - SUPPORT exposure of outside refs ie/ to non same as types
+    - DO DUMMY/SIMPLE rdfb
     """
     def __init__(self, fms="vs", systemBase="http://livevista.caregraf.info/", k3Base="http://schemes.caregraf.info/"):
                     
@@ -97,7 +104,7 @@ class DescribeRepliesToSGraph:
         
     def processReply(self, describeReply):
         
-        drrdf = DescribeToRDF(self.rdfb, self.fms, self.systemBase)
+        drrdf = DescribeReplyToRDF(self.rdfb, self.fms, self.systemBase)
         drrdf.processReply(describeReply)
         
         self.fileTypes |= describeReply.fileTypes()
@@ -140,7 +147,7 @@ class DescribeRepliesToSGraph:
             
         return self.rdfb.done()
         
-    # FMQL not returning the right MN in some cases. TODO: remove when it does.
+    # Tmp before FMQL V1
     SCHEMEMNMAP = {"ICD9": "ICD9CM", "PROVIDER": "HPTC"}
     def __expandSameAsURI(self, sameAsURI):
         # in mixed files (local only and sameas'ed terminologies), the local only entries are marked "LOCAL" in their same as fields
@@ -152,8 +159,12 @@ class DescribeRepliesToSGraph:
         # TODO: what if define. Should process this earlier
         if uriMatch.group(1) == "LOCAL":
             return self.systemBase + uriMatch.group(2)
+        # Tmp map til FMQL v1
         schemeMN = self.SCHEMEMNMAP[uriMatch.group(1)] if uriMatch.group(1) in self.SCHEMEMNMAP else uriMatch.group(1)
-        return self.k3Base + schemeMN.lower() + "/" + uriMatch.group(2)
+        id = uriMatch.group(2)
+        if schemeMN == "ICD9CM":
+           id = re.sub(r'\_$', '', re.sub(r'\.', '_', id)) # code form to kGraf form, no trailing .'s
+        return self.k3Base + schemeMN.lower() + "/" + id
                                     
 # ############################# Test Driver ####################################
 
