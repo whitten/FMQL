@@ -408,9 +408,9 @@ CNODETESTS = {
             "test": "testResult = (jreply['fmql']['CSTOP'] == '10')"
         },
         {
-            "description": "CNode List Element - set in URI",
+            "description": "CNode List Element ie 1 or 3 types - set in cnode field",
             "fmql": "DESCRIBE 120_8-4",
-            "test": "testResult = ('fmCType' in jreply['results'][0]['drug_classes']['value'][0]['uri'])"
+            "test": "testResult = (jreply['results'][0]['drug_classes']['list'] == True)"
         }
     ]
 }
@@ -1093,4 +1093,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
