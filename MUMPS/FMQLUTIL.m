@@ -28,11 +28,11 @@ XONFL(FLINF,FILTER,IENA,LIMIT,OFFSET,AFTERIEN,ORDERBY,NOIDXMX,TOX,PARAMS) ;
  ; Build filter expression
  S MFLT=$S(FILTER'="":"S MFTEST="_$$FLTTOM^FMQLFILT(.FLINF,FILTER,IENA),1:"")
  ; CNodes walk IENA.
- I '$D(FLINF("GL")) D XIENA(.FLINF,IENA,MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
+ I '$D(FLINF("GL")) D XFAR(.FLINF,IENA,MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
  ; Special case: ORDER BY .01 and BIDX supported
  I ORDERBY=".01",$D(FLINF("BIDX")) D XIDXA(.FLINF,FLINF("BIDX"),"",MFLT,.PLC,TOX,.PARAMS) Q PLC("CNT")
  ; Global but no filter - walk IENA
- I MFLT="" D XIENA(.FLINF,FLINF("ARRAY"),"",.PLC,TOX,.PARAMS) Q PLC("CNT")
+ I MFLT="" D XFAR(.FLINF,FLINF("ARRAY"),"",.PLC,TOX,.PARAMS) Q PLC("CNT")
  ; See if filter yields an IDXA(V)
  D FLTIDX^FMQLFILT(.FLINF,FILTER,.IDXA,.IDXSTART)
  ; 5 Cases:
@@ -46,16 +46,16 @@ XONFL(FLINF,FILTER,IENA,LIMIT,OFFSET,AFTERIEN,ORDERBY,NOIDXMX,TOX,PARAMS) ;
  ; - d. No IDXA(V) but filter. See if file too big to filter
  I NOIDXMX'=-1,($S($D(FLINF("FMSIZE")):FLINF("FMSIZE")>NOIDXMX,1:1)) Q -1
  ; - e. file not to big to filter, row by row
- D XIENA(.FLINF,FLINF("ARRAY"),MFLT,.PLC,TOX,.PARAMS)
+ D XFAR(.FLINF,FLINF("ARRAY"),MFLT,.PLC,TOX,.PARAMS)
  Q PLC("CNT")
  ;
  ;
- ; Apply TOX on entries in a simple IEN Array, a file in IEN order
+ ; Apply TOX on entries in a simple IEN Array
  ; 
  ; Used for plain walks of files in IEN order, for contained node walks and 
  ; for non-indexed filtering of smaller files.
  ;
-XIENA(FLINF,FAR,MFLT,PLC,TOX,PARAMS) ;
+XFAR(FLINF,FAR,MFLT,PLC,TOX,PARAMS) ;
  N AIEN,IEN,MFTEST
  ; Assumption: OFFLFT=0 if AFTERIEN as it takes precedence
  S AIEN=$S($D(PLC("AFTERIEN")):PLC("AFTERIEN"),1:0)
@@ -78,7 +78,7 @@ XIENA(FLINF,FAR,MFLT,PLC,TOX,PARAMS) ;
  ; 
 XIDXAV(FLINF,IDXAV,MFLT,PLC,TOX,PARAMS) ;
  N FAR,AIEN,IEN,MFTEST
- I '$D(FLINF("GL")) Q -1  ; globals only, CNodes walked in XIENA
+ I '$D(FLINF("GL")) Q -1  ; globals only, CNodes walked in XFAR 
  S FAR=FLINF("ARRAY")  ; FAR != IDXAV
  ; Assumption: OFFLFT=0 if AFTERIEN as it takes precedence
  S AIEN=$S($D(PLC("AFTERIEN")):PLC("AFTERIEN"),1:0)

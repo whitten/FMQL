@@ -37,7 +37,7 @@ CONTSTART(JSON,MARK) ;
  S @JSON@("LSTLVL",@JSON@("LSTLVL"))=""
  D PUTDATA(JSON,MARK)
  Q
-ASSERT(JSON,FIELD,IFIELD,FMTYPE,VALUE,PLABEL,PSAMEAS,NODETYPE) ;
+ASSERT(JSON,FIELD,IFIELD,FMTYPE,VALUE,PLABEL,PSAMEAS) ;
  D PUTDATA(JSON,@JSON@("LSTLVL",@JSON@("LSTLVL")))
  S @JSON@("LSTLVL",@JSON@("LSTLVL"))="," ; if next el then put a col before it
  ; TODO: change to pass FDINF which has predicate
@@ -48,8 +48,6 @@ ASSERT(JSON,FIELD,IFIELD,FMTYPE,VALUE,PLABEL,PSAMEAS,NODETYPE) ;
  . I $D(PSAMEAS) D
  . . D PUTDATA(JSON,",""sameAs"":"""_PSAMEAS("URI")_"""")
  . . D:$D(PSAMEAS("LABEL")) PUTDATA(JSON,",""sameAsLabel"":"""_$$JSONSTRING(PSAMEAS("LABEL"))_"""")
- . ; Meta just for CNodes (List Element)
- . I $G(NODETYPE)'="" D PUTDATA(JSON,",""fmCType"":"""_NODETYPE_"""")
  E  D
  . I FMTYPE="1" D PUTDATA(JSON,",""type"":""typed-literal"",""datatype"":""xsd:dateTime""") Q
  . I FMTYPE="12" D PUTDATA(JSON,",""type"":""typed-literal"",""datatype"":""xsd:boolean""") Q
@@ -83,12 +81,13 @@ WPALINE(JSON,LINE) ;
 WPAEND(JSON) ;
  D CONTEND(JSON,"""}")
  Q
-BNLISTSTART(JSON,BFL,BFDLBL,BFD) ; 
+BNLISTSTART(JSON,BFL,BFDLBL,BFD,ISL) ; 
  D PUTDATA(JSON,@JSON@("LSTLVL",@JSON@("LSTLVL")))
  S @JSON@("LSTLVL",@JSON@("LSTLVL"))=","
  S @JSON@("LSTLVL")=@JSON@("LSTLVL")+1
  S @JSON@("LSTLVL",@JSON@("LSTLVL"))=""
- D PUTDATA(JSON,""""_$$FIELDTOPRED^FMQLUTIL(BFDLBL)_""":{""fmId"":"""_BFD_""",""type"":""cnodes"",""file"":"""_BFL_""",""value"":[")
+ N ISLJ S ISLJ=$S($G(ISL)=1:",""list"":true",1:"")
+ D PUTDATA(JSON,""""_$$FIELDTOPRED^FMQLUTIL(BFDLBL)_""":{""fmId"":"""_BFD_""",""type"":""cnodes"",""file"":"""_BFL_""""_ISLJ_",""value"":[")
  Q
 BNLISTEND(JSON) ;
  D CONTEND(JSON,"]}")

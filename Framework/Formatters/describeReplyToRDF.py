@@ -54,6 +54,10 @@ class DescribeReplyToRDF:
         for field, fieldValue in record:
         
             pred = field.lower() + "-" + record.fileType
+            
+            # Issue: NCName	::= (Letter | '_') (NCNameChar)* in http://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName BUT JSON allows a number etc first. We insert a _ if there is a number first. TBD: best done in FMQL to be consistent.
+            if re.match(r'\d', pred):
+                pred = "_" + pred            
         
             if fieldValue.type == "URI":
                 fieldValue = fieldValue.asReference() # awkward: Coded -> Reference needs to be smoother TODO

@@ -71,7 +71,7 @@ BLDBNODE(FLOC,VAL,FID) ;
  N LC60 S LC60=$P(LC,"!",7)  ; 60 ref is in 7th position of code section
  Q:LC60=""
  Q:'$D(^LAB(60,LC60))
- N LABEL60 S LABEL60=$P(^LAB(60,LC60,0),"^")
+ N LABEL60 S LABEL60="LABORATORY TEST/"_$P(^LAB(60,LC60,0),"^")
  ;
  N LVAL S LVAL=$P(VAL,"^")  ; Get Value. TBD: need to check if there is one?
  ;
@@ -106,13 +106,13 @@ BLDBNODE(FLOC,VAL,FID) ;
  ; Note: Mayo appears here in MMH as one of three options. Goes to WKLD suffix.
  I $P(LC,"!",4) D
  . Q:'$D(^LAB(64.2,$P(LC,"!",4)))
- . N LABEL S LABEL=$P(^LAB(64.2,$P(LC,"!",4),0),"^")
+ . N LABEL S LABEL="WKLD SUFFIX CODES/"_$P(^LAB(64.2,$P(LC,"!",4),0),"^")
  . D ASSERT^FMQLJSON(REPLY,"METHOD",".11","7","64_2-"_$P(LC,"!",4),LABEL)
  ;
  ; 0.4: Verify Person
  I $P(VAL,"^",4) D
  . Q:'$D(^DPT($P(VAL,"^",4)))
- . N LABEL S LABEL=$P(^DPT($P(VAL,"^",4),0),"^")
+ . N LABEL S LABEL="NEW PERSON/"_$P(^DPT($P(VAL,"^",4),0),"^")
  . D ASSERT^FMQLJSON(REPLY,"VERIFY PERSON",".04","7","200-"_$P(VAL,"^",4),LABEL)
  ;
  ; Reference Ranges and Unit (Configured in 60.01 Specimen)
@@ -123,7 +123,7 @@ BLDBNODE(FLOC,VAL,FID) ;
  ; .08: Specimen (61). Also in $P(0,"^",5)
  I $P(LRU,"!") D
  . Q:'$D(^LAB(61,$P(LRU,"!")))
- . N LABEL S LABEL=$P(^LAB(61,$P(LRU,"!"),0),"^")
+ . N LABEL S LABEL="TOPOGRAPHY FIELD/"_$P(^LAB(61,$P(LRU,"!"),0),"^")
  . D ASSERT^FMQLJSON(REPLY,"SPECIMEN",".08","7","61-"_$P(LRU,"!"),LABEL)
  ; .09,.10: Range - high and low
  ; Ignore criticals (4/5). Use reference. If none, use therapeutic.
