@@ -4,7 +4,7 @@ import java.util.*;
 import com.google.gson.*; /* http://code.google.com/p/google-gson/ */
 
 /* 
- * FMQL V0.9 - Examples of querying from Java
+ * FMQL V1.0 - Examples of querying from Java
  * - uses .net and google-gson (no thread pools etc)
  * - just walks json and dumps as a string: this is dynamic coding
  *
@@ -15,7 +15,8 @@ import com.google.gson.*; /* http://code.google.com/p/google-gson/ */
  * - walk cnode arrays too ie recurse
  *
  * To use:
- * - down gson JAR and make sure it is in your classpath
+ * - download gson JAR and make sure it is in your classpath
+ *   ... https://code.google.com/p/google-gson/downloads/list
  * - crude invocation if JAR for gson is in FMQLReport's directory
  *   - javac -classpath 'gson-1.6.jar' FMQLReports.java
  *   - java -classpath '.;gson-1.6.jar' FMQLReports
@@ -23,7 +24,7 @@ import com.google.gson.*; /* http://code.google.com/p/google-gson/ */
 public class FMQLReports {
 
     /* Change to your own URL once you've set up FMQL on your VistA */
-    /* public static String FMQLEP = "http://vista.caregraf.org/fmqlEP"; */
+    /* public static String FMQLEP = "http://livevista.caregraf.info/fmqlEP"; */
     public static String FMQLEP = "http://www.examplehospital.com/fmqlEP";
     
     /* A sample of FMQL's data queries. Form is Name, basic query, filter if any */

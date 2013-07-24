@@ -7,7 +7,7 @@
 # An FMQL endpoint is "restful" - queries are made in HTTP GETs. Responses are
 # JSON (application/json). With FMQL, JSON becomes FileMan's export format.
 #
-# In v0.9, the endpoint supports 7 query types, 4 for FileMan data and 
+# In v1.0, the endpoint supports 7 query types, 4 for FileMan data and 
 # 3 for its schema Data.
 #
 # Data:
@@ -27,8 +27,8 @@
 # 1. DESCRIBE TYPE: describes any FileMan (file) type. For example, 
 # "DESCRIBE TYPE 2" asks about the PATIENT type (2).
 # 2. SELECT TYPES: lists all (file) types.
-# 3. SELECTALLREFERRERSTOTYPE: lists all types that refer to a type. For example, 
-#    "SELECTALLREFERRERSTOTYPE 2" returns all types that refer to PATIENT.
+# 3. SELECT TYPE REFS: lists all types that refer to a type. For example, 
+#    "SELECT TYPE REFS 2" returns all types that refer to PATIENT.
 #
 # Form of JSON in responses:
 # - the non-schema queries (Describe, Select, Count) return a superset of
@@ -43,7 +43,7 @@
 # This program is free software; you can redistribute it and/or modify it under the terms of 
 # the GNU Affero General Public License version 3 (AGPL) as published by the Free Software 
 # Foundation.
-# (c) 2010-2011 caregraf.org
+# (c) 2010-2013 caregraf
 #
 
 import re 
@@ -52,7 +52,7 @@ import json
 
 # These settings should match your FMQL configuration 
 FMQLEP = "http://www.examplehospital.com/fmqlEP" # Endpoint address
-# FMQLEP = "http://vista.caregraf.org/fmqlEP" # Endpoint address of Caregraf demo VistA
+# FMQLEP = "http://livevista.caregraf.info/fmqlEP" # Endpoint address of Caregraf demo VistA
 BASEURL = "http://www.examplehospital.com/fmql/" 
 
 # ############# the patients in your VistA ################
