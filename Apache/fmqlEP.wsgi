@@ -14,7 +14,6 @@
 import os, sys, urlparse, re, json
 sys.path.append(os.path.dirname(__file__))
 from brokerRPC import RPCConnectionPool
-from cacheObjectInterface import CacheObjectInterface
 from fmqlQP import FMQLQP
 
 class FMQLEP:
@@ -57,11 +56,7 @@ class FMQLEP:
         # 25 if multi-threaded (ala winnt mpm or worker mpm), 1 otherwise (prefork unix, the Apache unix default). Nice if could
         # get actual number of threads in a process.
         noThreads = 25 if environ["wsgi.multithread"] == True else 1
-        if self.fmqlEnviron["rpcbroker"] == "CSPIF":
-            # TODO: will probably move off to own property - cspif
-            rpcc = CacheObjectInterface(self.fmqlEnviron["rpcbroker"])
-        else:
-            rpcc = RPCConnectionPool(self.fmqlEnviron["rpcbroker"], noThreads, self.fmqlEnviron["rpchost"], int(self.fmqlEnviron["rpcport"]), self.fmqlEnviron["rpcaccess"], self.fmqlEnviron["rpcverify"], "CG FMQL QP USER", WSGILogger("BrokerRPC"))
+        rpcc = RPCConnectionPool(self.fmqlEnviron["rpcbroker"], noThreads, self.fmqlEnviron["rpchost"], int(self.fmqlEnviron["rpcport"]), self.fmqlEnviron["rpcaccess"], self.fmqlEnviron["rpcverify"], "CG FMQL QP USER", WSGILogger("BrokerRPC"))
         logger = WSGILogger("FMQLQP")
         self.qp = FMQLQP(rpcc, logger)
 
