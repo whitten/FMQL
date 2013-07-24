@@ -15,13 +15,12 @@ import os, sys, urlparse, re, json
 sys.path.append(os.path.dirname(__file__))
 from brokerRPC import RPCConnectionPool
 from cacheObjectInterface import CacheObjectInterface
-from fmqlQP import FMQLQueryProcessor
-from fmqlQPE import FMQLQPE
+from fmqlQP import FMQLQP
 
 class FMQLEP:
 
     def __init__(self):
-        self.qpe = None
+        self.qp = None
         self.fmqlEnviron = None
 
     def setFMQLEnviron(self, fmqlEnviron):
@@ -31,7 +30,7 @@ class FMQLEP:
 
     def __call__(self, environ, start_response):
         try:
-            if not self.qpe: # TBD make thread safe
+            if not self.qp: # TBD make thread safe
                 if not self.fmqlEnviron: # for Apache, not simple server
                     self.fmqlEnviron = {}
                     self.fmqlEnviron["rpcbroker"] = environ["fmql.rpcbroker"]
@@ -41,7 +40,7 @@ class FMQLEP:
                     self.fmqlEnviron["rpcverify"] = environ["fmql.rpcverify"]
                 self.__initQueryProcessor(environ)
             queryArgs = urlparse.parse_qs(environ['QUERY_STRING'])
-            reply = self.qpe.processQuery(queryArgs)
+            reply = self.qp.processQuery(queryArgs)
         # Exceptions: setting up comms to VistA or even QP code error
         except Exception as e:
             print >> sys.stderr, "FMQLEP: %s" % e # internal or entry level errors
@@ -64,8 +63,7 @@ class FMQLEP:
         else:
             rpcc = RPCConnectionPool(self.fmqlEnviron["rpcbroker"], noThreads, self.fmqlEnviron["rpchost"], int(self.fmqlEnviron["rpcport"]), self.fmqlEnviron["rpcaccess"], self.fmqlEnviron["rpcverify"], "CG FMQL QP USER", WSGILogger("BrokerRPC"))
         logger = WSGILogger("FMQLQP")
-        qp = FMQLQueryProcessor(rpcc, logger)
-        self.qpe = FMQLQPE(qp, logger)
+        self.qp = FMQLQP(rpcc, logger)
 
 class WSGILogger:
     def __init__(self, generator):
