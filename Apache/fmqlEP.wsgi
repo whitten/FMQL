@@ -1,20 +1,14 @@
 #
-# fmqlEP wsgi v0.96
+# fmqlEP wsgi v1.0
 #
 # This class stitches together brokerRPC and an FMQLQueryProcessor to make 
 # an FMQL Endpoint that runs in Apache.
-#
-# TBD:
-# - try loading python path in script load (WSGIImportScript) as can't load
-#   with PYTHONPATH in Virtual Hosts.
-# - take number of threads from os environ (or fallback to setting from host file)
-# - stress number threads/processes etc.
 #
 # LICENSE:
 # This program is free software; you can redistribute it and/or modify it under the terms of 
 # the GNU Affero General Public License version 3 (AGPL) as published by the Free Software 
 # Foundation.
-# (c) 2010-2012 caregraf.org
+# (c) 2010-2013 caregraf
 #
 
 import os, sys, urlparse, re, json

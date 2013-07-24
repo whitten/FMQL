@@ -8,7 +8,7 @@
     # - reload in Apache with every change
     # - the user (access/verify) MUST have permission to use the FMQL RPC.
     # - for VistA, set rpcBroker to "VistA"; RPMS, use "CIA"
-    # - rpcport is the port your VistA's broker listens on: 9201 for OpenVistA
+    # - rpcport is the port your VistA's broker listens on: usually 9430 for FOIA, 9201 for OpenVistA ...
     SetEnv fmql.rpcbroker "VistA"
     SetEnv fmql.rpchost localhost
     SetEnv fmql.rpcport ####
