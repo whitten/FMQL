@@ -33,7 +33,7 @@ class CacheObjectInterface:
             request.add_header('cookie', self.cookie)
         try:
             response = urllib2.urlopen(request)
-        except URLError, e:
+        except urllib2.URLError, e:
             # 503 "Service Unavailable": The server cannot process the request due to a high load
             raise
         # Always reset the cookie - may be a new one if session idle for > 15 minutes.
