@@ -25,6 +25,12 @@ class FMQLQP:
         self.rpcc = rpcc
         self.logger = logger
         
+    def invokeQuery(self, query):
+        # direct dispatch i/f
+        reply = self.processQuery({"fmql": [query]})
+        jreply = json.loads(reply)
+        return jreply
+        
     def processQuery(self, queryArgs):
         """
         Expect query and then qualifiers for return format

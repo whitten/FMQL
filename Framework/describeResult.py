@@ -46,6 +46,8 @@ class DescribeReply(object):
     def __init__(self, reply):
         if "results" not in reply:
             raise Exception("No results in reply")
+        if reply["fmql"]["OP"] != "DESCRIBE":
+            raise Exception("Only for DESCRIBEs")
         self.__reply = reply
         
     def __iter__(self):
@@ -61,14 +63,30 @@ class DescribeReply(object):
         singletonURI = self.__reply["results"][0]["uri"] 
         return (singletonURI["value"].split("-")[0], singletonURI["label"].split("/")[0])
         
-    def fileTypes(self):
+    def fileTypes(self, firstsOnly=False):
         """
         All file types (1 main and subordinates) seen in this reply
+        - firstsOnly means file itself and its immediately contained files.
         """
         fileTypes = set()
         for record in self.records():
-            fileTypes |= record.fileTypes()
+            fileTypes |= record.fileTypes(firstsOnly)
         return fileTypes
+        
+    def fileTypeCounts(self):
+        """
+        Helps analyze data usage - for contained file types in particular, how many instances are there in total and what's the maximum number in any one container?
+        """
+        fileTypeCounts = {}
+        for record in self.records():
+            for ft, total, max in record.fileTypeCounts():
+                if ft not in fileTypeCounts:
+                    fileTypeCounts[ft] = {"total": total, "max": max}
+                    continue
+                fileTypeCounts[ft]["total"] += total
+                if max > fileTypeCounts[ft]["max"]:
+                    fileTypeCounts[ft]["max"] = max
+        return fileTypeCounts
         
     def outsideReferences(self):
         """
@@ -130,6 +148,10 @@ class DescribeReply(object):
         if "CSTOP" in self.__reply["fmql"]:
             query += " CSTOP %(CSTOP)s" % self.__reply["fmql"]            
         return query
+        
+    @property
+    def raw(self):
+        return self.__reply
 
 class Record(object):
     """    
@@ -144,12 +166,13 @@ class Record(object):
             print crecord
     
     """
-    def __init__(self, result, container=None, index=-1):
+    def __init__(self, result, container=None, index=-1, cfield=""):
         self.__result = result
         if container and index == -1:
             raise Exception("If a contained record then need both container and index")
         self.__container = container # another record or none
         self.__index = index # position of contained record in order
+        self.__cfield = cfield
         
     def __iter__(self):
         for fieldInfo in self.fieldInfos():
@@ -166,7 +189,7 @@ class Record(object):
             return None
         if self.__result[field]["type"] == "cnodes":
             if "stopped" not in self.__result[field]:
-                return [Record(cnode, self, i) for i, cnode in enumerate(self.__result[field]["value"], 1)]
+                return [Record(cnode, self, i, field) for i, cnode in enumerate(self.__result[field]["value"], 1)]
             else:
                 return []
         # TODO: unicode all the way through
@@ -200,18 +223,19 @@ class Record(object):
         for i in range(1, self.level):
             indent += "\t\t"
         mu = indent + self.fileTypeLabel + " (" + self.id + ")" + (" -- Level: " + str(self.level) if indent != "" else "")
-        mu += " [LIST ELEMENT]" if self.isListElement else "" 
+        mu += " [LIST ELEMENT]" if self.container and self.container.isSimpleList(self.__cfield) else "" 
         mu += "\n"
         indent += "\t"
         if self.container:
             mu += indent + "fms:index: " + str(self.index) + "\n"
         for fieldInfo in self.fieldInfos():
             if fieldInfo[1] == "cnodes":
-                mu += indent + fieldInfo[0] + "\n"
+                mu += indent + fieldInfo[0]
+                mu += " [LIST MULTIPLE]\n" if self.isSimpleList(fieldInfo[0]) else "\n"
                 if "stopped" in self.__result[fieldInfo[0]]:
                     mu += indent + "\t" + "** STOPPED **\n"
                     continue
-                for crecord in [Record(cnode, self, i) for i, cnode in enumerate(self.__result[fieldInfo[0]]["value"], 1)]:
+                for crecord in [Record(cnode, self, i, fieldInfo[0]) for i, cnode in enumerate(self.__result[fieldInfo[0]]["value"], 1)]:
                     mu += str(crecord)
                 continue
             mu += indent + "%s: %s\n" % (fieldInfo[0], self[fieldInfo[0]])
@@ -225,6 +249,10 @@ class Record(object):
         TODO: id with .: 8052-3051024.0452 for http://datasets.caregraf.org/chcss/8052 [annotate change] ie/ replace . with _? (no as won't work for current multiples)
         """
         return self.__result["uri"]["value"]
+        
+    @property
+    def ien(self):
+        return self.id.split("-")[1]
         
     @property
     def label(self):
@@ -250,7 +278,8 @@ class Record(object):
     def asReference(self):
         return Reference(self.__result["uri"])
         
-    def fileTypes(self):
+    # TODO: drop firstsOnly or interwork with set(crecord.fileType for crecord in record.contains())
+    def fileTypes(self, firstsOnly=False):
         fileTypes = set()
         fileTypes.add((self.fileType, self.fileTypeLabel))
         for field, value in self.__result.iteritems():
@@ -259,10 +288,27 @@ class Record(object):
             if not (value["type"] == "cnodes" and "stopped" not in value):
                 continue
             for i, cnode in enumerate(value["value"], 1):
-                cRecord = Record(cnode, self, i)
+                cRecord = Record(cnode, self, i, field)
+                if firstsOnly:
+                    fileTypes.add((cRecord.fileType, cRecord.fileTypeLabel))
+                    continue
                 fileTypes |= cRecord.fileTypes()
-                break
-        return fileTypes        
+        return fileTypes    
+        
+    def fileTypeCounts(self):
+        # ft, count (REM: only ever one instance of a given hierarchy per record)
+        raise Exception("TBD - base on max containment")
+        
+    def maxContainment(self):
+        # The widest set of contained entities in a record's "tree"
+        cFileTypes = [value["file"] for field, value in self.__result.iteritems() if value["type"] == "cnodes"]
+        if not len(cFileTypes):
+            return 0
+        # Own immediate containment
+        mcs = [len(self.contains(cFileType)) for cFileType in cFileTypes]
+        # Contained record's containment
+        mcs.extend([crecord.maxContainment() for cFileType in cFileTypes for crecord in self.contains(cFileType)])
+        return max(mcs)  
                 
     def fields(self):
         return [field for field, fmId in sorted([(field, self.__result[field]["fmId"]) for field in self.__result if field != "uri"], key=lambda x: float(x[1]))]
@@ -289,10 +335,6 @@ class Record(object):
         return self.__container # may be None
         
     @property
-    def isListElement(self):
-        return True if "fmCType" in self.__result["uri"] and self.__result["uri"]["fmCType"] == "LISTEL" else False 
-        
-    @property
     def index(self):
         return self.__index # may be -1 (goes with container)
         
@@ -306,8 +348,17 @@ class Record(object):
             container = container.container
         return level
         
-    def contains(self, fileType=""):
+    @property
+    def cfields(self):
         """
+        Containing fields - become either list fields or disappear in a graph representation
+        """
+        return [field for field, value in self.__result.iteritems() if value["type"] == "cnodes"]
+        
+    def contains(self, cfileType=""):
+        """
+        TODO: consider move to cfield and away from cfileType
+        
         Note that this will build one level of a tree which you can walk ie.
         [x, y, z]
             [a, b]
@@ -324,21 +375,32 @@ class Record(object):
             if value["type"] == "cnodes":
                 if "stopped" not in value:
                     for i, cnode in enumerate(value["value"], 1):
-                        cRecord = Record(cnode, self, i)
-                        if fileType and cRecord.fileType != fileType:
+                        cRecord = Record(cnode, self, i, field)
+                        if cfileType and cRecord.fileType != cfileType:
                             continue
                         contains.append(cRecord)
         return contains
         
-    def maxContainment(self):
-        cFileTypes = [value["file"] for field, value in self.__result.iteritems() if value["type"] == "cnodes"]
-        if not len(cFileTypes):
-            return 0
-        # Own immediate containment
-        mcs = [len(self.contains(cFileType)) for cFileType in cFileTypes]
-        # Contained record's containment
-        mcs.extend([crecord.maxContainment() for cFileType in cFileTypes for crecord in self.contains(cFileType)])
-        return max(mcs)
+    def containsAtAnyLevel(self, cfileType=""):
+        contains = []
+        for field, value in self.__result.iteritems():
+            if value["type"] == "cnodes":
+                if "stopped" not in value:
+                    for i, cnode in enumerate(value["value"], 1):
+                        cRecord = Record(cnode, self, i, field)
+                        contains.extend(cRecord.containsAtAnyLevel(cfileType))
+                        if cfileType and cRecord.fileType != cfileType:
+                            continue
+                        contains.append(cRecord)
+        return contains
+        
+    def isSimpleList(self, cfield):
+        """
+        Three multiple/contained types - simple list (one field els), blank nodes (singletons of 1 or more fields), complex (should be top level files ex/ 63.04)
+        """
+        if cfield not in self.__result:
+            return False
+        return True if "list" in self.__result[cfield] else False
                 
     @property
     def isComplete(self):
@@ -348,7 +410,7 @@ class Record(object):
                 if "stopped" in value:
                     return False
                 for i, cnode in enumerate(value["value"], 1):
-                    cRecord = Record(cnode, self, i)
+                    cRecord = Record(cnode, self, i, field)
                     if not cRecord.isComplete:
                         return False
         return True
@@ -366,7 +428,7 @@ class Record(object):
             if value["type"] == "cnodes":
                 if "stopped" not in value:
                     for i, cnode in enumerate(value["value"], 1):
-                        cRecord = Record(cnode, self, i)
+                        cRecord = Record(cnode, self, i, field)
                         references |= cRecord.references(fileTypes, sameAsOnly)
                 continue
             if value["type"] != "uri":
@@ -390,7 +452,7 @@ class Record(object):
             if value["type"] == "cnodes":
                 if "stopped" not in value:
                     for i, cnode in enumerate(value["value"], 1):
-                        cRecord = Record(cnode, self, i)
+                        cRecord = Record(cnode, self, i, field)
                         dates.extend(cRecord.dates())
                 continue
             # Note: old versions had bug with http://www.w3.org/1999/02/22-rdf-syntax-ns#dateTime
@@ -431,7 +493,7 @@ class Record(object):
             if value["type"] == "cnodes":
                 if "stopped" not in value:
                     for i, cnode in enumerate(value["value"], 1):
-                        cRecord = Record(cnode, self, i)
+                        cRecord = Record(cnode, self, i, field)
                         no += cRecord.numberAssertions(assertionObjectType)
                 continue
             no += 1
@@ -548,9 +610,10 @@ class Reference(FieldValue):
         try:
             return int(ien)
         except:
-            return float(ien)
-        else:
-            return ien
+            try:
+                return float(ien)
+            except:
+                return ien
                 
     @property
     def label(self):

@@ -47,7 +47,7 @@ class FileInfo(object):
         mu += "Description: " + self.description + "\n" if self.description else ""
         if self.isListMultiple:
             mu += "List Multiple\n"
-            mu += "\tpredicate name: " + self.listMultiplePredicateName + "\n"
+            mu += "\tpredicate name: " + self.fieldInfos()[0].predicateName + "\n"
             mu += "\ttype: " + self.fieldInfos()[0].type + "\n"
             return mu
         # The following won't apply to list multiples
@@ -124,15 +124,6 @@ class FileInfo(object):
         if len(self.fieldInfos()) == 1:
             return True
         return False
-        
-    @property
-    def listMultiplePredicateName(self):
-        """
-        If something is a list multiple then make its predicate name from its only field.
-        """
-        if not self.isListMultiple:
-            return ""
-        return self.fieldInfos()[0].predicateName
         
     @property
     def isBlankNodeMultiple(self):
@@ -212,7 +203,8 @@ class FieldInfo(object):
         "8": "VARIABLE-POINTER",
         "9": "MULTIPLE",
         "10": "MUMPS",
-        "11": "IEN" # ie/ NUMBER FIELD (VistA only)
+        "11": "IEN", # IEN match in .001
+        "12": "BOOLEAN"
     }
 
     # a name owner is the FIRST field in the file to use a name. All others don't 'own' the name
