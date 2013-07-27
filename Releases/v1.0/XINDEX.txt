@@ -1,0 +1,93 @@
+V. A.  C R O S S  R E F E R E N C E R  7.3
+                       [2008 VA Standards & Conventions]
+                 UCI: VISTA CPU: VISTA    Jul 17, 2013@01:03:43
+ 
+All Routines? No => No
+ 
+Routine: FMQL*
+Routine:
+8 routines
+ 
+Select BUILD NAME:
+Select INSTALL NAME:
+Select PACKAGE NAME:
+ 
+Print more than compiled errors and warnings? YES//n
+ 
+Index all called routines? NO//
+ 
+This report could take some time, Remember to QUEUE the report.
+ 
+DEVICE: ;;99999  TELNET    Right Margin: 80//
+ 
+ 
+                   V. A.  C R O S S  R E F E R E N C E R  7.3
+                       [2008 VA Standards & Conventions]
+                 UCI: VISTA CPU: VISTA    Jul 17, 2013@01:03:43
+Routines: 8  Faux Routines: 0
+ 
+FMQLDATA  FMQLFILT  FMQLJSON  FMQLQP    FMQLSCH   FMQLSLAB  FMQLSSAM  FMQLUTIL 
+ 
+--- CROSS REFERENCING ---
+ 
+Compiled list of Errors and Warnings              Jul 17, 2013@01:03:43 page 1
+ 
+FMQLDATA * *  316 Lines,  14233 Bytes, Checksum: B136551631
+   ONEOFTYPE    S - Violates VA programming standards.
+ 
+FMQLFILT * *  182 Lines,  6524 Bytes, Checksum: B35572272
+   FLTBOUNDTOM  S - Violates VA programming standards.
+ 
+FMQLJSON * *  173 Lines,  6617 Bytes, Checksum: B38995199
+         . N NC S NC=$E(MSTR,I)
+   JSONSTRING+3 W - Blank(s) at end of line.
+         . S JSTR=JSTR_$S(CD=8:"\b",CD=9:"\t",CD=10:"\n",CD=12:"\f",CD=13:"\r",C
+          D=34:$C(92)_$C(34),CD=92:$C(92)_$C(92),(CD>31&(CD<127)):NC,$L($T(FUNC^
+          %UTF2HEX)):"\u"_$TR($J($$FUNC^%UTF2HEX(NC),4)," ","0"),1:"\u"_$TR($J($
+          ZHEX(CD),4)," ","0"))
+   JSONSTRING+6 F - Undefined Function.
+   BNLISTEND    S - Violates VA programming standards.
+   BNLISTSTART  S - Violates VA programming standards.
+   BNLISTSTOPPEDS - Violates VA programming standards.
+   CONTSTART    S - Violates VA programming standards.
+   DICTSTART    S - Violates VA programming standards.
+   ERRORREPLY   S - Violates VA programming standards.
+   JSONSTRING   S - Violates VA programming standards.
+   LISTSTART    S - Violates VA programming standards.
+   REPLYSTART   S - Violates VA programming standards.
+   JSONSTRING+6 F - Reference to routine '^%UTF2HEX'. That isn't in this UCI.
+   JSONSTRING+6 F - Reference to routine '^%UTF2HEX'. That isn't in this UCI.
+ 
+FMQLSCH  * *  203 Lines,  8795 Bytes, Checksum: B71252494
+   ALLREFERRERSTOTYPE
+                S - Violates VA programming standards.
+   DESCRIBETYPE S - Violates VA programming standards.
+   ERRORREPLY   S - Violates VA programming standards.
+   FIELDSINFO   S - Violates VA programming standards.
+   SUBFILEINFO  S - Violates VA programming standards.
+   TOPFILEINFO  S - Violates VA programming standards.
+   VARPOINTERRANGE
+                S - Violates VA programming standards.
+ 
+FMQLSLAB * *  141 Lines,  6039 Bytes, Checksum: B15107406
+   BLDBNODES    S - Violates VA programming standards.
+ 
+FMQLSSAM * *  352 Lines,  11935 Bytes, Checksum: B88854282
+   RESC8250P1   S - Violates VA programming standards.
+   RESC8254P01  S - Violates VA programming standards.
+   RESVS50dot7  S - Violates VA programming standards.
+   RESVS757dot01S - Violates VA programming standards.
+   RESVS790dot2 S - Violates VA programming standards.
+   RESVS9999999dot27
+                S - Violates VA programming standards.
+   RESVSSTANDARDS - Violates VA programming standards.
+   RESVSTOCPT   S - Violates VA programming standards.
+   RESVSVAFIXED S - Violates VA programming standards.
+   RESVSVUID    S - Violates VA programming standards.
+ 
+FMQLUTIL * *  405 Lines,  18218 Bytes, Checksum: B175530427
+   FIELDTOPRED  S - Violates VA programming standards.
+   MAKEFMDATE   S - Violates VA programming standards.
+   MAKEXMLDATE  S - Violates VA programming standards.
+ 
+--- END ---

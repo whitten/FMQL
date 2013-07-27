@@ -269,7 +269,12 @@ class Record(object):
                         
     @property
     def sameAs(self):
-        return self.__result["uri"]["sameAs"] if "sameAs" in self.__result["uri"] else ""
+        if "sameAs" not in self.__result["uri"]:
+            return ""
+        # TODO: LOCAL:XXX - need 'vistaBase' to qualify
+        if re.match(r'LOCAL', self.__result["uri"]["sameAs"]):
+            return ""
+        return self.__result["uri"]["sameAs"]
         
     @property
     def sameAsLabel(self):
@@ -639,7 +644,12 @@ class Reference(FieldValue):
         """
         Unlike 'internal'/local ids, sameAs is a full qualified URI
         """
-        return self._result["sameAs"] if "sameAs" in self._result else ""
+        if "sameAs" not in self._result:
+            return ""
+        # TODO: LOCAL:XXX - need 'vistaBase' to qualify
+        if re.match(r'LOCAL', self._result["sameAs"]):
+            return ""
+        return self._result["sameAs"]
         
     @property
     def sameAsLabel(self):
