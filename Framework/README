@@ -2,4 +2,4 @@ FMQL Python Framework
 
 A framework for working with the FMQL RPC from a python application. A typical application is an Apache (WSGI) hosted service.
 
-Note: FMQL needs brokerRPC.py from pyVistA (https://github.com/OSEHR/pyVistA) to run and that will be included in FMQL installs.
+Note: FMQL needs brokerRPC.py from pyVistA (https://github.com/caregraf/pyVistA) to run and that will be included in FMQL installs.
