@@ -20,6 +20,7 @@
  Thanks to: Sam Habiel, Jon Tai, Andy Purdue, Jeff Apple, Ben Mehling
  
 TODO:
+- Keep alive/poll message to avoid relogins due to idles
 - Application Proxy option
 - Remote Application/BSE option (http://www.va.gov/vdl/documents/Infrastructure/Remote_Proc_Call_Broker_(RPC)/xwb1_1p45_supplemental.pdf)
 - Move context addition/switching after login and allow switch of connection
@@ -103,8 +104,10 @@ class RPCConnection(object):
         except socket.error as e:
             msg = ""
         # remote end closed so reconnect and retry.
-        if not len(msg):
-            self.logger.logInfo("RPCConnection", "Forced to reconnect connection %d after reply failed (%s))" % (self.poolId, str(e) if e else "empty reply"))
+        # In Kernel System parameters (8989.3) "broker activity timeout" will force connection shutdown/resource freeup if idle for longer than its setting (usually 180 seconds). This and empty messages lead to one and only one relogin and retry. 
+        # TODO: per broker activity timeout comment, use "poll"/"keep alive" messages on a timer. 
+        if not len(msg) or re.match(r'\d+ Job ended', msg):
+            self.logger.logInfo("RPCConnection", "Forced to reconnect connection %d after reply failed (%s))" % (self.poolId, msg))
             self.connect()
             request = self.makeRequest(name, params)
             self.sock.send(request)
@@ -492,6 +495,17 @@ def main():
     for i in range(20):
         trpcInvoker = ThreadedRPCInvoker(pool, "CG FMQL QP", ["OP:DESCRIBE^TYPE:2^ID:9"])
         trpcInvoker.start()
+        
+    return
+    
+    # Keep alive/poll test
+    connection = VistARPCConnection(args[0], int(args[1]), args[2], args[3], "CG FMQL QP USER", RPCLogger())
+    while True:
+        print "Sending request ..."
+        reply = connection.invokeRPC("CG FMQL QP", ["OP:DESCRIBETYPE^TYPE:120_5"])
+        print reply[0:50]
+        print "Sleeping ..."
+        sleep(30) # typical 180 is timeout # in 8989_3-1. Reset to 20 for test (S ^XTV(8989.3,1,"XWB")=20)
     
 if __name__ == "__main__":
     main()
