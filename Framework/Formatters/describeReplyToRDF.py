@@ -18,6 +18,9 @@ from describeTypeResult import FieldInfo
 One of a series of formatters of Records (toHTML, toText ...). This makes RDF from  Records extracted from FMQL Describe replies.
 
 How to use? See example code in "main" at the bottom of this file.
+
+TODO:
+- inline LIST MULTIPLES (isSimpleList(cfield))
 """
                    
 class DescribeReplyToRDF:
@@ -69,10 +72,15 @@ class DescribeReplyToRDF:
                 
             self.rdfb.addLiteralAssertion(pred, {"value": str(fieldValue.value), "datatype": fieldValue.datatype} if fieldValue.datatype else {"value": str(fieldValue.value)})
             
+            # TODO: add list cnodes here i/e as inline assertions
+            # check that values are unique
+            # Fix up cfield vs cfileType in describeResult to be consistent
+            
         # close Resource Definition
         self.rdfb.endNode()
-            
+                    
         # Can recurse through the hierarchy of records in records
+        # TODO: if LIST ie/ isSimpleList(cfield), inline addAssertion from CRecords' only field
         for crecord in record.contains():
             if not crecord.isComplete: # skip the stopped
                 continue
