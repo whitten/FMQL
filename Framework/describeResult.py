@@ -15,6 +15,7 @@ from describeTypeResult import FieldInfo
 
 """
 Quick TODO:
+- CONTAINMENT: cfield or ctype is too messy. Pick a side.
 - setItem for non core field ie/ pass in [mn]: if not reseting an existing value
   i/e want vse: or chcsse: etc.
 
@@ -45,8 +46,10 @@ class DescribeReply(object):
     """
     def __init__(self, reply):
         if "results" not in reply:
-            raise Exception("No results in reply")
-        if reply["fmql"]["OP"] != "DESCRIBE":
+            # Important - empty filter looks like DESCRIBE not there
+            # for pGrafer
+            reply["results"] = []
+        elif reply["fmql"]["OP"] != "DESCRIBE":
             raise Exception("Only for DESCRIBEs")
         self.__reply = reply
         
@@ -99,7 +102,7 @@ class DescribeReply(object):
             references |= record.references()
         references -= recordsAsRefs
         return references
-                
+                            
     def records(self):
         """
         Basis of and peer of __iter__
@@ -135,7 +138,13 @@ class DescribeReply(object):
         What is the maximum number of contained entities in its hierarchy
         """
         return max(record.maxContainment() for record in self.records())
-                
+        
+    def deleteRecord(self, recordId):
+        for i, result in enumerate(self.__reply["results"]):
+            if result["uri"]["value"] == recordId:
+                self.__reply["results"].pop(i)
+                break
+
     def query(self):
         if "URI" in self.__reply["fmql"]:
             query = "DESCRIBE %(URI)s" % self.__reply["fmql"]
@@ -148,6 +157,14 @@ class DescribeReply(object):
         if "CSTOP" in self.__reply["fmql"]:
             query += " CSTOP %(CSTOP)s" % self.__reply["fmql"]            
         return query
+        
+    def reidentifyQuery(self, anchorId):
+        if "URI" in self.__reply["fmql"]:
+            self.__reply["fmql"]["URI"] = anchorId
+        elif "FILTER" in self.__reply["fmql"]:
+            if not re.search(r'\=', self.__reply["fmql"]["FILTER"]):
+                raise Exception("Can only reanchor == filters")
+            self.__reply["fmql"]["FILTER"] = self.__reply["fmql"]["FILTER"].split("=")[0] + "=" + anchorId
         
     @property
     def raw(self):
@@ -213,7 +230,10 @@ class Record(object):
         """
         # This will either reset a field value or ...
         # TODO: check that fieldInfo if already recorded, matches the value
-        self.__result[field] = value            
+        if type(value) == dict:
+            self.__result[field] = value
+        else:
+            self.__result[field]["value"] = value 
         
     def __contains__(self, field):
         return True if field in self.__result else False
@@ -249,7 +269,7 @@ class Record(object):
         TODO: id with .: 8052-3051024.0452 for http://datasets.caregraf.org/chcss/8052 [annotate change] ie/ replace . with _? (no as won't work for current multiples)
         """
         return self.__result["uri"]["value"]
-        
+                
     @property
     def ien(self):
         return self.id.split("-")[1]
@@ -333,6 +353,13 @@ class Record(object):
         return None
         
     @property
+    def o1Field(self):
+        for field, value in self.__result.iteritems():
+            if value["fmId"] == ".01" and field != "uri":
+                return field
+        raise Exception("Where's the .01 field!")
+        
+    @property
     def container(self):
         """
         If one then a multiple ie/ equivalent to isMultiple()
@@ -385,6 +412,18 @@ class Record(object):
                             continue
                         contains.append(cRecord)
         return contains
+        
+    def deleteContained(self, cId):
+        for field, value in self.__result.iteritems():
+            if value["type"] == "cnodes":
+                if "stopped" in value:
+                    continue
+                for i, cnode in enumerate(value["value"]):
+                    if cnode["uri"]["value"] == cId:
+                        value["value"].pop(i)
+                        if len(value["value"]) == 0:
+                            del self.__result[field]
+                        return
         
     def containsAtAnyLevel(self, cfileType=""):
         contains = []
@@ -446,6 +485,112 @@ class Record(object):
             references.add(reference)
         return references
         
+    def referenceInstances(self, fileTypes=None, sameAsOnly=False):
+        """
+        Not unique refs - instances - for changing
+        """
+        references = []
+        for field, value in self.__result.iteritems():
+            if field == "uri":
+                continue
+            if value["type"] == "cnodes":
+                if "stopped" not in value:
+                    for i, cnode in enumerate(value["value"], 1):
+                        cRecord = Record(cnode, self, i, field)
+                        references.extend(cRecord.references(fileTypes, sameAsOnly))
+                continue
+            if value["type"] != "uri":
+                continue
+            reference = Reference(value)
+            if fileTypes and reference.fileType not in fileTypes:
+                continue
+            if sameAsOnly and reference.sameAs == "":
+                continue
+            references.append(reference)
+        return references
+        
+    def modifyReferences(self, map):
+        """
+        Modify all instances of a reference including those in cnodes
+        
+        Note: doesn't apply to a record itself. Use reidentify for that.
+        """
+        # don't support changing "Reference" directly (may be a copy so change is misleading)
+        for field, value in self.__result.iteritems():
+            if field == "uri":
+                continue
+            if value["type"] == "cnodes":
+                if "stopped" not in value:
+                    for i, cnode in enumerate(value["value"], 1):
+                        cRecord = Record(cnode, self, i, field)
+                        cRecord.modifyReferences(map)
+                continue
+            if value["type"] != "uri":
+                continue
+            uriType = value["value"].split("-")[0] 
+            if uriType not in map:
+                continue
+            if value["value"] not in map[uriType]:
+                continue
+            mapLabel = map[uriType][value["value"]][1]
+            if value["label"].split("/")[0] != mapLabel.split("/")[0]:
+                raise Exception("To Label must match File Type of original reference")
+            value["label"] = mapLabel
+            if len(map[uriType][value["value"]]) > 2:
+                value["sameAs"] = map[uriType][value["value"]][2]
+                value["sameAsLabel"] = map[uriType][value["value"]][3]
+            value["value"] = map[uriType][value["value"]][0]
+        
+    def reidentify(self, newId, newLabel):
+        """
+        Important: this ONLY applies to top records. CNode ids are changed to match a change in the top record's id.
+        """
+        if self.__container:
+            newTCIEN = newId.split("-")[1]
+            self.__result["uri"]["value"] = re.sub(r'([^\_]+)$', newTCIEN, self.__result["uri"]["value"])
+            for field, value in self.__result.iteritems():
+                if value["type"] == "cnodes":
+                    if "stopped" not in value:
+                        for i, cnode in enumerate(value["value"], 1):
+                            cRecord = Record(cnode, self, i, field)
+                            cRecord.reidentify(newId, newLabel)
+            return
+                        
+        # Ensure 01 field changes
+        for field, value in self.__result.iteritems():
+            if value["fmId"] == ".01":
+                _01Field = field
+                # Assuming given order of REFERENCE changing that .01 has already been changed
+                # a/c for bug where Date is counted as a pointer!
+                if value["type"] == "uri" and not re.search(r'T\d{2}:', value["label"]):
+                    continue
+                # TODO: record if a date type and ensure newLabel is a date
+                value["value"] = newLabel.split("/")[1]
+                break
+                    
+        self.__result["uri"]["value"] = newId
+        self.__result["uri"]["label"] = newLabel
+        
+        for field, value in self.__result.iteritems():
+            if value["type"] == "cnodes":
+                if "stopped" not in value:
+                    for i, cnode in enumerate(value["value"], 1):
+                        cRecord = Record(cnode, self, i, field)
+                        cRecord.reidentify(newId, newLabel)
+                        
+    def deleteField(self, field):
+        if field not in self.__result:
+            return
+        # Not allowed delete "uri" or .01 field
+        for f, value in self.__result.iteritems():
+            if value["fmId"] == ".01":
+                if field == f:
+                    raise Exception("Cannot delete .01 field")
+                break
+        if field == "uri":
+            raise Exception("Cannot delete uri field")
+        del self.__result[field]
+        
     def dates(self):
         """
         All dates in this record - including contained dates, in order. Duplicates removed. To get first: dates()[0], dates()[-1] is latest.
@@ -468,6 +613,44 @@ class Record(object):
                 continue # bad date
             dates.append(dtValue.dateTimeValue)
         return sorted(list(set(dates))) # remove dups, low to high
+        
+    def addDatesDelta(self, tdelta):
+        """
+        Fixes dates by side effect - FMQL V1.1 should do that
+        """
+        for field, value in self.__result.iteritems(): 
+            if field == "uri": # REVISIT if type is date
+                # GET AROUND BUG that FMTYPE == 7 even if .01 field type is date
+                o1Field = self.o1Field
+                o1FI = self.fieldInfo(o1Field)
+                if o1FI[3] == "DATE-TIME":
+                    dv = DateValue({"fmType": "1", "value": self.__fixDate(self.__result[o1Field]["value"]), "type": "typed-literal"})
+                    if not dv.isValid:
+                        raise Exception("Date in URI is invalid - " + self.__result[o1Field]["value"])
+                    dv.addDelta(tdelta)
+                    self.__result["uri"]["label"] = self.__result["uri"]["label"].split("/")[0] + "/" + dv.value
+                continue
+            if value["type"] == "cnodes":
+                if "stopped" not in value:
+                    for i, cnode in enumerate(value["value"], 1):
+                        cRecord = Record(cnode, self, i, field)
+                        cRecord.addDatesDelta(tdelta)
+                continue
+            # Note: old versions had bug with http://www.w3.org/1999/02/22-rdf-syntax-ns#dateTime
+            if not (value["type"] == "typed-literal" and value["datatype"] == "xsd:dateTime"):
+                continue
+            # See cases of seconds > 59 (only case handled so far) FMQL V1.1 TODO
+            value["value"] = self.__fixDate(value["value"])
+            dtValue = DateValue(value)
+            if not dtValue.isValid:
+                raise Exception("Invalid date - " + value["value"])
+            dtValue.addDelta(tdelta)
+            
+    # TODO: FMQL V1.1 - should never happen
+    def __fixDate(self, dval):
+        if int(re.search(r':(\d{2})Z$', dval).group(1)) > 59:
+            dval = re.sub(r'\d{2}Z$', '59Z', dval) 
+        return dval
               
     def numerics(self):
         """
@@ -567,7 +750,7 @@ class Reference(FieldValue):
         if field not in ["sameAs", "sameAsLabel"]:
             raise Exception("Can't change anything but sameAs'")
         self._result[field] = value
-        
+                
     def __hash__(self):
         return self.id.__hash__()
         
@@ -739,6 +922,11 @@ class DateValue(Literal):
         # Also no date.strptime so "need" :00... etc for hours and minutes
         # Month not in 1-12; alpha num values (ex/ ); bad minutes (2006-05-15T08:60:00Z. Bad minutes.); or no day ie/ 2002-09-00T00:00:00Z
         return datetime.datetime.strptime(self._result["value"], '%Y-%m-%dT%H:%M:%SZ')
+        
+    def addDelta(self, tdelta):
+        dtVal = self.dateTimeValue
+        ndtVal = dtVal + tdelta
+        self._result["value"] = ndtVal.strftime('%Y-%m-%dT%H:%M:%SZ')
         
 class StringOrNumericValue(Literal):
     """
