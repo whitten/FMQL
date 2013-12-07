@@ -214,7 +214,7 @@ BLDFDINF(FLINF,FIELD,FDINF) ;
  S FDINF("FLAGS")=FLAGS
  S FDINF("LABEL")=$P(^DD(FILE,FIELD,0),"^")
  ; Pred: use in XML fields/RDF and JSON. TODO: account for name reuse
- S FDINF("PRED")=$$FIELDTOPRED(FDINF("LABEL"))
+ S FDINF("PRED")=$$UNIQPRED(FILE,FIELD)
  ; Date/Number/Codes/String/WP String/Pointer/V Pointer/MULT/MUMPS
  I +FLAGS D  ; WP and MULT flag start with the subfile number
  . ; WP special - need to reach into its 'file' to see what it is
@@ -307,7 +307,7 @@ FIELDIDX(FILE,FIELD) ;
  ; TODO: move 100, 52 MUMPS special IDX in here
  ;
 BLDCREFS(FILE,FIELD,FDINF) ;
- N IDXID,IDXINF,IDXTYP
+ N IDXID,IDXINF,IDXTYP,TRIGFILE,TRIGFLD,TRIGPRED
  I FILE=8927.1,FIELD=.01 S FDINF("IDX")="B" ; Missing from TIU TEMP FLD ^DD
  I '$D(^DD(FILE,FIELD,1,1)) Q
  S IDXID=0 F  S IDXID=$O(^DD(FILE,FIELD,1,IDXID)) Q:IDXID'=+IDXID  D
@@ -319,9 +319,11 @@ BLDCREFS(FILE,FIELD,FDINF) ;
  . Q:IDXTYP'="TRIGGER"
  . S TRIGFILE=$P(IDXINF,"^",4)
  . S TRIGFLD=$P(IDXINF,"^",5)
+ . S TRIGPRED=$$UNIQPRED(TRIGFILE,TRIGFLD)
+ . Q:TRIGPRED=""  ; file or field must be invalid
  . I $D(FDINF("TRIGS")) S FDINF("TRIGS")=FDINF("TRIGS")_","
  . E  S FDINF("TRIGS")=""
- . S FDINF("TRIGS")=FDINF("TRIGS")_$P(IDXINF,"^",4)_"/"_$P(IDXINF,"^",5)
+ . S FDINF("TRIGS")=FDINF("TRIGS")_TRIGFILE_"/"_TRIGPRED
  Q
  ;
  ;
@@ -431,5 +433,22 @@ FIELDTOPRED(FIELD) ;
  SET UPC="ABCDEFGHIJKLMNOPQRSTUVWXYZ /"
  SET LOC="abcdefghijklmnopqrstuvwxyz__"
  S PRED=$TR($TR(FIELD,$TR(FIELD,ALW)),UPC,LOC)
+ Q PRED
+ ;
+ ;
+ ; Unique predicate means accounting for use of the same name by prior fields
+ ; If a reuse then add field id (escaped) as suffix to normalized name to make
+ ; the predicate.
+ ;
+UNIQPRED(FILE,FIELD) ;
+ N OWNS,TNNAME,PFIELD,PNNAME,PRED
+ Q:'$D(^DD(FILE,FIELD,0)) ""
+ S OWNS=1
+ S NNAME=$$FIELDTOPRED($P(^DD(FILE,FIELD,0),"^"))
+ S PFIELD=0 F  S PFIELD=$O(^DD(FILE,PFIELD)) Q:PFIELD=FIELD!(OWNS=0)  D
+ . Q:'$D(^DD(FILE,PFIELD,0))
+ . S PNNAME=$$FIELDTOPRED($P(^DD(FILE,PFIELD,0),"^"))
+ . I PNNAME=NNAME S OWNS=0 Q
+ S PRED=$S(OWNS=1:NNAME,1:NNAME_"-"_$TR(FIELD,".","_"))
  Q PRED
  ;
