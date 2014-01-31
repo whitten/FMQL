@@ -166,7 +166,7 @@ class DescribeReply(object):
         else:
             qid += "T%(TYPE)s" % self.__reply["fmql"]
             if "FILTER" in self.__reply["fmql"]:
-                qid += "__F%s" % re.sub(r'\ ', '_', self.__reply["fmql"]["FILTER"])
+                qid += "__F%s" % re.sub(r'<', "_LT_", re.sub(r'>', "_GT_", re.sub(r'\ ', '_', self.__reply["fmql"]["FILTER"])))
             if self.__reply["fmql"]["LIMIT"] != "-1":
                 qid += "__L%(LIMIT)s" % self.__reply["fmql"]
             if "OFFSET" in self.__reply["fmql"]:
