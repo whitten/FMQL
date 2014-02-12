@@ -803,7 +803,7 @@ class Reference(FieldValue):
         ienStr = self.id.split("-")[1]
         if ienStr == "0":
             return False
-        if ienStr == self._result["label"].split("/")[1]: # Label == IEN for invalids (but can it be valid too?)
+        if "label" in self._result and ienStr == self._result["label"].split("/")[1]: # Label == IEN for invalids (but can it be valid too?)
             return False
         return True
         
@@ -893,7 +893,7 @@ class CodedValue(Literal):
         if self.isBoolean:
             return True if self._result["value"] == "true" else False
         return self._result["value"]
-    
+            
     @property
     def fmValue(self):
         return self._result["value"]
