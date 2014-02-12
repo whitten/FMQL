@@ -973,6 +973,9 @@ class StringOrNumericValue(Literal):
             
     @property
     def value(self):
+        # Python treats INF as Infinity but VistA won't
+        if self._result["value"].lower() == "inf":
+            return self._result["value"]
         try:
             floatVal = float(self._result["value"])
         except:
