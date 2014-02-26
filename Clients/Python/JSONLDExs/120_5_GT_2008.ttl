@@ -1,3 +1,4 @@
+@prefix fmql: <http://datasets.caregraf.org/fmql/> .
 @prefix fmso: <http://datasets.caregraf.org/fmso/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
@@ -153,35 +154,35 @@
     vs:vital_type-120_5 <http://livevista.caregraf.info/120_51-1> .
 
 <http://livevista.caregraf.info/120_51-1> rdfs:label "BLOOD PRESSURE" ;
-    vs:sameAsLabel "BLOOD PRESSURE" ;
+    fmso:sameAsLabel "BLOOD PRESSURE" ;
     owl:sameAs <va:4500634> .
 
 <http://livevista.caregraf.info/120_51-2> rdfs:label "TEMPERATURE" ;
-    vs:sameAsLabel "TEMPERATURE" ;
+    fmso:sameAsLabel "TEMPERATURE" ;
     owl:sameAs <va:4500638> .
 
 <http://livevista.caregraf.info/120_51-3> rdfs:label "RESPIRATION" ;
-    vs:sameAsLabel "RESPIRATION" ;
+    fmso:sameAsLabel "RESPIRATION" ;
     owl:sameAs <va:4688725> .
 
 <http://livevista.caregraf.info/120_51-5> rdfs:label "PULSE" ;
-    vs:sameAsLabel "PULSE" ;
+    fmso:sameAsLabel "PULSE" ;
     owl:sameAs <va:4500636> .
 
 <http://livevista.caregraf.info/120_52-1> rdfs:label "R ARM" ;
-    vs:sameAsLabel "R ARM" ;
+    fmso:sameAsLabel "R ARM" ;
     owl:sameAs <va:4688676> .
 
 <http://livevista.caregraf.info/120_52-47> rdfs:label "SPONTANEOUS" ;
-    vs:sameAsLabel "SPONTANEOUS" ;
+    fmso:sameAsLabel "SPONTANEOUS" ;
     owl:sameAs <va:4688706> .
 
 <http://livevista.caregraf.info/120_52-59> rdfs:label "PALPATED" ;
-    vs:sameAsLabel "PALPATED" ;
+    fmso:sameAsLabel "PALPATED" ;
     owl:sameAs <va:4688669> .
 
 <http://livevista.caregraf.info/120_52-6> rdfs:label "ORAL" ;
-    vs:sameAsLabel "ORAL" ;
+    fmso:sameAsLabel "ORAL" ;
     owl:sameAs <va:4500642> .
 
 <http://livevista.caregraf.info/120_52-64> rdfs:label "CUFF" .
@@ -191,7 +192,7 @@
 <http://livevista.caregraf.info/200-65> rdfs:label "ASCLEPIUS,DEUS" .
 
 <http://livevista.caregraf.info/120_52-50> rdfs:label "SITTING" ;
-    vs:sameAsLabel "SITTING" ;
+    fmso:sameAsLabel "SITTING" ;
     owl:sameAs <va:4688703> .
 
 <http://livevista.caregraf.info/200-64> rdfs:label "USER,FMQL TWENTY-FIVE" .

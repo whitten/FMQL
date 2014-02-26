@@ -9,18 +9,22 @@
       "@type": "@id"
     }, 
     "prov": "http://www.w3.org/ns/prov#", 
-    "list": "@list", 
+    "generatedAt": {
+      "@id": "prov:generatedAtTime", 
+      "@type": "xsd#date"
+    }, 
+    "fmql": "http://datasets.caregraf.org/fmql/", 
     "label": {
       "@id": "rdfs:label"
     }, 
     "value": "@value", 
     "fmso": "http://datasets.caregraf.org/fmso/", 
+    "list": "@list", 
     "@base": "http://livevista.caregraf.info/", 
     "vs": "http://datasets.caregraf.org/vs/", 
     "xsd": "http://www.w3.org/2001/XMLSchema#", 
-    "generatedAt": {
-      "@id": "prov:generatedAtTime", 
-      "@type": "xsd#date"
+    "sameAsLabel": {
+      "@id": "fmso:sameAsLabel"
     }, 
     "type": "@type", 
     "id": "@id"

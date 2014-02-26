@@ -32,13 +32,13 @@
     {
       "qualifier-120_5": {
         "sameAs": "va:4500642", 
-        "vs:sameAsLabel": "ORAL", 
+        "sameAsLabel": "ORAL", 
         "id": "http://livevista.caregraf.info/120_52-6", 
         "label": "ORAL"
       }, 
       "vital_type-120_5": {
         "sameAs": "va:4500638", 
-        "vs:sameAsLabel": "TEMPERATURE", 
+        "sameAsLabel": "TEMPERATURE", 
         "id": "http://livevista.caregraf.info/120_51-2", 
         "label": "TEMPERATURE"
       }, 
@@ -71,20 +71,20 @@
       "qualifier-120_5": [
         {
           "sameAs": "va:4688669", 
-          "vs:sameAsLabel": "PALPATED", 
+          "sameAsLabel": "PALPATED", 
           "id": "http://livevista.caregraf.info/120_52-59", 
           "label": "PALPATED"
         }, 
         {
           "sameAs": "va:4688703", 
-          "vs:sameAsLabel": "SITTING", 
+          "sameAsLabel": "SITTING", 
           "id": "http://livevista.caregraf.info/120_52-50", 
           "label": "SITTING"
         }
       ], 
       "vital_type-120_5": {
         "sameAs": "va:4500636", 
-        "vs:sameAsLabel": "PULSE", 
+        "sameAsLabel": "PULSE", 
         "id": "http://livevista.caregraf.info/120_51-5", 
         "label": "PULSE"
       }, 
@@ -116,13 +116,13 @@
     {
       "qualifier-120_5": {
         "sameAs": "va:4688706", 
-        "vs:sameAsLabel": "SPONTANEOUS", 
+        "sameAsLabel": "SPONTANEOUS", 
         "id": "http://livevista.caregraf.info/120_52-47", 
         "label": "SPONTANEOUS"
       }, 
       "vital_type-120_5": {
         "sameAs": "va:4688725", 
-        "vs:sameAsLabel": "RESPIRATION", 
+        "sameAsLabel": "RESPIRATION", 
         "id": "http://livevista.caregraf.info/120_51-3", 
         "label": "RESPIRATION"
       }, 
@@ -155,7 +155,7 @@
       "qualifier-120_5": [
         {
           "sameAs": "va:4688676", 
-          "vs:sameAsLabel": "R ARM", 
+          "sameAsLabel": "R ARM", 
           "id": "http://livevista.caregraf.info/120_52-1", 
           "label": "R ARM"
         }, 
@@ -165,7 +165,7 @@
         }, 
         {
           "sameAs": "va:4688703", 
-          "vs:sameAsLabel": "SITTING", 
+          "sameAsLabel": "SITTING", 
           "id": "http://livevista.caregraf.info/120_52-50", 
           "label": "SITTING"
         }, 
@@ -176,7 +176,7 @@
       ], 
       "vital_type-120_5": {
         "sameAs": "va:4500634", 
-        "vs:sameAsLabel": "BLOOD PRESSURE", 
+        "sameAsLabel": "BLOOD PRESSURE", 
         "id": "http://livevista.caregraf.info/120_51-1", 
         "label": "BLOOD PRESSURE"
       }, 
@@ -208,13 +208,13 @@
     {
       "qualifier-120_5": {
         "sameAs": "va:4500642", 
-        "vs:sameAsLabel": "ORAL", 
+        "sameAsLabel": "ORAL", 
         "id": "http://livevista.caregraf.info/120_52-6", 
         "label": "ORAL"
       }, 
       "vital_type-120_5": {
         "sameAs": "va:4500638", 
-        "vs:sameAsLabel": "TEMPERATURE", 
+        "sameAsLabel": "TEMPERATURE", 
         "id": "http://livevista.caregraf.info/120_51-2", 
         "label": "TEMPERATURE"
       }, 
@@ -247,20 +247,20 @@
       "qualifier-120_5": [
         {
           "sameAs": "va:4688669", 
-          "vs:sameAsLabel": "PALPATED", 
+          "sameAsLabel": "PALPATED", 
           "id": "http://livevista.caregraf.info/120_52-59", 
           "label": "PALPATED"
         }, 
         {
           "sameAs": "va:4688703", 
-          "vs:sameAsLabel": "SITTING", 
+          "sameAsLabel": "SITTING", 
           "id": "http://livevista.caregraf.info/120_52-50", 
           "label": "SITTING"
         }
       ], 
       "vital_type-120_5": {
         "sameAs": "va:4500636", 
-        "vs:sameAsLabel": "PULSE", 
+        "sameAsLabel": "PULSE", 
         "id": "http://livevista.caregraf.info/120_51-5", 
         "label": "PULSE"
       }, 
@@ -292,13 +292,13 @@
     {
       "qualifier-120_5": {
         "sameAs": "va:4688706", 
-        "vs:sameAsLabel": "SPONTANEOUS", 
+        "sameAsLabel": "SPONTANEOUS", 
         "id": "http://livevista.caregraf.info/120_52-47", 
         "label": "SPONTANEOUS"
       }, 
       "vital_type-120_5": {
         "sameAs": "va:4688725", 
-        "vs:sameAsLabel": "RESPIRATION", 
+        "sameAsLabel": "RESPIRATION", 
         "id": "http://livevista.caregraf.info/120_51-3", 
         "label": "RESPIRATION"
       }, 
@@ -331,7 +331,7 @@
       "qualifier-120_5": [
         {
           "sameAs": "va:4688676", 
-          "vs:sameAsLabel": "R ARM", 
+          "sameAsLabel": "R ARM", 
           "id": "http://livevista.caregraf.info/120_52-1", 
           "label": "R ARM"
         }, 
@@ -341,7 +341,7 @@
         }, 
         {
           "sameAs": "va:4688703", 
-          "vs:sameAsLabel": "SITTING", 
+          "sameAsLabel": "SITTING", 
           "id": "http://livevista.caregraf.info/120_52-50", 
           "label": "SITTING"
         }, 
@@ -352,7 +352,7 @@
       ], 
       "vital_type-120_5": {
         "sameAs": "va:4500634", 
-        "vs:sameAsLabel": "BLOOD PRESSURE", 
+        "sameAsLabel": "BLOOD PRESSURE", 
         "id": "http://livevista.caregraf.info/120_51-1", 
         "label": "BLOOD PRESSURE"
       }, 
@@ -384,13 +384,13 @@
     {
       "qualifier-120_5": {
         "sameAs": "va:4500642", 
-        "vs:sameAsLabel": "ORAL", 
+        "sameAsLabel": "ORAL", 
         "id": "http://livevista.caregraf.info/120_52-6", 
         "label": "ORAL"
       }, 
       "vital_type-120_5": {
         "sameAs": "va:4500638", 
-        "vs:sameAsLabel": "TEMPERATURE", 
+        "sameAsLabel": "TEMPERATURE", 
         "id": "http://livevista.caregraf.info/120_51-2", 
         "label": "TEMPERATURE"
       }, 
@@ -423,20 +423,20 @@
       "qualifier-120_5": [
         {
           "sameAs": "va:4688669", 
-          "vs:sameAsLabel": "PALPATED", 
+          "sameAsLabel": "PALPATED", 
           "id": "http://livevista.caregraf.info/120_52-59", 
           "label": "PALPATED"
         }, 
         {
           "sameAs": "va:4688703", 
-          "vs:sameAsLabel": "SITTING", 
+          "sameAsLabel": "SITTING", 
           "id": "http://livevista.caregraf.info/120_52-50", 
           "label": "SITTING"
         }
       ], 
       "vital_type-120_5": {
         "sameAs": "va:4500636", 
-        "vs:sameAsLabel": "PULSE", 
+        "sameAsLabel": "PULSE", 
         "id": "http://livevista.caregraf.info/120_51-5", 
         "label": "PULSE"
       }, 
@@ -468,13 +468,13 @@
     {
       "qualifier-120_5": {
         "sameAs": "va:4688706", 
-        "vs:sameAsLabel": "SPONTANEOUS", 
+        "sameAsLabel": "SPONTANEOUS", 
         "id": "http://livevista.caregraf.info/120_52-47", 
         "label": "SPONTANEOUS"
       }, 
       "vital_type-120_5": {
         "sameAs": "va:4688725", 
-        "vs:sameAsLabel": "RESPIRATION", 
+        "sameAsLabel": "RESPIRATION", 
         "id": "http://livevista.caregraf.info/120_51-3", 
         "label": "RESPIRATION"
       }, 
@@ -507,7 +507,7 @@
       "qualifier-120_5": [
         {
           "sameAs": "va:4688676", 
-          "vs:sameAsLabel": "R ARM", 
+          "sameAsLabel": "R ARM", 
           "id": "http://livevista.caregraf.info/120_52-1", 
           "label": "R ARM"
         }, 
@@ -517,7 +517,7 @@
         }, 
         {
           "sameAs": "va:4688703", 
-          "vs:sameAsLabel": "SITTING", 
+          "sameAsLabel": "SITTING", 
           "id": "http://livevista.caregraf.info/120_52-50", 
           "label": "SITTING"
         }, 
@@ -528,7 +528,7 @@
       ], 
       "vital_type-120_5": {
         "sameAs": "va:4500634", 
-        "vs:sameAsLabel": "BLOOD PRESSURE", 
+        "sameAsLabel": "BLOOD PRESSURE", 
         "id": "http://livevista.caregraf.info/120_51-1", 
         "label": "BLOOD PRESSURE"
       }, 
@@ -557,15 +557,5 @@
         "label": "ASCLEPIUS,DEUS"
       }
     }
-  ], 
-  "generatedAt": "2014-02-26", 
-  "query": {
-    "fmql:type": "120_5", 
-    "fmql:op": "DESCRIBE", 
-    "fmql:limit": "-1", 
-    "fmql:offset": "0", 
-    "fmql:cstop": "10", 
-    "fmql:typelabel": "GMRV VITAL MEASUREMENT", 
-    "fmql:filter": ".02=2-9&.01>2008-04-01"
-  }
+  ]
 }

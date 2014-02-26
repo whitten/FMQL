@@ -191,6 +191,9 @@ def usePyld():
     jreply = json.loads(urllib2.urlopen(queryURL).read())
     json.dump(jreply, open("fmql_FMQL.json", "w"), indent=2)
 
+    # nix all but @graph and @context
+    jreply = {"@context": jreply["@context"], "@graph": jreply["@graph"]}
+
     # Let's produce different forms of JSON-LD (and RDF) from this 
     
     # 1. Expanded form
