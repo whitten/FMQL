@@ -2,6 +2,7 @@
 
 import re 
 import json
+import urllib, urllib2
 import StringIO
 from datetime import datetime
 try: 
@@ -16,8 +17,14 @@ except:
     raise Exception("rdflib not installed - required to transform RDF N-QUADS to TTL. Download from 'https://pypi.python.org/pypi/rdflib/' or use 'easy_install rdflib'")
     
 """
-Simplest utility to take a basic "Describe" reply (@graph, @context) and create RDF TTL
+Utility to take a basic "Describe" reply (@graph, @context) and create RDF TTL
+
+Relies on both pyld AND rdflib
 """
+
+# These settings should match your FMQL configuration 
+# FMQLEP = "http://www.examplehospital.com/fmqlEP" # Endpoint address
+FMQLEP = "http://livevista.caregraf.info/fmqlEP" # Endpoint address of Caregraf demo VistA
 
 def jldToRDF(jld, fileName, cacheLocation=""):
     start = datetime.now()
@@ -33,4 +40,18 @@ def jldToRDF(jld, fileName, cacheLocation=""):
     g.load(StringIO.StringIO(jsonld.to_rdf(jld, {"format": "application/nquads"})), format="nquads")
     g.serialize(qualFileName, format="turtle")
     print "Made RDF", qualFileName, " - serialization took", datetime.now() - start
+
+# ######################### Test/Demo ###################
+    
+def main():
+
+    # Grab the vitals
+    query = {"fmql": "DESCRIBE 120_5 FILTER(.02=2-9&.01>2008-04-01)", "format": "JSON-LD"}
+    queryURL = FMQLEP + "?" + urllib.urlencode(query)
+    jreply = json.loads(urllib2.urlopen(queryURL).read())
+    fileName = "120_5_GT_2008"
+    jldToRDF(jreply, fileName, cacheLocation="")
+
+if __name__ == "__main__":
+    main()
     
