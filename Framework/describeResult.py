@@ -145,6 +145,9 @@ class DescribeReply(object):
             if result["uri"]["value"] == recordId:
                 self.__reply["results"].pop(i)
                 break
+                
+    def queryParams(self):
+        return self.__reply["fmql"]
 
     def query(self):
         if "URI" in self.__reply["fmql"]:
@@ -800,10 +803,14 @@ class Reference(FieldValue):
         
     @property
     def valid(self):
+        if re.search(r'_E\-', self.id):
+            return True 
         ienStr = self.id.split("-")[1]
         if ienStr == "0":
             return False
-        if "label" in self._result and ienStr == self._result["label"].split("/")[1]: # Label == IEN for invalids (but can it be valid too?)
+        try:
+            float(ienStr)
+        except:
             return False
         return True
         
@@ -860,7 +867,17 @@ class Reference(FieldValue):
         
     @property
     def sameAsLabel(self):
-        return self._result["sameAsLabel"] if "sameAsLabel" in self._result else ""
+        if "sameAsLabel" not in self._result:
+            return ""
+        sameAsLabel = self._result["sameAsLabel"]
+        """
+        Special case: need to fix FMQL. Right now, prefix type name if 
+        VUID embedded in local type.
+        ex/ GMRV VITAL TYPE ... alt is to not send it ie/ allow for none
+        """
+        if re.match(self.fileTypeLabel, sameAsLabel):
+            sameAsLabel = re.sub(self.fileTypeLabel + "\-", "", sameAsLabel) 
+        return sameAsLabel
         
     @property
     def builtIn(self):
