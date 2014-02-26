@@ -6,6 +6,7 @@
     "prov": "http://www.w3.org/ns/prov#",
 
     "fmso": "http://datasets.caregraf.org/fmso/",
+    "fmql": "http://datasets.caregraf.org/fmql/",
     "vs": "http://datasets.caregraf.org/vs/",
     
     "generatedAt": {
@@ -18,5 +19,6 @@
     "list": "@list",
     "label": {"@id": "rdfs:label"},
     "sameAs": {"@id": "owl:sameAs", "@type": "@id"},
+    "sameAsLabel": {"@id": "fmso:sameAsLabel"},
     "@vocab": "http://datasets.caregraf.org/vs/"
 }
