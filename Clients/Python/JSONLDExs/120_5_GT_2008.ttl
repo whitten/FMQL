@@ -1,0 +1,202 @@
+@prefix fmso: <http://datasets.caregraf.org/fmso/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vs: <http://datasets.caregraf.org/vs/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://livevista.caregraf.info/120_5-284> a <http://datasets.caregraf.org/vs/120_5> ;
+    rdfs:label "2008-04-01T07:12:06Z" ;
+    vs:date_time_vitals_entered-120_5 "2008-04-01T07:12:22"^^xsd:dateTime ;
+    vs:date_time_vitals_taken-120_5 "2008-04-01T07:12:06"^^xsd:dateTime ;
+    vs:entered_by-120_5 <http://livevista.caregraf.info/200-64> ;
+    vs:hospital_location-120_5 <http://livevista.caregraf.info/44-23> ;
+    vs:patient-120_5 <http://livevista.caregraf.info/2-9> ;
+    vs:qualifier-120_5 <http://livevista.caregraf.info/120_52-6> ;
+    vs:rate-120_5 "101" ;
+    vs:vital_type-120_5 <http://livevista.caregraf.info/120_51-2> .
+
+<http://livevista.caregraf.info/120_5-285> a <http://datasets.caregraf.org/vs/120_5> ;
+    rdfs:label "2008-04-01T07:12:06Z" ;
+    vs:date_time_vitals_entered-120_5 "2008-04-01T07:12:22"^^xsd:dateTime ;
+    vs:date_time_vitals_taken-120_5 "2008-04-01T07:12:06"^^xsd:dateTime ;
+    vs:entered_by-120_5 <http://livevista.caregraf.info/200-64> ;
+    vs:hospital_location-120_5 <http://livevista.caregraf.info/44-23> ;
+    vs:patient-120_5 <http://livevista.caregraf.info/2-9> ;
+    vs:qualifier-120_5 <http://livevista.caregraf.info/120_52-50>,
+        <http://livevista.caregraf.info/120_52-59> ;
+    vs:rate-120_5 "98" ;
+    vs:vital_type-120_5 <http://livevista.caregraf.info/120_51-5> .
+
+<http://livevista.caregraf.info/120_5-286> a <http://datasets.caregraf.org/vs/120_5> ;
+    rdfs:label "2008-04-01T07:12:06Z" ;
+    vs:date_time_vitals_entered-120_5 "2008-04-01T07:12:22"^^xsd:dateTime ;
+    vs:date_time_vitals_taken-120_5 "2008-04-01T07:12:06"^^xsd:dateTime ;
+    vs:entered_by-120_5 <http://livevista.caregraf.info/200-64> ;
+    vs:hospital_location-120_5 <http://livevista.caregraf.info/44-23> ;
+    vs:patient-120_5 <http://livevista.caregraf.info/2-9> ;
+    vs:qualifier-120_5 <http://livevista.caregraf.info/120_52-47> ;
+    vs:rate-120_5 "20" ;
+    vs:vital_type-120_5 <http://livevista.caregraf.info/120_51-3> .
+
+<http://livevista.caregraf.info/120_5-287> a <http://datasets.caregraf.org/vs/120_5> ;
+    rdfs:label "2008-04-01T07:12:06Z" ;
+    vs:date_time_vitals_entered-120_5 "2008-04-01T07:12:22"^^xsd:dateTime ;
+    vs:date_time_vitals_taken-120_5 "2008-04-01T07:12:06"^^xsd:dateTime ;
+    vs:entered_by-120_5 <http://livevista.caregraf.info/200-64> ;
+    vs:hospital_location-120_5 <http://livevista.caregraf.info/44-23> ;
+    vs:patient-120_5 <http://livevista.caregraf.info/2-9> ;
+    vs:qualifier-120_5 <http://livevista.caregraf.info/120_52-1>,
+        <http://livevista.caregraf.info/120_52-50>,
+        <http://livevista.caregraf.info/120_52-64>,
+        <http://livevista.caregraf.info/120_52-66> ;
+    vs:rate-120_5 "140/90" ;
+    vs:vital_type-120_5 <http://livevista.caregraf.info/120_51-1> .
+
+<http://livevista.caregraf.info/120_5-288> a <http://datasets.caregraf.org/vs/120_5> ;
+    rdfs:label "2008-04-02T07:49:55Z" ;
+    vs:date_time_vitals_entered-120_5 "2008-04-02T07:50:28"^^xsd:dateTime ;
+    vs:date_time_vitals_taken-120_5 "2008-04-02T07:49:55"^^xsd:dateTime ;
+    vs:entered_by-120_5 <http://livevista.caregraf.info/200-64> ;
+    vs:hospital_location-120_5 <http://livevista.caregraf.info/44-23> ;
+    vs:patient-120_5 <http://livevista.caregraf.info/2-9> ;
+    vs:qualifier-120_5 <http://livevista.caregraf.info/120_52-6> ;
+    vs:rate-120_5 "102" ;
+    vs:vital_type-120_5 <http://livevista.caregraf.info/120_51-2> .
+
+<http://livevista.caregraf.info/120_5-289> a <http://datasets.caregraf.org/vs/120_5> ;
+    rdfs:label "2008-04-02T07:49:55Z" ;
+    vs:date_time_vitals_entered-120_5 "2008-04-02T07:50:28"^^xsd:dateTime ;
+    vs:date_time_vitals_taken-120_5 "2008-04-02T07:49:55"^^xsd:dateTime ;
+    vs:entered_by-120_5 <http://livevista.caregraf.info/200-64> ;
+    vs:hospital_location-120_5 <http://livevista.caregraf.info/44-23> ;
+    vs:patient-120_5 <http://livevista.caregraf.info/2-9> ;
+    vs:qualifier-120_5 <http://livevista.caregraf.info/120_52-50>,
+        <http://livevista.caregraf.info/120_52-59> ;
+    vs:rate-120_5 "84" ;
+    vs:vital_type-120_5 <http://livevista.caregraf.info/120_51-5> .
+
+<http://livevista.caregraf.info/120_5-290> a <http://datasets.caregraf.org/vs/120_5> ;
+    rdfs:label "2008-04-02T07:49:55Z" ;
+    vs:date_time_vitals_entered-120_5 "2008-04-02T07:50:28"^^xsd:dateTime ;
+    vs:date_time_vitals_taken-120_5 "2008-04-02T07:49:55"^^xsd:dateTime ;
+    vs:entered_by-120_5 <http://livevista.caregraf.info/200-64> ;
+    vs:hospital_location-120_5 <http://livevista.caregraf.info/44-23> ;
+    vs:patient-120_5 <http://livevista.caregraf.info/2-9> ;
+    vs:qualifier-120_5 <http://livevista.caregraf.info/120_52-47> ;
+    vs:rate-120_5 "24" ;
+    vs:vital_type-120_5 <http://livevista.caregraf.info/120_51-3> .
+
+<http://livevista.caregraf.info/120_5-291> a <http://datasets.caregraf.org/vs/120_5> ;
+    rdfs:label "2008-04-02T07:49:55Z" ;
+    vs:date_time_vitals_entered-120_5 "2008-04-02T07:50:28"^^xsd:dateTime ;
+    vs:date_time_vitals_taken-120_5 "2008-04-02T07:49:55"^^xsd:dateTime ;
+    vs:entered_by-120_5 <http://livevista.caregraf.info/200-64> ;
+    vs:hospital_location-120_5 <http://livevista.caregraf.info/44-23> ;
+    vs:patient-120_5 <http://livevista.caregraf.info/2-9> ;
+    vs:qualifier-120_5 <http://livevista.caregraf.info/120_52-1>,
+        <http://livevista.caregraf.info/120_52-50>,
+        <http://livevista.caregraf.info/120_52-64>,
+        <http://livevista.caregraf.info/120_52-66> ;
+    vs:rate-120_5 "110/70" ;
+    vs:vital_type-120_5 <http://livevista.caregraf.info/120_51-1> .
+
+<http://livevista.caregraf.info/120_5-292> a <http://datasets.caregraf.org/vs/120_5> ;
+    rdfs:label "2008-04-02T13:16:13Z" ;
+    vs:date_time_vitals_entered-120_5 "2008-04-02T13:17:39"^^xsd:dateTime ;
+    vs:date_time_vitals_taken-120_5 "2008-04-02T13:16:13"^^xsd:dateTime ;
+    vs:entered_by-120_5 <http://livevista.caregraf.info/200-65> ;
+    vs:hospital_location-120_5 <http://livevista.caregraf.info/44-23> ;
+    vs:patient-120_5 <http://livevista.caregraf.info/2-9> ;
+    vs:qualifier-120_5 <http://livevista.caregraf.info/120_52-6> ;
+    vs:rate-120_5 "101" ;
+    vs:vital_type-120_5 <http://livevista.caregraf.info/120_51-2> .
+
+<http://livevista.caregraf.info/120_5-293> a <http://datasets.caregraf.org/vs/120_5> ;
+    rdfs:label "2008-04-02T13:16:13Z" ;
+    vs:date_time_vitals_entered-120_5 "2008-04-02T13:17:39"^^xsd:dateTime ;
+    vs:date_time_vitals_taken-120_5 "2008-04-02T13:16:13"^^xsd:dateTime ;
+    vs:entered_by-120_5 <http://livevista.caregraf.info/200-65> ;
+    vs:hospital_location-120_5 <http://livevista.caregraf.info/44-23> ;
+    vs:patient-120_5 <http://livevista.caregraf.info/2-9> ;
+    vs:qualifier-120_5 <http://livevista.caregraf.info/120_52-50>,
+        <http://livevista.caregraf.info/120_52-59> ;
+    vs:rate-120_5 "98" ;
+    vs:vital_type-120_5 <http://livevista.caregraf.info/120_51-5> .
+
+<http://livevista.caregraf.info/120_5-294> a <http://datasets.caregraf.org/vs/120_5> ;
+    rdfs:label "2008-04-02T13:16:13Z" ;
+    vs:date_time_vitals_entered-120_5 "2008-04-02T13:17:39"^^xsd:dateTime ;
+    vs:date_time_vitals_taken-120_5 "2008-04-02T13:16:13"^^xsd:dateTime ;
+    vs:entered_by-120_5 <http://livevista.caregraf.info/200-65> ;
+    vs:hospital_location-120_5 <http://livevista.caregraf.info/44-23> ;
+    vs:patient-120_5 <http://livevista.caregraf.info/2-9> ;
+    vs:qualifier-120_5 <http://livevista.caregraf.info/120_52-47> ;
+    vs:rate-120_5 "20" ;
+    vs:vital_type-120_5 <http://livevista.caregraf.info/120_51-3> .
+
+<http://livevista.caregraf.info/120_5-295> a <http://datasets.caregraf.org/vs/120_5> ;
+    rdfs:label "2008-04-02T13:16:13Z" ;
+    vs:date_time_vitals_entered-120_5 "2008-04-02T13:17:39"^^xsd:dateTime ;
+    vs:date_time_vitals_taken-120_5 "2008-04-02T13:16:13"^^xsd:dateTime ;
+    vs:entered_by-120_5 <http://livevista.caregraf.info/200-65> ;
+    vs:hospital_location-120_5 <http://livevista.caregraf.info/44-23> ;
+    vs:patient-120_5 <http://livevista.caregraf.info/2-9> ;
+    vs:qualifier-120_5 <http://livevista.caregraf.info/120_52-1>,
+        <http://livevista.caregraf.info/120_52-50>,
+        <http://livevista.caregraf.info/120_52-64>,
+        <http://livevista.caregraf.info/120_52-66> ;
+    vs:rate-120_5 "160/90" ;
+    vs:vital_type-120_5 <http://livevista.caregraf.info/120_51-1> .
+
+<http://livevista.caregraf.info/120_51-1> rdfs:label "BLOOD PRESSURE" ;
+    vs:sameAsLabel "BLOOD PRESSURE" ;
+    owl:sameAs <va:4500634> .
+
+<http://livevista.caregraf.info/120_51-2> rdfs:label "TEMPERATURE" ;
+    vs:sameAsLabel "TEMPERATURE" ;
+    owl:sameAs <va:4500638> .
+
+<http://livevista.caregraf.info/120_51-3> rdfs:label "RESPIRATION" ;
+    vs:sameAsLabel "RESPIRATION" ;
+    owl:sameAs <va:4688725> .
+
+<http://livevista.caregraf.info/120_51-5> rdfs:label "PULSE" ;
+    vs:sameAsLabel "PULSE" ;
+    owl:sameAs <va:4500636> .
+
+<http://livevista.caregraf.info/120_52-1> rdfs:label "R ARM" ;
+    vs:sameAsLabel "R ARM" ;
+    owl:sameAs <va:4688676> .
+
+<http://livevista.caregraf.info/120_52-47> rdfs:label "SPONTANEOUS" ;
+    vs:sameAsLabel "SPONTANEOUS" ;
+    owl:sameAs <va:4688706> .
+
+<http://livevista.caregraf.info/120_52-59> rdfs:label "PALPATED" ;
+    vs:sameAsLabel "PALPATED" ;
+    owl:sameAs <va:4688669> .
+
+<http://livevista.caregraf.info/120_52-6> rdfs:label "ORAL" ;
+    vs:sameAsLabel "ORAL" ;
+    owl:sameAs <va:4500642> .
+
+<http://livevista.caregraf.info/120_52-64> rdfs:label "CUFF" .
+
+<http://livevista.caregraf.info/120_52-66> rdfs:label "ADULT" .
+
+<http://livevista.caregraf.info/200-65> rdfs:label "ASCLEPIUS,DEUS" .
+
+<http://livevista.caregraf.info/120_52-50> rdfs:label "SITTING" ;
+    vs:sameAsLabel "SITTING" ;
+    owl:sameAs <va:4688703> .
+
+<http://livevista.caregraf.info/200-64> rdfs:label "USER,FMQL TWENTY-FIVE" .
+
+<http://livevista.caregraf.info/2-9> rdfs:label "JONES,CHRISTOPHER" .
+
+<http://livevista.caregraf.info/44-23> rdfs:label "3 NORTH - ICU" .
+

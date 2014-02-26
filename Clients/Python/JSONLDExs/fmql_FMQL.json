@@ -1,0 +1,580 @@
+{
+  "@context": {
+    "owl": "http://www.w3.org/2002/07/owl#", 
+    "skos": "http://www.w3.org/2004/02/skos/core#", 
+    "@vocab": "http://datasets.caregraf.org/vs/", 
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#", 
+    "sameAs": {
+      "@id": "owl:sameAs", 
+      "@type": "@id"
+    }, 
+    "prov": "http://www.w3.org/ns/prov#", 
+    "list": "@list", 
+    "label": {
+      "@id": "rdfs:label"
+    }, 
+    "value": "@value", 
+    "fmso": "http://datasets.caregraf.org/fmso/", 
+    "@base": "http://livevista.caregraf.info/", 
+    "vs": "http://datasets.caregraf.org/vs/", 
+    "xsd": "http://www.w3.org/2001/XMLSchema#", 
+    "generatedAt": {
+      "@id": "prov:generatedAtTime", 
+      "@type": "xsd#date"
+    }, 
+    "type": "@type", 
+    "id": "@id"
+  }, 
+  "@graph": [
+    {
+      "vital_type-120_5": {
+        "sameAs": "va:4500638", 
+        "sameAsLabel": "TEMPERATURE", 
+        "id": "120_51-2", 
+        "label": "TEMPERATURE"
+      }, 
+      "hospital_location-120_5": {
+        "id": "44-23", 
+        "label": "3 NORTH - ICU"
+      }, 
+      "label": "2008-04-01T07:12:06Z", 
+      "date_time_vitals_taken-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-01T07:12:06"
+      }, 
+      "qualifier-120_5": [
+        {
+          "sameAs": "va:4500642", 
+          "sameAsLabel": "ORAL", 
+          "id": "120_52-6", 
+          "label": "ORAL"
+        }
+      ], 
+      "date_time_vitals_entered-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-01T07:12:22"
+      }, 
+      "rate-120_5": "101", 
+      "type": "vs:120_5", 
+      "id": "120_5-284", 
+      "patient-120_5": {
+        "id": "2-9", 
+        "label": "JONES,CHRISTOPHER"
+      }, 
+      "entered_by-120_5": {
+        "id": "200-64", 
+        "label": "USER,FMQL TWENTY-FIVE"
+      }
+    }, 
+    {
+      "vital_type-120_5": {
+        "sameAs": "va:4500636", 
+        "sameAsLabel": "PULSE", 
+        "id": "120_51-5", 
+        "label": "PULSE"
+      }, 
+      "hospital_location-120_5": {
+        "id": "44-23", 
+        "label": "3 NORTH - ICU"
+      }, 
+      "label": "2008-04-01T07:12:06Z", 
+      "date_time_vitals_taken-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-01T07:12:06"
+      }, 
+      "qualifier-120_5": [
+        {
+          "sameAs": "va:4688669", 
+          "sameAsLabel": "PALPATED", 
+          "id": "120_52-59", 
+          "label": "PALPATED"
+        }, 
+        {
+          "sameAs": "va:4688703", 
+          "sameAsLabel": "SITTING", 
+          "id": "120_52-50", 
+          "label": "SITTING"
+        }
+      ], 
+      "date_time_vitals_entered-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-01T07:12:22"
+      }, 
+      "rate-120_5": "98", 
+      "type": "vs:120_5", 
+      "id": "120_5-285", 
+      "patient-120_5": {
+        "id": "2-9", 
+        "label": "JONES,CHRISTOPHER"
+      }, 
+      "entered_by-120_5": {
+        "id": "200-64", 
+        "label": "USER,FMQL TWENTY-FIVE"
+      }
+    }, 
+    {
+      "vital_type-120_5": {
+        "sameAs": "va:4688725", 
+        "sameAsLabel": "RESPIRATION", 
+        "id": "120_51-3", 
+        "label": "RESPIRATION"
+      }, 
+      "hospital_location-120_5": {
+        "id": "44-23", 
+        "label": "3 NORTH - ICU"
+      }, 
+      "label": "2008-04-01T07:12:06Z", 
+      "date_time_vitals_taken-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-01T07:12:06"
+      }, 
+      "qualifier-120_5": [
+        {
+          "sameAs": "va:4688706", 
+          "sameAsLabel": "SPONTANEOUS", 
+          "id": "120_52-47", 
+          "label": "SPONTANEOUS"
+        }
+      ], 
+      "date_time_vitals_entered-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-01T07:12:22"
+      }, 
+      "rate-120_5": "20", 
+      "type": "vs:120_5", 
+      "id": "120_5-286", 
+      "patient-120_5": {
+        "id": "2-9", 
+        "label": "JONES,CHRISTOPHER"
+      }, 
+      "entered_by-120_5": {
+        "id": "200-64", 
+        "label": "USER,FMQL TWENTY-FIVE"
+      }
+    }, 
+    {
+      "vital_type-120_5": {
+        "sameAs": "va:4500634", 
+        "sameAsLabel": "BLOOD PRESSURE", 
+        "id": "120_51-1", 
+        "label": "BLOOD PRESSURE"
+      }, 
+      "hospital_location-120_5": {
+        "id": "44-23", 
+        "label": "3 NORTH - ICU"
+      }, 
+      "label": "2008-04-01T07:12:06Z", 
+      "date_time_vitals_taken-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-01T07:12:06"
+      }, 
+      "qualifier-120_5": [
+        {
+          "sameAs": "va:4688676", 
+          "sameAsLabel": "R ARM", 
+          "id": "120_52-1", 
+          "label": "R ARM"
+        }, 
+        {
+          "id": "120_52-64", 
+          "label": "CUFF"
+        }, 
+        {
+          "sameAs": "va:4688703", 
+          "sameAsLabel": "SITTING", 
+          "id": "120_52-50", 
+          "label": "SITTING"
+        }, 
+        {
+          "id": "120_52-66", 
+          "label": "ADULT"
+        }
+      ], 
+      "date_time_vitals_entered-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-01T07:12:22"
+      }, 
+      "rate-120_5": "140/90", 
+      "type": "vs:120_5", 
+      "id": "120_5-287", 
+      "patient-120_5": {
+        "id": "2-9", 
+        "label": "JONES,CHRISTOPHER"
+      }, 
+      "entered_by-120_5": {
+        "id": "200-64", 
+        "label": "USER,FMQL TWENTY-FIVE"
+      }
+    }, 
+    {
+      "vital_type-120_5": {
+        "sameAs": "va:4500638", 
+        "sameAsLabel": "TEMPERATURE", 
+        "id": "120_51-2", 
+        "label": "TEMPERATURE"
+      }, 
+      "hospital_location-120_5": {
+        "id": "44-23", 
+        "label": "3 NORTH - ICU"
+      }, 
+      "label": "2008-04-02T07:49:55Z", 
+      "date_time_vitals_taken-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T07:49:55"
+      }, 
+      "qualifier-120_5": [
+        {
+          "sameAs": "va:4500642", 
+          "sameAsLabel": "ORAL", 
+          "id": "120_52-6", 
+          "label": "ORAL"
+        }
+      ], 
+      "date_time_vitals_entered-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T07:50:28"
+      }, 
+      "rate-120_5": "102", 
+      "type": "vs:120_5", 
+      "id": "120_5-288", 
+      "patient-120_5": {
+        "id": "2-9", 
+        "label": "JONES,CHRISTOPHER"
+      }, 
+      "entered_by-120_5": {
+        "id": "200-64", 
+        "label": "USER,FMQL TWENTY-FIVE"
+      }
+    }, 
+    {
+      "vital_type-120_5": {
+        "sameAs": "va:4500636", 
+        "sameAsLabel": "PULSE", 
+        "id": "120_51-5", 
+        "label": "PULSE"
+      }, 
+      "hospital_location-120_5": {
+        "id": "44-23", 
+        "label": "3 NORTH - ICU"
+      }, 
+      "label": "2008-04-02T07:49:55Z", 
+      "date_time_vitals_taken-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T07:49:55"
+      }, 
+      "qualifier-120_5": [
+        {
+          "sameAs": "va:4688669", 
+          "sameAsLabel": "PALPATED", 
+          "id": "120_52-59", 
+          "label": "PALPATED"
+        }, 
+        {
+          "sameAs": "va:4688703", 
+          "sameAsLabel": "SITTING", 
+          "id": "120_52-50", 
+          "label": "SITTING"
+        }
+      ], 
+      "date_time_vitals_entered-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T07:50:28"
+      }, 
+      "rate-120_5": "84", 
+      "type": "vs:120_5", 
+      "id": "120_5-289", 
+      "patient-120_5": {
+        "id": "2-9", 
+        "label": "JONES,CHRISTOPHER"
+      }, 
+      "entered_by-120_5": {
+        "id": "200-64", 
+        "label": "USER,FMQL TWENTY-FIVE"
+      }
+    }, 
+    {
+      "vital_type-120_5": {
+        "sameAs": "va:4688725", 
+        "sameAsLabel": "RESPIRATION", 
+        "id": "120_51-3", 
+        "label": "RESPIRATION"
+      }, 
+      "hospital_location-120_5": {
+        "id": "44-23", 
+        "label": "3 NORTH - ICU"
+      }, 
+      "label": "2008-04-02T07:49:55Z", 
+      "date_time_vitals_taken-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T07:49:55"
+      }, 
+      "qualifier-120_5": [
+        {
+          "sameAs": "va:4688706", 
+          "sameAsLabel": "SPONTANEOUS", 
+          "id": "120_52-47", 
+          "label": "SPONTANEOUS"
+        }
+      ], 
+      "date_time_vitals_entered-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T07:50:28"
+      }, 
+      "rate-120_5": "24", 
+      "type": "vs:120_5", 
+      "id": "120_5-290", 
+      "patient-120_5": {
+        "id": "2-9", 
+        "label": "JONES,CHRISTOPHER"
+      }, 
+      "entered_by-120_5": {
+        "id": "200-64", 
+        "label": "USER,FMQL TWENTY-FIVE"
+      }
+    }, 
+    {
+      "vital_type-120_5": {
+        "sameAs": "va:4500634", 
+        "sameAsLabel": "BLOOD PRESSURE", 
+        "id": "120_51-1", 
+        "label": "BLOOD PRESSURE"
+      }, 
+      "hospital_location-120_5": {
+        "id": "44-23", 
+        "label": "3 NORTH - ICU"
+      }, 
+      "label": "2008-04-02T07:49:55Z", 
+      "date_time_vitals_taken-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T07:49:55"
+      }, 
+      "qualifier-120_5": [
+        {
+          "sameAs": "va:4688676", 
+          "sameAsLabel": "R ARM", 
+          "id": "120_52-1", 
+          "label": "R ARM"
+        }, 
+        {
+          "id": "120_52-64", 
+          "label": "CUFF"
+        }, 
+        {
+          "sameAs": "va:4688703", 
+          "sameAsLabel": "SITTING", 
+          "id": "120_52-50", 
+          "label": "SITTING"
+        }, 
+        {
+          "id": "120_52-66", 
+          "label": "ADULT"
+        }
+      ], 
+      "date_time_vitals_entered-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T07:50:28"
+      }, 
+      "rate-120_5": "110/70", 
+      "type": "vs:120_5", 
+      "id": "120_5-291", 
+      "patient-120_5": {
+        "id": "2-9", 
+        "label": "JONES,CHRISTOPHER"
+      }, 
+      "entered_by-120_5": {
+        "id": "200-64", 
+        "label": "USER,FMQL TWENTY-FIVE"
+      }
+    }, 
+    {
+      "vital_type-120_5": {
+        "sameAs": "va:4500638", 
+        "sameAsLabel": "TEMPERATURE", 
+        "id": "120_51-2", 
+        "label": "TEMPERATURE"
+      }, 
+      "hospital_location-120_5": {
+        "id": "44-23", 
+        "label": "3 NORTH - ICU"
+      }, 
+      "label": "2008-04-02T13:16:13Z", 
+      "date_time_vitals_taken-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T13:16:13"
+      }, 
+      "qualifier-120_5": [
+        {
+          "sameAs": "va:4500642", 
+          "sameAsLabel": "ORAL", 
+          "id": "120_52-6", 
+          "label": "ORAL"
+        }
+      ], 
+      "date_time_vitals_entered-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T13:17:39"
+      }, 
+      "rate-120_5": "101", 
+      "type": "vs:120_5", 
+      "id": "120_5-292", 
+      "patient-120_5": {
+        "id": "2-9", 
+        "label": "JONES,CHRISTOPHER"
+      }, 
+      "entered_by-120_5": {
+        "id": "200-65", 
+        "label": "ASCLEPIUS,DEUS"
+      }
+    }, 
+    {
+      "vital_type-120_5": {
+        "sameAs": "va:4500636", 
+        "sameAsLabel": "PULSE", 
+        "id": "120_51-5", 
+        "label": "PULSE"
+      }, 
+      "hospital_location-120_5": {
+        "id": "44-23", 
+        "label": "3 NORTH - ICU"
+      }, 
+      "label": "2008-04-02T13:16:13Z", 
+      "date_time_vitals_taken-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T13:16:13"
+      }, 
+      "qualifier-120_5": [
+        {
+          "sameAs": "va:4688669", 
+          "sameAsLabel": "PALPATED", 
+          "id": "120_52-59", 
+          "label": "PALPATED"
+        }, 
+        {
+          "sameAs": "va:4688703", 
+          "sameAsLabel": "SITTING", 
+          "id": "120_52-50", 
+          "label": "SITTING"
+        }
+      ], 
+      "date_time_vitals_entered-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T13:17:39"
+      }, 
+      "rate-120_5": "98", 
+      "type": "vs:120_5", 
+      "id": "120_5-293", 
+      "patient-120_5": {
+        "id": "2-9", 
+        "label": "JONES,CHRISTOPHER"
+      }, 
+      "entered_by-120_5": {
+        "id": "200-65", 
+        "label": "ASCLEPIUS,DEUS"
+      }
+    }, 
+    {
+      "vital_type-120_5": {
+        "sameAs": "va:4688725", 
+        "sameAsLabel": "RESPIRATION", 
+        "id": "120_51-3", 
+        "label": "RESPIRATION"
+      }, 
+      "hospital_location-120_5": {
+        "id": "44-23", 
+        "label": "3 NORTH - ICU"
+      }, 
+      "label": "2008-04-02T13:16:13Z", 
+      "date_time_vitals_taken-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T13:16:13"
+      }, 
+      "qualifier-120_5": [
+        {
+          "sameAs": "va:4688706", 
+          "sameAsLabel": "SPONTANEOUS", 
+          "id": "120_52-47", 
+          "label": "SPONTANEOUS"
+        }
+      ], 
+      "date_time_vitals_entered-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T13:17:39"
+      }, 
+      "rate-120_5": "20", 
+      "type": "vs:120_5", 
+      "id": "120_5-294", 
+      "patient-120_5": {
+        "id": "2-9", 
+        "label": "JONES,CHRISTOPHER"
+      }, 
+      "entered_by-120_5": {
+        "id": "200-65", 
+        "label": "ASCLEPIUS,DEUS"
+      }
+    }, 
+    {
+      "vital_type-120_5": {
+        "sameAs": "va:4500634", 
+        "sameAsLabel": "BLOOD PRESSURE", 
+        "id": "120_51-1", 
+        "label": "BLOOD PRESSURE"
+      }, 
+      "hospital_location-120_5": {
+        "id": "44-23", 
+        "label": "3 NORTH - ICU"
+      }, 
+      "label": "2008-04-02T13:16:13Z", 
+      "date_time_vitals_taken-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T13:16:13"
+      }, 
+      "qualifier-120_5": [
+        {
+          "sameAs": "va:4688676", 
+          "sameAsLabel": "R ARM", 
+          "id": "120_52-1", 
+          "label": "R ARM"
+        }, 
+        {
+          "id": "120_52-64", 
+          "label": "CUFF"
+        }, 
+        {
+          "sameAs": "va:4688703", 
+          "sameAsLabel": "SITTING", 
+          "id": "120_52-50", 
+          "label": "SITTING"
+        }, 
+        {
+          "id": "120_52-66", 
+          "label": "ADULT"
+        }
+      ], 
+      "date_time_vitals_entered-120_5": {
+        "type": "xsd:dateTime", 
+        "value": "2008-04-02T13:17:39"
+      }, 
+      "rate-120_5": "160/90", 
+      "type": "vs:120_5", 
+      "id": "120_5-295", 
+      "patient-120_5": {
+        "id": "2-9", 
+        "label": "JONES,CHRISTOPHER"
+      }, 
+      "entered_by-120_5": {
+        "id": "200-65", 
+        "label": "ASCLEPIUS,DEUS"
+      }
+    }
+  ], 
+  "generatedAt": "2014-02-26", 
+  "query": {
+    "fmql:filter": ".02=2-9&.01>2008-04-01", 
+    "fmql:op": "DESCRIBE", 
+    "fmql:limit": "-1", 
+    "fmql:offset": "0", 
+    "fmql:cstop": "10", 
+    "fmql:typelabel": "GMRV VITAL MEASUREMENT", 
+    "fmql:type": "120_5"
+  }
+}
