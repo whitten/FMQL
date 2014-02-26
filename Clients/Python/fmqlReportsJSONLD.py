@@ -182,7 +182,7 @@ def usePyld():
     try:
         jsonld
     except:
-        print "=== can't do pyld demos' as package pyld isn't installed"
+        print "=== can't do pyld demos' as package pyld isn't installed - Download and install from https://github.com/digitalbazaar/pyld"
         return
 
     # Grab the vitals
