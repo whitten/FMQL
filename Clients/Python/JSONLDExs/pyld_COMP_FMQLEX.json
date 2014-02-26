@@ -1,561 +1,595 @@
 {
   "@context": {
-    "owl": "http://www.w3.org/2002/07/owl#", 
-    "skos": "http://www.w3.org/2004/02/skos/core#", 
-    "@vocab": "http://datasets.caregraf.org/vs/", 
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#", 
-    "sameAs": {
-      "@id": "owl:sameAs", 
-      "@type": "@id"
-    }, 
-    "prov": "http://www.w3.org/ns/prov#", 
-    "generatedAt": {
-      "@id": "prov:generatedAtTime", 
-      "@type": "xsd#date"
-    }, 
-    "fmql": "http://datasets.caregraf.org/fmql/", 
-    "label": {
-      "@id": "rdfs:label"
-    }, 
-    "value": "@value", 
-    "fmso": "http://datasets.caregraf.org/fmso/", 
-    "list": "@list", 
-    "vs": "http://datasets.caregraf.org/vs/", 
-    "xsd": "http://www.w3.org/2001/XMLSchema#", 
-    "sameAsLabel": {
-      "@id": "fmso:sameAsLabel"
-    }, 
-    "type": "@type", 
-    "id": "@id"
+    "livevista": "http://livevista.caregraf.info/"
   }, 
   "@graph": [
     {
-      "qualifier-120_5": {
-        "sameAs": "va:4500642", 
-        "sameAsLabel": "ORAL", 
-        "id": "http://livevista.caregraf.info/120_52-6", 
-        "label": "ORAL"
+      "http://datasets.caregraf.org/vs/hospital_location-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "3 NORTH - ICU", 
+        "@id": "livevista:44-23"
       }, 
-      "vital_type-120_5": {
-        "sameAs": "va:4500638", 
-        "sameAsLabel": "TEMPERATURE", 
-        "id": "http://livevista.caregraf.info/120_51-2", 
-        "label": "TEMPERATURE"
+      "http://datasets.caregraf.org/vs/vital_type-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "TEMPERATURE", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "TEMPERATURE", 
+        "@id": "livevista:120_51-2", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4500638"
+        }
       }, 
-      "label": "2008-04-01T07:12:06Z", 
-      "date_time_vitals_taken-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-01T07:12:06"
+      "http://datasets.caregraf.org/vs/rate-120_5": "101", 
+      "@id": "livevista:120_5-284", 
+      "http://datasets.caregraf.org/vs/date_time_vitals_taken-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-01T07:12:06"
       }, 
-      "hospital_location-120_5": {
-        "id": "http://livevista.caregraf.info/44-23", 
-        "label": "3 NORTH - ICU"
+      "http://datasets.caregraf.org/vs/patient-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "JONES,CHRISTOPHER", 
+        "@id": "livevista:2-9"
       }, 
-      "date_time_vitals_entered-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-01T07:12:22"
+      "http://datasets.caregraf.org/vs/qualifier-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "ORAL", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "ORAL", 
+        "@id": "livevista:120_52-6", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4500642"
+        }
       }, 
-      "rate-120_5": "101", 
-      "type": "120_5", 
-      "id": "http://livevista.caregraf.info/120_5-284", 
-      "patient-120_5": {
-        "id": "http://livevista.caregraf.info/2-9", 
-        "label": "JONES,CHRISTOPHER"
+      "http://datasets.caregraf.org/vs/date_time_vitals_entered-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-01T07:12:22"
       }, 
-      "entered_by-120_5": {
-        "id": "http://livevista.caregraf.info/200-64", 
-        "label": "USER,FMQL TWENTY-FIVE"
-      }
+      "http://www.w3.org/2000/01/rdf-schema#label": "2008-04-01T07:12:06Z", 
+      "http://datasets.caregraf.org/vs/entered_by-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "USER,FMQL TWENTY-FIVE", 
+        "@id": "livevista:200-64"
+      }, 
+      "@type": "http://datasets.caregraf.org/vs/120_5"
     }, 
     {
-      "qualifier-120_5": [
+      "http://datasets.caregraf.org/vs/hospital_location-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "3 NORTH - ICU", 
+        "@id": "livevista:44-23"
+      }, 
+      "http://datasets.caregraf.org/vs/vital_type-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "PULSE", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "PULSE", 
+        "@id": "livevista:120_51-5", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4500636"
+        }
+      }, 
+      "http://datasets.caregraf.org/vs/rate-120_5": "98", 
+      "@id": "livevista:120_5-285", 
+      "http://datasets.caregraf.org/vs/date_time_vitals_taken-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-01T07:12:06"
+      }, 
+      "http://datasets.caregraf.org/vs/patient-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "JONES,CHRISTOPHER", 
+        "@id": "livevista:2-9"
+      }, 
+      "http://datasets.caregraf.org/vs/qualifier-120_5": [
         {
-          "sameAs": "va:4688669", 
-          "sameAsLabel": "PALPATED", 
-          "id": "http://livevista.caregraf.info/120_52-59", 
-          "label": "PALPATED"
+          "http://datasets.caregraf.org/fmso/sameAsLabel": "PALPATED", 
+          "http://www.w3.org/2000/01/rdf-schema#label": "PALPATED", 
+          "@id": "livevista:120_52-59", 
+          "http://www.w3.org/2002/07/owl#sameAs": {
+            "@id": "http://schemes.caregraf.info/va/4688669"
+          }
         }, 
         {
-          "sameAs": "va:4688703", 
-          "sameAsLabel": "SITTING", 
-          "id": "http://livevista.caregraf.info/120_52-50", 
-          "label": "SITTING"
+          "http://datasets.caregraf.org/fmso/sameAsLabel": "SITTING", 
+          "http://www.w3.org/2000/01/rdf-schema#label": "SITTING", 
+          "@id": "livevista:120_52-50", 
+          "http://www.w3.org/2002/07/owl#sameAs": {
+            "@id": "http://schemes.caregraf.info/va/4688703"
+          }
         }
       ], 
-      "vital_type-120_5": {
-        "sameAs": "va:4500636", 
-        "sameAsLabel": "PULSE", 
-        "id": "http://livevista.caregraf.info/120_51-5", 
-        "label": "PULSE"
+      "http://datasets.caregraf.org/vs/date_time_vitals_entered-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-01T07:12:22"
       }, 
-      "label": "2008-04-01T07:12:06Z", 
-      "date_time_vitals_taken-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-01T07:12:06"
+      "http://www.w3.org/2000/01/rdf-schema#label": "2008-04-01T07:12:06Z", 
+      "http://datasets.caregraf.org/vs/entered_by-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "USER,FMQL TWENTY-FIVE", 
+        "@id": "livevista:200-64"
       }, 
-      "hospital_location-120_5": {
-        "id": "http://livevista.caregraf.info/44-23", 
-        "label": "3 NORTH - ICU"
-      }, 
-      "date_time_vitals_entered-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-01T07:12:22"
-      }, 
-      "rate-120_5": "98", 
-      "type": "120_5", 
-      "id": "http://livevista.caregraf.info/120_5-285", 
-      "patient-120_5": {
-        "id": "http://livevista.caregraf.info/2-9", 
-        "label": "JONES,CHRISTOPHER"
-      }, 
-      "entered_by-120_5": {
-        "id": "http://livevista.caregraf.info/200-64", 
-        "label": "USER,FMQL TWENTY-FIVE"
-      }
+      "@type": "http://datasets.caregraf.org/vs/120_5"
     }, 
     {
-      "qualifier-120_5": {
-        "sameAs": "va:4688706", 
-        "sameAsLabel": "SPONTANEOUS", 
-        "id": "http://livevista.caregraf.info/120_52-47", 
-        "label": "SPONTANEOUS"
+      "http://datasets.caregraf.org/vs/hospital_location-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "3 NORTH - ICU", 
+        "@id": "livevista:44-23"
       }, 
-      "vital_type-120_5": {
-        "sameAs": "va:4688725", 
-        "sameAsLabel": "RESPIRATION", 
-        "id": "http://livevista.caregraf.info/120_51-3", 
-        "label": "RESPIRATION"
+      "http://datasets.caregraf.org/vs/vital_type-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "RESPIRATION", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "RESPIRATION", 
+        "@id": "livevista:120_51-3", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4688725"
+        }
       }, 
-      "label": "2008-04-01T07:12:06Z", 
-      "date_time_vitals_taken-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-01T07:12:06"
+      "http://datasets.caregraf.org/vs/rate-120_5": "20", 
+      "@id": "livevista:120_5-286", 
+      "http://datasets.caregraf.org/vs/date_time_vitals_taken-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-01T07:12:06"
       }, 
-      "hospital_location-120_5": {
-        "id": "http://livevista.caregraf.info/44-23", 
-        "label": "3 NORTH - ICU"
+      "http://datasets.caregraf.org/vs/patient-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "JONES,CHRISTOPHER", 
+        "@id": "livevista:2-9"
       }, 
-      "date_time_vitals_entered-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-01T07:12:22"
+      "http://datasets.caregraf.org/vs/qualifier-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "SPONTANEOUS", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "SPONTANEOUS", 
+        "@id": "livevista:120_52-47", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4688706"
+        }
       }, 
-      "rate-120_5": "20", 
-      "type": "120_5", 
-      "id": "http://livevista.caregraf.info/120_5-286", 
-      "patient-120_5": {
-        "id": "http://livevista.caregraf.info/2-9", 
-        "label": "JONES,CHRISTOPHER"
+      "http://datasets.caregraf.org/vs/date_time_vitals_entered-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-01T07:12:22"
       }, 
-      "entered_by-120_5": {
-        "id": "http://livevista.caregraf.info/200-64", 
-        "label": "USER,FMQL TWENTY-FIVE"
-      }
+      "http://www.w3.org/2000/01/rdf-schema#label": "2008-04-01T07:12:06Z", 
+      "http://datasets.caregraf.org/vs/entered_by-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "USER,FMQL TWENTY-FIVE", 
+        "@id": "livevista:200-64"
+      }, 
+      "@type": "http://datasets.caregraf.org/vs/120_5"
     }, 
     {
-      "qualifier-120_5": [
+      "http://datasets.caregraf.org/vs/hospital_location-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "3 NORTH - ICU", 
+        "@id": "livevista:44-23"
+      }, 
+      "http://datasets.caregraf.org/vs/vital_type-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "BLOOD PRESSURE", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "BLOOD PRESSURE", 
+        "@id": "livevista:120_51-1", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4500634"
+        }
+      }, 
+      "http://datasets.caregraf.org/vs/rate-120_5": "140/90", 
+      "@id": "livevista:120_5-287", 
+      "http://datasets.caregraf.org/vs/date_time_vitals_taken-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-01T07:12:06"
+      }, 
+      "http://datasets.caregraf.org/vs/patient-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "JONES,CHRISTOPHER", 
+        "@id": "livevista:2-9"
+      }, 
+      "http://datasets.caregraf.org/vs/qualifier-120_5": [
         {
-          "sameAs": "va:4688676", 
-          "sameAsLabel": "R ARM", 
-          "id": "http://livevista.caregraf.info/120_52-1", 
-          "label": "R ARM"
+          "http://datasets.caregraf.org/fmso/sameAsLabel": "R ARM", 
+          "http://www.w3.org/2000/01/rdf-schema#label": "R ARM", 
+          "@id": "livevista:120_52-1", 
+          "http://www.w3.org/2002/07/owl#sameAs": {
+            "@id": "http://schemes.caregraf.info/va/4688676"
+          }
         }, 
         {
-          "id": "http://livevista.caregraf.info/120_52-64", 
-          "label": "CUFF"
+          "http://www.w3.org/2000/01/rdf-schema#label": "CUFF", 
+          "@id": "livevista:120_52-64"
         }, 
         {
-          "sameAs": "va:4688703", 
-          "sameAsLabel": "SITTING", 
-          "id": "http://livevista.caregraf.info/120_52-50", 
-          "label": "SITTING"
+          "http://datasets.caregraf.org/fmso/sameAsLabel": "SITTING", 
+          "http://www.w3.org/2000/01/rdf-schema#label": "SITTING", 
+          "@id": "livevista:120_52-50", 
+          "http://www.w3.org/2002/07/owl#sameAs": {
+            "@id": "http://schemes.caregraf.info/va/4688703"
+          }
         }, 
         {
-          "id": "http://livevista.caregraf.info/120_52-66", 
-          "label": "ADULT"
+          "http://www.w3.org/2000/01/rdf-schema#label": "ADULT", 
+          "@id": "livevista:120_52-66"
         }
       ], 
-      "vital_type-120_5": {
-        "sameAs": "va:4500634", 
-        "sameAsLabel": "BLOOD PRESSURE", 
-        "id": "http://livevista.caregraf.info/120_51-1", 
-        "label": "BLOOD PRESSURE"
+      "http://datasets.caregraf.org/vs/date_time_vitals_entered-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-01T07:12:22"
       }, 
-      "label": "2008-04-01T07:12:06Z", 
-      "date_time_vitals_taken-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-01T07:12:06"
+      "http://www.w3.org/2000/01/rdf-schema#label": "2008-04-01T07:12:06Z", 
+      "http://datasets.caregraf.org/vs/entered_by-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "USER,FMQL TWENTY-FIVE", 
+        "@id": "livevista:200-64"
       }, 
-      "hospital_location-120_5": {
-        "id": "http://livevista.caregraf.info/44-23", 
-        "label": "3 NORTH - ICU"
-      }, 
-      "date_time_vitals_entered-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-01T07:12:22"
-      }, 
-      "rate-120_5": "140/90", 
-      "type": "120_5", 
-      "id": "http://livevista.caregraf.info/120_5-287", 
-      "patient-120_5": {
-        "id": "http://livevista.caregraf.info/2-9", 
-        "label": "JONES,CHRISTOPHER"
-      }, 
-      "entered_by-120_5": {
-        "id": "http://livevista.caregraf.info/200-64", 
-        "label": "USER,FMQL TWENTY-FIVE"
-      }
+      "@type": "http://datasets.caregraf.org/vs/120_5"
     }, 
     {
-      "qualifier-120_5": {
-        "sameAs": "va:4500642", 
-        "sameAsLabel": "ORAL", 
-        "id": "http://livevista.caregraf.info/120_52-6", 
-        "label": "ORAL"
+      "http://datasets.caregraf.org/vs/hospital_location-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "3 NORTH - ICU", 
+        "@id": "livevista:44-23"
       }, 
-      "vital_type-120_5": {
-        "sameAs": "va:4500638", 
-        "sameAsLabel": "TEMPERATURE", 
-        "id": "http://livevista.caregraf.info/120_51-2", 
-        "label": "TEMPERATURE"
+      "http://datasets.caregraf.org/vs/vital_type-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "TEMPERATURE", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "TEMPERATURE", 
+        "@id": "livevista:120_51-2", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4500638"
+        }
       }, 
-      "label": "2008-04-02T07:49:55Z", 
-      "date_time_vitals_taken-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T07:49:55"
+      "http://datasets.caregraf.org/vs/rate-120_5": "102", 
+      "@id": "livevista:120_5-288", 
+      "http://datasets.caregraf.org/vs/date_time_vitals_taken-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T07:49:55"
       }, 
-      "hospital_location-120_5": {
-        "id": "http://livevista.caregraf.info/44-23", 
-        "label": "3 NORTH - ICU"
+      "http://datasets.caregraf.org/vs/patient-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "JONES,CHRISTOPHER", 
+        "@id": "livevista:2-9"
       }, 
-      "date_time_vitals_entered-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T07:50:28"
+      "http://datasets.caregraf.org/vs/qualifier-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "ORAL", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "ORAL", 
+        "@id": "livevista:120_52-6", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4500642"
+        }
       }, 
-      "rate-120_5": "102", 
-      "type": "120_5", 
-      "id": "http://livevista.caregraf.info/120_5-288", 
-      "patient-120_5": {
-        "id": "http://livevista.caregraf.info/2-9", 
-        "label": "JONES,CHRISTOPHER"
+      "http://datasets.caregraf.org/vs/date_time_vitals_entered-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T07:50:28"
       }, 
-      "entered_by-120_5": {
-        "id": "http://livevista.caregraf.info/200-64", 
-        "label": "USER,FMQL TWENTY-FIVE"
-      }
+      "http://www.w3.org/2000/01/rdf-schema#label": "2008-04-02T07:49:55Z", 
+      "http://datasets.caregraf.org/vs/entered_by-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "USER,FMQL TWENTY-FIVE", 
+        "@id": "livevista:200-64"
+      }, 
+      "@type": "http://datasets.caregraf.org/vs/120_5"
     }, 
     {
-      "qualifier-120_5": [
+      "http://datasets.caregraf.org/vs/hospital_location-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "3 NORTH - ICU", 
+        "@id": "livevista:44-23"
+      }, 
+      "http://datasets.caregraf.org/vs/vital_type-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "PULSE", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "PULSE", 
+        "@id": "livevista:120_51-5", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4500636"
+        }
+      }, 
+      "http://datasets.caregraf.org/vs/rate-120_5": "84", 
+      "@id": "livevista:120_5-289", 
+      "http://datasets.caregraf.org/vs/date_time_vitals_taken-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T07:49:55"
+      }, 
+      "http://datasets.caregraf.org/vs/patient-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "JONES,CHRISTOPHER", 
+        "@id": "livevista:2-9"
+      }, 
+      "http://datasets.caregraf.org/vs/qualifier-120_5": [
         {
-          "sameAs": "va:4688669", 
-          "sameAsLabel": "PALPATED", 
-          "id": "http://livevista.caregraf.info/120_52-59", 
-          "label": "PALPATED"
+          "http://datasets.caregraf.org/fmso/sameAsLabel": "PALPATED", 
+          "http://www.w3.org/2000/01/rdf-schema#label": "PALPATED", 
+          "@id": "livevista:120_52-59", 
+          "http://www.w3.org/2002/07/owl#sameAs": {
+            "@id": "http://schemes.caregraf.info/va/4688669"
+          }
         }, 
         {
-          "sameAs": "va:4688703", 
-          "sameAsLabel": "SITTING", 
-          "id": "http://livevista.caregraf.info/120_52-50", 
-          "label": "SITTING"
+          "http://datasets.caregraf.org/fmso/sameAsLabel": "SITTING", 
+          "http://www.w3.org/2000/01/rdf-schema#label": "SITTING", 
+          "@id": "livevista:120_52-50", 
+          "http://www.w3.org/2002/07/owl#sameAs": {
+            "@id": "http://schemes.caregraf.info/va/4688703"
+          }
         }
       ], 
-      "vital_type-120_5": {
-        "sameAs": "va:4500636", 
-        "sameAsLabel": "PULSE", 
-        "id": "http://livevista.caregraf.info/120_51-5", 
-        "label": "PULSE"
+      "http://datasets.caregraf.org/vs/date_time_vitals_entered-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T07:50:28"
       }, 
-      "label": "2008-04-02T07:49:55Z", 
-      "date_time_vitals_taken-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T07:49:55"
+      "http://www.w3.org/2000/01/rdf-schema#label": "2008-04-02T07:49:55Z", 
+      "http://datasets.caregraf.org/vs/entered_by-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "USER,FMQL TWENTY-FIVE", 
+        "@id": "livevista:200-64"
       }, 
-      "hospital_location-120_5": {
-        "id": "http://livevista.caregraf.info/44-23", 
-        "label": "3 NORTH - ICU"
-      }, 
-      "date_time_vitals_entered-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T07:50:28"
-      }, 
-      "rate-120_5": "84", 
-      "type": "120_5", 
-      "id": "http://livevista.caregraf.info/120_5-289", 
-      "patient-120_5": {
-        "id": "http://livevista.caregraf.info/2-9", 
-        "label": "JONES,CHRISTOPHER"
-      }, 
-      "entered_by-120_5": {
-        "id": "http://livevista.caregraf.info/200-64", 
-        "label": "USER,FMQL TWENTY-FIVE"
-      }
+      "@type": "http://datasets.caregraf.org/vs/120_5"
     }, 
     {
-      "qualifier-120_5": {
-        "sameAs": "va:4688706", 
-        "sameAsLabel": "SPONTANEOUS", 
-        "id": "http://livevista.caregraf.info/120_52-47", 
-        "label": "SPONTANEOUS"
+      "http://datasets.caregraf.org/vs/hospital_location-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "3 NORTH - ICU", 
+        "@id": "livevista:44-23"
       }, 
-      "vital_type-120_5": {
-        "sameAs": "va:4688725", 
-        "sameAsLabel": "RESPIRATION", 
-        "id": "http://livevista.caregraf.info/120_51-3", 
-        "label": "RESPIRATION"
+      "http://datasets.caregraf.org/vs/vital_type-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "RESPIRATION", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "RESPIRATION", 
+        "@id": "livevista:120_51-3", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4688725"
+        }
       }, 
-      "label": "2008-04-02T07:49:55Z", 
-      "date_time_vitals_taken-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T07:49:55"
+      "http://datasets.caregraf.org/vs/rate-120_5": "24", 
+      "@id": "livevista:120_5-290", 
+      "http://datasets.caregraf.org/vs/date_time_vitals_taken-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T07:49:55"
       }, 
-      "hospital_location-120_5": {
-        "id": "http://livevista.caregraf.info/44-23", 
-        "label": "3 NORTH - ICU"
+      "http://datasets.caregraf.org/vs/patient-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "JONES,CHRISTOPHER", 
+        "@id": "livevista:2-9"
       }, 
-      "date_time_vitals_entered-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T07:50:28"
+      "http://datasets.caregraf.org/vs/qualifier-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "SPONTANEOUS", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "SPONTANEOUS", 
+        "@id": "livevista:120_52-47", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4688706"
+        }
       }, 
-      "rate-120_5": "24", 
-      "type": "120_5", 
-      "id": "http://livevista.caregraf.info/120_5-290", 
-      "patient-120_5": {
-        "id": "http://livevista.caregraf.info/2-9", 
-        "label": "JONES,CHRISTOPHER"
+      "http://datasets.caregraf.org/vs/date_time_vitals_entered-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T07:50:28"
       }, 
-      "entered_by-120_5": {
-        "id": "http://livevista.caregraf.info/200-64", 
-        "label": "USER,FMQL TWENTY-FIVE"
-      }
+      "http://www.w3.org/2000/01/rdf-schema#label": "2008-04-02T07:49:55Z", 
+      "http://datasets.caregraf.org/vs/entered_by-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "USER,FMQL TWENTY-FIVE", 
+        "@id": "livevista:200-64"
+      }, 
+      "@type": "http://datasets.caregraf.org/vs/120_5"
     }, 
     {
-      "qualifier-120_5": [
+      "http://datasets.caregraf.org/vs/hospital_location-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "3 NORTH - ICU", 
+        "@id": "livevista:44-23"
+      }, 
+      "http://datasets.caregraf.org/vs/vital_type-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "BLOOD PRESSURE", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "BLOOD PRESSURE", 
+        "@id": "livevista:120_51-1", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4500634"
+        }
+      }, 
+      "http://datasets.caregraf.org/vs/rate-120_5": "110/70", 
+      "@id": "livevista:120_5-291", 
+      "http://datasets.caregraf.org/vs/date_time_vitals_taken-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T07:49:55"
+      }, 
+      "http://datasets.caregraf.org/vs/patient-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "JONES,CHRISTOPHER", 
+        "@id": "livevista:2-9"
+      }, 
+      "http://datasets.caregraf.org/vs/qualifier-120_5": [
         {
-          "sameAs": "va:4688676", 
-          "sameAsLabel": "R ARM", 
-          "id": "http://livevista.caregraf.info/120_52-1", 
-          "label": "R ARM"
+          "http://datasets.caregraf.org/fmso/sameAsLabel": "R ARM", 
+          "http://www.w3.org/2000/01/rdf-schema#label": "R ARM", 
+          "@id": "livevista:120_52-1", 
+          "http://www.w3.org/2002/07/owl#sameAs": {
+            "@id": "http://schemes.caregraf.info/va/4688676"
+          }
         }, 
         {
-          "id": "http://livevista.caregraf.info/120_52-64", 
-          "label": "CUFF"
+          "http://www.w3.org/2000/01/rdf-schema#label": "CUFF", 
+          "@id": "livevista:120_52-64"
         }, 
         {
-          "sameAs": "va:4688703", 
-          "sameAsLabel": "SITTING", 
-          "id": "http://livevista.caregraf.info/120_52-50", 
-          "label": "SITTING"
+          "http://datasets.caregraf.org/fmso/sameAsLabel": "SITTING", 
+          "http://www.w3.org/2000/01/rdf-schema#label": "SITTING", 
+          "@id": "livevista:120_52-50", 
+          "http://www.w3.org/2002/07/owl#sameAs": {
+            "@id": "http://schemes.caregraf.info/va/4688703"
+          }
         }, 
         {
-          "id": "http://livevista.caregraf.info/120_52-66", 
-          "label": "ADULT"
+          "http://www.w3.org/2000/01/rdf-schema#label": "ADULT", 
+          "@id": "livevista:120_52-66"
         }
       ], 
-      "vital_type-120_5": {
-        "sameAs": "va:4500634", 
-        "sameAsLabel": "BLOOD PRESSURE", 
-        "id": "http://livevista.caregraf.info/120_51-1", 
-        "label": "BLOOD PRESSURE"
+      "http://datasets.caregraf.org/vs/date_time_vitals_entered-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T07:50:28"
       }, 
-      "label": "2008-04-02T07:49:55Z", 
-      "date_time_vitals_taken-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T07:49:55"
+      "http://www.w3.org/2000/01/rdf-schema#label": "2008-04-02T07:49:55Z", 
+      "http://datasets.caregraf.org/vs/entered_by-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "USER,FMQL TWENTY-FIVE", 
+        "@id": "livevista:200-64"
       }, 
-      "hospital_location-120_5": {
-        "id": "http://livevista.caregraf.info/44-23", 
-        "label": "3 NORTH - ICU"
-      }, 
-      "date_time_vitals_entered-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T07:50:28"
-      }, 
-      "rate-120_5": "110/70", 
-      "type": "120_5", 
-      "id": "http://livevista.caregraf.info/120_5-291", 
-      "patient-120_5": {
-        "id": "http://livevista.caregraf.info/2-9", 
-        "label": "JONES,CHRISTOPHER"
-      }, 
-      "entered_by-120_5": {
-        "id": "http://livevista.caregraf.info/200-64", 
-        "label": "USER,FMQL TWENTY-FIVE"
-      }
+      "@type": "http://datasets.caregraf.org/vs/120_5"
     }, 
     {
-      "qualifier-120_5": {
-        "sameAs": "va:4500642", 
-        "sameAsLabel": "ORAL", 
-        "id": "http://livevista.caregraf.info/120_52-6", 
-        "label": "ORAL"
+      "http://datasets.caregraf.org/vs/hospital_location-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "3 NORTH - ICU", 
+        "@id": "livevista:44-23"
       }, 
-      "vital_type-120_5": {
-        "sameAs": "va:4500638", 
-        "sameAsLabel": "TEMPERATURE", 
-        "id": "http://livevista.caregraf.info/120_51-2", 
-        "label": "TEMPERATURE"
+      "http://datasets.caregraf.org/vs/vital_type-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "TEMPERATURE", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "TEMPERATURE", 
+        "@id": "livevista:120_51-2", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4500638"
+        }
       }, 
-      "label": "2008-04-02T13:16:13Z", 
-      "date_time_vitals_taken-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T13:16:13"
+      "http://datasets.caregraf.org/vs/rate-120_5": "101", 
+      "@id": "livevista:120_5-292", 
+      "http://datasets.caregraf.org/vs/date_time_vitals_taken-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T13:16:13"
       }, 
-      "hospital_location-120_5": {
-        "id": "http://livevista.caregraf.info/44-23", 
-        "label": "3 NORTH - ICU"
+      "http://datasets.caregraf.org/vs/patient-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "JONES,CHRISTOPHER", 
+        "@id": "livevista:2-9"
       }, 
-      "date_time_vitals_entered-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T13:17:39"
+      "http://datasets.caregraf.org/vs/qualifier-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "ORAL", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "ORAL", 
+        "@id": "livevista:120_52-6", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4500642"
+        }
       }, 
-      "rate-120_5": "101", 
-      "type": "120_5", 
-      "id": "http://livevista.caregraf.info/120_5-292", 
-      "patient-120_5": {
-        "id": "http://livevista.caregraf.info/2-9", 
-        "label": "JONES,CHRISTOPHER"
+      "http://datasets.caregraf.org/vs/date_time_vitals_entered-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T13:17:39"
       }, 
-      "entered_by-120_5": {
-        "id": "http://livevista.caregraf.info/200-65", 
-        "label": "ASCLEPIUS,DEUS"
-      }
+      "http://www.w3.org/2000/01/rdf-schema#label": "2008-04-02T13:16:13Z", 
+      "http://datasets.caregraf.org/vs/entered_by-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "ASCLEPIUS,DEUS", 
+        "@id": "livevista:200-65"
+      }, 
+      "@type": "http://datasets.caregraf.org/vs/120_5"
     }, 
     {
-      "qualifier-120_5": [
+      "http://datasets.caregraf.org/vs/hospital_location-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "3 NORTH - ICU", 
+        "@id": "livevista:44-23"
+      }, 
+      "http://datasets.caregraf.org/vs/vital_type-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "PULSE", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "PULSE", 
+        "@id": "livevista:120_51-5", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4500636"
+        }
+      }, 
+      "http://datasets.caregraf.org/vs/rate-120_5": "98", 
+      "@id": "livevista:120_5-293", 
+      "http://datasets.caregraf.org/vs/date_time_vitals_taken-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T13:16:13"
+      }, 
+      "http://datasets.caregraf.org/vs/patient-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "JONES,CHRISTOPHER", 
+        "@id": "livevista:2-9"
+      }, 
+      "http://datasets.caregraf.org/vs/qualifier-120_5": [
         {
-          "sameAs": "va:4688669", 
-          "sameAsLabel": "PALPATED", 
-          "id": "http://livevista.caregraf.info/120_52-59", 
-          "label": "PALPATED"
+          "http://datasets.caregraf.org/fmso/sameAsLabel": "PALPATED", 
+          "http://www.w3.org/2000/01/rdf-schema#label": "PALPATED", 
+          "@id": "livevista:120_52-59", 
+          "http://www.w3.org/2002/07/owl#sameAs": {
+            "@id": "http://schemes.caregraf.info/va/4688669"
+          }
         }, 
         {
-          "sameAs": "va:4688703", 
-          "sameAsLabel": "SITTING", 
-          "id": "http://livevista.caregraf.info/120_52-50", 
-          "label": "SITTING"
+          "http://datasets.caregraf.org/fmso/sameAsLabel": "SITTING", 
+          "http://www.w3.org/2000/01/rdf-schema#label": "SITTING", 
+          "@id": "livevista:120_52-50", 
+          "http://www.w3.org/2002/07/owl#sameAs": {
+            "@id": "http://schemes.caregraf.info/va/4688703"
+          }
         }
       ], 
-      "vital_type-120_5": {
-        "sameAs": "va:4500636", 
-        "sameAsLabel": "PULSE", 
-        "id": "http://livevista.caregraf.info/120_51-5", 
-        "label": "PULSE"
+      "http://datasets.caregraf.org/vs/date_time_vitals_entered-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T13:17:39"
       }, 
-      "label": "2008-04-02T13:16:13Z", 
-      "date_time_vitals_taken-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T13:16:13"
+      "http://www.w3.org/2000/01/rdf-schema#label": "2008-04-02T13:16:13Z", 
+      "http://datasets.caregraf.org/vs/entered_by-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "ASCLEPIUS,DEUS", 
+        "@id": "livevista:200-65"
       }, 
-      "hospital_location-120_5": {
-        "id": "http://livevista.caregraf.info/44-23", 
-        "label": "3 NORTH - ICU"
-      }, 
-      "date_time_vitals_entered-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T13:17:39"
-      }, 
-      "rate-120_5": "98", 
-      "type": "120_5", 
-      "id": "http://livevista.caregraf.info/120_5-293", 
-      "patient-120_5": {
-        "id": "http://livevista.caregraf.info/2-9", 
-        "label": "JONES,CHRISTOPHER"
-      }, 
-      "entered_by-120_5": {
-        "id": "http://livevista.caregraf.info/200-65", 
-        "label": "ASCLEPIUS,DEUS"
-      }
+      "@type": "http://datasets.caregraf.org/vs/120_5"
     }, 
     {
-      "qualifier-120_5": {
-        "sameAs": "va:4688706", 
-        "sameAsLabel": "SPONTANEOUS", 
-        "id": "http://livevista.caregraf.info/120_52-47", 
-        "label": "SPONTANEOUS"
+      "http://datasets.caregraf.org/vs/hospital_location-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "3 NORTH - ICU", 
+        "@id": "livevista:44-23"
       }, 
-      "vital_type-120_5": {
-        "sameAs": "va:4688725", 
-        "sameAsLabel": "RESPIRATION", 
-        "id": "http://livevista.caregraf.info/120_51-3", 
-        "label": "RESPIRATION"
+      "http://datasets.caregraf.org/vs/vital_type-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "RESPIRATION", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "RESPIRATION", 
+        "@id": "livevista:120_51-3", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4688725"
+        }
       }, 
-      "label": "2008-04-02T13:16:13Z", 
-      "date_time_vitals_taken-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T13:16:13"
+      "http://datasets.caregraf.org/vs/rate-120_5": "20", 
+      "@id": "livevista:120_5-294", 
+      "http://datasets.caregraf.org/vs/date_time_vitals_taken-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T13:16:13"
       }, 
-      "hospital_location-120_5": {
-        "id": "http://livevista.caregraf.info/44-23", 
-        "label": "3 NORTH - ICU"
+      "http://datasets.caregraf.org/vs/patient-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "JONES,CHRISTOPHER", 
+        "@id": "livevista:2-9"
       }, 
-      "date_time_vitals_entered-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T13:17:39"
+      "http://datasets.caregraf.org/vs/qualifier-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "SPONTANEOUS", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "SPONTANEOUS", 
+        "@id": "livevista:120_52-47", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4688706"
+        }
       }, 
-      "rate-120_5": "20", 
-      "type": "120_5", 
-      "id": "http://livevista.caregraf.info/120_5-294", 
-      "patient-120_5": {
-        "id": "http://livevista.caregraf.info/2-9", 
-        "label": "JONES,CHRISTOPHER"
+      "http://datasets.caregraf.org/vs/date_time_vitals_entered-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T13:17:39"
       }, 
-      "entered_by-120_5": {
-        "id": "http://livevista.caregraf.info/200-65", 
-        "label": "ASCLEPIUS,DEUS"
-      }
+      "http://www.w3.org/2000/01/rdf-schema#label": "2008-04-02T13:16:13Z", 
+      "http://datasets.caregraf.org/vs/entered_by-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "ASCLEPIUS,DEUS", 
+        "@id": "livevista:200-65"
+      }, 
+      "@type": "http://datasets.caregraf.org/vs/120_5"
     }, 
     {
-      "qualifier-120_5": [
+      "http://datasets.caregraf.org/vs/hospital_location-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "3 NORTH - ICU", 
+        "@id": "livevista:44-23"
+      }, 
+      "http://datasets.caregraf.org/vs/vital_type-120_5": {
+        "http://datasets.caregraf.org/fmso/sameAsLabel": "BLOOD PRESSURE", 
+        "http://www.w3.org/2000/01/rdf-schema#label": "BLOOD PRESSURE", 
+        "@id": "livevista:120_51-1", 
+        "http://www.w3.org/2002/07/owl#sameAs": {
+          "@id": "http://schemes.caregraf.info/va/4500634"
+        }
+      }, 
+      "http://datasets.caregraf.org/vs/rate-120_5": "160/90", 
+      "@id": "livevista:120_5-295", 
+      "http://datasets.caregraf.org/vs/date_time_vitals_taken-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T13:16:13"
+      }, 
+      "http://datasets.caregraf.org/vs/patient-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "JONES,CHRISTOPHER", 
+        "@id": "livevista:2-9"
+      }, 
+      "http://datasets.caregraf.org/vs/qualifier-120_5": [
         {
-          "sameAs": "va:4688676", 
-          "sameAsLabel": "R ARM", 
-          "id": "http://livevista.caregraf.info/120_52-1", 
-          "label": "R ARM"
+          "http://datasets.caregraf.org/fmso/sameAsLabel": "R ARM", 
+          "http://www.w3.org/2000/01/rdf-schema#label": "R ARM", 
+          "@id": "livevista:120_52-1", 
+          "http://www.w3.org/2002/07/owl#sameAs": {
+            "@id": "http://schemes.caregraf.info/va/4688676"
+          }
         }, 
         {
-          "id": "http://livevista.caregraf.info/120_52-64", 
-          "label": "CUFF"
+          "http://www.w3.org/2000/01/rdf-schema#label": "CUFF", 
+          "@id": "livevista:120_52-64"
         }, 
         {
-          "sameAs": "va:4688703", 
-          "sameAsLabel": "SITTING", 
-          "id": "http://livevista.caregraf.info/120_52-50", 
-          "label": "SITTING"
+          "http://datasets.caregraf.org/fmso/sameAsLabel": "SITTING", 
+          "http://www.w3.org/2000/01/rdf-schema#label": "SITTING", 
+          "@id": "livevista:120_52-50", 
+          "http://www.w3.org/2002/07/owl#sameAs": {
+            "@id": "http://schemes.caregraf.info/va/4688703"
+          }
         }, 
         {
-          "id": "http://livevista.caregraf.info/120_52-66", 
-          "label": "ADULT"
+          "http://www.w3.org/2000/01/rdf-schema#label": "ADULT", 
+          "@id": "livevista:120_52-66"
         }
       ], 
-      "vital_type-120_5": {
-        "sameAs": "va:4500634", 
-        "sameAsLabel": "BLOOD PRESSURE", 
-        "id": "http://livevista.caregraf.info/120_51-1", 
-        "label": "BLOOD PRESSURE"
+      "http://datasets.caregraf.org/vs/date_time_vitals_entered-120_5": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime", 
+        "@value": "2008-04-02T13:17:39"
       }, 
-      "label": "2008-04-02T13:16:13Z", 
-      "date_time_vitals_taken-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T13:16:13"
+      "http://www.w3.org/2000/01/rdf-schema#label": "2008-04-02T13:16:13Z", 
+      "http://datasets.caregraf.org/vs/entered_by-120_5": {
+        "http://www.w3.org/2000/01/rdf-schema#label": "ASCLEPIUS,DEUS", 
+        "@id": "livevista:200-65"
       }, 
-      "hospital_location-120_5": {
-        "id": "http://livevista.caregraf.info/44-23", 
-        "label": "3 NORTH - ICU"
-      }, 
-      "date_time_vitals_entered-120_5": {
-        "type": "xsd:dateTime", 
-        "value": "2008-04-02T13:17:39"
-      }, 
-      "rate-120_5": "160/90", 
-      "type": "120_5", 
-      "id": "http://livevista.caregraf.info/120_5-295", 
-      "patient-120_5": {
-        "id": "http://livevista.caregraf.info/2-9", 
-        "label": "JONES,CHRISTOPHER"
-      }, 
-      "entered_by-120_5": {
-        "id": "http://livevista.caregraf.info/200-65", 
-        "label": "ASCLEPIUS,DEUS"
-      }
+      "@type": "http://datasets.caregraf.org/vs/120_5"
     }
   ]
 }

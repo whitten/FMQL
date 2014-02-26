@@ -25,7 +25,7 @@
         "@id": "http://livevista.caregraf.info/120_51-2", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4500638"
+            "@id": "http://schemes.caregraf.info/va/4500638"
           }
         ]
       }
@@ -81,7 +81,7 @@
         "@id": "http://livevista.caregraf.info/120_52-6", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4500642"
+            "@id": "http://schemes.caregraf.info/va/4500642"
           }
         ]
       }
@@ -123,7 +123,7 @@
         "@id": "http://livevista.caregraf.info/120_51-5", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4500636"
+            "@id": "http://schemes.caregraf.info/va/4500636"
           }
         ]
       }
@@ -179,7 +179,7 @@
         "@id": "http://livevista.caregraf.info/120_52-59", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688669"
+            "@id": "http://schemes.caregraf.info/va/4688669"
           }
         ]
       }, 
@@ -197,7 +197,7 @@
         "@id": "http://livevista.caregraf.info/120_52-50", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688703"
+            "@id": "http://schemes.caregraf.info/va/4688703"
           }
         ]
       }
@@ -239,7 +239,7 @@
         "@id": "http://livevista.caregraf.info/120_51-3", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688725"
+            "@id": "http://schemes.caregraf.info/va/4688725"
           }
         ]
       }
@@ -295,7 +295,7 @@
         "@id": "http://livevista.caregraf.info/120_52-47", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688706"
+            "@id": "http://schemes.caregraf.info/va/4688706"
           }
         ]
       }
@@ -337,7 +337,7 @@
         "@id": "http://livevista.caregraf.info/120_51-1", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4500634"
+            "@id": "http://schemes.caregraf.info/va/4500634"
           }
         ]
       }
@@ -393,7 +393,7 @@
         "@id": "http://livevista.caregraf.info/120_52-1", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688676"
+            "@id": "http://schemes.caregraf.info/va/4688676"
           }
         ]
       }, 
@@ -419,7 +419,7 @@
         "@id": "http://livevista.caregraf.info/120_52-50", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688703"
+            "@id": "http://schemes.caregraf.info/va/4688703"
           }
         ]
       }, 
@@ -469,7 +469,7 @@
         "@id": "http://livevista.caregraf.info/120_51-2", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4500638"
+            "@id": "http://schemes.caregraf.info/va/4500638"
           }
         ]
       }
@@ -525,7 +525,7 @@
         "@id": "http://livevista.caregraf.info/120_52-6", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4500642"
+            "@id": "http://schemes.caregraf.info/va/4500642"
           }
         ]
       }
@@ -567,7 +567,7 @@
         "@id": "http://livevista.caregraf.info/120_51-5", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4500636"
+            "@id": "http://schemes.caregraf.info/va/4500636"
           }
         ]
       }
@@ -623,7 +623,7 @@
         "@id": "http://livevista.caregraf.info/120_52-59", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688669"
+            "@id": "http://schemes.caregraf.info/va/4688669"
           }
         ]
       }, 
@@ -641,7 +641,7 @@
         "@id": "http://livevista.caregraf.info/120_52-50", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688703"
+            "@id": "http://schemes.caregraf.info/va/4688703"
           }
         ]
       }
@@ -683,7 +683,7 @@
         "@id": "http://livevista.caregraf.info/120_51-3", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688725"
+            "@id": "http://schemes.caregraf.info/va/4688725"
           }
         ]
       }
@@ -739,7 +739,7 @@
         "@id": "http://livevista.caregraf.info/120_52-47", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688706"
+            "@id": "http://schemes.caregraf.info/va/4688706"
           }
         ]
       }
@@ -781,7 +781,7 @@
         "@id": "http://livevista.caregraf.info/120_51-1", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4500634"
+            "@id": "http://schemes.caregraf.info/va/4500634"
           }
         ]
       }
@@ -837,7 +837,7 @@
         "@id": "http://livevista.caregraf.info/120_52-1", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688676"
+            "@id": "http://schemes.caregraf.info/va/4688676"
           }
         ]
       }, 
@@ -863,7 +863,7 @@
         "@id": "http://livevista.caregraf.info/120_52-50", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688703"
+            "@id": "http://schemes.caregraf.info/va/4688703"
           }
         ]
       }, 
@@ -913,7 +913,7 @@
         "@id": "http://livevista.caregraf.info/120_51-2", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4500638"
+            "@id": "http://schemes.caregraf.info/va/4500638"
           }
         ]
       }
@@ -969,7 +969,7 @@
         "@id": "http://livevista.caregraf.info/120_52-6", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4500642"
+            "@id": "http://schemes.caregraf.info/va/4500642"
           }
         ]
       }
@@ -1011,7 +1011,7 @@
         "@id": "http://livevista.caregraf.info/120_51-5", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4500636"
+            "@id": "http://schemes.caregraf.info/va/4500636"
           }
         ]
       }
@@ -1067,7 +1067,7 @@
         "@id": "http://livevista.caregraf.info/120_52-59", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688669"
+            "@id": "http://schemes.caregraf.info/va/4688669"
           }
         ]
       }, 
@@ -1085,7 +1085,7 @@
         "@id": "http://livevista.caregraf.info/120_52-50", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688703"
+            "@id": "http://schemes.caregraf.info/va/4688703"
           }
         ]
       }
@@ -1127,7 +1127,7 @@
         "@id": "http://livevista.caregraf.info/120_51-3", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688725"
+            "@id": "http://schemes.caregraf.info/va/4688725"
           }
         ]
       }
@@ -1183,7 +1183,7 @@
         "@id": "http://livevista.caregraf.info/120_52-47", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688706"
+            "@id": "http://schemes.caregraf.info/va/4688706"
           }
         ]
       }
@@ -1225,7 +1225,7 @@
         "@id": "http://livevista.caregraf.info/120_51-1", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4500634"
+            "@id": "http://schemes.caregraf.info/va/4500634"
           }
         ]
       }
@@ -1281,7 +1281,7 @@
         "@id": "http://livevista.caregraf.info/120_52-1", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688676"
+            "@id": "http://schemes.caregraf.info/va/4688676"
           }
         ]
       }, 
@@ -1307,7 +1307,7 @@
         "@id": "http://livevista.caregraf.info/120_52-50", 
         "http://www.w3.org/2002/07/owl#sameAs": [
           {
-            "@id": "va:4688703"
+            "@id": "http://schemes.caregraf.info/va/4688703"
           }
         ]
       }, 

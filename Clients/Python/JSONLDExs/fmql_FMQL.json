@@ -19,10 +19,14 @@
     }, 
     "value": "@value", 
     "fmso": "http://datasets.caregraf.org/fmso/", 
+    "va": "http://schemes.caregraf.info/va/", 
     "list": "@list", 
     "@base": "http://livevista.caregraf.info/", 
     "vs": "http://datasets.caregraf.org/vs/", 
     "xsd": "http://www.w3.org/2001/XMLSchema#", 
+    "query": {
+      "@id": "fmql:query"
+    }, 
     "sameAsLabel": {
       "@id": "fmso:sameAsLabel"
     }, 

@@ -132,33 +132,33 @@
 <http://livevista.caregraf.info/120_5-295> <http://www.w3.org/2000/01/rdf-schema#label> "2008-04-02T13:16:13Z" .
 <http://livevista.caregraf.info/120_51-1> <http://datasets.caregraf.org/fmso/sameAsLabel> "BLOOD PRESSURE" .
 <http://livevista.caregraf.info/120_51-1> <http://www.w3.org/2000/01/rdf-schema#label> "BLOOD PRESSURE" .
-<http://livevista.caregraf.info/120_51-1> <http://www.w3.org/2002/07/owl#sameAs> <va:4500634> .
+<http://livevista.caregraf.info/120_51-1> <http://www.w3.org/2002/07/owl#sameAs> <http://schemes.caregraf.info/va/4500634> .
 <http://livevista.caregraf.info/120_51-2> <http://datasets.caregraf.org/fmso/sameAsLabel> "TEMPERATURE" .
 <http://livevista.caregraf.info/120_51-2> <http://www.w3.org/2000/01/rdf-schema#label> "TEMPERATURE" .
-<http://livevista.caregraf.info/120_51-2> <http://www.w3.org/2002/07/owl#sameAs> <va:4500638> .
+<http://livevista.caregraf.info/120_51-2> <http://www.w3.org/2002/07/owl#sameAs> <http://schemes.caregraf.info/va/4500638> .
 <http://livevista.caregraf.info/120_51-3> <http://datasets.caregraf.org/fmso/sameAsLabel> "RESPIRATION" .
 <http://livevista.caregraf.info/120_51-3> <http://www.w3.org/2000/01/rdf-schema#label> "RESPIRATION" .
-<http://livevista.caregraf.info/120_51-3> <http://www.w3.org/2002/07/owl#sameAs> <va:4688725> .
+<http://livevista.caregraf.info/120_51-3> <http://www.w3.org/2002/07/owl#sameAs> <http://schemes.caregraf.info/va/4688725> .
 <http://livevista.caregraf.info/120_51-5> <http://datasets.caregraf.org/fmso/sameAsLabel> "PULSE" .
 <http://livevista.caregraf.info/120_51-5> <http://www.w3.org/2000/01/rdf-schema#label> "PULSE" .
-<http://livevista.caregraf.info/120_51-5> <http://www.w3.org/2002/07/owl#sameAs> <va:4500636> .
+<http://livevista.caregraf.info/120_51-5> <http://www.w3.org/2002/07/owl#sameAs> <http://schemes.caregraf.info/va/4500636> .
 <http://livevista.caregraf.info/120_52-1> <http://datasets.caregraf.org/fmso/sameAsLabel> "R ARM" .
 <http://livevista.caregraf.info/120_52-1> <http://www.w3.org/2000/01/rdf-schema#label> "R ARM" .
-<http://livevista.caregraf.info/120_52-1> <http://www.w3.org/2002/07/owl#sameAs> <va:4688676> .
+<http://livevista.caregraf.info/120_52-1> <http://www.w3.org/2002/07/owl#sameAs> <http://schemes.caregraf.info/va/4688676> .
 <http://livevista.caregraf.info/120_52-47> <http://datasets.caregraf.org/fmso/sameAsLabel> "SPONTANEOUS" .
 <http://livevista.caregraf.info/120_52-47> <http://www.w3.org/2000/01/rdf-schema#label> "SPONTANEOUS" .
-<http://livevista.caregraf.info/120_52-47> <http://www.w3.org/2002/07/owl#sameAs> <va:4688706> .
+<http://livevista.caregraf.info/120_52-47> <http://www.w3.org/2002/07/owl#sameAs> <http://schemes.caregraf.info/va/4688706> .
 <http://livevista.caregraf.info/120_52-50> <http://datasets.caregraf.org/fmso/sameAsLabel> "SITTING" .
 <http://livevista.caregraf.info/120_52-50> <http://www.w3.org/2000/01/rdf-schema#label> "SITTING" .
-<http://livevista.caregraf.info/120_52-50> <http://www.w3.org/2002/07/owl#sameAs> <va:4688703> .
+<http://livevista.caregraf.info/120_52-50> <http://www.w3.org/2002/07/owl#sameAs> <http://schemes.caregraf.info/va/4688703> .
 <http://livevista.caregraf.info/120_52-59> <http://datasets.caregraf.org/fmso/sameAsLabel> "PALPATED" .
 <http://livevista.caregraf.info/120_52-59> <http://www.w3.org/2000/01/rdf-schema#label> "PALPATED" .
-<http://livevista.caregraf.info/120_52-59> <http://www.w3.org/2002/07/owl#sameAs> <va:4688669> .
+<http://livevista.caregraf.info/120_52-59> <http://www.w3.org/2002/07/owl#sameAs> <http://schemes.caregraf.info/va/4688669> .
 <http://livevista.caregraf.info/120_52-64> <http://www.w3.org/2000/01/rdf-schema#label> "CUFF" .
 <http://livevista.caregraf.info/120_52-66> <http://www.w3.org/2000/01/rdf-schema#label> "ADULT" .
 <http://livevista.caregraf.info/120_52-6> <http://datasets.caregraf.org/fmso/sameAsLabel> "ORAL" .
 <http://livevista.caregraf.info/120_52-6> <http://www.w3.org/2000/01/rdf-schema#label> "ORAL" .
-<http://livevista.caregraf.info/120_52-6> <http://www.w3.org/2002/07/owl#sameAs> <va:4500642> .
+<http://livevista.caregraf.info/120_52-6> <http://www.w3.org/2002/07/owl#sameAs> <http://schemes.caregraf.info/va/4500642> .
 <http://livevista.caregraf.info/2-9> <http://www.w3.org/2000/01/rdf-schema#label> "JONES,CHRISTOPHER" .
 <http://livevista.caregraf.info/200-64> <http://www.w3.org/2000/01/rdf-schema#label> "USER,FMQL TWENTY-FIVE" .
 <http://livevista.caregraf.info/200-65> <http://www.w3.org/2000/01/rdf-schema#label> "ASCLEPIUS,DEUS" .
