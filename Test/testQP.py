@@ -22,6 +22,14 @@ sys.path.append('../Framework')
 from brokerRPC import VistARPCConnection
 
 """
+FIX UP FOR FOIA - indexed queries to test things (in place of patient, use meta data):
+- 5 County indexed by State C
+  SELECT 5_1 FILTER(1=5-6)
+- 50_6 ... lookup by VUID ie/ not a pointer but it is indexed.
+[county for state too but stick to drugs]
+"""
+
+"""
  FMQL Query Processor Unit Tests
 
  Two sorts of test:
@@ -219,6 +227,7 @@ STESTSETS = []
 CNT_PATIENTS = "39"
 CNT_ORDERS = "6"
 CNT_LABS = "22"
+TESTSTATEID = "5-33" # New Hampshire - refs from Institutions and Postal codes
 TESTPATIENTID = "2-9"
 TESTIHSPATIENTID = "9000001-9"
 TESTOPATIENTID = "2-6" # Order patient different in CG Demo
@@ -230,7 +239,7 @@ CNT_VITALSFROM2008ON="104" # Vitals from 2008 on
 CNT_HVITALSOFTPNEIE="12" # Height Vitals of patient
 CNT_ORDERSOFOTP = "5"
 CNT_ACCESSIONS = "15"
-CNT_REFS = "1669"
+CNT_STATE_REFS = "1669"
 BADSCHEMANOFILE = "1_01"
 BADSCHEMA01FILE = "627_99" # File with bad schema for its .01 field
 MUMPSCODETESTID = "68-11"
@@ -253,30 +262,21 @@ TESTSCHEMATESTS = {
             "count": "5810", # FOIA VISTA Mar 2014
         },
         {
-<<<<<<< HEAD
             "description": "SELECT TYPES BADTOO",
             "fmql": "SELECT TYPES BADTOO",
             "count": "5827",
             "test": "testResult=(len(jreply['results']) == int(jreply['allCount']))"
         },
         {
-=======
->>>>>>> b6b287e2401491bd1d85df762aced3d78281f205
-            "description": "SELECT TYPES TOPONLY",
-            "fmql": "SELECT TYPES TOPONLY",
-            "count": "2526"
-        },
-        {
-<<<<<<< HEAD
             "description": "SELECT TYPES TOPONLY BADTOO",
             "fmql": "SELECT TYPES TOPONLY BADTOO",
             "test": "testResult=(len(jreply['results']) == int(jreply['topCount']))" 
-=======
+        },
+        {
             "description": "DESCRIBE BADTYPES",
             "fmql": "DESCRIBE BADTYPES",
             "count": "49",
             "test": "testResult=(len(jreply['results']) == int(jreply['badCount']))" 
->>>>>>> b6b287e2401491bd1d85df762aced3d78281f205
         },
         {
             "description": "SELECT TYPES POPONLY",
@@ -292,22 +292,22 @@ STESTSETS.append(TESTSCHEMATESTS)
 # - 80_3-2 ... MUMPS (6) is .01 value. Seems to show properly
 # - typeID: ["9002313.55"] has BAD IEN (1VA) in my system. I skip it properly ie. no entries show.
 
-TESTPATIENTTESTS = {
-    "name": "Ramble Test Patient %s" % TESTPATIENTID,
+TESTSTATETESTS = {
+    "name": "Ramble Test State %s" % TESTSTATEID,
     "definitions": [
         {
-            "description": "Describe %s" % TESTPATIENTID,
-            "fmql": "DESCRIBE " + TESTPATIENTID, 
+            "description": "Describe %s" % TESTSTATEID,
+            "fmql": "DESCRIBE " + TESTSTATEID, 
         },
         {
-            "description": "COUNT REFS to %s" % TESTPATIENTID,
-            "fmql": "COUNT REFS %s" % TESTPATIENTID,
-            "count": CNT_REFS,
+            "description": "COUNT REFS to %s" % TESTSTATEID,
+            "fmql": "COUNT REFS %s" % TESTSTATEID,
+            "count": CNT_STATE_REFS,
         },
     ]
 }
 
-STESTSETS.append(TESTPATIENTTESTS)
+STESTSETS.append(TESTSTATETESTS)
 
 # Special case: "B" index 2 and 68 overloaded with alias names
 # 68 has "SEND","SEND OUT" for same record in B index. Only exercised with >
