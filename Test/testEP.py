@@ -23,7 +23,7 @@ except ImportError:
 import time
 from datetime import datetime
 
-FMQLEP = "http://www.examplehospital.com/fmqlEP"
+FMQLEP = "http://www.examplehospital.com:8080/fmqlEP"
 
 def simpleEPTests():
     start = datetime.now()

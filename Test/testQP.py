@@ -250,23 +250,38 @@ TESTSCHEMATESTS = {
         {
             "description": "SELECT TYPES - no args (all good, no bad)",
             "fmql": "SELECT TYPES", 
-            "count": "5393",
+            "count": "5810", # FOIA VISTA Mar 2014
         },
         {
+<<<<<<< HEAD
+            "description": "SELECT TYPES BADTOO",
+            "fmql": "SELECT TYPES BADTOO",
+            "count": "5827",
+            "test": "testResult=(len(jreply['results']) == int(jreply['allCount']))"
+        },
+        {
+=======
+>>>>>>> b6b287e2401491bd1d85df762aced3d78281f205
             "description": "SELECT TYPES TOPONLY",
             "fmql": "SELECT TYPES TOPONLY",
-            "count": "2359"
+            "count": "2526"
         },
         {
+<<<<<<< HEAD
+            "description": "SELECT TYPES TOPONLY BADTOO",
+            "fmql": "SELECT TYPES TOPONLY BADTOO",
+            "test": "testResult=(len(jreply['results']) == int(jreply['topCount']))" 
+=======
             "description": "DESCRIBE BADTYPES",
             "fmql": "DESCRIBE BADTYPES",
             "count": "49",
             "test": "testResult=(len(jreply['results']) == int(jreply['badCount']))" 
+>>>>>>> b6b287e2401491bd1d85df762aced3d78281f205
         },
         {
             "description": "SELECT TYPES POPONLY",
             "fmql": "SELECT TYPES POPONLY",
-            "count": "1245"
+            "count": "1294"
         }
     ]
 }
@@ -632,7 +647,7 @@ NOIDXMXTESTS = {
         },
         {
             "description": "No index max for patients set to 1 (there are 39). Filter on name. Expect result of 1 as .01 name is indexed.", 
-            "fmql": "COUNT 2 FILTER(.01=AYERS,ASHLEY) NOIDXMAX 1",
+            "fmql": "COUNT 2 FILTER(.01=THREE,PATIENT C) NOIDXMAX 1",
             "count": "1"
         },
         {
