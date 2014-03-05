@@ -476,15 +476,16 @@ class RPCLogger:
 import getopt, sys
 import json
 import time
+
 def main():
     opts, args = getopt.getopt(sys.argv[1:], "")
     if len(args) < 4:
         print "Enter <host> <port> <access> <verify>"
         return
-        
+
     # VERY BASIC:
     connection = VistARPCConnection(args[0], int(args[1]), args[2], args[3], "CG FMQL QP USER", RPCLogger())
-    reply = connection.invokeRPC("CG FMQL QP", ["OP:DESCRIBE^TYPE:2^ID:9"])
+    reply = connection.invokeRPC("CG FMQL QP", ["DESCRIBE 2-9"])
     json.loads(reply)
     print reply[0:31]
 
@@ -493,19 +494,19 @@ def main():
     pool = RPCConnectionPool("VistA", 30, args[0], int(args[1]), args[2], args[3], "CG FMQL QP USER", RPCLogger())
     pool.preconnect(5)
     for i in range(20):
-        trpcInvoker = ThreadedRPCInvoker(pool, "CG FMQL QP", ["OP:DESCRIBE^TYPE:2^ID:9"])
+        trpcInvoker = ThreadedRPCInvoker(pool, "CG FMQL QP", ["DESCRIBE 2-9"])
         trpcInvoker.start()
-        
+
     return
-    
+
     # Keep alive/poll test
     connection = VistARPCConnection(args[0], int(args[1]), args[2], args[3], "CG FMQL QP USER", RPCLogger())
     while True:
         print "Sending request ..."
-        reply = connection.invokeRPC("CG FMQL QP", ["OP:DESCRIBETYPE^TYPE:120_5"])
+        reply = connection.invokeRPC("CG FMQL QP", ["DESCRIBETYPE 120_5"])
         print reply[0:50]
         print "Sleeping ..."
         sleep(30) # typical 180 is timeout # in 8989_3-1. Reset to 20 for test (S ^XTV(8989.3,1,"XWB")=20)
-    
+
 if __name__ == "__main__":
     main()
