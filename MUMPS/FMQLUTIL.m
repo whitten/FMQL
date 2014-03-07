@@ -440,6 +440,12 @@ FIELDTOPRED(FIELD) ;
  ; If a reuse then add field id (escaped) as suffix to normalized name to make
  ; the predicate.
  ;
+ ; TODO: v2 
+ ; - a/c for leading \d ie/ if match then prefix _ and this is just
+ ; file uniqueness.
+ ; - a/c for file tree (parent context) uniqueness + reserved words (id/type/value etc) 
+ ; ... merge with FIELDTOPRED?
+ ;
 UNIQPRED(FILE,FIELD) ;
  N OWNS,TNNAME,PFIELD,PNNAME,PRED
  Q:'$D(^DD(FILE,FIELD,0)) ""

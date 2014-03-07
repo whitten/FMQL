@@ -13,6 +13,10 @@ from collections import defaultdict
 
 """
 The schema companion of DescribeReply: a utility to cross the protocol-model boundary. This turns a DESCRIBE TYPE reply into FileInfos, FileMan schema definitions.
+
+NOTE: after FMQL V2, this will merge with CONTEXT GENERATION UTILITIES. In effect, 
+context captures the FileInfo nuance exposed here and overlaps with some of its functions.
+"context" == "mini schema format".
 """
 
 class FileInfo(object):
@@ -296,8 +300,22 @@ class FieldInfo(object):
 
         ex/ Utility doesn't like ":" in a field name ex/ ROUTINES (RN1:RN2) -> ROUTINES (RN1-RN2)
         ex/ ALIAS FMP/SSN ... don't want / in a URL'ed id
+        
+        NOTE: will go to MUMPS with DESCRIBE TYPE returning predicate name for field (according to File Type Tree). Means no need for this.
+        
+        ex/ 2/ place_of_birth_city from place of birth [city] - dropping specials
         """
-        return re.sub(r'[^A-Za-z\d_\-]', "_", fieldName).lower()
+        # FIELDTOPRED Match
+        # - get rid of - inside ie/ not replaced so k2-phone -> k2phone
+        # - space, / become _'s
+        # - no multiple __'s
+        # ... perhaps should change so k2phone_number -> k2_phone_number ie/ treat - like / and space
+        nname = re.sub(r'[ \/]', '_', re.sub(r'[^A-Za-z\d\_ \/]', '', fieldName)).lower()
+
+        # Need to _ before \d
+        if re.match(r'\d', nname):
+            nname = "_" + nname
+        return nname 
 
     @property
     def description(self):
