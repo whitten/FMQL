@@ -242,7 +242,7 @@ CNT_VITALSFROM2008ON="104" # Vitals from 2008 on
 CNT_HVITALSOFTPNEIE="12" # Height Vitals of patient
 CNT_ORDERSOFOTP = "5"
 CNT_ACCESSIONS = "15"
-CNT_STATE_REFS = "1669"
+CNT_STATE_REFS = "617"
 BADSCHEMANOFILE = "1_01"
 BADSCHEMA01FILE = "627_99" # File with bad schema for its .01 field
 MUMPSCODETESTID = "68-11"
@@ -258,25 +258,19 @@ TESTSCHEMATESTS = {
     "name": "SELECT TYPES in all its forms",
     "definitions": [
         {
-            "description": "SELECT TYPES - no args (all good, no bad)",
+            "description": "SELECT TYPES - top and subs",
             "fmql": "SELECT TYPES", 
             "count": "5810", # FOIA VISTA Mar 2014
         },
         {
-            "description": "SELECT TYPES BADTOO",
-            "fmql": "SELECT TYPES BADTOO",
-            "count": "5827",
-            "test": "testResult=(len(jreply['results']) == int(jreply['allCount']))"
-        },
-        {
-            "description": "SELECT TYPES TOPONLY BADTOO",
-            "fmql": "SELECT TYPES TOPONLY BADTOO",
+            "description": "SELECT TYPES TOPONLY",
+            "fmql": "SELECT TYPES TOPONLY",
             "test": "testResult=(len(jreply['results']) == int(jreply['topCount']))" 
         },
         {
             "description": "DESCRIBE BADTYPES",
             "fmql": "DESCRIBE BADTYPES",
-            "count": "49",
+            "count": "20",
             "test": "testResult=(len(jreply['results']) == int(jreply['badCount']))" 
         },
         {
@@ -310,6 +304,9 @@ TESTSTATETESTS = {
 
 STESTSETS.append(TESTSTATETESTS)
 
+"""
+TODO - 68 doesn't seem to fit FOIA
+
 # Special case: "B" index 2 and 68 overloaded with alias names
 # 68 has "SEND","SEND OUT" for same record in B index. Only exercised with >
 # as it forces full walk of B
@@ -325,9 +322,10 @@ PATIENTALIASTEST = {
 }
 
 STESTSETS.append(PATIENTALIASTEST)
+"""
 
 # Note - was 63 - now state 5 (6 == CA). 
-# LOST: test on URI format for CNode
+# TODO - add back lost: 2 commented out test on URI format for CNode
 CNODETESTS = {
     "name": "CNODE",
     "definitions": [
@@ -349,7 +347,7 @@ CNODETESTS = {
         {
             "description": "Count all counties in CA, Offset %d" % (int(CNT_COUNTY_CA)-9),
             "fmql": "COUNT 5_01 IN 5-6 OFFSET " + str(int(CNT_COUNTY_CA)-9),
-            "count": str(int(CNT_COUNTY_CA)-10)
+            "count": str(9)
         },
         {
             "description": "Select counties in CA, Limit 10",
@@ -361,14 +359,12 @@ CNODETESTS = {
             "fmql": "SELECT 2_141 IN " + "2-1",
             "count": "0"
         },
-        """
         # TODO: find mult in mult in basic setup
-        {
-            "description": "Select sub sub node 70_03 - expect error",
-            "fmql": "SELECT 70_03 IN 70-1",
-            "error": ""
-        },
-        """
+        # {
+        #    "description": "Select sub sub node 70_03 - expect error",
+        #    "fmql": "SELECT 70_03 IN 70-1",
+        #    "error": ""
+        # },
         {
             "description": "Describe a Node (5-6) without its cnodes",
             "fmql": "DESCRIBE 5-6 CSTOP 0",
@@ -384,11 +380,11 @@ CNODETESTS = {
             "fmql": "DESCRIBE %s CSTOP %s" % ("5-6", int(CNT_COUNTY_CA)+1),
             "test": "testResult = ('%s' in jreply['results'][0])" % "county",
         },
-        {
-            "description": "Stop/Limit CNode within CNode - recursion test",
-            "fmql": "DESCRIBE %s CSTOP 10" % CTRLUDR32TESTID,
-            "test": "testResult = ('stopped' in jreply['results'][0]['error_number']['value'][0]['variables_and_data'])"
-        },
+        # {
+        #    "description": "Stop/Limit CNode within CNode - recursion test",
+        #    "fmql": "DESCRIBE %s CSTOP 10" % CTRLUDR32TESTID,
+        #    "test": "testResult = ('stopped' in jreply['results'][0]['error_number']['value'][0]['variables_and_data'])"
+        # },
         {
             "description": "Describe first 2 C Nodes of a Node (5-6). LIMIT test",
             "fmql": "DESCRIBE 5_01 IN 5-6 LIMIT 2",
@@ -411,6 +407,8 @@ STESTSETS.append(CNODETESTS)
 
 # FILTER TESTS
 # - TBD: ] test for names
+# - NEXT: could use 5_1 indexes state ie/ 1=5-6 ala .02=TESTPATIENTID
+# - Without index, use SELECT 50_67 FILTER(!bound(7)) LIMIT 10 - also for expired dates
 FILTERTESTS = {
     "name": "FILTER",
     "definitions": [
