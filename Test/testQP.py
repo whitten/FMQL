@@ -27,6 +27,10 @@ FIX UP FOR FOIA - indexed queries to test things (in place of patient, use meta 
   SELECT 5_1 FILTER(1=5-6)
 - 50_6 ... lookup by VUID ie/ not a pointer but it is indexed.
 [county for state too but stick to drugs]
+
+State 5 - has multiple: county = 5.01 ie 5_01 IN 
+
+County 5_1 - indexes state using C: issue - seems empty
 """
 
 """
@@ -144,13 +148,13 @@ GENERICTESTS = {
             "count": "PRINT",
         },
         {
-            "description": "Count orders",
-            "fmql": "COUNT 100",
+            "description": "Count States",
+            "fmql": "COUNT 5",
             "count": "PRINT",
         },
         {
-            "description": "Count labs",
-            "fmql": "COUNT 63",
+            "description": "Count Institution",
+            "fmql": "COUNT 4",
             "count": "PRINT",
         },
     ]
@@ -219,14 +223,13 @@ NEGATIVETESTS = {
 
 TESTSETS.append(NEGATIVETESTS)
 
-########################## System Specifics ################
+########################## Data Specifics (OSEHRA Test FOIA) ################
 
 STESTSETS = []
 
 # Set the following per test system
 CNT_PATIENTS = "39"
-CNT_ORDERS = "6"
-CNT_LABS = "22"
+CNT_COUNTY_CA = "58"
 TESTSTATEID = "5-33" # New Hampshire - refs from Institutions and Postal codes
 TESTPATIENTID = "2-9"
 TESTIHSPATIENTID = "9000001-9"
@@ -247,8 +250,6 @@ MUMPSCODETEST="(re.match(r'I \$P\(\^LRO\(68,LRAA,1,LRAD,1,LRAN,0\),U,2\)=62.3 S 
 CTRLUDR32TESTID="3_075-60698"
 # Escape Decimal 27 == u'\x1b'
 CTRLUDR32TEST="re.search(r'\x1b', jreply['results'][0]['error_number']['value'][1]['variables_and_data']['value'][88]['data_value']['value'])"
-NODEWITHSUCNODES="63-4"
-CNODEFIELD="chem_hem_tox_ria_ser_etc"
 TESTPROBLEMDIAGNOSIS="80-62"
 
 # TODO: upgrade to test if FMQL response has BADTOO:true etc
@@ -325,81 +326,63 @@ PATIENTALIASTEST = {
 
 STESTSETS.append(PATIENTALIASTEST)
 
-# TBD: BNode included or not for count and bnode count.
-# TBD: test BNode count stuff to confirm ... (limitation of Describe where BNodes are
-# really first class entries, not scoped in any meaningful way) [A Schema Viewpoint]
-# - RPMS: [MOST] 90213 (BDW Warehouse Export), 9002274_45, [MID] 50_8, 
-#   9009016_2, 90536_03, 90057, 9009011
-# - and 68, Accession too (in MMH too)
-# Testing empties too
+# Note - was 63 - now state 5 (6 == CA). 
+# LOST: test on URI format for CNode
 CNODETESTS = {
     "name": "CNODE",
     "definitions": [
         {
-            "description": "Describe all CHEM in 63 - count em",
-            "fmql": "DESCRIBE 63_04 IN 63-4",
-            "count": CNT_CHLAB
+            "description": "Describe all counties in CA",
+            "fmql": "DESCRIBE 5_01 IN 5-6",
+            "count": CNT_COUNTY_CA
         },
         {
-            "description": "Count all CHEM in 63",
-            "fmql": "COUNT 63_04 IN 63-4",
-            "count": CNT_CHLAB
+            "description": "Count all counties in CA",
+            "fmql": "DESCRIBE 5_01 IN 5-6",
+            "count": CNT_COUNTY_CA
         },
         {
-            "description": "Select all CHEM in 63 - count em",
-            "fmql": "SELECT 63_04 IN 63-4",
-            "count": CNT_CHLAB
-        },
-        { # Note: in my test system, chvals is empty
-            "description": "Describe all CHEM in 63 - ensure Lab BNode generation works",
-            "fmql": "DESCRIBE 63_04 IN 63-4",
-            "test": "testResult=('chvals' in jreply['results'][0])"
+            "description": "Select all counties in CA - count em",
+            "fmql": "SELECT 5_01 IN 5-6",
+            "count": CNT_COUNTY_CA
         },
         {
-            "description": "Select All CHEM in 63 - ensure URI format is 'right'",
-            "fmql": "SELECT 63_04 IN 63-4",
-            "test": "testResult=re.search(r'%s', jreply['results'][0]['uri']['value'])" % CHLAB_URIFORMAT,
+            "description": "Count all counties in CA, Offset %d" % (int(CNT_COUNTY_CA)-9),
+            "fmql": "COUNT 5_01 IN 5-6 OFFSET " + str(int(CNT_COUNTY_CA)-9),
+            "count": str(int(CNT_COUNTY_CA)-10)
         },
         {
-            "description": "Count CHEM in 63, Offset %d" % (int(CNT_CHLAB)-9),
-            "fmql": "COUNT 63_04 IN 63-4 OFFSET " + str(int(CNT_CHLAB)-9),
-            "count": str(int(CNT_CHLAB)-10)
-        },
-        {
-            "description": "Select CHEM in 63, Limit 10",
-            "fmql": "SELECT 63_04 IN 63-4 LIMIT 10",
+            "description": "Select counties in CA, Limit 10",
+            "fmql": "SELECT 5_01 IN 5-6 LIMIT 10",
             "count": "10"
         },
         {
             "description": "Select 2_141 - expect 0",
-            "fmql": "SELECT 2_141 IN " + TESTPATIENTID,
+            "fmql": "SELECT 2_141 IN " + "2-1",
             "count": "0"
         },
+        """
+        # TODO: find mult in mult in basic setup
         {
             "description": "Select sub sub node 70_03 - expect error",
             "fmql": "SELECT 70_03 IN 70-1",
             "error": ""
         },
+        """
         {
-            "description": "Describe a Node (63) without its cnodes",
-            "fmql": "DESCRIBE %s CSTOP 0" % NODEWITHSUCNODES,
-            "test": "testResult = (jreply['results'][0]['%s'].has_key('stopped'))" % CNODEFIELD
+            "description": "Describe a Node (5-6) without its cnodes",
+            "fmql": "DESCRIBE 5-6 CSTOP 0",
+            "test": "testResult = (jreply['results'][0]['%s'].has_key('stopped'))" % "county"
         },
         {
-            "description": "Describe a Node (63) without its sub nodes, setting limit = number of subnodes (limit threshold test)",
-            "fmql": "DESCRIBE %s CSTOP %s" % (NODEWITHSUCNODES, CNT_CHLAB),
-            "test": "testResult = (jreply['results'][0]['%s'].has_key('stopped'))" % CNODEFIELD
+            "description": "Describe a Node (5-6) without its sub nodes, setting limit = number of subnodes (limit threshold test)",
+            "fmql": "DESCRIBE %s CSTOP %s" % ("5-6", CNT_COUNTY_CA),
+            "test": "testResult = (jreply['results'][0]['%s'].has_key('stopped'))" % "county"
         },
         {
-            "description": "Describe a Node (63) with its sub nodes",
-            "fmql": "DESCRIBE %s CSTOP %s" % (NODEWITHSUCNODES, int(CNT_CHLAB)+1),
-            "test": "testResult = ('%s' in jreply['results'][0])" % CNODEFIELD,
-        },
-        {
-            "description": "Describe first 4 Nodes (63) without sub nodes",
-            "fmql": "DESCRIBE %s LIMIT 4 CSTOP 0" % re.search(r'([^\-]+)', NODEWITHSUCNODES).group(1),
-            # The fourth one has cnodes. The others don't.
-            "test": "testResult = (jreply['count'] == '4' and (jreply['results'][3]['%s'].has_key('stopped')))" % CNODEFIELD,
+            "description": "Describe a Node (5-6) with its sub nodes",
+            "fmql": "DESCRIBE %s CSTOP %s" % ("5-6", int(CNT_COUNTY_CA)+1),
+            "test": "testResult = ('%s' in jreply['results'][0])" % "county",
         },
         {
             "description": "Stop/Limit CNode within CNode - recursion test",
@@ -407,19 +390,19 @@ CNODETESTS = {
             "test": "testResult = ('stopped' in jreply['results'][0]['error_number']['value'][0]['variables_and_data'])"
         },
         {
-            "description": "Describe first 2 C Nodes of a Node (63). LIMIT test",
-            "fmql": "DESCRIBE 63_04 IN 63-4 LIMIT 2",
+            "description": "Describe first 2 C Nodes of a Node (5-6). LIMIT test",
+            "fmql": "DESCRIBE 5_01 IN 5-6 LIMIT 2",
             "count": "2"
         },
         {
             "description": "Describe a Node without a CSTOP. 10 (default) is imposed by MUMPS QP",
-            "fmql": "DESCRIBE %s" % NODEWITHSUCNODES,
+            "fmql": "DESCRIBE %s" % "5-6",
             "test": "testResult = (jreply['fmql']['CSTOP'] == '10')"
         },
         {
-            "description": "CNode List Element ie 1 or 3 types - set in cnode field",
-            "fmql": "DESCRIBE 120_8-4",
-            "test": "testResult = (jreply['results'][0]['drug_classes']['list'] == True)"
+            "description": "CNode - list (ie simple list)/array vs bnode or bnodes",
+            "fmql": "DESCRIBE 50_68-8525", # BUPROPION HCL 75MG TAB
+            "test": "testResult = (jreply['results'][0]['secondary_va_drug_class']['list'] == True)"
         }
     ]
 }
@@ -1100,6 +1083,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
