@@ -14,6 +14,9 @@ from collections import defaultdict
 from describeTypeResult import FieldInfo
 
 """
+NOTE: V2 is moving data over to JSON-LD V2. This is just here for reference on how
+to process the existing reply format. It has some items (predicates ordered by FM id) that would need to be provided differently in V2.
+
 Quick TODO:
 - CONTAINMENT: cfield or ctype is too messy. Pick a side.
   - cfield is NOT a field ... access as contained records (possible)
@@ -365,6 +368,8 @@ class Record(object):
         Schema from the reply: better than generic "keys()"
         
         TODO: turn into tuples
+        
+        NOTE TODO: with new JSONLD, won't see ids. Need to get meta separately
         """
         return sorted([(field, self.__result[field]["type"], self.__result[field]["fmId"], FieldInfo.FIELDTYPES[self.__result[field]["fmType"]] if "fmType" in self.__result[field] else "") for field in self.__result if field != "uri"], key=lambda x: float(x[2]))  
         
@@ -990,17 +995,10 @@ class StringOrNumericValue(Literal):
             
     @property
     def value(self):
+        # all except [\d\.]+ as string
         # Python treats INF as Infinity, NAN as no number but VistA won't
-        if self._result["value"].lower() in ["inf", "nan"]:
-            return self._result["value"]
-        try:
-            floatVal = float(self._result["value"])
-        except:
-            return self._result["value"]
-        else:
-            intVal = int(floatVal)
-            val = int(floatVal) if int(floatVal) == floatVal else floatVal
-            return val            
+        # safe side - no int or float for now
+        return self._result["value"]           
              
     @property
     def isNumeric(self):
