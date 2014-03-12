@@ -262,6 +262,10 @@ class Record(object):
         
     def __contains__(self, field):
         return True if field in self.__result else False
+        
+    @property
+    def raw(self):
+        return self.__result
                 
     def __str__(self):
         indent = ""
