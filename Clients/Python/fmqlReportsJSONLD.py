@@ -203,7 +203,7 @@ def usePyld():
     
     # 2. Compact it - using the basic context
     print "pyld compact ..."
-    compact = jsonld.compact(jreply, json.load(open("vsfmcontextBase.json")))
+    compact = jsonld.compact(jreply, {"livevista": "http://livevista.caregraf.info/"})
     json.dump(compact, open("pyld_COMP_FMQLEX.json", "w"), indent=2)
 
     # 3. Dump RDF -- only nquads are supported ... others return errors

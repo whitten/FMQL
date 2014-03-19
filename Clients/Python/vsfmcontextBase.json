@@ -13,6 +13,8 @@
         "@id": "prov:generatedAtTime",
         "@type": "xsd#date"
     },
+    "query": {"@id": "fmql:query"},
+
     "id": "@id",
     "type": "@type",
     "value": "@value",
@@ -20,5 +22,6 @@
     "label": {"@id": "rdfs:label"},
     "sameAs": {"@id": "owl:sameAs", "@type": "@id"},
     "sameAsLabel": {"@id": "fmso:sameAsLabel"},
+
     "@vocab": "http://datasets.caregraf.org/vs/"
 }

@@ -54,7 +54,7 @@ ALL(REPLY,PARAMS) ;
  S OFFSET=$S($G(PARAMS("OFFSET"))?1.N:PARAMS("OFFSET"),1:0)
  S NOIDXMX=$S($G(PARAMS("NOIDXMX"))?1.N:PARAMS("NOIDXMX"),1:-1)
  S ORDERBY=$G(PARAMS("ORDERBY"))
- S AFTERIEN=$S($G(PARAMS("AFTERIEN"))?1.N:PARAMS("AFTERIEN"),1:"")
+ S AFTERIEN=$G(PARAMS("AFTERIEN"))  ; float value enforced above this pt
  I AFTERIEN'="" S OFFSET=0  ; Make sure AFTERIEN takes precedence
  ; Forcing default CNODESTOP to be 10
  I PARAMS("OP")="DESCRIBE" S CNODESTOP=$S($D(PARAMS("CNODESTOP")):$G(PARAMS("CNODESTOP")),1:10)
@@ -194,6 +194,7 @@ ONEFIELD(FAR,ID,FDINF) ;
  . N LOCSUB S LOCSUB=@FAR@(ID,FDINF("LOCSUB"))
  . ; For $E values, don't just take the $E limit.
  . N IVALUE S IVALUE=$S($D(FDINF("LOCPOS")):$P(LOCSUB,"^",FDINF("LOCPOS")),1:LOCSUB) Q:IVALUE=""
+ . ; Note: issue with EVALUE here before type specific checks is that EVAL must dup the checks
  . N EVALUE S EVALUE=$$GETEVAL^FMQLUTIL(.FDINF,IVALUE)
  . I FDINF("TYPE")=7 D
  . . N PFLINF D BLDFLINF^FMQLUTIL(FDINF("PFILE"),.PFLINF)
