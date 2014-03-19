@@ -328,12 +328,14 @@ BLDCREFS(FILE,FIELD,FDINF) ;
  ;
  ;
  ; Get External Value
- ; TBD: get vptr
- ; TBD: GETS maps some .01's (50_605 to field 1 etc.) Is this in meta or ?
+ ;
+ ; TBD:
+ ; - distinguish fall back EVAL (=IVAL) from error EVAL ie/ resolution error
+ ; - GETS maps some .01's (50_605 to field 1 etc.) Is this in meta or ?
  ; Another ex is 120_8 Allergy Type is a 4 but treated like a CODE. Ext form
  ; comes from ^DD(120.8,3.1,2.1)="S Y=$$OUTTYPE^GMRAUTL(Y)" [this doesn't work
  ; for lab's name map.]
- ; TBD: catch the invalid - CODES beyond range, bad ptrs, dates etc.
+ ; - catch the invalid - CODES beyond range, bad ptrs, dates etc.
  ;
 GETEVAL(FDINF,IVAL) ;
  Q:$D(FDINF("HIDE")) "**HIDDEN**"
@@ -342,7 +344,7 @@ GETEVAL(FDINF,IVAL) ;
  I ((FDINF("TYPE")=3)!(FDINF("TYPE")=12)),$D(FDINF("CODES",IVAL)) Q FDINF("CODES",IVAL)
  N EVAL S EVAL=IVAL ; Fallback to internal value
  I FDINF("TYPE")=7 D
- . I IVAL="0" Q  ; TODO NULL value that doesn't resolve (consider leaving out PTR)
+ . I IVAL="0" Q  ;  TBD: merge with invalid ptr below and return "" (callers must change)
  . N PFLINF D BLDFLINF(FDINF("PFILE"),.PFLINF)
  . Q:$D(PFLINF("BAD"))
  . N PFDINF D BLDFDINF(.PFLINF,.01,.PFDINF)
@@ -359,6 +361,7 @@ GETEVAL(FDINF,IVAL) ;
  . N PFLINF D BLDFLINF(PFILE,.PFLINF)
  . Q:$D(PFLINF("BAD"))
  . N PID S PID=$P(IVAL,";")
+ . Q:PID=""  ; Only saw in C***
  . Q:$G(@PFLINF("ARRAY")@(PID,0))=""  ; Invalid Pointer
  . N PFDINF D BLDFDINF(.PFLINF,.01,.PFDINF)
  . Q:$D(PFDINF("BAD"))

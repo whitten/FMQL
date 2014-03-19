@@ -11,7 +11,7 @@ FMQLQP ;CG/CD - Caregraf - FMQL Query Processor Entry Point; 11.25.2013  11:30
  ; example: QUERY(.REPLY,"DESCRIBE 2-9") will describe the 9th entry in
  ; file 2 into ^TMP($J,"FMQLJSON")
  ; 
-QUERY(REPLY,QUERY) ;
+QUERY(QUERY) ;
  N PARAMS,PRSRES
  ; Note: storing in TMP for large JSON and older Cache-based systems
  K ^TMP($J,"FMQLJSON")  ; VistA Coding Convention
@@ -21,10 +21,10 @@ QUERY(REPLY,QUERY) ;
  I PRSRES'="" S ^TMP($J,"FMQLJSON",0)="{""error"":""Bad Query Form: "_PRSRES_"""}"
  E  D PROCQRY($NA(^TMP($J,"FMQLJSON")),.PARAMS)
  S REPLY=$NA(^TMP($J,"FMQLJSON"))
- Q
+ Q REPLY
  ;
 FMQLRPC(RPCREPLY,RPCARG) ;
- D QUERY(.RPCREPLY,RPCARG)
+ S RPCREPLY=$$QUERY(RPCARG)
  Q
  ; 
  ;
@@ -40,7 +40,7 @@ PRSQUERY(INPUT,PARAMS) ;
  S ERROR=""
  S QRYDEFS("SELECT","TYPE","LIMIT")="NUM"
  S QRYDEFS("SELECT","TYPE","OFFSET")="NUM"
- S QRYDEFS("SELECT","TYPE","AFTERIEN")="NUM"
+ S QRYDEFS("SELECT","TYPE","AFTERIEN")="QID"
  S QRYDEFS("SELECT","TYPE","NOIDXMAX")="NUM"
  S QRYDEFS("SELECT","TYPE","IN")="QID"
  S QRYDEFS("SELECT","TYPE","ORDERBY")="FLDID"

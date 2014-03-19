@@ -204,6 +204,7 @@ ONEFIELD(FAR,ID,FDINF) ;
  . . D ASSERT^FMQLJSON(REPLY,FDINF("LABEL"),FDINF("FIELD"),"7",PVALUE,PLABEL,.PSAMEAS)
  . E  I FDINF("TYPE")=8 D
  . . N PID S PID=$P(IVALUE,";")
+ . . Q:PID=""  ; Corrupt pointer
  . . Q:PID'=+PID  ; Corrupt pointer
  . . Q:$P(IVALUE,";",2)=""  ; Corrupt pointer
  . . N LOCZ S LOCZ="^"_$P(IVALUE,";",2)_"0)"  ; 0 has file's description

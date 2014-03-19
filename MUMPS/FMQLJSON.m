@@ -142,7 +142,7 @@ PUTDATA(JSON,DATA) ;
  ;
  ; For string values
  ; 1. CTRL characters (0-31 except the escaped noted below) are not allowed as themselves.
- ; GT/M using UTF2HEX, Cache using ZHEX
+ ; GT/M using UTF2HEX, Cache using ZHEX - REMOVED IN V2 to avoid warning on GT/M.
  ; 2. Escape the following with a \
  ; - QUOTE 34 "
  ; - Backslash 92 \
@@ -158,8 +158,6 @@ PUTDATA(JSON,DATA) ;
  ; - If character set is utf-8, then $L(($C(256))=1 (cheap check).
  ; - not escaping forward slash (47). JSON standard seems to say yes but few encoders
  ;   do this and all decoders accept it as is.
- ;
- ; NOTE: will get warning on GT/M as doesn't like conditional call to Cache's ZHEX.
  ;
 JSONSTRING(IN) N ASCII,II,HEX,HH,OUT
  S ASCII(8)="\b"
