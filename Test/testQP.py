@@ -225,7 +225,68 @@ TESTSETS.append(NEGATIVETESTS)
 
 ########################## Data Specifics (OSEHRA Test FOIA) ################
 
-STESTSETS = []
+SSCHEMASETS = []
+
+# TODO: upgrade to test if FMQL response has BADTOO:true etc
+# TODO: add for FILE=.109 ; allow .11 on but no .001 -> .1
+TESTSCHEMATESTS = {
+    "name": "SELECT TYPES in all its forms",
+    "definitions": [
+        {
+            "description": "SELECT TYPES - top and subs",
+            "fmql": "SELECT TYPES", 
+            "count": "5810", # FOIA VISTA Mar 2014
+        },
+        {
+            "description": "SELECT TYPES TOPONLY",
+            "fmql": "SELECT TYPES TOPONLY",
+            "test": "testResult=(len(jreply['results']) == int(jreply['topCount']))" 
+        },
+        { # ADD distinction of fields bad vs bad files
+            "description": "DESCRIBE BADTYPES",
+            "fmql": "DESCRIBE BADTYPES",
+            "count": "20",
+            "test": "testResult=(len(jreply['results']) == int(jreply['badCount']))" 
+        },
+        {
+            "description": "SELECT TYPES POPONLY",
+            "fmql": "SELECT TYPES POPONLY",
+            "count": "1294"
+        },
+    ]
+}
+
+SSCHEMASETS.append(TESTSCHEMATESTS)
+
+BADSCHEMA01FILE = "627_99" # File with bad schema for its .01 field
+BADSCHEMANOFILE = "1_01"
+
+# Small now: in V9, enhanced Schema Graph will support a full schema audit.
+# TODO: add in DESCRIBE TYPE 394_4 - file with no COUNT/FMSIZE
+BADSCHEMATESTS = {
+    "name": "Bad Schema Tests",
+    "definitions": [
+        {
+            "description": "File with bad .01 schema. Try to list it. Get back count 0",
+            "fmql": "SELECT " + BADSCHEMA01FILE,
+            "count": "0",
+        },
+        {
+            "description": "File defined but it doesn't exist",
+            "fmql": "SELECT " + BADSCHEMANOFILE,
+            "error": "",
+        },
+    ]
+}
+
+SSCHEMASETS.append(BADSCHEMATESTS)
+
+TESTSETS.extend(SSCHEMASETS)
+
+# ####################### (Specific) Data Tests ###########################
+
+SDATASETS = []
+SDATASETS2 = []
 
 # Set the following per test system
 CNT_PATIENTS = "39"
@@ -243,45 +304,12 @@ CNT_HVITALSOFTPNEIE="12" # Height Vitals of patient
 CNT_ORDERSOFOTP = "5"
 CNT_ACCESSIONS = "15"
 CNT_STATE_REFS = "617"
-BADSCHEMANOFILE = "1_01"
-BADSCHEMA01FILE = "627_99" # File with bad schema for its .01 field
 MUMPSCODETESTID = "68-11"
 MUMPSCODETEST="(re.match(r'I \$P\(\^LRO\(68,LRAA,1,LRAD,1,LRAN,0\),U,2\)=62.3 S LRTEST=\"\" D \^LRMRSHRT', jreply['results'][0]['ver_code']['value']))"
 CTRLUDR32TESTID="3_075-60698"
 # Escape Decimal 27 == u'\x1b'
 CTRLUDR32TEST="re.search(r'\x1b', jreply['results'][0]['error_number']['value'][1]['variables_and_data']['value'][88]['data_value']['value'])"
 TESTPROBLEMDIAGNOSIS="80-62"
-
-# TODO: upgrade to test if FMQL response has BADTOO:true etc
-# TODO: add for FILE=.109 ; allow .11 on but no .001 -> .1
-TESTSCHEMATESTS = {
-    "name": "SELECT TYPES in all its forms",
-    "definitions": [
-        {
-            "description": "SELECT TYPES - top and subs",
-            "fmql": "SELECT TYPES", 
-            "count": "5810", # FOIA VISTA Mar 2014
-        },
-        {
-            "description": "SELECT TYPES TOPONLY",
-            "fmql": "SELECT TYPES TOPONLY",
-            "test": "testResult=(len(jreply['results']) == int(jreply['topCount']))" 
-        },
-        {
-            "description": "DESCRIBE BADTYPES",
-            "fmql": "DESCRIBE BADTYPES",
-            "count": "20",
-            "test": "testResult=(len(jreply['results']) == int(jreply['badCount']))" 
-        },
-        {
-            "description": "SELECT TYPES POPONLY",
-            "fmql": "SELECT TYPES POPONLY",
-            "count": "1294"
-        }
-    ]
-}
-
-STESTSETS.append(TESTSCHEMATESTS)
 
 # OTHERS TO ADD:
 # - 80_3-2 ... MUMPS (6) is .01 value. Seems to show properly
@@ -302,7 +330,7 @@ TESTSTATETESTS = {
     ]
 }
 
-STESTSETS.append(TESTSTATETESTS)
+SDATASETS.append(TESTSTATETESTS)
 
 """
 TODO - 68 doesn't seem to fit FOIA
@@ -321,7 +349,7 @@ PATIENTALIASTEST = {
     ]
 }
 
-STESTSETS.append(PATIENTALIASTEST)
+SDATASETS.append(PATIENTALIASTEST)
 """
 
 # Note - was 63 - now state 5 (6 == CA). 
@@ -403,7 +431,7 @@ CNODETESTS = {
     ]
 }
 
-STESTSETS.append(CNODETESTS)
+SDATASETS.append(CNODETESTS)
 
 # FILTER TESTS
 # - TBD: ] test for names
@@ -530,7 +558,7 @@ FILTERTESTS = {
     ]
 }
 
-STESTSETS.append(FILTERTESTS)
+SDATASETS2.append(FILTERTESTS)
 
 # LIMIT and OFFSET TESTS (Make Sure Test Patients has Vitals)
 LIMITTESTS = {
@@ -569,7 +597,7 @@ LIMITTESTS = {
     ]
 }
 
-STESTSETS.append(LIMITTESTS)
+SDATASETS2.append(LIMITTESTS)
 
 # AFTERIEN - alternative to OFFSET 
 AFTERIENTESTS = {
@@ -598,7 +626,7 @@ AFTERIENTESTS = {
     ]
 }
 
-STESTSETS.append(AFTERIENTESTS)
+SDATASETS2.append(AFTERIENTESTS)
 
 FORMATTESTS = {
     "name": "Format (date) tests",
@@ -611,7 +639,7 @@ FORMATTESTS = {
     ]
 }
 
-STESTSETS.append(FORMATTESTS)
+SDATASETS2.append(FORMATTESTS)
 
 # No Index Max tests. There is a limit on filtered selects when the filter doesn't assert
 # the value of an index.
@@ -644,7 +672,7 @@ NOIDXMXTESTS = {
     ]
 }
 
-STESTSETS.append(NOIDXMXTESTS)
+SDATASETS2.append(NOIDXMXTESTS)
 
 # ORDER BY and No B IDX (means can't order) tests
 ORDERBYTESTS = {
@@ -668,7 +696,7 @@ ORDERBYTESTS = {
     ]
 }
 
-STESTSETS.append(ORDERBYTESTS)
+SDATASETS2.append(ORDERBYTESTS)
 
 SELECTPREDTESTS = {
     "name": "Select Tests",
@@ -687,7 +715,7 @@ SELECTPREDTESTS = {
     ]
 }
 
-STESTSETS.append(SELECTPREDTESTS)
+SDATASETS2.append(SELECTPREDTESTS)
 
 # Special for Orders (until V0.9)
 ORDERTESTS = {
@@ -711,7 +739,7 @@ ORDERTESTS = {
     ]
 }
 
-STESTSETS.append(ORDERTESTS)
+SDATASETS2.append(ORDERTESTS)
 
 """
 Two Provider Narrative 9999999_27 tests fixed with arrays
@@ -823,7 +851,7 @@ SAMEASTESTS = {
     ]
 }
 
-STESTSETS.append(SAMEASTESTS)
+SDATASETS2.append(SAMEASTESTS)
 
 #
 # NOTE: \x and \u interchange for <255
@@ -876,27 +904,7 @@ CHARACTERTESTS = {
     ]
 }
 
-STESTSETS.append(CHARACTERTESTS)
-
-# Small now: in V9, enhanced Schema Graph will support a full schema audit.
-# TODO: add in DESCRIBE TYPE 394_4 - file with no COUNT/FMSIZE
-BADSCHEMATESTS = {
-    "name": "Bad Schema Tests",
-    "definitions": [
-        {
-            "description": "File with bad .01 schema. Try to list it. Get back count 0",
-            "fmql": "SELECT " + BADSCHEMA01FILE,
-            "count": "0",
-        },
-        {
-            "description": "File defined but it doesn't exist",
-            "fmql": "SELECT " + BADSCHEMANOFILE,
-            "error": "",
-        },
-    ]
-}
-
-STESTSETS.append(BADSCHEMATESTS)
+SDATASETS2.append(CHARACTERTESTS)
 
 # . IEN tests. This is to support date stamps mainly but the test
 # system doesn't have date stamped (labs) IENs yet. For now, test
@@ -927,7 +935,7 @@ DOTIENTESTS = {
     ]
 }
 
-STESTSETS.append(DOTIENTESTS)
+SDATASETS2.append(DOTIENTESTS)
 
 # .001's are special - reaches into Schema view displaying them and data where value is a pointer or a date. Current test system has no example of the pointer form which is in three places in C***'s Lab schema.
 # SELECT 50_6 FIELD .001 LIMIT 10
@@ -969,7 +977,7 @@ OO1IENTESTS = {
     ]
 }
 
-STESTSETS.append(OO1IENTESTS)
+SDATASETS2.append(OO1IENTESTS)
 
 # Boolean 'set of codes' apply fixed maps (Y->true etc) to turn binary and unary valued set of codes into booleans. This cuts down on the number of coded-values/enums needed in a graph or its schema.
 BOOLEANCODETESTS = {
@@ -1008,9 +1016,11 @@ BOOLEANCODETESTS = {
     ]
 }
 
-STESTSETS.append(BOOLEANCODETESTS)
+SDATASETS2.append(BOOLEANCODETESTS)
 
-TESTSETS.extend(STESTSETS)
+TESTSETS.extend(SDATASETS)
+
+####################### Explicit Tests ####################
 
 def orderPatientReturnTest(qp):
     fileId = "2"
@@ -1047,7 +1057,7 @@ def main():
     opts, args = getopt.getopt(sys.argv[1:], "")
     if len(args) < 5:
         print "Enter <host> <port> <access> <verify> (access/verify for FMQL RPC) <fmql host>"
-        print "Ex: localhost 9201 'QLFM1234' 'QLFM1234!!' http://www.examplehospital.com/fmqlEP'"
+        print "Ex: localhost 9201 'QLFM1234' 'QLFM1234!!' http://www.examplehospital.com/fmqlEP"
         return
 
     fmqlEP = args[4] + "/fmqlEP"
