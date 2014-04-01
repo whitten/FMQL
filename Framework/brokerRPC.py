@@ -486,7 +486,13 @@ def main():
     # VERY BASIC:
     connection = VistARPCConnection(args[0], int(args[1]), args[2], args[3], "CG FMQL QP USER", RPCLogger())
     reply = connection.invokeRPC("CG FMQL QP", ["DESCRIBE 2-9"])
-    json.loads(reply)
+    try:
+        json.loads(reply)
+    except:
+        print "Couldn't make JSON"
+        print reply
+        print "... exiting"
+        return
     print reply[0:31]
 
     # 10 and 20 ie. pool size 10, request number 20. Can interplay. Should see some connection come more to the fore.
