@@ -223,7 +223,7 @@ NEGATIVETESTS = {
 
 TESTSETS.append(NEGATIVETESTS)
 
-########################## Data Specifics (OSEHRA Test FOIA) ################
+########################## Schema Specifics (OSEHRA Test FOIA) ################
 
 SSCHEMASETS = []
 
@@ -245,8 +245,7 @@ TESTSCHEMATESTS = {
         { # ADD distinction of fields bad vs bad files
             "description": "DESCRIBE BADTYPES",
             "fmql": "DESCRIBE BADTYPES",
-            "count": "20",
-            "test": "testResult=(len(jreply['results']) == int(jreply['badCount']))" 
+            "test": "testResult=(len(jreply['results']) == int(jreply['badCount']) and len(jreply['results']) == 20 and sum(1 for badFieldRes in jreply['results'] if badFieldRes.has_key('badfields')) == 3)" 
         },
         {
             "description": "SELECT TYPES POPONLY",
@@ -257,29 +256,6 @@ TESTSCHEMATESTS = {
 }
 
 SSCHEMASETS.append(TESTSCHEMATESTS)
-
-BADSCHEMA01FILE = "627_99" # File with bad schema for its .01 field
-BADSCHEMANOFILE = "1_01"
-
-# Small now: in V9, enhanced Schema Graph will support a full schema audit.
-# TODO: add in DESCRIBE TYPE 394_4 - file with no COUNT/FMSIZE
-BADSCHEMATESTS = {
-    "name": "Bad Schema Tests",
-    "definitions": [
-        {
-            "description": "File with bad .01 schema. Try to list it. Get back count 0",
-            "fmql": "SELECT " + BADSCHEMA01FILE,
-            "count": "0",
-        },
-        {
-            "description": "File defined but it doesn't exist",
-            "fmql": "SELECT " + BADSCHEMANOFILE,
-            "error": "",
-        },
-    ]
-}
-
-SSCHEMASETS.append(BADSCHEMATESTS)
 
 TESTSETS.extend(SSCHEMASETS)
 
@@ -434,131 +410,97 @@ CNODETESTS = {
 SDATASETS.append(CNODETESTS)
 
 # FILTER TESTS
+# use mixture of 5 (state), 5.1 (county) and 50.68 (VA Product) and 2 for indexed time
+# note: if patient data, use Vitals (120.5)
 # - TBD: ] test for names
-# - NEXT: could use 5_1 indexes state ie/ 1=5-6 ala .02=TESTPATIENTID
 # - Without index, use SELECT 50_67 FILTER(!bound(7)) LIMIT 10 - also for expired dates
 FILTERTESTS = {
     "name": "FILTER",
     "definitions": [
         {
-            "description": "All Vitals of Patient 9, not entered in error",
-            "fmql": "DESCRIBE 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2))",
-            "count": CNT_VITALSOFTPNEIE
+            "description": "All of type with specific field value - counties with state Utah (note: state field is indexed)",
+            "fmql": "DESCRIBE 5_1 FILTER(1=5-49)", # Note: index is corrupt as count state illinois (17) doesn't work
+            "count": "29"
         },
         {
-            "description": "All Height Vitals of Patient 9, not entered in error",
-            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)&.03=120_51-8)",
-            "count": CNT_HVITALSOFTPNEIE
+            "description": "All of type with a value not bound - counties with no seer county code",
+            "fmql": "DESCRIBE 5_1 FILTER(1=5-49&!bound(2))",
+            "count": "0" # all have 'seer county code' - alaska's (2) 2 don't
         },
         {
-            "description": "All Vitals of Patient 9, from 2008 on",
-            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)&.01>2008-01-01)",
-            "count": CNT_VITALSFROM2008ON
+            "description": "All of type with a value bound - counties with seer county code",
+            "fmql": "DESCRIBE 5_1 FILTER(1=5-49&bound(2))",
+            "count": "29" # all of them 
         },
         {
-            "description": "All Vitals of Patient 9, before 2008",
-            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)&.01<2008-01-01)",
-            "count": str(int(CNT_VITALSOFTPNEIE)-int(CNT_VITALSFROM2008ON))
+            "description": "All of type with a bound value and a field with a value - utah county with seer and name washington",
+            "fmql": "SELECT 5_1 FILTER(1=5-49&bound(2)&.01='WASHINGTON')",
+            "count": "1" # very precise so maybe not best test but works
         },
         {
-            "description": "First 12 Patients with names beginning with P on",
-            "fmql": "SELECT 2 FILTER(.01>P) LIMIT 12",
-            "count": "12"
+            "description": "Filtered node with field value > letter - utah counties with names beginning with E on",
+            "fmql": "COUNT 5_1 FILTER(1=5-49&&.01>E)",
+            "count": "22"
         },
         {
-            "description": "Labs with bound CHEM, HEM ie/ top level bound cnode test",
-            "fmql": "COUNT 63 FILTER(bound(4))",
-            "count": "1" # only 9 has labs
+            "description": "Nodes without bound CNODE - VA Drug product with secondary class",
+            "fmql": "COUNT 50_68 FILTER(bound(16))",
+            "count": "13" # only 13
         },
         {
-            "description": "Labs without bound CHEM, HEM ie/ top level bound cnode test",
-            "fmql": "COUNT 63 FILTER(!bound(4))",
-            "count": "21"
+            "description": "Nodes with bound CNODE",
+            "fmql": "COUNT 50_68 FILTER(!bound(16))",
+            "count": "23682"
         },
         {
-            "description": "Contained Node Non VA Meds with route 'MOUTH'",
-            "fmql": "SELECT 55_05 IN 55-9 FILTER(3=MOUTH)",
-            "count": "6"
+            "description": "Contained Node with specific field value - of three active ings in va product, only one has this value",
+            "fmql": "DESCRIBE 50_6814 IN 50_68-18 FILTER(1='2')",
+            "count": "1"
         },      
         {
-            "description": "Contained Node CHEM, HEM with bound creatinine (4).",
-            "fmql": "COUNT 63_04 IN 63-4 FILTER(bound(4))",
-            "count": "2"
+            "description": "Contained Node with bound value - cook county is containment area, only county in illinois",
+            "fmql": "COUNT 5_01 IN 5-17 FILTER(bound(3))",
+            "count": "1"
         },  
-        {
-            "description": "Contained Node CHEM, HEM before 1/1/2007. TBD [add to triple of all, before and after and carry totals as a variable]",
-            "fmql": "COUNT 63_04 IN 63-4 FILTER(.01<'2007-01-01T000000')",
-            "count": "15"
-        },  
-        {
-            "description": "Contained Node CHEM, HEM after 1/1/2007. Should be 10",
-            "fmql": "COUNT 63_04 IN 63-4 FILTER(.01>'2007-01-01T000000')",
-            "count": "4"
-        },  
-        { # TBD: V0.9 - should raise error
-            "description": "Bad filter (no such field) on select patients",
-            "fmql": "SELECT 2 FILTER(.999999=X)",
+        { # TODO - should raise error
+            "description": "Bad filter (no such field)",
+            "fmql": "SELECT 5 FILTER(.999999=X)",
             "count": "0"
         },
         {
-            "description": "Month filter: HL7 Exceptions in a month (2005/11)",
-            "fmql": "SELECT 79_3 FILTER(.01>2005-11&.01<2005-12)",
-            "count": "17"
-        },
-        {
-            "description": "HL7 Exceptions on a day (2005/11/01)",
-            "fmql": "SELECT 79_3 FILTER(.01>2005-11&.01<2005-11-02)",
-            "count": "14"
-        },
-        {
-            "description": "HL7 Exceptions after an hour of a day (2005/11/01:17))",
-            "fmql": "SELECT 79_3 FILTER(.01>2005-11-01T17&.01<2005-11-02)",
-            "count": "6"
-        },
-        {
-            "description": "HL7 Exceptions in a year (2005)",
-            "fmql": "SELECT 79_3 FILTER(.01>2004&.01<2006)",
-            "count": "107"
-        },
-        {
-            "description": "HL7 Exceptions after a precise time (down to seconds)",
-            "fmql": "SELECT 79_3 FILTER(.01>2005-11-01T17:46:09)",
-            "count": "10"
-        },
-        {
-            "description": "Doc types called BMI, single quote",
-            "fmql": "COUNT 8925_1 FILTER(.01='BMI')",
+            "description": "Day filter - patient born after a day (born the next day)",
+            "fmql": "SELECT 2 FILTER(.03>1969-07-07)",
             "count": "1"
+        }, # TODO: add test for time of day ie/ TX...
+        {
+            "description": "Filter a year - patient born between 1960 and 1970",
+            "fmql": "SELECT 2 FILTER(.03>1940&&.03<1960)",
+            "count": "13"
         },
         {
-            "description": "Doc type History & Physical. It has an embedded &. For pre V0.9, must escape. TBD change",
-            "fmql": "COUNT 8925_1 FILTER(.01='HISTORY \& PHYSICAL')",
-            "count": "1"
+            "description": "Filter with embedded bracket - name of Armed Forces 'state'",
+            "fmql": "DESCRIBE 5 FILTER(.01='ARMED FORCES AMER (EXC CANADA)')",
+            "count": "1",
         },
         {
-            "description": "Doc type CHF DAY 1 (C) has embedded ('s",
-            "fmql": "COUNT 8925_1 FILTER(.01='CHF DAY 1 (C)')",
-            "count": "1"
-        },
+            "description": "Filter with embedded & - must escape &.",
+            "fmql": "COUNT 50_68 FILTER(.01='MENINGOCOCCAL POLYSACCHARIDE VACCINE GROUPS A \& C COMB. INJ')",
+            "count": "2"
+        }, # TODO: get a \\ ie/ escape escape?
         { 
-            "description": "Doc type ALLERGIES/ADR is made _ by FMQL. Need to lookup with /",
-            "fmql": "COUNT 8925_1 FILTER(.01='ALLERGIES/ADR')",
+            "description": "Filter with embedded ( and & - only escape & - FMQL TODO",
+            "fmql": "COUNT 50_68 FILTER(.01='INFLUENZA VIRUS VACCINE,TRIVALENT TYPES A\&B ('90-'91) INJ')",
             "count": "1"
         },
         {
-            "description": "&& test. Make sure can do &&",
-            "fmql": "COUNT 8925_1 FILTER(.01='MISC/OTHER SVCS'&&.04='DC')",
+            "description": "Filter with embedded /",
+            "fmql": "COUNT 50_68 FILTER(.01='ATROPINE SO4 2MG/0.7ML INJ')",
             "count": "1"
-        },
-        {
-            "description": "V0.8 & Test. Will go with forced && in V0.9",
-            "fmql": "COUNT 8925_1 FILTER(.01='MISC/OTHER SVCS'&.04='DC')",
-            "count": "1"
-        },
+        }
     ]
 }
 
-SDATASETS2.append(FILTERTESTS)
+SDATASETS.append(FILTERTESTS)
 
 # LIMIT and OFFSET TESTS (Make Sure Test Patients has Vitals)
 LIMITTESTS = {
