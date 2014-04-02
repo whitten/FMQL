@@ -23,6 +23,7 @@ except ImportError:
 import time
 from datetime import datetime
 
+# 8080 used to proxy to a Vagrant setup FOIA VistA
 FMQLEP = "http://www.examplehospital.com:8080/fmqlEP"
 
 def simpleEPTests():
