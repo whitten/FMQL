@@ -4,7 +4,7 @@ import java.util.*;
 import com.google.gson.*; /* http://code.google.com/p/google-gson/ */
 
 /* 
- * FMQL V1.0 - Examples of querying from Java
+ * FMQL - Examples of querying from Java
  * - uses .net and google-gson (no thread pools etc)
  * - just walks json and dumps as a string: this is dynamic coding
  *
@@ -20,6 +20,12 @@ import com.google.gson.*; /* http://code.google.com/p/google-gson/ */
  * - crude invocation if JAR for gson is in FMQLReport's directory
  *   - javac -classpath 'gson-1.6.jar' FMQLReports.java
  *   - java -classpath '.;gson-1.6.jar' FMQLReports
+ *
+ * LICENSE:
+ * This program is free software; you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License version 3 (AGPL) as published by the Free Software 
+ * Foundation.
+ * (c) 2014 caregraf
  */
 public class FMQLReports {
 

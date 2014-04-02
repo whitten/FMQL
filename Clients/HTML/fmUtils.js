@@ -1,5 +1,5 @@
 /*
- * Simple utilities for Basic FMQL HTML/JS clients V1.0
+ * Simple utilities for Basic FMQL HTML/JS clients
  *
  * Highlights:
  * - support FMQL query and result display for IE 7+, FF 3.5+, Safari 4+,
@@ -13,7 +13,7 @@
  * Foundation. Modified or not:
  * - as required under Section 5, its source must retain appropriate legal notices
  * - in accordance with Section 7(b), its display must retain the "Master FileMan's Data" slogan with its link to http://vista.caregraf.info
- * (c) 2013 Caregraf
+ * (c) 2014 Caregraf
  */
 
 // SAMEASBASE
