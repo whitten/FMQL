@@ -1,12 +1,12 @@
-FMQLSCH ;CG/CD - Caregraf - FMQL Schema Query Processor; 07/12/2013  11:30
- ;;1.1b;FMQLQP;;Nov 25th, 2013
+FMQLSCH ;CG/CD - Caregraf - FMQL Schema Query Processor; 04/04/2014  11:30
+ ;;1.1;FMQLQP;;Apr 4th, 2014
  ;
  ; FMQL Schema Query Processor
  ;
  ; Companion of FMQLDATA - this resolves schema queries. Like its
  ; peer, it uses FLINF utilities rather than reading FM's raw dicts.
  ;
- ; FMQL Query Processor (c) Caregraf 2010-2013 AGPL
+ ; FMQL Query Processor (c) Caregraf 2010-2014 AGPL
  ;
 ALLTYPES(REPLY,FMQLPARAMS) ;
  N FILE,FILELABEL,TOPONLY,POPONLY,TCNT,CNT

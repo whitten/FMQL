@@ -1,12 +1,11 @@
-FMQLSLAB ;CG/CD - Caregraf - FMQL Schema Enhancement for Lab; 07/12/2013  11:30
- ;;1.0;FMQLQP;;Jul 12th, 2013
- ;
+FMQLSLAB ;CG/CD - Caregraf - FMQL Schema Enhancement for Lab; 04/04/2014  11:30
+ ;;1.1;FMQLQP;;Apr 4th, 2014
  ;
  ;
  ; FMQL Schema Enhancement for Lab (SLAB). 
  ; - peer of SSAM (SAMEAS)
  ;
- ; FMQL Query Processor (c) Caregraf 2010-2013 AGPL
+ ; FMQL Query Processor (c) Caregraf 2010-2014 AGPL
  ; 
  ; Exposes hidden Lab (CH) variables to a blank node pending a set of 
  ; cross references that does this work in an enhanced lab schema. This makes

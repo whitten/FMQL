@@ -1,11 +1,12 @@
-FMQLJSON ;CG/CD - Caregraf - FMQL JSON Builder; 11/26/2013  11:30
- ;;1.1.b;FMQLQP;;Nov 26th, 2013
+FMQLJSON ;CG/CD - Caregraf - FMQL JSON Builder; 04/04/2014  11:30
+ ;;1.1;FMQLQP;;Apr 4th, 2014
+ ;
  ;
  ; FMQL JSON Builder
  ; 
  ; A "class" for building JSON responses
  ; 
- ; FMQL Query Processor (c) Caregraf 2010-2013 AGPL
+ ; FMQL Query Processor (c) Caregraf 2010-2014 AGPL
  ;
 ERRORREPLY(REPLY,MSG) ;
  D REPLYSTART^FMQLJSON(.REPLY)

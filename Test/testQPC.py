@@ -20,7 +20,6 @@ import re
 from testQP import runTest, schemaField
 
 sys.path.append('../Framework')
-from fmqlQP import FMQLQP
 from cacheObjectInterface import CacheObjectInterface
 
 """
@@ -162,13 +161,7 @@ FMQLEP = "http://10.255.167.116:57772/csp/fmquery/FMQL.csp"
 
 def main():
  
-    try:
-        coi = CacheObjectInterface(FMQLEP)
-        logger = DefaultLogger()
-        fmqlQP = FMQLQP(coi, logger)
-    except Exception as e:
-        print "Failed to log in to C***: %s ... exiting" % e
-        return
+    coi = CacheObjectInterface(FMQLEP)
         
     times = []
 
@@ -181,7 +174,7 @@ def main():
         for i, testSet in enumerate(CTESTSETS, 1):
             for j, testDef in enumerate(testSet["definitions"], 1):
                 total += 1
-                if not runTest(fmqlQP, testSet["name"], str(i) + ":" + str(j), testDef):
+                if not runTest(coi, testSet["name"], str(i) + ":" + str(j), testDef):
                     fails += 1
                     if stopOnFail:
                         break

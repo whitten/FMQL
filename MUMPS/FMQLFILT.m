@@ -1,19 +1,17 @@
-FMQLFILT ;CG/CD - Caregraf - FMQL Filter Handling; 07/12/2013  11:30
- ;;1.0;FMQLQP;;July 12th,2012
- ;
+FMQLFILT ;CG/CD - Caregraf - FMQL Filter Handling; 04/04/2014  11:30
+ ;;1.1;FMQLQP;;Apr 4th, 2014
  ;
  ;
  ; FMQL Filters
  ; 
  ; Parse and Apply filters
  ; 
- ; FMQL Query Processor (c) Caregraf 2010-2013 AGPL
+ ; FMQL Query Processor (c) Caregraf 2010-2014 AGPL
  ;
  ; TBD:
  ; - remove support for &: only &&
  ; - force all values to be quoted. Must be 'X' or "X"
  ; - remove need for \& inside quotes
- ;
  ;
  ;
  ; Simple & sequence of X op Y and bound(X)

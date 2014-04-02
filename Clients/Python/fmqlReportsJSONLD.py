@@ -211,8 +211,6 @@ def usePyld():
     open("pyld_RDF_FMQLEX.rdf", "w").write(jsonld.to_rdf(jreply, {"format": "application/nquads"}))
     
     print
-    print "For more JSON to RDF, see the utility 'jldToRDF.py'"
-    print
     
 # ############################# Demo Driver ####################################
 

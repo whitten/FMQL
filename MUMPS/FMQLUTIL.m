@@ -1,11 +1,12 @@
-FMQLUTIL ;CG/CD - Caregraf - FMQL Utilities; 07/12/2013  11:30
- ;;1.1a;FMQLQP;;Oct 30th, 2013
+FMQLUTIL ;CG/CD - Caregraf - FMQL Utilities; 04/04/2014  11:30
+ ;;1.1;FMQLQP;;Apr 4th, 2014
+ ;
  ;
  ; FMQL Utilities
  ; 
  ; Schema and data array walkers and checkers
  ; 
- ; FMQL Query Processor (c) Caregraf 2010-2013 AGPL
+ ; FMQL Query Processor (c) Caregraf 2010-2014 AGPL
  ;
  ;
  ;
