@@ -14,6 +14,8 @@
 import os, sys, urlparse, re, json
 sys.path.append(os.path.dirname(__file__))
 from brokerRPC import RPCConnectionPool
+from describeReplyToRDF import DescribeRepliesToSGraph
+from describeResult import DescribeReply
 
 class FMQLEP:
 
@@ -42,6 +44,20 @@ class FMQLEP:
                 raise Exception("Expect fmql=")
             fmqlQuery = queryArgs["fmql"][0]
             reply = self.rpcc.invokeRPC("CG FMQL QP", [fmqlQuery])
+            # if not JSON format form and is supported
+            if "format" in queryArgs and queryArgs["format"][0] == "RDF":
+                jreply = json.loads(reply)
+                if "error" in jreply: # ex/ DESCRIBE of CONTAINED node
+                    raise Exception(reply)
+                ftor = DescribeRepliesToSGraph(fms="vs", systemBase=self.fmqlEnviron["vistaurl"] + "/", k3Base=K3BASE)
+                try:
+                    dr = DescribeReply(jreply)
+                except:
+                    raise Exception("Format", "RDF not supported for this query")
+                ftor.processReply(dr)
+                reply = ftor.done().getvalue()
+                # Should be application/rdf+xml but not recognized as XML in XHR in Chrome though Firefox seems ok. Downgrading for support
+                contentType = "application/xml; charset=utf-8"
         # Exceptions: setting up comms to VistA or even QP code error
         except Exception as e:
             print >> sys.stderr, "FMQLEP: %s" % e # internal or entry level errors
