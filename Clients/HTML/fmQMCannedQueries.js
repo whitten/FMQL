@@ -1,4 +1,4 @@
-/* Canned Queries for fmQueryMaker.html v1.0 */
+/* Canned Queries for fmQueryMaker.html v1.1 */
 CANNEDQUERIES = [
 	["SELECT 2 LIMIT 10", "List first 10 Patients"],
 	["DESCRIBE 2-9", "DESCRIBE Patient 9"],

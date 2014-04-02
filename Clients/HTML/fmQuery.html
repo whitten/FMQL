@@ -65,7 +65,7 @@ th, td {
 <script type="text/javascript">
 
 /* 
- * FileMan Query Maker v1.0
+ * FileMan Query Maker v1.1
  *
  * In default setup, handles urls of form:
  *      /query?fmql=...
@@ -76,7 +76,7 @@ th, td {
  * Foundation. Modified or not:
  * - as required under Section 5, its source must retain appropriate legal notices
  * - in accordance with Section 7(b), its display must retain the "Master FileMan's Data" slogan with its link to http://vista.caregraf.info
- * (c) 2013 Caregraf
+ * (c) 2014 Caregraf
  */
 
 /*
@@ -157,6 +157,8 @@ function sendQueryInURLBar()
               {
                   if (format == "JSON")
                       html("results", "<pre>" + makeJSONPretty(xhr.responseText) + "</pre>"); 
+                  else if (xhr.responseXML) // application/xml
+                      html("results", "<pre>" +  ConvChar(xhr.responseText) + "</pre>");
                   else
                       html("results", makeHTMLFromJSON(xhr.responseText, query));
               }
@@ -271,6 +273,7 @@ function makeHTMLFromJSON(jsonReply, query)
 <select id="format" name="format">
 <option value="html" selected="selected">HTML</option> 
 <option value="json">JSON</option> 
+<option value="rdf">RDF</option> 
 </select> 
 </div> 
 <input type="button" value="Send Query" onclick="handleSendQuery()" /> 
@@ -280,7 +283,7 @@ function makeHTMLFromJSON(jsonReply, query)
 <div id="results">
 </div>
 
-<div id="footer"><a href="http://vista.caregraf.info">Master FileMan's Data</a>&trade; (c) 2013 <span id="flogo"><a href="http://www.caregraf.com">Caregraf</a></span></div>
+<div id="footer"><a href="http://vista.caregraf.info">Master FileMan's Data</a>&trade; (c) 2014 <span id="flogo"><a href="http://www.caregraf.com">Caregraf</a></span></div>
 
 </body>
 </html>
