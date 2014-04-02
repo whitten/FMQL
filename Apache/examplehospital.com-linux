@@ -4,14 +4,20 @@
     ServerAlias examplehospital.com
     ServerAdmin webmaster@examplehospital.com
 
-    # IMPORTANT: these settings must match your VistA/RPMS 
+    #
+    # IMPORTANT: these settings must match your VistA/CHCS/RPMS
     # - reload in Apache with every change
-    # - the user (access/verify) MUST have permission to use the FMQL RPC.
-    # - for VistA, set rpcBroker to "VistA"; RPMS, use "CIA"
-    # - rpcport is the port your VistA's broker listens on: usually 9430 for FOIA, 9201 for OpenVistA ...
+    # - for VistA/RPMS:
+    #   - set rpcBroker to "VistA" (the default below); RPMS, use "CIA"
+    #   - user (access/verify) must have permission to use the FMQL PRC
+    #     ... defaults below (QLFM1234...) are from the Install Instruction
+    #   - rpcport is the port your VistA's broker listens on: default is 9430
+    #     used by OSEHRA FOIA
+    # - for CHCS/Cache
+    #
     SetEnv fmql.rpcbroker "VistA"
     SetEnv fmql.rpchost localhost
-    SetEnv fmql.rpcport ####
+    SetEnv fmql.rpcport 9430
     SetEnv fmql.rpcaccess "QLFM1234"
     SetEnv fmql.rpcverify "QLFM1234!!"
 

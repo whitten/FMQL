@@ -169,6 +169,7 @@ function sendQueryInURLBar()
 
     EPURL = "http://" + location.host + "/fmqlEP";
     queryURL = EPURL + "?fmql=" + encodeURIComponent(query);
+    queryURL += "&format=" + format;
     xhr.open('GET', queryURL,  true); 
     xhr.send(null);   
 }
