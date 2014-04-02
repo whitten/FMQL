@@ -15,6 +15,8 @@ class CacheObjectInterface:
     Utility for talking to FMQL through a Cache Object Interface. Key feature is managing sessions. Cache uses cookies for session identification. Cache limits the number of sessions on a server so it is important to use and reuse the same session.
     
     If Cache runs out of sessions, it will issue Service Unavailable 503 errors.
+    
+    Follows FMQLInterface
     """
     def __init__(self, ep):
         # ex/ http://...../FMQL.csp
