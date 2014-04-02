@@ -21,13 +21,13 @@
     #   in RDF replies
     # ... reload in Apache after a change
     #
-    SetEnv fmql.rpcbroker "VistA" # "CSPIF" (CHCS); "CIA" (RPMS)
+    SetEnv fmql.rpcbroker "VistA"
     SetEnv fmql.rpchost localhost
     SetEnv fmql.rpcport 9430
     SetEnv fmql.rpcaccess "QLFM1234"
     SetEnv fmql.rpcverify "QLFM1234!!"
     SetEnv fmql.baseurl "http://examplehospital.com"
-    SetEnv fmql.schemans "vs" # "chcss" (CHCS)
+    SetEnv fmql.schemans "vs"
 
     # Trace problems in FMQL in this error log
     LogLevel warn
