@@ -257,6 +257,45 @@ TESTSCHEMATESTS = {
 
 SSCHEMASETS.append(TESTSCHEMATESTS)
 
+# Boolean 'set of codes' apply fixed maps (Y->true etc) to turn binary and unary valued set of codes into booleans. This cuts down on the number of coded-values/enums needed in a graph or its schema.
+BOOLEANCODETESTS = {
+    "name": "Boolean Code Tests",
+    "definitions": [
+        {
+            "description": "1:YES;0:NO - 52/10.1",
+            "fmql": "DESCRIBE TYPE 52",
+            "test": "testResult=(jreply['fields'][12]['type'] == '12')"
+        },
+        {
+            "description": "1:YES - 52/34.1",
+            "fmql": "DESCRIBE TYPE 52",
+            "test": "testResult=(schemaField(jreply,'34.1')['type'] == '12')"
+        },
+        {
+            "description": "0:NO;1:YES (order different) - 52/116",
+            "fmql": "DESCRIBE TYPE 52",
+            "test": "testResult=(schemaField(jreply,'116')['type'] == '12')"
+        },
+        {
+            "description": "MALE:FEMALE SEX is Enum not boolean - 2/.02",
+            "fmql": "DESCRIBE TYPE 2",
+            "test": "testResult=(schemaField(jreply,'.02')['type'] == '3')"
+        },
+        {
+            "description": "YES/NO/UNKNOWN is Enum not boolean - 2/3025",
+            "fmql": "DESCRIBE TYPE 2",
+            "test": "testResult=(schemaField(jreply,'.3025')['type'] == '3')"
+        },
+        {
+            "description": "1;Yes:0;No (lowers) - 120.86/1",
+            "fmql": "DESCRIBE TYPE 120_86",
+            "test": "testResult=(schemaField(jreply,'1')['type'] == '12')"
+        }
+    ]
+}
+
+SSCHEMASETS.append(BOOLEANCODETESTS)
+
 TESTSETS.extend(SSCHEMASETS)
 
 # ####################### (Specific) Data Tests ###########################
@@ -266,8 +305,6 @@ SDATASETS2 = []
 
 # Set the following per test system
 CNT_PATIENTS = "39"
-CNT_COUNTY_CA = "58"
-TESTSTATEID = "5-33" # New Hampshire - refs from Institutions and Postal codes
 TESTPATIENTID = "2-9"
 TESTIHSPATIENTID = "9000001-9"
 TESTOPATIENTID = "2-6" # Order patient different in CG Demo
@@ -279,17 +316,14 @@ CNT_VITALSFROM2008ON="104" # Vitals from 2008 on
 CNT_HVITALSOFTPNEIE="12" # Height Vitals of patient
 CNT_ORDERSOFOTP = "5"
 CNT_ACCESSIONS = "15"
-CNT_STATE_REFS = "617"
-MUMPSCODETESTID = "68-11"
-MUMPSCODETEST="(re.match(r'I \$P\(\^LRO\(68,LRAA,1,LRAD,1,LRAN,0\),U,2\)=62.3 S LRTEST=\"\" D \^LRMRSHRT', jreply['results'][0]['ver_code']['value']))"
-CTRLUDR32TESTID="3_075-60698"
-# Escape Decimal 27 == u'\x1b'
-CTRLUDR32TEST="re.search(r'\x1b', jreply['results'][0]['error_number']['value'][1]['variables_and_data']['value'][88]['data_value']['value'])"
 TESTPROBLEMDIAGNOSIS="80-62"
 
 # OTHERS TO ADD:
 # - 80_3-2 ... MUMPS (6) is .01 value. Seems to show properly
 # - typeID: ["9002313.55"] has BAD IEN (1VA) in my system. I skip it properly ie. no entries show.
+
+TESTSTATEID = "5-33" # new hampshire
+CNT_STATE_REFS = "617"
 
 TESTSTATETESTS = {
     "name": "Ramble Test State %s" % TESTSTATEID,
@@ -327,6 +361,8 @@ PATIENTALIASTEST = {
 
 SDATASETS.append(PATIENTALIASTEST)
 """
+
+CNT_COUNTY_CA = "58"
 
 # Note - was 63 - now state 5 (6 == CA). 
 # TODO - add back lost: 2 commented out test on URI format for CNode
@@ -411,9 +447,13 @@ SDATASETS.append(CNODETESTS)
 
 # FILTER TESTS
 # use mixture of 5 (state), 5.1 (county) and 50.68 (VA Product) and 2 for indexed time
+# - using Counties (5.1) of State (5) as it is indexed (ala Vitals of Patient)
 # note: if patient data, use Vitals (120.5)
 # - TBD: ] test for names
 # - Without index, use SELECT 50_67 FILTER(!bound(7)) LIMIT 10 - also for expired dates
+
+CNT_COUNTIES_ILLINOIS_WITH_SEER_CODE = "29"
+
 FILTERTESTS = {
     "name": "FILTER",
     "definitions": [
@@ -430,7 +470,7 @@ FILTERTESTS = {
         {
             "description": "All of type with a value bound - counties with seer county code",
             "fmql": "DESCRIBE 5_1 FILTER(1=5-49&bound(2))",
-            "count": "29" # all of them 
+            "count": CNT_COUNTIES_ILLINOIS_WITH_SEER_CODE # all of them 
         },
         {
             "description": "All of type with a bound value and a field with a value - utah county with seer and name washington",
@@ -502,73 +542,76 @@ FILTERTESTS = {
 
 SDATASETS.append(FILTERTESTS)
 
-# LIMIT and OFFSET TESTS (Make Sure Test Patients has Vitals)
+# LIMIT and OFFSET TESTS (When Patients, used Vitals, Counties of state is similar)
 LIMITTESTS = {
     "name": "LIMIT/OFFSET",
     "definitions": [
         {
-            "description": "Vitals of a Patient, limit 5",
-            "fmql": "DESCRIBE 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) LIMIT 5",
+            "description": "LIMIT filtered list of type - Counties",
+            "fmql": "DESCRIBE 5_1 FILTER(1=5-49) LIMIT 5",
             "count": "5"
         },
         {
-            "description": "Vitals of a Patient, limit 5, offset 3",
-            "fmql": "DESCRIBE 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) LIMIT 5 OFFSET 3",
+            "description": "LIMIT filtered list of type, offset - Counties",
+            "fmql": "DESCRIBE 5_1 FILTER(1=5-49) LIMIT 5 OFFSET 3",
             "count": "5"
         },
         {
-            "description": "Select Vitals of a Patient, offset CNT_VITALSOFTPNEIE - 1 (ie. start one off end)",
-            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) OFFSET " + str(int(CNT_VITALSOFTPNEIE)-1),
+            "description": "Filtered list of type, offset one off end",
+            "fmql": "DESCRIBE 5_1 FILTER(1=5-49&bound(2)) OFFSET " + str(int(CNT_COUNTIES_ILLINOIS_WITH_SEER_CODE)-1),
             "count": "1"
         },
         {
-            "description": "Select Vitals of a Patient, offset 1 past end",
-            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) OFFSET " + str(int(CNT_VITALSOFTPNEIE)+1),
+            "description": "Filtered list of type, offset 1 past end",
+            "fmql": "SELECT 5_1 FILTER(1=5-49&bound(2)) OFFSET " + str(int(CNT_COUNTIES_ILLINOIS_WITH_SEER_CODE)+1),
             "count": "0"
         },
         {
-            "description": "Count Patients, offset 5",
-            "fmql": "COUNT 2 OFFSET 5",
-            "count": str(int(CNT_PATIENTS)-5)
+            "description": "Count filtered list of type, offset 5",
+            "fmql": "SELECT 5_1 FILTER(1=5-49&bound(2)) OFFSET 5",
+            "count": str(int(CNT_COUNTIES_ILLINOIS_WITH_SEER_CODE)-5)
         },
         {
-            "description": "Select all Patients, offset 3, limit 2",
-            "fmql": "SELECT 2 LIMIT 2 OFFSET 3",
+            "description": "SELECT filtered list of type limit 2 offset 3",
+            "fmql": "SELECT 5_1 FILTER(1=5-49) LIMIT 2 OFFSET 5",
             "count": "2"
         },
     ]
 }
 
-SDATASETS2.append(LIMITTESTS)
+SDATASETS.append(LIMITTESTS)
 
 # AFTERIEN - alternative to OFFSET 
 AFTERIENTESTS = {
     "name": "AFTERIEN",
     "definitions": [
         {
-            "description": "Vitals of a Patient, AFTER 6th last IEN",
-            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) AFTERIEN 290",
+            "description": "Counties of state, AFTER 6th last IEN",
+            "fmql": "SELECT 5_1 FILTER(1=5-49) AFTERIEN 249",
             "count": "5"
         },
         {
-            "description": "Vitals of a Patient, AFTER 6th last IEN, limit 2",
-            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) AFTERIEN 290 LIMIT 2",
+            "description": "Counties of state, AFTER 6th last IEN, limit 2",
+            "fmql": "SELECT 5_1 FILTER(1=5-49) AFTERIEN 249 LIMIT 2",
             "count": "2"
         },
         {
-            "description": "Vitals of a Patient, AFTER 6th last IEN, set OFFSET but expect it to be reset",
-            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) AFTERIEN 290 OFFSET 22",
+            "description": "Counties of state, AFTER 6th last IEN, set OFFSET but expect it to be reset",
+            "fmql": "SELECT 5_1 FILTER(1=5-49) AFTERIEN 249 OFFSET 22",
             "test": "testResult=(jreply['fmql']['OFFSET']=='0')"
         },
         {
-            "description": "Vitals of a Patient, AFTER last IEN, expect no entries",
-            "fmql": "SELECT 120_5 FILTER(.02=" + TESTPATIENTID + "&!bound(2)) AFTERIEN 295",
+            "description": "Counties of state, AFTER last IEN, expect no entries",
+            "fmql": "SELECT 5_1 FILTER(1=5-49) AFTERIEN 254", # last IEN in set is 254
             "count": "0"
         },
     ]
 }
 
-SDATASETS2.append(AFTERIENTESTS)
+SDATASETS.append(AFTERIENTESTS)
+
+"""
+TODO: find similar date issue outside HL7
 
 FORMATTESTS = {
     "name": "Format (date) tests",
@@ -581,7 +624,8 @@ FORMATTESTS = {
     ]
 }
 
-SDATASETS2.append(FORMATTESTS)
+SDATASETS.append(FORMATTESTS)
+"""
 
 # No Index Max tests. There is a limit on filtered selects when the filter doesn't assert
 # the value of an index.
@@ -589,46 +633,51 @@ SDATASETS2.append(FORMATTESTS)
 # Note: TBD: may change definition of no index max so an error is returned.
 #
 NOIDXMXTESTS = {
-    "name": "No Index MX tests",
+    "name": "No Index MX tests - using VA Product with non indexed links",
     "definitions": [
         {
-            "description": "No Index Max for patients set to 1 (there are 39). Filter on non indexed field and expect to be rejected", 
+            "description": "No Index Max set to 1 - there are many more to count", 
             "fmql": "COUNT 50_68 FILTER(.05=11-2) NOIDXMAX 1",
             "count": "-1"
         },
         {
-            "description": "No index max for patients set to 1 (there are 39). Filter on name. Expect result of 1 as .01 name is indexed.", 
-            "fmql": "COUNT 2 FILTER(.01=THREE,PATIENT C) NOIDXMAX 1",
+            "description": "No index max set to 1 but only one in the list (there are 39). Filter on name. Expect result of 1 as .01 name is indexed.", 
+            "fmql": "COUNT 50_68 FILTER(.01='ATROPINE SO4 0.4MG TAB') NOIDXMAX 1",
             "count": "1"
         },
-        {
-            "description": "No index max for array kicks in for < filter, even on an idx (won't for follow on > filter ie/ < can't use indexes",
-            "fmql": "SELECT 79_3 FILTER(.01<2005-10) NOIDXMAX 10",
-            "count": "-1"
-        },
-        {
-            "description": "No index max doesn't matter for indexed > filter. Will pull index",
-            "fmql": "SELECT 79_3 FILTER(.01>2005-10) NOIDXMAX 10",
-            "test": "testResult= (len(jreply['results']) > 0)"
-        },
+        # {
+        #    "description": "No index max for array kicks in for < filter, even on an idx (won't for follow on > filter ie/ < can't use indexes",
+        #    "fmql": "SELECT 79_3 FILTER(.01<2005-10) NOIDXMAX 10",
+        #    "count": "-1"
+        # },
+        # {
+        #    "description": "No index max doesn't matter for indexed > filter. Will pull index",
+        #    "fmql": "SELECT 79_3 FILTER(.01>2005-10) NOIDXMAX 10",
+        #    "test": "testResult= (len(jreply['results']) > 0)"
+        # },
     ]
 }
 
-SDATASETS2.append(NOIDXMXTESTS)
+SDATASETS.append(NOIDXMXTESTS)
 
 # ORDER BY and No B IDX (means can't order) tests
+"""
+Note - shows order by is too index dependent and that either it should fail if no index OR make one
+
+TODO: to be "bullet proof", move off patients
+"""
 ORDERBYTESTS = {
     "name": "No B Index tests",
     "definitions": [
         {
             "description": "2 with ORDER BY (Z should be last)",
             "fmql": "SELECT 2 ORDERBY .01",
-            "test": "testResult = (jreply['results'][len(jreply['results'])-1]['uri']['value']=='2-1')",
+            "test": "testResult = (jreply['results'][len(jreply['results'])-1]['uri']['value']=='2-11')",
         },
         {
             "description": "2 without ORDER BY (Z should be first)",
             "fmql": "SELECT 2",
-            "test": "testResult = (jreply['results'][0]['uri']['value']=='2-1')",
+            "test": "testResult = (jreply['results'][len(jreply['results'])-1]['uri']['value']=='2-25')",
         },
         {
             "description": "8985_1 has no simple, inline B Index. It can be listed but the list is in IEN order. Note: ICD Diagnosis 80 has no B Index either!",
@@ -638,28 +687,23 @@ ORDERBYTESTS = {
     ]
 }
 
-SDATASETS2.append(ORDERBYTESTS)
+SDATASETS.append(ORDERBYTESTS)
 
 SELECTPREDTESTS = {
-    "name": "Select Tests",
+    "name": "Select Field/Pred Tests",
     "definitions": [
         {
-            "description": "Select patient id for 100 problems",
-            "fmql": "SELECT 9000011 FIELD .02 LIMIT 10",
-            "test": "testResult = (jreply['count']=='10' and 'patient_name' in jreply['results'][0])",
+            "description": "Select field for 10 records",
+            "fmql": "SELECT 50_68 FIELD .05 LIMIT 10",
+            "test": "testResult = (jreply['count']=='10' and 'va_generic_name' in jreply['results'][0])",
         },
-        # TMP
-        # {
-        #   "description": "Select patients with a diagnosed problem",
-        #   "query": {"op": ["Select"], "typeId": ["9000011"], "predicate": [".02"], "filter": [".01=" + TESTPROBLEMDIAGNOSIS]},
-        #   "test": "testResult = ('patient_name' in jreply['results'][0] and jreply['results'][0]['patient_name']['value'] == '%s')" % TESTIHSPATIENTID,
-        # },
     ]
 }
 
-SDATASETS2.append(SELECTPREDTESTS)
+SDATASETS.append(SELECTPREDTESTS)
 
-# Special for Orders (until V0.9)
+"""
+# Special for Orders - TODO: need to add to base FOIA as this is special
 ORDERTESTS = {
     "name": "ORDERS",
     "definitions": [
@@ -681,7 +725,8 @@ ORDERTESTS = {
     ]
 }
 
-SDATASETS2.append(ORDERTESTS)
+SDATASETS.append(ORDERTESTS)
+"""
 
 """
 Two Provider Narrative 9999999_27 tests fixed with arrays
@@ -714,15 +759,18 @@ SAMEASTESTS = {
     "name": "SAMEAS",
     "definitions": [
         {
-            # TBD: Vital with VUID (1 BP) once added properly
-            "description": "VUID FILE: most vitals have VUIDs. Picking Vital (AB Girth 10) with LOCAL only", 
+            "description": "VUID FILE: most vitals have VUIDs. Picking Vital (AB Girth 10)", 
             "fmql": "DESCRIBE 120_51-10",
-            "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'LOCAL')",
+            "test": "testResult = (jreply['results'][0]['uri']['sameAs'] != 'LOCAL')",
         },
         {
-            # TBD: GMR Allergy with VUID (2 Choc) once added properly
-            "description": "VUID FILE: most GMR Allergies have VUIDs. Picking one (Other 1) with LOCAL only", 
+            "description": "VUID FILE: most GMR Allergies have VUIDs", 
             "fmql": "DESCRIBE 120_82-1",
+            "test": "testResult = (jreply['results'][0]['uri']['sameAs'] != 'LOCAL')",
+        },
+        {
+            "description": "VUID FILE: GMR Allergy with no VUID (only a few)",
+            "fmql": "DESCRIBE 120_82-1558",
             "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'LOCAL')",
         },
         {
@@ -742,12 +790,12 @@ SAMEASTESTS = {
         },
         {
             "description": "Provider Narrative with Expression to major concept",
-            "fmql": "DESCRIBE 9999999_27-352",
-            "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'VA:757-9335')",
+            "fmql": "DESCRIBE 9999999_27-1",
+            "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'VA:757-63679')",
         },
         {
             "description": "Provider Narrative with no expression, marked local",
-            "fmql": "DESCRIBE 9999999_27-11",
+            "fmql": "DESCRIBE 9999999_27-8",
             "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'LOCAL')",
         },        
         {
@@ -755,45 +803,49 @@ SAMEASTESTS = {
             "fmql": "DESCRIBE 50_6-95",
             "test": "testResult = (('VA:' + jreply['results'][0]['vuid']['value']) == jreply['results'][0]['uri']['sameAs'])",
         },
-        {
-            "description": "Drug (50) with map",
-            "fmql": "DESCRIBE 50-1",
-            "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'VA:4000987')",
-        },
-        {
-            "description": "Drug (50) local only",
-            "fmql": "DESCRIBE 50-9",
-            "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'LOCAL')",
-        },          
-        {
-            "description": "Pharmacy Orderable (50.7) with map",
-            "fmql": "DESCRIBE 50_7-1",
-            "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'VA:4000987')",
-        },
-        {
-            "description": "Pharmacy Orderable (50.7) maps to 50 but it is local only so get LOCAL:50-X",
-            "fmql": "DESCRIBE 50_7-7",
-            "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'LOCAL:50-9')",
-        }, 
+        # 50 and 50_7 not in default base OSEHRA FOIA
+        # {
+        #    "description": "Drug (50) with map",
+        #    "fmql": "DESCRIBE 50-1",
+        #    "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'VA:4000987')",
+        # },
+        # {
+        #    "description": "Drug (50) local only",
+        #    "fmql": "DESCRIBE 50-9",
+        #    "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'LOCAL')",
+        # },          
+        # {
+        #    "description": "Pharmacy Orderable (50.7) with map",
+        #    "fmql": "DESCRIBE 50_7-1",
+        #    "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'VA:4000987')",
+        # },
+        # {
+        #    "description": "Pharmacy Orderable (50.7) maps to 50 but it is local only so get LOCAL:50-X",
+        #    "fmql": "DESCRIBE 50_7-7",
+        #    "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'LOCAL:50-9')",
+        # }, 
         #   For these labs manually fixed 60 and 64 as follows:
         #   - S ^LAB(60,5721,64)=666 (WBC)
         #   - S ^LAB(60,5482,64)=1918 and S ^LAM(1918,9)="787^^^^" (MCV)
-        {
-            "description": "Lab 60 to WKLD 64 and no further",
-            "fmql": "DESCRIBE 60-5721", # WBC
-            "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'VA:wkld85030')",
-        }, 
-        {
-            "description": "Lab 60 all the way to LOINC",
-            "fmql": "DESCRIBE 60-5482",
-            "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'LOINC:787-2')",
-        }, 
+        #
+        # Default 60 lacks any links - TODO: add
+        # 
+        # {
+        #    "description": "Lab 60 to WKLD 64 and no further",
+        #    "fmql": "DESCRIBE 60-5721", # WBC
+        #    "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'VA:wkld85030')",
+        # }, 
+        # {
+        #    "description": "Lab 60 all the way to LOINC",
+        #    "fmql": "DESCRIBE 60-5482",
+        #    "test": "testResult = (jreply['results'][0]['uri']['sameAs'] == 'LOINC:787-2')",
+        # }, 
         # Add: 50_7 LOCAL ONLY (ie/ no 50)
         # Add: 71, 790_2 - needs CPT filled. Browse of system with CPT works V0.9
     ]
 }
 
-SDATASETS2.append(SAMEASTESTS)
+SDATASETS.append(SAMEASTESTS)
 
 #
 # NOTE: \x and \u interchange for <255
@@ -819,6 +871,12 @@ SDATASETS2.append(SAMEASTESTS)
 # are valid unicode (surrogates) but flipped by loads. Need to work out why GT/M exports surrogates.
 #
 
+MUMPSCODETESTID = "68-11"
+MUMPSCODETEST="(re.match(r'I \$P\(\^LRO\(68,LRAA,1,LRAD,1,LRAN,0\),U,2\)=62.3 S LRTEST=\"\" D \^LRMRSHRT', jreply['results'][0]['ver_code']['value']))"
+CTRLUDR32TESTID="3_075-60698" # Note in FOIA VISTA - need substitute TODO
+# Escape Decimal 27 == u'\x1b'
+CTRLUDR32TEST="re.search(r'\x1b', jreply['results'][0]['error_number']['value'][1]['variables_and_data']['value'][88]['data_value']['value'])"
+
 CHARACTERTESTS = {
     "name": "Character set tests - make sure proper data is transferred",
     "definitions": [
@@ -831,11 +889,11 @@ CHARACTERTESTS = {
         # Escape Decimal 27 == u'\x1b'
         # print jreply['results'][0]["error_number"]["value"][1]["variables_and_data"]["value"][88]["data_value"]
         # NOTE: need CSTOP as relying on a large set of bnodes
-        {
-            "description": "CTRL Chars < 32 rendered as \u00XX",
-            "fmql": "DESCRIBE %s CSTOP 500" % CTRLUDR32TESTID,
-            "test": "testResult = " + CTRLUDR32TEST
-        }
+        # {
+        #    "description": "CTRL Chars < 32 rendered as \u00XX",
+        #    "fmql": "DESCRIBE %s CSTOP 500" % CTRLUDR32TESTID,
+        #     "test": "testResult = " + CTRLUDR32TEST
+        # }
         # \" TEST (... see in 3_075 too)
 
         # \\\ TEST ?
@@ -846,7 +904,7 @@ CHARACTERTESTS = {
     ]
 }
 
-SDATASETS2.append(CHARACTERTESTS)
+SDATASETS.append(CHARACTERTESTS)
 
 # . IEN tests. This is to support date stamps mainly but the test
 # system doesn't have date stamped (labs) IENs yet. For now, test
@@ -877,7 +935,7 @@ DOTIENTESTS = {
     ]
 }
 
-SDATASETS2.append(DOTIENTESTS)
+SDATASETS.append(DOTIENTESTS)
 
 # .001's are special - reaches into Schema view displaying them and data where value is a pointer or a date. Current test system has no example of the pointer form which is in three places in C***'s Lab schema.
 # SELECT 50_6 FIELD .001 LIMIT 10
@@ -919,46 +977,7 @@ OO1IENTESTS = {
     ]
 }
 
-SDATASETS2.append(OO1IENTESTS)
-
-# Boolean 'set of codes' apply fixed maps (Y->true etc) to turn binary and unary valued set of codes into booleans. This cuts down on the number of coded-values/enums needed in a graph or its schema.
-BOOLEANCODETESTS = {
-    "name": "Boolean Code Tests",
-    "definitions": [
-        {
-            "description": "1:YES;0:NO - 52/10.1",
-            "fmql": "DESCRIBE TYPE 52",
-            "test": "testResult=(jreply['fields'][12]['type'] == '12')"
-        },
-        {
-            "description": "1:YES - 52/34.1",
-            "fmql": "DESCRIBE TYPE 52",
-            "test": "testResult=(schemaField(jreply,'34.1')['type'] == '12')"
-        },
-        {
-            "description": "0:NO;1:YES (order different) - 52/116",
-            "fmql": "DESCRIBE TYPE 52",
-            "test": "testResult=(schemaField(jreply,'116')['type'] == '12')"
-        },
-        {
-            "description": "MALE:FEMALE SEX is Enum not boolean - 2/.02",
-            "fmql": "DESCRIBE TYPE 2",
-            "test": "testResult=(schemaField(jreply,'.02')['type'] == '3')"
-        },
-        {
-            "description": "YES/NO/UNKNOWN is Enum not boolean - 2/3025",
-            "fmql": "DESCRIBE TYPE 2",
-            "test": "testResult=(schemaField(jreply,'.3025')['type'] == '3')"
-        },
-        {
-            "description": "1;Yes:0;No (lowers) - 120.86/1",
-            "fmql": "DESCRIBE TYPE 120_86",
-            "test": "testResult=(schemaField(jreply,'1')['type'] == '12')"
-        }
-    ]
-}
-
-SDATASETS2.append(BOOLEANCODETESTS)
+SDATASETS.append(OO1IENTESTS)
 
 TESTSETS.extend(SDATASETS)
 
