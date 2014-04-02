@@ -14,6 +14,12 @@ vs
             <rdf:Description rdf:about="http://2"/>            
         </x:pred>
 inline listing is very straightforward in turtle: x:pred <http://1>, <http:/2> .
+
+# LICENSE:
+# This program is free software; you can redistribute it and/or modify it under the terms of
+# the GNU Affero General Public License version 3 (AGPL) as published by the Free Software
+# Foundation.
+# (c) 2010-2014 caregraf
 """
         
 import codecs

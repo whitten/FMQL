@@ -2,12 +2,11 @@
 
 #
 # FileMan report generators to illustrate the use of an FMQL Endpoint.
-# v0.9
 #
 # An FMQL endpoint is "restful" - queries are made in HTTP GETs. Responses are
 # JSON (application/json). With FMQL, JSON becomes FileMan's export format.
 #
-# In v1.0, the endpoint supports 7 query types, 4 for FileMan data and 
+# The endpoint supports 7 query types, 4 for FileMan data and 
 # 3 for its schema Data.
 #
 # Data:
@@ -43,7 +42,7 @@
 # This program is free software; you can redistribute it and/or modify it under the terms of 
 # the GNU Affero General Public License version 3 (AGPL) as published by the Free Software 
 # Foundation.
-# (c) 2010-2013 caregraf
+# (c) 2010-2014 caregraf
 #
 
 import re 

@@ -1,5 +1,5 @@
 /*
- * Simple utilities for Basic FMQL HTML/JS clients V1.1
+ * Simple utilities for Basic FMQL HTML/JS clients
  *
  * Highlights:
  * - support FMQL query and result display for IE 7+, FF 3.5+, Safari 4+,
