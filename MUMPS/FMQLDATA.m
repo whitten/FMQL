@@ -1,12 +1,12 @@
-FMQLDATA ;CG/CD - Caregraf - FMQL Data Query Processor; 11/25/2013  11:30
- ;;1.1b;FMQLQP;;Nov 25th, 2013
+FMQLDATA ;CG/CD - Caregraf - FMQL Data Query Processor; 04/04/2014  11:30
+ ;;1.1;FMQLQP;;Apr 4th, 2014
  ;
  ;
  ; FMQL Data Query Processor
  ;
  ; For queries for data. Peer of FMQLSCH
  ;
- ; FMQL Query Processor (c) Caregraf 2010-2013 AGPL
+ ; FMQL Query Processor (c) Caregraf 2010-2014 AGPL
  ;
  ;
  ;

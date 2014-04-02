@@ -1,10 +1,10 @@
-FMQLSSAM ;CG/CD - Caregraf - FMQL Schema Enhancement for Terminologies; 07/12/2013  11:30
- ;;1.0;FMQLQP;;Jul 12th, 2013
+FMQLSSAM ;CG/CD - Caregraf - FMQL Schema Enhancement for Terminologies; 04/04/2014  11:30
+ ;;1.1;FMQLQP;;Apr 4th, 2014
  ;
  ;
  ; FMQL Schema Enhancement for Terminologies - sameas relationships
  ;
- ; FMQL Query Processor (c) Caregraf 2010-2013 AGPL
+ ; FMQL Query Processor (c) Caregraf 2010-2014 AGPL
  ;
  ; Link (declare sameas) local vocabulary/resources to standard or national 
  ; equivalents. This is part of FMQL's FileMan schema enhancements and 
