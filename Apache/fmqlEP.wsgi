@@ -38,6 +38,8 @@ class FMQLEP:
                     self.fmqlEnviron["rpcport"] = environ["fmql.rpcport"]
                     self.fmqlEnviron["rpcaccess"] = environ["fmql.rpcaccess"]
                     self.fmqlEnviron["rpcverify"] = environ["fmql.rpcverify"]
+                    self.fmqlEnviron["schemans"] = environ["fmql.schemans"]
+                    self.fmqlEnviron["baseurl"] = environ["fmql.baseurl"]
                 self.__initConnectionPool(environ)
             queryArgs = urlparse.parse_qs(environ['QUERY_STRING'])
             if "fmql" not in queryArgs:
@@ -49,7 +51,7 @@ class FMQLEP:
                 jreply = json.loads(reply)
                 if "error" in jreply: # ex/ DESCRIBE of CONTAINED node
                     raise Exception(reply)
-                ftor = DescribeRepliesToSGraph(fms="vs", systemBase=self.fmqlEnviron["vistaurl"] + "/", k3Base=K3BASE)
+                ftor = DescribeRepliesToSGraph(fms=self.fmqlEnviron["schemans"], systemBase=self.fmqlEnviron["baseurl"] + "/")
                 try:
                     dr = DescribeReply(jreply)
                 except:
@@ -97,7 +99,7 @@ if __name__ == '__main__':
         from wsgiref import simple_server
         print "Running test application - point your browser at http://localhost:8000/fmqlEP?fmql=DESCRIBE 2-1 ..."
         httpd = simple_server.WSGIServer(('', 8000), simple_server.WSGIRequestHandler)
-        fmqlEnviron = {"rpcbroker": "VistA", "rpchost": "localhost", "rpcport": "9201", "rpcaccess": "QLFM1234", "rpcverify": "QLFM1234!!"}
+        fmqlEnviron = {"rpcbroker": "VistA", "rpchost": "localhost", "rpcport": "9201", "rpcaccess": "QLFM1234", "rpcverify": "QLFM1234!!", "schemans": "vs", "baseurl": "http://examplehospital.com"}
         application.setFMQLEnviron(fmqlEnviron)
         httpd.set_app(application)
         httpd.serve_forever()
