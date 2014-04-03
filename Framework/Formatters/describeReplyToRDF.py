@@ -103,7 +103,7 @@ class DescribeRepliesToSGraph:
     - SUPPORT exposure of outside refs ie/ to non same as types
     - DO DUMMY/SIMPLE rdfb
     """
-    def __init__(self, fms="vs", systemBase="http://livevista.caregraf.info/", k3Base="http://schemes.caregraf.info/"):
+    def __init__(self, fms="vs", systemBase="http://livevista.caregraf.info/", k3Base="http://datasets.caregraf.org/"):
                     
         self.fms = fms
         self.systemBase = systemBase 
