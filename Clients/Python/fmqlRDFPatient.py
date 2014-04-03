@@ -12,12 +12,13 @@ sys.path.append("../../Framework/Formatters")
 from describeReplyToRDF import DescribeRepliesToSGraph
 
 """
-The work of RDF graphing is performed by 'DescribeRepliesToSGraph', part of the FMQL Python Framework.
-This utility is used behind the FMQL Apache endpoint to serialize RDF/XML. Here we use it to
-incrementally build a graph for a patient's data. 
+Patient Grapher
 
-We aren't relying on Apache to serialize the RDF/XML from FMQL/JSON - instead we serialize it
-locally. Why? Because it is easier to keep track of replies in JSON than in RDF/XML itself.
+The work of RDF graphing is performed by 'DescribeRepliesToSGraph', part of the FMQL Python Framework.
+
+This utility is used behind the FMQL Apache endpoint to serialize RDF/XML. Here we use it to incrementally build a graph for a patient's data. 
+
+We aren't relying on Apache to serialize the RDF/XML from FMQL/JSON - instead we serialize it locally. Why? Because it is easier to keep track of replies in JSON than in RDF/XML itself.
 
 Once we've made the RDF/XML, we can load it into triple stores like Jena/Fuseki or BigData.
 
@@ -35,7 +36,7 @@ FMQLEP = "http://livevista.caregraf.info/fmqlEP"
 
 def main():
        
-    print "RDFing patient 9 from the Caregraf live vista"
+    print "RDFing patient 9 from the Caregraf 'Live Vista'"
     
     # We know this is a VistA, not a CHCS - hence "fms" = "vs" rather than "chcss". We
     # will also specify a base url for resources in the graph
@@ -57,7 +58,7 @@ def main():
         resultFile.write(gdRDF.done().getvalue())
         resultFile.close()
         
-    print "graph written out as vsPatientGraph9.rdf"
+    print "graph written out as vsPatientGraph9.rdf - put it into Jena or BigData"
     
 if __name__ == "__main__":
     main()
