@@ -19,9 +19,6 @@ One of a series of formatters of Records (toHTML, toText ...). This makes RDF fr
 
 How to use? See example code in "main" at the bottom of this file.
 
-TODO:
-- inline LIST MULTIPLES (isSimpleList(cfield))
-
 # LICENSE:
 # This program is free software; you can redistribute it and/or modify it under the terms of
 # the GNU Affero General Public License version 3 (AGPL) as published by the Free Software
@@ -158,7 +155,6 @@ class DescribeRepliesToSGraph:
             
         return self.rdfb.done()
         
-    # Tmp before FMQL V1
     SCHEMEMNMAP = {"ICD9": "ICD9CM", "PROVIDER": "HPTC"}
     def __expandSameAsURI(self, sameAsURI):
         # in mixed files (local only and sameas'ed terminologies), the local only entries are marked "LOCAL" in their same as fields
