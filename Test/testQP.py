@@ -22,15 +22,8 @@ sys.path.append('../Framework')
 from brokerRPC import VistARPCConnection
 
 """
-FIX UP FOR FOIA - indexed queries to test things (in place of patient, use meta data):
-- 5 County indexed by State C
-  SELECT 5_1 FILTER(1=5-6)
-- 50_6 ... lookup by VUID ie/ not a pointer but it is indexed.
-[county for state too but stick to drugs]
-
-State 5 - has multiple: county = 5.01 ie 5_01 IN 
-
-County 5_1 - indexes state using C: issue - seems empty
+TODO:
+- isNameOwner in TypeDefinition: put in test to ensure FMQL side disambigs secondary fields
 """
 
 """
@@ -301,22 +294,6 @@ TESTSETS.extend(SSCHEMASETS)
 # ####################### (Specific) Data Tests ###########################
 
 SDATASETS = []
-SDATASETS2 = []
-
-# Set the following per test system
-CNT_PATIENTS = "39"
-TESTPATIENTID = "2-9"
-TESTIHSPATIENTID = "9000001-9"
-TESTOPATIENTID = "2-6" # Order patient different in CG Demo
-CNT_CHLAB="19" # no of CH labs of test patient (was 38!)
-CHLAB_URIFORMAT = "^63_04\-[^_]+_\d+$"
-CNT_VITALSOFTP = "290" # no of vitals of test patient
-CNT_VITALSOFTPNEIE="260" # Not entered in error
-CNT_VITALSFROM2008ON="104" # Vitals from 2008 on
-CNT_HVITALSOFTPNEIE="12" # Height Vitals of patient
-CNT_ORDERSOFOTP = "5"
-CNT_ACCESSIONS = "15"
-TESTPROBLEMDIAGNOSIS="80-62"
 
 # OTHERS TO ADD:
 # - 80_3-2 ... MUMPS (6) is .01 value. Seems to show properly
@@ -361,6 +338,24 @@ PATIENTALIASTEST = {
 
 SDATASETS.append(PATIENTALIASTEST)
 """
+
+BOOLEAN_ENUM_TESTS = {
+    "name": "Boolean/Enum tests",
+    "definitions": [
+        {
+            "description": "Coded value has an ivalue and a value - test 50.68 single_multi_source_product",
+            "fmql": "DESCRIBE 50_68-1 CSTOP 0",
+            "test": "testResult = ('ivalue' in jreply['results'][0]['single_multi_source_product'] and jreply['results'][0]['single_multi_source_product']['ivalue'] in ['S', 'M'])"
+        }, # TODO: could add check that schema matches this ie/ it returns i and e
+        {
+            "description": "Boolean value is either true or false - test 50.68 national_formulary_indicator",
+            "fmql": "DESCRIBE 50_68-1 CSTOP 0",
+            "test": "testResult = (jreply['results'][0]['national_formulary_indicator']['value'] in ['true', 'false'])"
+        }
+    ]
+}
+
+SDATASETS.append(BOOLEAN_ENUM_TESTS)
 
 CNT_COUNTY_CA = "58"
 
