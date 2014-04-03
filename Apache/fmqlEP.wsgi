@@ -108,6 +108,7 @@ if __name__ == '__main__':
         print "Running test application - point your browser at http://localhost:8000/fmqlEP?fmql=DESCRIBE 2-1 ..."
         httpd = simple_server.WSGIServer(('', 8000), simple_server.WSGIRequestHandler)
         fmqlEnviron = {"rpcbroker": "VistA", "rpchost": "localhost", "rpcport": "9201", "rpcaccess": "QLFM1234", "rpcverify": "QLFM1234!!", "schemans": "vs", "baseurl": "http://examplehospital.com"}
+        # fmqlEnviron = {"rpcbroker": "CSPIF", "rpchost": "http://10.255.167.116:57772/csp/fmquery/FMQL.csp", "schemans": "chcss", "baseurl": "http://chcshospital.com"}
         application.setFMQLEnviron(fmqlEnviron)
         httpd.set_app(application)
         httpd.serve_forever()
