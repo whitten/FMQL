@@ -1,5 +1,5 @@
 #
-# fmqlEP wsgi v1.1b
+# fmqlEP wsgi
 #
 # This class stitches together brokerRPC and an FMQLQueryProcessor to make 
 # an FMQL Endpoint that runs in Apache.
