@@ -186,7 +186,7 @@ function boxQuery(query, format)
         return; // leave at selected index
     if (format == "JSON")
         document.getElementById('format').selectedIndex = 1;
-    elif (format == "RDF")
+    else if (format == "RDF")
         document.getElementById('format').selectedIndex = 2; // RDF
     else
         document.getElementById("format").selectedIndex = 0; // HTML
