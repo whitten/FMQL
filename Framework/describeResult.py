@@ -873,8 +873,9 @@ class Reference(FieldValue):
                 
     @property
     def label(self):
-        # TMP til FMQL 1.0 - CH sub doesn't have qualifier
-        return self._result["label"].split("/")[1] if "label" in self._result and re.search(r'\/', self._result["label"]) else self._result["value"].split("_E-")[1]
+        if re.search(r'\/', self._result["label"]):
+            return self._result["label"].split("/")[1]
+        return self._result["label"]
         
     @property
     def fileType(self):
@@ -888,8 +889,9 @@ class Reference(FieldValue):
 
     @property
     def fileTypeLabel(self):
-        # allows for enums - relies on 'enumLabel' filled in 
-        return self._result["label"].split("/")[0] if "label" in self._result and re.search(r'\/', self._result["label"]) else self._result["enumLabel"]
+        if not re.search(r'\/', self._result["label"]):
+            return ""
+        return self._result["label"].split("/")[0]
         
     @property
     def sameAs(self):
@@ -974,7 +976,7 @@ class CodedValue(Literal):
             raise Exception("Not a Reference")
         fileType = self.__fileType + "_" + re.sub(r'\.', '_', self._result["fmId"]) + "_E"
         uriValue = fileType + "-" + re.sub(r'[^\w]', '_', self._result["ivalue"]) # using ivalue for id
-        return Reference({"value": uriValue, "type": "uri", "fmId": self._result["fmId"], "enumLabel": self.__fileTypeLabel})
+        return Reference({"value": uriValue, "type": "uri", "fmId": self._result["fmId"], "label": self.__fileTypeLabel + "/" + self._result["value"]})
                 
 class DateValue(Literal):
 
