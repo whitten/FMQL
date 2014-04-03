@@ -14,6 +14,7 @@
 import os, sys, urlparse, re, json
 sys.path.append(os.path.dirname(__file__))
 from brokerRPC import RPCConnectionPool
+from cacheObjectInterface import CacheObjectInterface
 from describeReplyToRDF import DescribeRepliesToSGraph
 from describeResult import DescribeReply
 
@@ -25,19 +26,21 @@ class FMQLEP:
 
     def setFMQLEnviron(self, fmqlEnviron):
         # for simple server
-        # TBD: way to use os.environ instead?
         self.fmqlEnviron = fmqlEnviron
 
     def __call__(self, environ, start_response):
+        contentType = "application/json"
         try:
             if not self.rpcc: # TBD make thread safe
                 if not self.fmqlEnviron: # for Apache, not simple server
                     self.fmqlEnviron = {}
                     self.fmqlEnviron["rpcbroker"] = environ["fmql.rpcbroker"]
                     self.fmqlEnviron["rpchost"] = environ["fmql.rpchost"]
-                    self.fmqlEnviron["rpcport"] = environ["fmql.rpcport"]
-                    self.fmqlEnviron["rpcaccess"] = environ["fmql.rpcaccess"]
-                    self.fmqlEnviron["rpcverify"] = environ["fmql.rpcverify"]
+                    # Don't need port/access/verify if Cache CSP
+                    if environ["fmql.rpcbroker"] != "CSPIF":
+                        self.fmqlEnviron["rpcport"] = environ["fmql.rpcport"]
+                        self.fmqlEnviron["rpcaccess"] = environ["fmql.rpcaccess"]
+                        self.fmqlEnviron["rpcverify"] = environ["fmql.rpcverify"]
                     self.fmqlEnviron["schemans"] = environ["fmql.schemans"]
                     self.fmqlEnviron["baseurl"] = environ["fmql.baseurl"]
                 self.__initConnectionPool(environ)
@@ -67,7 +70,8 @@ class FMQLEP:
             reply = json.dumps({"error": "Exception: %s" % e})
         else:
             status = '200 OK'
-        response_headers = [('Content-type', 'application/json'),
+        reply = reply.encode("utf-8") # avoid "sequence of byte code issues and agree with ct setting
+        response_headers = [('Content-type', contentType),
                             ('Content-Length', str(len(reply)))]
         start_response(status, response_headers)
         return [reply]
@@ -76,6 +80,10 @@ class FMQLEP:
         # 25 if multi-threaded (ala winnt mpm or worker mpm), 1 otherwise (prefork unix, the Apache unix default). Nice if could
         # get actual number of threads in a process.
         noThreads = 25 if environ["wsgi.multithread"] == True else 1
+        # CHCS to Cache CSP ie Apache here is a proxy 
+        if self.fmqlEnviron["rpcbroker"] == "CSPIF":
+            self.rpcc = CacheObjectInterface(self.fmqlEnviron["rpchost"])
+            return
         self.rpcc = RPCConnectionPool(self.fmqlEnviron["rpcbroker"], noThreads, self.fmqlEnviron["rpchost"], int(self.fmqlEnviron["rpcport"]), self.fmqlEnviron["rpcaccess"], self.fmqlEnviron["rpcverify"], "CG FMQL QP USER", WSGILogger("BrokerRPC"))
 
 class WSGILogger:
