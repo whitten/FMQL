@@ -18,7 +18,7 @@ The work of RDF graphing is performed by 'DescribeRepliesToSGraph', part of the 
 
 This utility is used behind the FMQL Apache endpoint to serialize RDF/XML. Here we use it to incrementally build a graph for a patient's data. 
 
-We aren't relying on Apache to serialize the RDF/XML from FMQL/JSON - instead we serialize it locally. Why? Because it is easier to keep track of replies in JSON than in RDF/XML itself.
+We don't rely on Apache to serialize the RDF/XML from FMQL/JSON - instead we serialize it locally. Why? Because it is easier to keep track of replies in JSON than in RDF/XML itself.
 
 Once we've made the RDF/XML, we can load it into triple stores like Jena/Fuseki or BigData.
 
@@ -41,9 +41,16 @@ def main():
     # We know this is a VistA, not a CHCS - hence "fms" = "vs" rather than "chcss". We
     # will also specify a base url for resources in the graph
     gdRDF = DescribeRepliesToSGraph(fms="vs", systemBase="http://livevista.caregraf.info/")
-    
-    # Three types of data - demographics (file 5), prescriptions (52) and vitals (120.5)
-    # ... any number could be requested
+
+    #
+    # Three types of patient data - demographics (file 5), prescriptions (52) 
+    # and vitals (120.5)
+    # 
+    # Exercise:
+    # - add more queries yourself for other types of patient data
+    # - wildcard the patient identifier to provide a service to graph the data
+    #   of any patient
+    #
     QUERIES = ["DESCRIBE 2-9", "DESCRIBE 52 FILTER(2=2-9)", "DESCRIBE 120_5 FILTER(.02=2-9&!bound(2))"]
     
     for query in QUERIES:
