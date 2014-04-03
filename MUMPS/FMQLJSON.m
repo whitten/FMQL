@@ -54,7 +54,7 @@ ASSERT(JSON,FIELD,IFIELD,FMTYPE,VALUE,PLABEL,PSAMEAS,IVALUE) ;
  . I FMTYPE="12" D PUTDATA(JSON,",""type"":""typed-literal"",""datatype"":""xsd:boolean""") Q
  . D PUTDATA(JSON,",""type"":""literal""")
  . ; Coded Value only - really a form of URI
- . D:$D(IVALUE),FMTYPE="3" PUTDATA(JSON,",""ivalue"":"""_$$JSONSTRING(IVALUE)_"""")
+ . I $D(IVALUE),FMTYPE="3" D PUTDATA(JSON,",""ivalue"":"""_$$JSONSTRING(IVALUE)_"""")
  D PUTDATA(JSON,"}")
  Q
 DASSERT(JSON,LVALUE,RVALUE) ;
