@@ -106,6 +106,12 @@ class DescribeReply(object):
             references |= record.references()
         references -= recordsAsRefs
         return references
+        
+    def codedValueReferences(self):
+        codedValueReferences = set()
+        for record in self.records():
+            codedValueReferences |= record.codedValueReferences()
+        return codedValueReferences
                             
     def records(self):
         """
@@ -492,7 +498,7 @@ class Record(object):
                 
     def references(self, fileTypes=None, sameAsOnly=False):
         """
-        Includes references from contained records but DOES NOT include coded values (though it may going forward)
+        Includes references from contained records but DOES NOT include coded values (see coded values below)
         
         Note: a record (or sub records) may include a reference to itself.
         """
@@ -515,6 +521,29 @@ class Record(object):
                 continue
             references.add(reference)
         return references
+        
+    def codedValueReferences(self):
+        """
+        Note may merge with references once FMQL (v1.2 or v2) moves enums over to 
+        being uris
+        """
+        codedValueReferences = set()
+        for field, value in self.__result.iteritems():
+            if field == "uri":
+                continue
+            if value["type"] == "cnodes":
+                if "stopped" not in value:
+                    for i, cnode in enumerate(value["value"], 1):
+                        cRecord = Record(cnode, self, i, field)
+                        codedValueReferences |= cRecord.codedValueReferences()
+                continue
+            if value["type"] == "uri" or value["fmType"] != "3":
+                continue
+            codedValue = CodedValue(value, self.fileType, field)
+            if codedValue.isBoolean:
+                continue
+            codedValueReferences.add(codedValue.asReference())
+        return codedValueReferences
         
     def referenceInstances(self, fileTypes=None, sameAsOnly=False):
         """
@@ -905,7 +934,7 @@ class CodedValue(Literal):
         if self.isBoolean:
             self._datatype = "xsd:boolean" 
         else:
-            self._type = "URI"
+            self._type = "URI" # careful as looks like reference
             self.__fileType = fileType # needed to make
             self.__fileTypeLabel = re.sub(r'_', ' ', field).title() # for enums ... take field 
         
@@ -923,6 +952,10 @@ class CodedValue(Literal):
     @property
     def fmValue(self):
         return self._result["value"]
+
+    @property
+    def valid(self): # compatible with URI/Reference - need to merge the two
+        return True
         
     @property
     def isBoolean(self):

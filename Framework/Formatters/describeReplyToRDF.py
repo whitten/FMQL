@@ -19,9 +19,6 @@ One of a series of formatters of Records (toHTML, toText ...). This makes RDF fr
 
 How to use? See example code in "main" at the bottom of this file.
 
-TODO:
-- inline LIST MULTIPLES (isSimpleList(cfield))
-
 # LICENSE:
 # This program is free software; you can redistribute it and/or modify it under the terms of
 # the GNU Affero General Public License version 3 (AGPL) as published by the Free Software
@@ -64,34 +61,39 @@ class DescribeReplyToRDF:
         
             pred = field.lower() + "-" + record.fileType
             
-            # Issue: NCName	::= (Letter | '_') (NCNameChar)* in http://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName BUT JSON allows a number etc first. We insert a _ if there is a number first. TBD: best done in FMQL to be consistent.
+            # Issue: NCName	::= (Letter | '_') (NCNameChar)* in http://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName BUT JSON allows a number etc first. We insert a _ if there is a number first.
             if re.match(r'\d', pred):
                 pred = "_" + pred            
         
             if fieldValue.type == "URI":
-                fieldValue = fieldValue.asReference() # awkward: Coded -> Reference needs to be smoother TODO
-                uriBase = "http://datasets.caregraf.org/%s/" % self.fms if fieldValue.builtIn else self.systemBase
-                self.rdfb.addURIAssertion(pred, {"value": uriBase + fieldValue.value})
-                # if fieldValue.sameAs:   
-                #    pass
-                continue
+            
+                # If invalid - skip it
+                if not fieldValue.valid:
+                    continue
+            
+                fieldValue = fieldValue.asReference() # awkward: Coded -> Reference
                 
+                # Enum vs dynamic reference
+                uriBase = "http://datasets.caregraf.org/%s/" % self.fms if fieldValue.builtIn else self.systemBase
+                
+                self.rdfb.addURIAssertion(pred, {"value": uriBase + fieldValue.value})
+                
+                continue
+                  
+            # Handles boolean, datetime etc but NOT presuming NUMERIC == int/float
             self.rdfb.addLiteralAssertion(pred, {"value": str(fieldValue.value), "datatype": fieldValue.datatype} if fieldValue.datatype else {"value": str(fieldValue.value)})
-            
-            # TODO: add list cnodes here i/e as inline assertions
-            # check that values are unique
-            # Fix up cfield vs cfileType in describeResult to be consistent
-            
+                        
         # close Resource Definition
         self.rdfb.endNode()
                     
         # Can recurse through the hierarchy of records in records
-        # TODO: if LIST ie/ isSimpleList(cfield), inline addAssertion from CRecords' only field
+        # - Future: if LIST ie/ isSimpleList(cfield), inline addAssertion 
+        # from CRecords' only field
         for crecord in record.contains():
             if not crecord.isComplete: # skip the stopped
                 continue
             self.__processRecord(crecord)
-            
+                        
 class DescribeRepliesToSGraph:
     """
     This builds on DescribeReplyToRDF to produce a self contained (all URI's labeled) graph from one or more Describe Replies. These replies may be about a Patient or a Ward or System information.
@@ -103,7 +105,7 @@ class DescribeRepliesToSGraph:
     - SUPPORT exposure of outside refs ie/ to non same as types
     - DO DUMMY/SIMPLE rdfb
     """
-    def __init__(self, fms="vs", systemBase="http://livevista.caregraf.info/", k3Base="http://schemes.caregraf.info/"):
+    def __init__(self, fms="vs", systemBase="http://livevista.caregraf.info/", k3Base="http://datasets.caregraf.org/"):
                     
         self.fms = fms
         self.systemBase = systemBase 
@@ -111,7 +113,8 @@ class DescribeRepliesToSGraph:
         self.rdfb = RDFBuilder(["%s" % fms, "http://datasets.caregraf.org/%s/" % fms], "http://datasets.caregraf.org/%s/" % fms, extraNSInfos=[["fms", "http://datasets.caregraf.org/fms/"], ["xsd", "http://www.w3.org/2001/XMLSchema#"], ["dc", "http://purl.org/dc/elements/1.1/"]])
         self.fileTypes = set()
         self.outsideReferences = set()
-        self.described = set()
+        self.codedValueReferences = set()
+        self.described = set() # recheck outside refs as build graph
         
     def processReply(self, describeReply):
         
@@ -121,6 +124,7 @@ class DescribeRepliesToSGraph:
         self.fileTypes |= describeReply.fileTypes()
         # Track outside references as go, removing if completely define a record
         self.outsideReferences |= describeReply.outsideReferences()
+        self.codedValueReferences |= describeReply.codedValueReferences() # outside by defn
         self.described |= set(record.asReference() for record in describeReply.records())
         
     def done(self):
@@ -150,6 +154,15 @@ class DescribeRepliesToSGraph:
             self.rdfb.addURIAssertion("rdf:type", {"value": "http://datasets.caregraf.org/fms/CommonConcept"})         
             self.rdfb.endNode()  
             
+        for codedValueReference in self.codedValueReferences:
+            self.rdfb.startNode(("http://datasets.caregraf.org/%s/" % self.fms) + codedValueReference.id, "")
+            self.rdfb.addLiteralAssertion("rdfs:label", {"type": "literal", "value": codedValueReference.label})
+            # Rem: in schema, Enum == instance of Class defined with owl:oneOf
+            # ex/ http://datasets.caregraf.org/chcss/2__02_E has 
+            # http://datasets.caregraf.org/chcss/2__02_E-M with label MALE
+            self.rdfb.addURIAssertion("rdf:type", {"type": "uri", "value": self.fms + ":" + codedValueReference.id.split("_E-")[0] + "_E"})
+            self.rdfb.endNode()             
+            
         for fileType in self.fileTypes:
             self.rdfb.startNode(("http://datasets.caregraf.org/%s/" % self.fms) + fileType[0], "")
             self.rdfb.addLiteralAssertion("rdfs:label", {"type": "literal", "value": fileType[1]})
@@ -158,7 +171,6 @@ class DescribeRepliesToSGraph:
             
         return self.rdfb.done()
         
-    # Tmp before FMQL V1
     SCHEMEMNMAP = {"ICD9": "ICD9CM", "PROVIDER": "HPTC"}
     def __expandSameAsURI(self, sameAsURI):
         # in mixed files (local only and sameas'ed terminologies), the local only entries are marked "LOCAL" in their same as fields

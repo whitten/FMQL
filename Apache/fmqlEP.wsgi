@@ -1,5 +1,5 @@
 #
-# fmqlEP wsgi v1.1b
+# fmqlEP wsgi
 #
 # This class stitches together brokerRPC and an FMQLQueryProcessor to make 
 # an FMQL Endpoint that runs in Apache.
@@ -8,12 +8,13 @@
 # This program is free software; you can redistribute it and/or modify it under the terms of 
 # the GNU Affero General Public License version 3 (AGPL) as published by the Free Software 
 # Foundation.
-# (c) 2010-2013 caregraf
+# (c) 2010-2014 caregraf
 #
 
 import os, sys, urlparse, re, json
 sys.path.append(os.path.dirname(__file__))
 from brokerRPC import RPCConnectionPool
+from cacheObjectInterface import CacheObjectInterface
 from describeReplyToRDF import DescribeRepliesToSGraph
 from describeResult import DescribeReply
 
@@ -25,19 +26,23 @@ class FMQLEP:
 
     def setFMQLEnviron(self, fmqlEnviron):
         # for simple server
-        # TBD: way to use os.environ instead?
         self.fmqlEnviron = fmqlEnviron
 
     def __call__(self, environ, start_response):
+        contentType = "application/json"
         try:
             if not self.rpcc: # TBD make thread safe
                 if not self.fmqlEnviron: # for Apache, not simple server
                     self.fmqlEnviron = {}
                     self.fmqlEnviron["rpcbroker"] = environ["fmql.rpcbroker"]
                     self.fmqlEnviron["rpchost"] = environ["fmql.rpchost"]
-                    self.fmqlEnviron["rpcport"] = environ["fmql.rpcport"]
-                    self.fmqlEnviron["rpcaccess"] = environ["fmql.rpcaccess"]
-                    self.fmqlEnviron["rpcverify"] = environ["fmql.rpcverify"]
+                    # Don't need port/access/verify if Cache CSP
+                    if environ["fmql.rpcbroker"] != "CSPIF":
+                        self.fmqlEnviron["rpcport"] = environ["fmql.rpcport"]
+                        self.fmqlEnviron["rpcaccess"] = environ["fmql.rpcaccess"]
+                        self.fmqlEnviron["rpcverify"] = environ["fmql.rpcverify"]
+                    self.fmqlEnviron["schemans"] = environ["fmql.schemans"]
+                    self.fmqlEnviron["baseurl"] = environ["fmql.baseurl"]
                 self.__initConnectionPool(environ)
             queryArgs = urlparse.parse_qs(environ['QUERY_STRING'])
             if "fmql" not in queryArgs:
@@ -49,7 +54,7 @@ class FMQLEP:
                 jreply = json.loads(reply)
                 if "error" in jreply: # ex/ DESCRIBE of CONTAINED node
                     raise Exception(reply)
-                ftor = DescribeRepliesToSGraph(fms="vs", systemBase=self.fmqlEnviron["vistaurl"] + "/", k3Base=K3BASE)
+                ftor = DescribeRepliesToSGraph(fms=self.fmqlEnviron["schemans"], systemBase=self.fmqlEnviron["baseurl"] + "/")
                 try:
                     dr = DescribeReply(jreply)
                 except:
@@ -65,7 +70,8 @@ class FMQLEP:
             reply = json.dumps({"error": "Exception: %s" % e})
         else:
             status = '200 OK'
-        response_headers = [('Content-type', 'application/json'),
+        reply = reply.encode("utf-8") # avoid "sequence of byte code issues and agree with ct setting
+        response_headers = [('Content-type', contentType),
                             ('Content-Length', str(len(reply)))]
         start_response(status, response_headers)
         return [reply]
@@ -74,6 +80,10 @@ class FMQLEP:
         # 25 if multi-threaded (ala winnt mpm or worker mpm), 1 otherwise (prefork unix, the Apache unix default). Nice if could
         # get actual number of threads in a process.
         noThreads = 25 if environ["wsgi.multithread"] == True else 1
+        # CHCS to Cache CSP ie Apache here is a proxy 
+        if self.fmqlEnviron["rpcbroker"] == "CSPIF":
+            self.rpcc = CacheObjectInterface(self.fmqlEnviron["rpchost"])
+            return
         self.rpcc = RPCConnectionPool(self.fmqlEnviron["rpcbroker"], noThreads, self.fmqlEnviron["rpchost"], int(self.fmqlEnviron["rpcport"]), self.fmqlEnviron["rpcaccess"], self.fmqlEnviron["rpcverify"], "CG FMQL QP USER", WSGILogger("BrokerRPC"))
 
 class WSGILogger:
@@ -97,7 +107,8 @@ if __name__ == '__main__':
         from wsgiref import simple_server
         print "Running test application - point your browser at http://localhost:8000/fmqlEP?fmql=DESCRIBE 2-1 ..."
         httpd = simple_server.WSGIServer(('', 8000), simple_server.WSGIRequestHandler)
-        fmqlEnviron = {"rpcbroker": "VistA", "rpchost": "localhost", "rpcport": "9201", "rpcaccess": "QLFM1234", "rpcverify": "QLFM1234!!"}
+        fmqlEnviron = {"rpcbroker": "VistA", "rpchost": "localhost", "rpcport": "9201", "rpcaccess": "QLFM1234", "rpcverify": "QLFM1234!!", "schemans": "vs", "baseurl": "http://examplehospital.com"}
+        # fmqlEnviron = {"rpcbroker": "CSPIF", "rpchost": "http://10.255.167.116:57772/csp/fmquery/FMQL.csp", "schemans": "chcss", "baseurl": "http://chcshospital.com"}
         application.setFMQLEnviron(fmqlEnviron)
         httpd.set_app(application)
         httpd.serve_forever()

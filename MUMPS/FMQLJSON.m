@@ -38,7 +38,7 @@ CONTSTART(JSON,MARK) ;
  S @JSON@("LSTLVL",@JSON@("LSTLVL"))=""
  D PUTDATA(JSON,MARK)
  Q
-ASSERT(JSON,FIELD,IFIELD,FMTYPE,VALUE,PLABEL,PSAMEAS) ;
+ASSERT(JSON,FIELD,IFIELD,FMTYPE,VALUE,PLABEL,PSAMEAS,IVALUE) ;
  D PUTDATA(JSON,@JSON@("LSTLVL",@JSON@("LSTLVL")))
  S @JSON@("LSTLVL",@JSON@("LSTLVL"))="," ; if next el then put a col before it
  ; TODO: change to pass FDINF which has predicate
@@ -53,6 +53,8 @@ ASSERT(JSON,FIELD,IFIELD,FMTYPE,VALUE,PLABEL,PSAMEAS) ;
  . I FMTYPE="1" D PUTDATA(JSON,",""type"":""typed-literal"",""datatype"":""xsd:dateTime""") Q
  . I FMTYPE="12" D PUTDATA(JSON,",""type"":""typed-literal"",""datatype"":""xsd:boolean""") Q
  . D PUTDATA(JSON,",""type"":""literal""")
+ . ; Coded Value only - really a form of URI
+ . D:$D(IVALUE),FMTYPE="3" PUTDATA(JSON,",""ivalue"":"""_$$JSONSTRING(IVALUE)_"""")
  D PUTDATA(JSON,"}")
  Q
 DASSERT(JSON,LVALUE,RVALUE) ;
