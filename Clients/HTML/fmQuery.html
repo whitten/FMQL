@@ -205,8 +205,6 @@ function handleSendQuery()
 
 /*
  * JSON format: make it "pretty"
- *
- * TBD: MUMPS side pretty up
  */
 function makeJSONPretty(jsonReply)
 {
@@ -214,6 +212,15 @@ function makeJSONPretty(jsonReply)
         return jsonReply; // IE 7
     /* Parse it and then set indent to 1 */
     return JSON.stringify(JSON.parse(jsonReply), null, 1);
+}
+
+/*
+ * To display XML inline
+ */ 
+function ConvChar( str ) {
+  c = {'<':'&lt;', '>':'&gt;', '&':'&amp;', '"':'&quot;', "'":'&#039;',
+       '#':'&#035;' };
+  return str.replace( /[<&>'"#]/g, function(s) { return c[s]; } );
 }
 
 /*
