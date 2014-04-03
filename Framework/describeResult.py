@@ -836,7 +836,7 @@ class Reference(FieldValue):
         return self # to be compatible with CodedValue - TODO
 
     @property
-    def id(self): # copy of .value
+    def id(self): 
         return self._result["value"]
         
     @property
@@ -948,6 +948,12 @@ class CodedValue(Literal):
         if self.isBoolean:
             return True if self._result["value"] == "true" else False
         return self._result["value"]
+
+    @property
+    def ivalue(self):
+        if self.isBoolean:
+            return ""
+        return self._result["ivalue"]
             
     @property
     def fmValue(self):
@@ -967,7 +973,7 @@ class CodedValue(Literal):
         if self.isBoolean:
             raise Exception("Not a Reference")
         fileType = self.__fileType + "_" + re.sub(r'\.', '_', self._result["fmId"]) + "_E"
-        uriValue = fileType + "-" + re.sub(r'[^\w]', '_', self._result["value"])
+        uriValue = fileType + "-" + re.sub(r'[^\w]', '_', self._result["ivalue"]) # using ivalue for id
         return Reference({"value": uriValue, "type": "uri", "fmId": self._result["fmId"], "enumLabel": self.__fileTypeLabel})
                 
 class DateValue(Literal):
