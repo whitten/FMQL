@@ -216,8 +216,8 @@ BLDFDINF(FLINF,FIELD,FDINF) ;
  S FDINF("FLAGS")=FLAGS
  S FDINF("LABEL")=$P(^DD(FILE,FIELD,0),"^")
  ; Pred: use in XML fields/RDF and JSON. Accounting for name reuse
- I $D(FLINF("FDINFS",FIELD,"PRED")) S FDINF("PRED")=FLINF("FDINFS",FIELD,"PRED")
- E  S FDINF("PRED")=$$UNIQPRED(FILE,FIELD) S FLINF("FDINFS",FIELD,"PRED")=FDINF("PRED")
+ I $D(FLINF("FDPREDS",FILE_";"_FIELD)) S FDINF("PRED")=FLINF("FDPREDS",FILE_";"_FIELD)
+ E  S FDINF("PRED")=$$UNIQPRED(FILE,FIELD) S FLINF("FDPREDS",FILE_";"_FIELD)=FDINF("PRED")
  ; Date/Number/Codes/String/WP String/Pointer/V Pointer/MULT/MUMPS
  I +FLAGS D  ; WP and MULT flag start with the subfile number
  . ; WP special - need to reach into its 'file' to see what it is
@@ -308,6 +308,7 @@ FIELDIDX(FILE,FIELD) ;
  ; Get IDX, TRIGGERs and total number of CREFS of a field. Peer of MUMPS Cross References.
  ; 
  ; TODO: move 100, 52 MUMPS special IDX in here
+ ; TODO: efficiency on UNIQPRED etc per trigger
  ;
 BLDCREFS(FILE,FIELD,FDINF) ;
  N IDXID,IDXINF,IDXTYP,TRIGFILE,TRIGFLD,TRIGPRED
