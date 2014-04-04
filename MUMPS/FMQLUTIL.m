@@ -198,6 +198,7 @@ BLDSFINF(FILE,FLINF) ;
  ; Specials fields: CODES (for type 3)
  ; 
  ; TODO: 
+ ; - redesign: consider more MUMPy FDINF inside FLINF ie/ FDINFS,FIELD,xx
  ; - Careful: gfs_frm.htm not definite. Ex/ "S" in flags if multiple with only
  ; one field, a set of codes (ex/ 120.506S for ^DD(120.5,4,0)
  ; - Computed (C) is DC,BC,C,Cm,Cmp. Must distinguish actual type. Correlate with no location
@@ -206,8 +207,6 @@ BLDSFINF(FILE,FLINF) ;
  ; - Add ^DD(FILE,FIELD,1,1,...)
  ;
 BLDFDINF(FLINF,FIELD,FDINF) ;
- I $D(FLINF("FDINFS",FIELD)) S FDINF=FLINF("FDINFS",FIELD) Q  ; only build FDINF once
- S FLINF("FDINFS",FIELD)=FDINF
  N MFLAG
  N FILE S FILE=FLINF("FILE")
  S FIELD=$TR(FIELD,"_",".")
@@ -217,7 +216,8 @@ BLDFDINF(FLINF,FIELD,FDINF) ;
  S FDINF("FLAGS")=FLAGS
  S FDINF("LABEL")=$P(^DD(FILE,FIELD,0),"^")
  ; Pred: use in XML fields/RDF and JSON. TODO: account for name reuse
- S FDINF("PRED")=$$UNIQPRED(FILE,FIELD)
+ I $D(FLINF("UPREDS",FIELD)) S FDINF("PRED")=FLINF("UPREDS",FIELD)
+ E  S FDINF("PRED")=$$UNIQPRED(FILE,FIELD) S FLINF("UPREDS",FIELD)=FDINF("PRED")
  ; Date/Number/Codes/String/WP String/Pointer/V Pointer/MULT/MUMPS
  I +FLAGS D  ; WP and MULT flag start with the subfile number
  . ; WP special - need to reach into its 'file' to see what it is
