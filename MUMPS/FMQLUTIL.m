@@ -196,15 +196,18 @@ BLDSFINF(FILE,FLINF) ;
  ; Field Info
  ; Fields: FIELD, FLAGS, LABEL, LOCPOS, LOCSUB, TYPE
  ; Specials fields: CODES (for type 3)
+ ; ... does NOT calculate 'pred'. Right now JSON picks pred. Need to
+ ; calculate but one off efficiently
  ; 
  ; TODO: 
  ; - redesign: consider more MUMPy FDINF inside FLINF ie/ FDINFS,FIELD,xx
  ; - Careful: gfs_frm.htm not definite. Ex/ "S" in flags if multiple with only
  ; one field, a set of codes (ex/ 120.506S for ^DD(120.5,4,0)
  ; - Computed (C) is DC,BC,C,Cm,Cmp. Must distinguish actual type. Correlate with no location
- ; - move inputTransform in here from Sch serializer. Want for filter processing
  ; - move IDX in here from Sch serializer: want for filters
  ; - Add ^DD(FILE,FIELD,1,1,...)
+ ; - consider FDINF extended that will include PRED (costly) and Inputtransform etc
+ ;   ... right now done inline
  ;
 BLDFDINF(FLINF,FIELD,FDINF) ;
  N MFLAG
@@ -215,9 +218,6 @@ BLDFDINF(FLINF,FIELD,FDINF) ;
  N FLAGS S FLAGS=$P(^DD(FILE,FIELD,0),"^",2)
  S FDINF("FLAGS")=FLAGS
  S FDINF("LABEL")=$P(^DD(FILE,FIELD,0),"^")
- ; Pred: use in XML fields/RDF and JSON. Accounting for name reuse
- I $D(FLINF("FDPREDS",FILE_";"_FIELD)) S FDINF("PRED")=FLINF("FDPREDS",FILE_";"_FIELD) S ^TMP("FMQL",$J,"REUSED",FILE_";"_FIELD)=$S($D(^TMP("FMQL",$J,"REUSED",FILE_";"_FIELD)):^TMP("FMQL",$J,"REUSED",FILE_";"_FIELD)+1,1:1)
- E  S FDINF("PRED")=$$UNIQPRED(FILE,FIELD) S FLINF("FDPREDS",FILE_";"_FIELD)=FDINF("PRED")
  ; Date/Number/Codes/String/WP String/Pointer/V Pointer/MULT/MUMPS
  I +FLAGS D  ; WP and MULT flag start with the subfile number
  . ; WP special - need to reach into its 'file' to see what it is
@@ -323,7 +323,9 @@ BLDCREFS(FILE,FIELD,FDINF) ;
  . Q:IDXTYP'="TRIGGER"
  . S TRIGFILE=$P(IDXINF,"^",4)
  . S TRIGFLD=$P(IDXINF,"^",5)
- . S TRIGPRED=$$UNIQPRED(TRIGFILE,TRIGFLD)
+ . ; Revisit - too costly for now - must reduce to lookup table
+ . ; S TRIGPRED=$$UNIQPRED(TRIGFILE,TRIGFLD)
+ . S TRIGPRED=$$FIELDTOPRED(TRIGFLD)
  . Q:TRIGPRED=""  ; file or field must be invalid
  . I $D(FDINF("TRIGS")) S FDINF("TRIGS")=FDINF("TRIGS")_","
  . E  S FDINF("TRIGS")=""
@@ -434,6 +436,7 @@ MAKEFMDATE(XMLDATE) ;
  ;
  ;
  ; Predicate is lower alphanum and _
+ ; ... called from JSON over and over ie/ not in DATA or SCH where it should be
  ;
 FIELDTOPRED(FIELD) ;
  SET ALW="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz_ /"
@@ -447,11 +450,16 @@ FIELDTOPRED(FIELD) ;
  ; If a reuse then add field id (escaped) as suffix to normalized name to make
  ; the predicate.
  ;
- ; TODO: v2 
+ ; TODO: 
+ ; - merge with FIELDTOPRED with a lookup table
+ ; - field by field ... too inefficient. Do map for whole file per FLINF once
+ ;   ... still issue of CNodes passing in BLDFLINF over and over so should be
+ ;   a global map
+ ;
+ ; TODO (bigger)
  ; - a/c for leading \d ie/ if match then prefix _ and this is just
  ; file uniqueness.
  ; - a/c for file tree (parent context) uniqueness + reserved words (id/type/value etc) 
- ; ... merge with FIELDTOPRED?
  ;
 UNIQPRED(FILE,FIELD) ;
  N OWNS,TNNAME,PFIELD,PNNAME,PRED
