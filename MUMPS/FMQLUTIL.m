@@ -216,7 +216,7 @@ BLDFDINF(FLINF,FIELD,FDINF) ;
  S FDINF("FLAGS")=FLAGS
  S FDINF("LABEL")=$P(^DD(FILE,FIELD,0),"^")
  ; Pred: use in XML fields/RDF and JSON. Accounting for name reuse
- I $D(FLINF("FDPREDS",FILE_";"_FIELD)) S FDINF("PRED")=FLINF("FDPREDS",FILE_";"_FIELD)
+ I $D(FLINF("FDPREDS",FILE_";"_FIELD)) S FDINF("PRED")=FLINF("FDPREDS",FILE_";"_FIELD) S ^TMP("FMQL",$J,"REUSED")=$S($D(^TMP("FMQL",$J,"REUSED")):^TMP("FMQL",$J,"REUSED")+1,1:0)
  E  S FDINF("PRED")=$$UNIQPRED(FILE,FIELD) S FLINF("FDPREDS",FILE_";"_FIELD)=FDINF("PRED")
  ; Date/Number/Codes/String/WP String/Pointer/V Pointer/MULT/MUMPS
  I +FLAGS D  ; WP and MULT flag start with the subfile number
