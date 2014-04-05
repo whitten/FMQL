@@ -22,6 +22,8 @@ We don't rely on Apache to serialize the RDF/XML from FMQL/JSON - instead we ser
 
 Once we've made the RDF/XML, we can load it into triple stores like Jena/Fuseki or BigData.
 
+See examples of Patient Graphs downloaded with code like this in https://github.com/caregraf/FMQL/tree/master/Datasets
+
 #
 # LICENSE:
 # This program is free software; you can redistribute it and/or modify it under the terms of
