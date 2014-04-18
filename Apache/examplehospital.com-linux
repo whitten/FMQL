@@ -8,13 +8,15 @@
     # IMPORTANT: these settings must match your VistA/CHCS/RPMS
     # - for VistA/RPMS:
     #   - set rpcBroker to "VistA" for VistA and "CIA" for RPMS
+    #   - rpchost to host of System (default is localhost)
     #   - user (access/verify) must have permission to use the FMQL PRC
     #     ... defaults below (QLFM1234...) are from the Install Instruction
     #   - rpcport is the port your VistA's broker listens on: default is 9430
     #     used by OSEHRA FOIA
-    #   - for both VistA and RPMS, the schema is 'vs' ("VistA Schema")
+    #   - for both VistA and RPMS, the schemans is 'vs' ("VistA Schema")
     # - for CHCS/Cache
     #   - set rpcBroker to "CSPIF"
+    #   - rpchost to CSP endpoint: ex/ http://10.255.167.116:57772/csp/fmquery/FMQL.csp
     #   - set schemans to "chcss"
     #   - rpcport/rpcaccess/rpcverify are ignored
     # - for all systems, set 'baseurl' to the base url you wish to appear
