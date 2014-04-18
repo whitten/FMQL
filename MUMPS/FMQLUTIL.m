@@ -230,6 +230,7 @@ BLDFDINF(FLINF,FIELD,FDINF) ;
  . ; If computed (C), punt to client - BC, DC, Cmp - until FMQL calcs computeds
  . ; Note: Cm does not mean Computed Multiple. 'm' means multi-line string
  . S FDINF("TYPE")=$S(FIELD=.001:11,FLAGS["C":6,FLAGS["D":1,FLAGS["N":2,FLAGS["S":3,FLAGS["F":4,FLAGS["P":7,FLAGS["V":8,FLAGS[MFLAG:10,1:"4") ; Default to String
+ . ; IDX setting now in BLDCREFS - keeping older routine as may move back for speed. Now recalculating cross refs in every pass
  . ; N IDX S IDX=$$FIELDIDX^FMQLUTIL(FILE,FIELD)
  . ; S:IDX'="" FDINF("IDX")=IDX
  . D BLDCREFS(FILE,FIELD,.FDINF)
@@ -288,7 +289,7 @@ BLDFDINF(FLINF,FIELD,FDINF) ;
  ; TBD: check ^DD(FILE,"IX",FIELD) - compare to walk below
  ; TBD: support .11 ie. Walk its ^DD("IX","B",FILE#) or ? ie. XREFs defined outside file. Equivalent of DESRIBE _11 FILTER(.01=[FILE]&&.2=R) and look at fields. Will need to distinguish .11 INDEX from Simple like B. Use array.
  ; 
- ; TODO: remove use of this and rely on CREF util below to fill in FDINF
+ ; TODO: relying on CREF util below to fill in FDINF. Keeping in case move back for speed reasons
  ;
 FIELDIDX(FILE,FIELD) ;
  N IDXID,IDXINF,IDX
