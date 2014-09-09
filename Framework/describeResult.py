@@ -147,6 +147,8 @@ class DescribeReply(object):
         """
         What is the maximum number of contained entities in its hierarchy
         """
+        if not len(self.records()):
+            return 0
         return max(record.maxContainment() for record in self.records())
         
     def deleteRecord(self, recordId):
@@ -381,7 +383,7 @@ class Record(object):
         
         NOTE TODO: with new JSONLD, won't see ids. Need to get meta separately
         """
-        return sorted([(field, self.__result[field]["type"], self.__result[field]["fmId"], FieldInfo.FIELDTYPES[self.__result[field]["fmType"]] if "fmType" in self.__result[field] else "") for field in self.__result if field != "uri"], key=lambda x: float(x[2]))  
+        return sorted([(field, self.__result[field]["type"], self.__result[field]["fmId"], FieldInfo.FIELDTYPES[self.__result[field]["fmType"]] if "fmType" in self.__result[field] else "", self.fileType) for field in self.__result if field != "uri"], key=lambda x: float(x[2]))  
         
     def fieldInfo(self, field):
         for fieldInfo in self.fieldInfos():
