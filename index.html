@@ -1,1 +1,129 @@
-My Page
+<!DOCTYPE html> 
+<!-- lang en simple -->
+<html lang="en"> 
+<head>
+<!--[if lt IE 9]>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+<![endif]-->   
+<!-- charset simple HTML (put into BG of template) -->
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale=1">
+<title>FMQL | Caregraf.info</title>	
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->  
+<!-- simple include - no need for type -->
+<link rel="stylesheet" href="/css/cgorgstyleNew.css" /> 
+</head>
+<body>
+
+<!--[if lte IE 8 ]>
+<noscript><strong>JavaScript is required for this website to be displayed correctly. Please enable JavaScript before continuing...</strong></noscript>
+<![endif]-->
+
+<article> 
+<header> 
+<hgroup> 
+<h1>FMQL Corner</h1> 
+</hgroup> 
+</header>
+<p>VistA is built around a MUMPS-based data repository called <em>FileMan</em> -  <em>VistA data</em> is <em>FileMan data</em>. Though efficient and flexible, FileMan has no remote query language or formal schema definition mechanism - the VA didn't make an "SQL for FileMan".</p>
+<p>Instead data is transferred to and from FileMan using three kinds of mechanism: thousands of remote procedure calls (RPCs), flavors of HL7 v2 and "SQL-projection", where select data types (files) are mapped to SQL tables. But no one mechanism works for all data and each demands careful handling.</p>
+<p>FMQL, the FileMan Query Language, changes this. Patient data, Institution data, Conceptual information ("Know-how"), System records - to FMQL, this is all just data to extract. By delivering one uniform mechanism for extracting any data, FMQL makes VistA data access easy and let's you focus on analyzing and presenting data.</p>
+
+<section id="dataAndSchema">
+<h2>All Data and Schema too</h2>
+<figure>
+<img src="/images/fmqlFromFileMan.png" width="90%" alt="FMQL from FileMan (c) Caregraf 2012"/>
+</figure>
+<p>FMQL provides access to both FileMan data - a vital measurement of a patient - and the schema of that data - the type "Vital Measurement". It addresses:</p>
+<ol>
+<li>Identity: every entity and entity type in FileMan gets a unique identifier - a URI</li>
+<li>Data Formats: a consistent form of JSON, the web-friendly response format, for every type of data in the system as well as HTML for human readers and RDF for web-data practitioners</li>
+<li>Query Nuance: from the precise - SELECT - to the broader - DESCRIBE - or just COUNT, covers data hierarchies and graphical layouts, paging and filtering</li>
+</ol>
+</section>
+
+<section id="semanticWeb">
+<h2>It's VistA on the Web of Data</h2>
+<p>FMQL draws on SPARQL, the w3c's query language for the <em>Web of Data</em> (or <em>Semantic Web</em>). As FileMan's data is more web-like than relational, some of SPARQL's query syntax and response formats proved ideal for a FileMan query language and much of the underlying theories and practices of SPARQL apply to FMQL. As a result, an FMQL-enabled VistA fits naturally into a Web of Data environment.</p> 
+</section>
+
+<section id="exPIKS">
+<h2>PIKS'ing through VistA</h2>
+<p>The PIKS (Patient-Institution-Knowhow-System) model divides any EHR's data into four broad categories. This table shows how FMQL exposes an example of each type of data in a VistA - Caregraf's demo <em>livevista.caregraf.info</em> - in three different formats ...</p>
+<table>
+<tr><th>PIKS</th><th>Data</th><th>FMQL</th></tr>
+<tr><td><b>P</b>atient</td><td>A SIMVASTATIN Prescription (URI: 52-27)</td><td>DESCRIBE 52-27 (<a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/fmqlEP?fmql=DESCRIBE 52-27&format=HTML">HTML</a>|<a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/fmqlEP?fmql=DESCRIBE 52-27&format=JSON">JSON</a>|<a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/fmqlEP?fmql=DESCRIBE 52-27&format=RDF">RDF</a>)</td></tr>
+<tr><td><b>I</b>nstitution</td><td>ENDOSCOPY Location (URI: 44-14)</td><td>DESCRIBE 44-14 (<a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/fmqlEP?fmql=DESCRIBE 44-14&format=HTML">HTML</a>|<a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/fmqlEP?fmql=DESCRIBE 44-14&format=JSON">JSON</a>|<a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/fmqlEP?fmql=DESCRIBE 44-14&format=RDF">RDF</a>)</td></tr>
+<tr><td><b>K</b>nowhow</td><td>Drug Clozapine (URI: 50_68-16496)</td><td>DESCRIBE 50_68-16496 (<a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/fmqlEP?fmql=DESCRIBE 50_68-16496&format=HTML">HTML</a>|<a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/fmqlEP?fmql=DESCRIBE 50_68-16496&format=JSON">JSON</a>|<a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/fmqlEP?fmql=DESCRIBE 50_68-16496&format=RDF">RDF</a>)</td></tr>
+<tr><td><b>S</b>ystem</td><td>KIDs Package (URI: 9_4-2)</td><td>DESCRIBE 9_4-2 (<a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/fmqlEP?fmql=DESCRIBE 9_4-2&format=HTML">HTML</a>|<a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/fmqlEP?fmql=DESCRIBE 9_4-2&format=JSON">JSON</a>|<a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/fmqlEP?fmql=DESCRIBE 9_4-2&format=RDF">RDF</a>)</td></tr>
+</table>
+</section>
+
+<section id="linkedData">
+<h2>Linked (VistA) Data</h2>
+<p>FMQL exposes all of VistA's data on the web but <em>Linked-Data</em> demands more. This approach to data publication demands that URIs which identify data can be looked up on the web, that data URIs should act like web page URIs. They must not just identify - they must be live on the web and lead to <q cite="http://www.w3.org/DesignIssues/LinkedData">useful information</q>.</p>
+<p>In other words, with just the URI FMQL gives to a Prescription (<code>http://livevista.caregraf.info/52-14</code>), you should be able to get its full description and links to descriptions of related things. And it turns out that once you have an FMQL endpoint, this facility is easy to provide.</p>
+<p>Reconsider the data in the table above ...</p> 
+<table>
+<tr><th>PIKS</th><th>Data</th><th>Live URI</th><th>Non HTML Forms</th></tr>
+<tr><td><b>P</b>atient</td><td>A SIMVASTATIN Prescription (URI: 52-27)</td><td><a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/52-27">http://livevista.caregraf.info/52-27</a></td><td><a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/52-27?format=JSON">?format=JSON</a> | <a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/52-27?format=RDF">?format=RDF</a></td></tr>
+<tr><td><b>I</b>nstitution</td><td>ENDOSCOPY Location (URI: 44-14)</td><td><a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/44-14">http://livevista.caregraf.info/44-14</a></td><td><a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/44-14?format=JSON">?format=JSON</a> | <a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/44-14?format=RDF">?format=RDF</a></td></tr>
+<tr><td><b>K</b>nowhow</td><td>Drug Clozapine (URI: 50_68-16496)</td>
+<td><a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/50_68-16496">http://livevista.caregraf.info/50_68-16496</a></td><td><a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/50_68-16496?format=JSON">?format=JSON</a> | <a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/50_68-16496?format=RDF">?format=RDF</a></td></tr>
+<tr><td><b>S</b>ystem</td><td>KIDs Package (URI: 9_4-2)</td>
+<td><a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/9_4-2">http://livevista.caregraf.info/9_4-2</a></td><td><a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/9_4-2?format=JSON">?format=JSON</a> | <a onclick="pageTracker._trackPageview('fmqlExPIKS');" href="http://livevista.caregraf.info/9_4-2?format=RDF">?format=RDF</a></td></tr>
+</table>
+<p>So instead of making a query about data, you can just invoke its URI - notice how you can still specify the data format you want using a query argument. Of course, there are still things a query language like FMQL provides which are too complex to render with a straightforward URI but for the equivalent of pointing - <em>give me a description of this thing</em> - Linked (VistA) Data is both easy to understand and use.</p>
+</section>
+
+<section id="caregrafvista">
+<h2>Play with it</h2>
+<p>Visit Caregraf&#8217;s demo VistA at <em>livevista.caregraf.info</em> which supports three FMQL-enabled applications &#8230;</p>
+<ul>
+<li>Go anywhere with the <em>FileMan Rambler</em> - the unfortunate <a onclick="pageTracker._trackPageview('chrisRambleSV');" href="http://livevista.caregraf.info/rambler#!2-9">patient Jones</a> has a story to tell.</li>
+<li>Understand the meaning of FileMan&#8217;s data with the <em>FileMan Native Schema Browser</em>. Here&#8217;s the definition of <a onclick="pageTracker._trackPageview('schemaSV');" href="http://livevista.caregraf.info/schema#!9000011">Problem</a>, <a onclick="pageTracker._trackPageview('schemaSV');" href="http://livevista.caregraf.info/schema#!52">Prescription</a> and the lynchpin of so much, <a onclick="pageTracker._trackPageview('schemaSV');" href="http://livevista.caregraf.info/schema#!2">Patient</a>.</li>
+<li>Make your own queries in the <a onclick="pageTracker._trackPageview('queryFormSV');" href="http://livevista.caregraf.info/query">FMQL Query Maker</a> and it gets you started with a range of examples.</li>
+</ul>
+<p>These clients come in the FMQL opensource release.</p>
+</section>
+
+<aside id="conorsblog">
+<h2>More in's and out's</h2>
+<p>Consult the <a href="https://github.com/caregraf/FMQL/wiki">FMQL Wiki</a> ...</p>
+</aside>
+
+<section id="fmqlrelease">
+<h2>Add FMQL to your VistA</h2>
+<p><a id="download" style="font-weight: bold; background-color: #f0f0f0;" onclick="pageTracker._trackPageview('fmqlDownload');" href="https://github.com/caregraf/FMQL/releases/tag/v1.1">Download</a>, unzip and follow the <a onclick="pageTracker._trackPageview('InstallInstructionsview');" href="https://github.com/caregraf/FMQL/wiki/Install-Instructions">install instructions</a>. Any questions or problems, just <a href="mailto:contact@caregraf.com">contact Caregraf support</a>.</p>
+<p>Everything about FMQL from its VistA Plugin to clients and example code in HTML/Javascript, Python and Java are in the <a onclick="pageTracker._trackPageview('RamblerView');" href="https://github.com/caregraf/FMQL">fmql source code repository</a>.</p>
+<p>FMQL has been tested on both fully populated and test FileMan-based systems:</p>
+<ul>
+<li>OpenVistA, VxVistA, and WorldVistA &#8211; the open source FOIA based VistAs</li>
+<li>RPMS</li>
+<li>GT/M on Linux, Cache on Windows and Linux</li>
+</ul>
+</section>
+
+<!-- consider using small and consider rel=copyright -->
+<footer id="cgfooter"> 
+<div><div class="footerLeft"><a href="http://livevista.caregraf.info">Semantic VistA</a> - Mastering VistA's Data</div><div class="footerRight">&copy; Caregraf, 2014 -- <a href="mailto:contact@caregraf.com">Contact</a></div></div>
+</footer> 
+
+</article>
+
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-4725236-5");
+pageTracker._setDomainName("caregraf.info");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+</body> 
+</html>

@@ -1,0 +1,191 @@
+
+/*
+Theme Name: CGORG
+Theme URI: http://www.caregraf.org
+Description: Very simple Article-centric, minimal color accent in footer
+Author: Caregraf
+Version: 1.0
+
+TBD: fill out pigeon/all tags below fixing content where I can, figure all sections and make the image work, test on ipad etc. Do a few simple accents.
+
+Notes:
+- not header section [article, article] aside footer, each page is just
+  an article that leads to other articles.
+  
+See http://html5doctor.com/
+*/
+@import url("/html5reset-1.6.css"); 
+
+/* font-size: 1em == 10px, 1.2 = 12 etc. and needed for IE bug */
+body {
+	font: normal 62.5% helvetica, arial, sans-serif;
+}
+
+/* Article takes up whole body: 960 base for 1024x768 screens */
+article {
+    padding: 2em 2em 5em 2em;
+    width: 96em;
+    margin: 0 auto;
+    clear: both;
+}
+
+header {
+    margin: 0;
+    padding: 0;
+}
+
+section {
+    margin-bottom: 3em;
+}
+
+aside {
+    padding: 1.5em;
+    width: 21.8em;
+    float: right;
+    margin: 0 1.5em 1.5em 1.5em;
+}
+
+footer {
+    clear: both;
+    width: 100%;
+    padding: 1.5em 0;
+    text-align: center;
+    overflow: hidden;
+    font-size: small !important;
+}
+
+.footerLeft {
+    float: left;
+}
+
+.footerRight {
+    float: right;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6, p, dd, dt, li, pre, blockquote, address {
+    margin: 0 0 0.8em;
+    line-height: 1.4; /* multiple of font-size */
+}
+h1 {
+    font-size: 3.6em;
+}
+h2 {
+    font-size: 2.6em;
+}
+hgroup h2 {
+    margin-top: -1.1em;
+    font-size: 2.2em;
+}
+h3 {
+    font-size: 2.2em;
+}
+p, ul, ol, dt, dd, figcaption {
+    font-size: 1.6em;
+    line-height: 1.4em;
+}
+ul, ol {
+    margin: 0 0 2em 3.2em;
+    width: 75%;
+}
+
+ul ul, ol ol { /* fixes nested lists */
+    font-size: 100%;
+}
+
+blockquote {
+    margin: 2em 2em;
+    width: 85%;
+}
+
+dt { font-weight: bold; }
+dd { margin-left: 1em; }
+
+/* Links */
+a {
+    color: black;
+}
+
+a:hover {
+    background: #FFE4E1;
+}
+
+/* Tables */ 
+table {margin: .5em auto 1.5em auto; width: 98%;}  
+thead th {padding: .5em .4em; text-align: left;} 
+thead td {} 
+tbody td {padding: .5em .4em;} 
+tbody th {}  
+tbody .alt td {} 
+tbody .alt th {}  
+tfoot th {} 
+tfoot td {}
+
+/* figures */
+figure {margin-top: 2em;}
+figcaption {text-align: center; margin-top: 1em; font-style: italic; margin-bottom: 2em;}
+
+/* Some Style */
+article > footer {
+    border-top: solid #F58113 1px;
+}
+.high-word-red {
+    color: #B4131D;
+    font-weight: bold;
+    font-style: italic;
+}
+.high-word-black {
+    font-weight: bold;
+}
+.high-word-black-gillsans {
+    font-weight: bold;
+    font-style: italic;
+    font-family: Gill-Sans/Gill Sans MT, sans-serif;
+}
+
+/* Table: Subset of "Grey Suits you Sir" by Stuart Colville. */
+table,td
+{
+	border               : 1px solid #CCC;
+	border-collapse      : collapse;
+  	font                 : small/1.5 "Tahoma", "Bitstream Vera Sans", Verdana, Helvetica, sans-serif;
+}
+
+table
+{
+	border                :1px solid #CCC;
+}
+
+thead th,
+tbody th
+{
+	color                 : #666;  
+	padding               : 5px 10px;
+  	border-left           : 1px solid #CCC;
+}
+tbody th
+{
+	background            : #fafafb;
+	border-top            : 1px solid #CCC;
+	text-align            : center;
+	font-weight           : normal;
+}
+tbody tr td
+{
+	padding               : 5px 10px;
+}
+tfoot td,
+tfoot th
+{
+	border-left           : none;
+	border-top            : 1px solid #CCC;
+	padding               : 4px;
+	color                 : #666;
+}
+caption
+{
+	text-align            : left;
+	font-size             : 120%;
+	padding               : 10px 0;
+	color                 : #666;
+}
