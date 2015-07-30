@@ -27,9 +27,9 @@
 <h1>FMQL Corner</h1> 
 </hgroup> 
 </header>
-<p>VistA is built around a MUMPS-based data repository called <em>FileMan</em> -  <em>VistA data</em> is <em>FileMan data</em>. Though efficient and flexible, FileMan has no remote query language or formal schema definition mechanism - the VA didn't make an "SQL for FileMan".</p>
+<p>Together the Department of Defense's CHCS and VistA from the Veterans Administration represent the most widely deployed medical record system on the planet.</p><p>Both are built around a MUMPS-based data repository called <em>FileMan</em> -  <em>VistA or CHCS data</em> is <em>FileMan data</em>. Though efficient and flexible, FileMan has no remote query language or formal schema definition mechanism - there is no "SQL for FileMan".</p>
 <p>Instead data is transferred to and from FileMan using three kinds of mechanism: thousands of remote procedure calls (RPCs), flavors of HL7 v2 and "SQL-projection", where select data types (files) are mapped to SQL tables. But no one mechanism works for all data and each demands careful handling.</p>
-<p>FMQL, the FileMan Query Language, changes this. Patient data, Institution data, Conceptual information ("Know-how"), System records - to FMQL, this is all just data to extract. By delivering one uniform mechanism for extracting any data, FMQL makes VistA data access easy and let's you focus on analyzing and presenting data.</p>
+<p>FMQL, the FileMan Query Language, changes this. Patient data, Institution data, Conceptual information ("Know-how"), System records - to FMQL, this is all just data to extract. By delivering one uniform mechanism for extracting any data, FMQL makes VistA and CHCS data access easy and let's you focus on analyzing and presenting data.</p>
 
 <section id="dataAndSchema">
 <h2>All Data and Schema too</h2>
@@ -101,7 +101,7 @@
 <p>FMQL has been tested on both fully populated and test FileMan-based systems:</p>
 <ul>
 <li>OpenVistA, VxVistA, and WorldVistA &#8211; the open source FOIA based VistAs</li>
-<li>RPMS</li>
+<li>CHCS</li>
 <li>GT/M on Linux, Cache on Windows and Linux</li>
 </ul>
 </section>
