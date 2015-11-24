@@ -1,0 +1,26 @@
+{
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "prov": "http://www.w3.org/ns/prov#",
+
+    "fms": "http://datasets.caregraf.org/fms/",
+    "fmql": "http://datasets.caregraf.org/fmql/",
+    "chcss": "http://datasets.caregraf.org/chcss/",
+    
+    "generatedAt": {
+        "@id": "prov:generatedAtTime",
+        "@type": "xsd#date"
+    },
+
+    "id": "@id",
+    "_id": "@id",
+    "type": "@type",
+    "value": "@value",
+    "list": "@list",
+    "label": {"@id": "rdfs:label"},
+    "sameAs": {"@id": "owl:sameAs", "@type": "@id"},
+    "sameAsLabel": {"@id": "fms:sameAsLabel"},
+    "@vocab": "http://datasets.caregraf.org/chcss/"
+}
