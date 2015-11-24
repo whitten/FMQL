@@ -18,7 +18,7 @@ from operator import itemgetter
 import sys
 import os
 import commands
-from describeResult import DescribeReply
+from fmqlf.describeResult import DescribeReply
 import StringIO
 
 """
