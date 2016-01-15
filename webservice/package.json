@@ -1,7 +1,7 @@
 {
     "name": "fmqlServer",
     "description": "Adds REST interface to FMQL and provides access to FMQL's one page apps",
-    "version": "0.1",
+    "version": "0.0.1",
     "license": "Apache-2.0",
     "private": true,
     "dependencies": {
