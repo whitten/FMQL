@@ -1,1 +1,1 @@
-# FMQL Framework (fmqlf)
+# FileMan Analytics Framework (fmaf)
