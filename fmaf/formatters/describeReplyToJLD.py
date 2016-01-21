@@ -18,9 +18,11 @@ from operator import itemgetter
 import sys
 import os
 import commands
-from fmaf.describeResult import DescribeReply
 import StringIO
 from collections import OrderedDict
+
+from fmaf.describeResult import DescribeReply
+from fmaf.fileManInfo import FileManInfo
 
 """
 QUICK FIXES:
@@ -126,8 +128,13 @@ class DescribeReplyToJLD:
             
     def __processRecord(self, record, container=None):  
                 
-        resource = OrderedDict([(self.MONGOATID if container == None and self.useMongoResourceId else self.ATID, record.id), (self.ATTYPE, self.TYPEFMSNS + record.fileType)])
-                
+        resource = OrderedDict([(self.MONGOATID if container == None and self.useMongoResourceId else self.ATID, record.id)])
+        
+        # Note - .title() turns PATIENT to Patient. Same is applied in .label
+        # of fileInfo but iffy as each doing it independently. TODO: FMQL should
+        # return what's needed natively.
+        resource[self.ATTYPE] = self.TYPEFMSNS + FileManInfo.normalizeLabel(record.fileTypeLabel.title(), False) + "-" + record.fileType
+                        
         if container is not None:
             container.append(resource)
         else:
