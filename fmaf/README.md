@@ -6,3 +6,7 @@ Key modules include:
   * fileManInfo - process the FileMan file definitions (dd's) returned by FMQL
   * dataModel - process the model derived from the FileMan file definitions
   * describeReply - process a reply with one or more records of data returned by FMQL from FileMan
+
+## Releases note
+
+For now, doing separate _fmaf_ release with _python setup.py sdist --formats=gztar,zip_
