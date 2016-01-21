@@ -18,8 +18,22 @@ from operator import itemgetter
 import sys
 import os
 import commands
-from fmqlf.describeResult import DescribeReply
+from fmaf.describeResult import DescribeReply
 import StringIO
+from collections import OrderedDict
+
+"""
+QUICK FIXES:
+- support new CodedFieldValue (vs treating as reference)
+  MOVE FROM HACK BELOW
+- add and then remove override loading (will hide schema-enabled overrides 
+behind Record/Field entities ie/ reflecting that eventually the remote side
+will do the right work)
+  MOVE FROM HACK BELOW
+- need to revisit the mongo implications of the @list qualifier. Perhaps
+make optional so a Mongo friendly form won't have it (or a context).
+- clean notes below (mongo etc references)
+"""
 
 """
 FileMan JSON-LD Format:
@@ -64,7 +78,7 @@ Bigger TODO/Context:
 class DescribeReplyToJLD:
     """
     """
-    def __init__(self, fms="vs", systemBase="http://livevista.caregraf.info/", useMongoResourceId=False):
+    def __init__(self, fms="vs", systemBase="http://livevista.caregraf.info/", useMongoResourceId=False, nameMeta={}, multipleMeta={}):
         """
         Ex/ systemBase = http://www.examplehospital.com/vista/, fms="vs" etc.
         """
@@ -73,11 +87,15 @@ class DescribeReplyToJLD:
         self.useMongoResourceId = useMongoResourceId
         self.TYPEFMSNS = self.fms + ":"
         # NOTE: built JSON in memory - decided not to do StringIO.StringIO
-        self.__jsonLD = {"@graph": []}
+        self.__jsonLD = OrderedDict()
         thisdir = os.path.dirname(os.path.abspath(__file__)) + "/"
-        self.__jsonLD["@context"] = json.load(open(thisdir + self.fms + "fmcontextBase.json"))
+        self.__jsonLD["@context"] = json.load(open(thisdir + self.fms + "fmcontextBase.json"), object_pairs_hook=OrderedDict)
         self.__jsonLD["@context"]["@base"] = systemBase
+        self.__jsonLD["@graph"] = []
         self.__sameAsNSSeen = set()
+        
+        self.__nameMeta = nameMeta
+        self.__multipleMeta = multipleMeta
 
     FMSNS = "" # self.fms + ":"
     TYPEFMSNS = "" # override ... self.fms + ":" # do qualify types
@@ -101,21 +119,26 @@ class DescribeReplyToJLD:
             if sameAsNS not in self.__jsonLD["@context"]:
                 self.__jsonLD["@context"][sameAsNS] = self.KGRAFNS + sameAsNS + "/"
         self.__jsonLD["generatedAt"] = datetime.now().strftime("%Y-%m-%d") 
-        self.__jsonLD["query"] = {}
+        self.__jsonLD["query"] = OrderedDict()
         queryParams = describeReply.queryParams() 
         for queryParam in queryParams:
             self.__jsonLD["query"]["fmql:" + queryParam.lower()] = queryParams[queryParam]
             
     def __processRecord(self, record, container=None):  
                 
-        resource = {self.MONGOATID if container == None and self.useMongoResourceId else self.ATID: record.id, self.ATTYPE: self.TYPEFMSNS + record.fileType}
+        resource = OrderedDict([(self.MONGOATID if container == None and self.useMongoResourceId else self.ATID, record.id), (self.ATTYPE, self.TYPEFMSNS + record.fileType)])
                 
         if container is not None:
             container.append(resource)
         else:
             self.__jsonLD["@graph"].append(resource)
-                                                                           
-        resource[self.RDFSLABEL] = record.label
+            
+        """
+        No label for Blank Nodes (never pointed to!). Nixes 'silly' date labels
+        which are rare for top/first class records.
+        """
+        if not record.container:                                                               
+            resource[self.RDFSLABEL] = record.label
                     
         for field, fieldValue in record:
         
@@ -146,6 +169,8 @@ class DescribeReplyToJLD:
             list = []
             resource[qpred] = list
             for crecord in completeCRecords:
+                # TODO: will go off multiple list (or no need as JSON will follow
+                # this going forward ie/ will inline SINGLE VALUE MULTIPLES
                 # "list" included in cnode's value if simple - @id tells me to look for the reference. Note that in inline version will just inline label and id of referenced item ie/ no sharing.
                 if record.isSimpleList(cfield):
                     # get one and only field name - usually matches cfield itself but
@@ -160,6 +185,17 @@ class DescribeReplyToJLD:
     # rely on DescribeResult following new field normalization rules (sync with schema)
     # that will eventually push back into MUMPS
     def __qpred(self, field, record):
+        
+        """
+        TODO TMP: Hacky here - move back into FieldValue/Record but must also 
+        move the globalName back there too which will be qualified in place. 
+        Then in here can add FMSNS
+        
+        Here we override the fully qualified name.
+        """
+        fieldId = record.fieldInfo(field)[2]
+        if record.fileType in self.__nameMeta and fieldId in self.__nameMeta[record.fileType]:
+            return self.__nameMeta[record.fileType][fieldId]["NAME"]
         
         qpred = self.FMSNS + field.lower() + "-" + record.fileType
             
@@ -180,20 +216,32 @@ class DescribeReplyToJLD:
             if not fieldValue.valid:
                 return None
             
-            # REM: @base sets up default base
-            uriPrefix = self.TYPEFMSNS if fieldValue.builtIn else ""
+            """
+            Let's turn ENUMS into plan strings
             
-            value = {self.ATID: uriPrefix + fieldValue.value, self.RDFSLABEL: fieldValue.label}
+            TODO: make ENUM a first class thing (not a reference) in FieldValue
+            
+            Note: current CodedValue says it is a "URI"! need to change that
+            make. Can still do asReference but it would have to change properly.
+            """
+            if fieldValue.fmFileType == 0: # means CODED!
+                value = fieldValue.label
+            else:
+            
+                # REM: @base sets up default base
+                uriPrefix = self.TYPEFMSNS if fieldValue.builtIn else ""
+            
+                value = OrderedDict([(self.ATID, uriPrefix + fieldValue.value), (self.RDFSLABEL, fieldValue.label)])
                                 
-            if fieldValue.sameAs:
+                if fieldValue.sameAs:
                 # Special for ICD9CM ... dot and space for _ (TODO: look into codes with spaces)
-                sameAsId = fieldValue.sameAs.lower() 
-                if re.match(r'icd9cm', sameAsId):
-                    sameAsId = re.sub(r'[\. ]', '_', sameAsId)
-                value[self.SAMEAS] = sameAsId
-                if fieldValue.sameAsLabel: # as optional
-                    value[self.SAMEASLABEL] = fieldValue.sameAsLabel
-                self.__sameAsNSSeen.add(sameAsId.split(":")[0])
+                    sameAsId = fieldValue.sameAs.lower() 
+                    if re.match(r'icd9cm', sameAsId):
+                        sameAsId = re.sub(r'[\. ]', '_', sameAsId)
+                    value[self.SAMEAS] = sameAsId
+                    if fieldValue.sameAsLabel: # as optional
+                        value[self.SAMEASLABEL] = fieldValue.sameAsLabel
+                    self.__sameAsNSSeen.add(sameAsId.split(":")[0])
                                                                             
         elif fieldValue.datatype == "xsd:boolean":
              value = bool(fieldValue.value) # compact form
@@ -223,9 +271,9 @@ class DescribeReplyToJLD:
             if not dataType:
                 value = dateValue
             else:
-                value = {self.ATVALUE: dateValue, self.ATTYPE: dataType}
+                value = OrderedDict([(self.ATVALUE, dateValue), (self.ATTYPE, dataType)])
         elif fieldValue.datatype:
-            value = {self.ATVALUE: str(fieldValue.value), self.ATTYPE: fieldValue.datatype}
+            value = OrderedDict([(self.ATVALUE, str(fieldValue.value)), (self.ATTYPE,  fieldValue.datatype)])
         else: 
             """
             try:
@@ -237,10 +285,11 @@ class DescribeReplyToJLD:
         return value
         
     def json(self):
+        print self.__jsonLD.keys()
         return self.__jsonLD
                     
     def flushJSON(self, where):
-        return json.dump(self.__jsonLD, open(where, "w"), indent=2, sort_keys=True)
+        return json.dump(self.__jsonLD, open(where, "w"), indent=2)
                 
 # ############################# Test Driver ####################################
 

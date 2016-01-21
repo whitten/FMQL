@@ -11,8 +11,8 @@ except ImportError:
 from collections import defaultdict
 from datetime import datetime
 from operator import itemgetter
-from fmqlf.describeResult import DescribeReply
-from fmqlf.describeTypeResult import FieldInfo
+from fmaf.describeResult import DescribeReply
+from fmaf.fileManInfo import FieldInfo
 
 """
 One of a series of formatters of Records (toHTML, toText ...). This makes RDF from  Records extracted from FMQL Describe replies.

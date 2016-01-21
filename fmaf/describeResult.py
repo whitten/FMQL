@@ -11,7 +11,8 @@
 import datetime
 import re
 from collections import defaultdict
-from describeTypeResult import FieldInfo
+
+from fileManInfo import FieldInfo
 
 """
 QUICK TODO:
