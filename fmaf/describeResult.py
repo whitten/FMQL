@@ -14,6 +14,11 @@ from collections import defaultdict
 from describeTypeResult import FieldInfo
 
 """
+QUICK TODO:
+- split this off from RecordList and specialize RecordList with a reply. Or return one (better)
+"""
+
+"""
 NOTE: V2 is moving data over to JSON-LD V2. This is just here for reference on how
 to process the existing reply format. It has some items (predicates ordered by FM id) that would need to be provided differently in V2.
 
