@@ -10,3 +10,5 @@ Key modules include:
 ## Releases note
 
 For now, doing separate _fmaf_ release with _python setup.py sdist --formats=gztar,zip_
+
+and for users ... _wget https://raw.github.com/caregraf/FMQL/master/Releases/v1.3/fmaf-1.*.zip_
