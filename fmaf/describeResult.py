@@ -17,6 +17,8 @@ from fileManInfo import FieldInfo
 """
 QUICK TODO:
 - split this off from RecordList and specialize RecordList with a reply. Or return one (better)
+- move renaming and serialization from toJLD and nix that formatter
+  - renaming should be in a stand alone renamer
 """
 
 """

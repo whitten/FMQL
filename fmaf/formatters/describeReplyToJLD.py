@@ -25,7 +25,13 @@ from fmaf.describeResult import DescribeReply
 from fmaf.fileManInfo import FileManInfo
 
 """
-QUICK FIXES:
+BIGGER:
+- describeReply to get serializer ala FileManInfo. Take JLD serialization
+from here (may wait until FMQL side JLD done)
+- renaming ie/ meta driven small changes, removed from here and part of DescribeReply
+  - should be performed in separate class
+
+QUICK FIXES - examine before removal of this to DescribeReply as Serializer:
 - support new CodedFieldValue (vs treating as reference)
   MOVE FROM HACK BELOW
 - add and then remove override loading (will hide schema-enabled overrides 
