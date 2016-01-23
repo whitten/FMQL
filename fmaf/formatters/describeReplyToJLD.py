@@ -298,7 +298,6 @@ class DescribeReplyToJLD:
         return value
         
     def json(self):
-        print self.__jsonLD.keys()
         return self.__jsonLD
                     
     def flushJSON(self, where):
