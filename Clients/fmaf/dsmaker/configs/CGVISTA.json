@@ -1,0 +1,8 @@
+{
+    "name": "CGVISTA",
+    "description": "CG VISTA at livevista.caregraf.info",
+    "fmqlEP": "http://livevista.caregraf.info/fmqlEP",
+    "fmqlQuery": "fmql",
+    "fmType": "VISTA",
+    "systemBase": "http://livevista.caregraf.info/"
+}

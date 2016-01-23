@@ -1,0 +1,13 @@
+# don't check in FMQL things
+describeReplyToJLD.py
+chcssfmcontextBase.json
+describeResult.py
+describeTypeResult.py
+
+# data if local
+data/*
+
+# Others
+*.pyc
+nohup*
+fmqlf-*
