@@ -39,6 +39,14 @@ def makeJLD(config, useNameMeta=False, reassemble=True):
     if not os.path.isdir(cacheLocation):
         print "Cache location for dataset doesn't even exist ... exiting"
         return
+
+    # VISTA or CHCS
+    if config["fmType"] == "VISTA":
+        fms = "vs"
+    elif config["fmType"] == "CHCS":
+        fms = "chcss"
+    else:
+        raise Exception("Invalid fmType", config["fmType"])
         
     jldLocation = re.sub(r'JSON', 'JSONLD', cacheLocation) 
     systemBase = config["systemBase"] # ex/ http://livevista.caregraf.info/    
@@ -83,7 +91,7 @@ def makeJLD(config, useNameMeta=False, reassemble=True):
             jreply = json.load(open(os.path.join(cacheLocation, replyFile)), object_pairs_hook=OrderedDict)
             dr = DescribeReply(jreply)
             # TODO: pass meta into DescribeReply instead
-            drToJLD = DescribeReplyToJLD(fms="chcss", systemBase=systemBase, useMongoResourceId=True, nameMeta=nameMeta, multipleMeta={})
+            drToJLD = DescribeReplyToJLD(fms=fms, systemBase=systemBase, useMongoResourceId=True, nameMeta=nameMeta, multipleMeta={})
             drToJLD.processReply(dr)
             jld = drToJLD.json()
             if not reassemble:
